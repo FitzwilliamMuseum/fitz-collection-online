@@ -95,6 +95,7 @@ class indexController extends Controller
     $client = ClientBuilder::create()->setHosts($hosts)->build();
     $params = [
       'index' => 'ciim',
+      'size' => $perPage,
       'body' => [
         'query' => [
           "bool" => [
