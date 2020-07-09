@@ -45,24 +45,26 @@
             <p>{{ ucfirst($record['_source']['legal']['credit_line']) }} </p>
           @endif
 
-          @if(array_key_exists('creation', $record['_source']['lifecycle']))
-          <h4>Dating</h4>
-          <ul>
-            @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
-            @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)
-              <li>{{ $date['summary_title']}}</li>
-            @endforeach
-            @endif
-            @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
-              <li>Date: {{$record['_source']['lifecycle']['creation'][0]['date'][0]['value']}}</li>
-            @endif
-          </ul>
-
-            @if(array_key_exists('maker', $record['_source']['lifecycle']['creation'][0]))
-            <h4>Production</h4>
+          @if(array_key_exists('lifecycle',$record['_source'] ))
+            @if(array_key_exists('creation', $record['_source']['lifecycle']))
+            <h4>Dating</h4>
             <ul>
-              <li>Made by: {{ $record['_source']['lifecycle']['creation'][0]['maker'][0]['summary_title']}}</li>
+              @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
+              @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)
+                <li>{{ $date['summary_title']}}</li>
+              @endforeach
+              @endif
+              @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
+                <li>Date: {{$record['_source']['lifecycle']['creation'][0]['date'][0]['value']}}</li>
+              @endif
             </ul>
+
+              @if(array_key_exists('maker', $record['_source']['lifecycle']['creation'][0]))
+              <h4>Production</h4>
+              <ul>
+                <li>Made by: {{ $record['_source']['lifecycle']['creation'][0]['maker'][0]['summary_title']}}</li>
+              </ul>
+              @endif
             @endif
           @endif
 
