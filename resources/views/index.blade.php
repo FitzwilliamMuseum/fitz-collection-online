@@ -30,5 +30,9 @@
     </div>
   </div>
   @endforeach
+
 </div>
+  <nav aria-label="Page navigation">
+    {{ $paginator->links() }}
+  </nav>
 @endsection

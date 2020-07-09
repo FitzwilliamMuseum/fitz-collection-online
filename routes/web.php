@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'indexController@index');
+Route::get('/search', 'indexController@landing');
 Route::get('/object/id/{priref}', 'indexController@record');
+Route::match(array('GET','POST'),'/search/results/', 'indexController@results');
