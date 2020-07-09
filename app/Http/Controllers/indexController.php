@@ -27,9 +27,9 @@ class indexController extends Controller
     $total = 8000;
     $page = $request->page;
     if(!is_null($page)){
-        $offset = ($page -1) * $perPage ;
+      $offset = ($page -1) * $perPage ;
     } else {
-        $offset = 0;
+      $offset = 0;
     }
 
 
@@ -72,42 +72,53 @@ class indexController extends Controller
 
   public function landing()
   {
-      return view('record.landing');
+    return view('record.landing');
   }
 
   /** Get results for search
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function results(Request $request)
-    {
-      $hosts = [
-        'http://api.fitz.ms:9200',        // SSL to localhost
-      ];
-        $this->validate($request, [
-            'query' => 'required|max:200|min:3',
-        ]);
+  *
+  * @param Request $request
+  * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+  */
+  public function results(Request $request)
+  {
+    $hosts = [
+      'http://api.fitz.ms:9200',        // SSL to localhost
+    ];
+    $this->validate($request, [
+      'query' => 'required|max:200|min:3',
+    ]);
 
-        $queryString = \Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
-        $perPage = 20;
-        $from = ($request->get('page', 1) - 1) * $perPage;
-        $client = ClientBuilder::create()->setHosts($hosts)->build();
-        $params = [
-          'index' => 'ciim',
-          'body'  => [
-            'query' => [
-              'match' => [
-                '_generic_all_std' => $queryString
+    $queryString = \Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
+    $perPage = 20;
+    $from = ($request->get('page', 1) - 1) * $perPage;
+    $client = ClientBuilder::create()->setHosts($hosts)->build();
+    $params = [
+      'index' => 'ciim',
+      'body' => [
+        'query' => [
+          "bool" => [
+            "must" => [
+              [
+                "match" => [
+                  "_generic_all_std" => $queryString
+                ]
+              ],
+              [
+                "match" => [
+                  "type.base" => 'object'
+                ]
               ]
-            ]
-          ]
-        ];
-        $number = 2;
-        $response = $client->search($params);
-        $records = $response['hits']['hits'];
-        $paginate = new LengthAwarePaginator($records, $number, $perPage);
-        $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
-        return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
-    }
+            ],
+          ],
+        ],
+      ],
+    ];
+    $response = $client->search($params);
+    $number = $response['hits']['total']['value'];
+    $records = $response['hits']['hits'];
+    $paginate = new LengthAwarePaginator($records, $number, $perPage);
+    $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
+    return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
+  }
 }

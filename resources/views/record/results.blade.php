@@ -13,32 +13,36 @@
   </p>
 </div>
 
-  @if(!empty($records))
-  @foreach($records as $result)
-    <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded search-results">
-      @if(isset($result['searchImage']))
-          <img src="{{$result['searchImage'][0]}}" class="rounded rounded-circle float-right" height="150" width="150"
-          alt="Highlight image for {{ $result['title'][0] }}"/>
-        @else
-          <img src="https://fitz-cms-images.s3.eu-west-2.amazonaws.com/fvlogo.jpg" class="rounded float-right" width="200"
-          alt="No image was provided"/>
-      @endif
-      <h3>{{ $result['_source']['summary_title']}}</h3>
-      <p>
-        @if(!empty($result['_source']['description'][0]['value']))
-          {{ $result['_source']['description'][0]['value'] }}...
-        @endif
-      </p>
 
+
+  <div class="row">
+    @foreach($records as $record)
+    <div class="col-md-4 mb-3">
+      <div class="card card-body h-100">
+        <div class="container h-100">
+          @if(array_key_exists('multimedia', $record['_source']))
+          <a href="/object/id/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+           loading="lazy"
+          /></a>
+        @endif
+          <!-- <pre>@php(var_dump($record['_source']))</pre> -->
+          <div class="contents-label mb-3">
+            <h3>
+              {{ $record['_source']['identifier'][0]['accession_number'] }}: {{ ucfirst($record['_source']['summary_title']) }}
+            </h3>
+            <p>{{ $record['_source']['department']['value'] }}</p>
+            @if(array_key_exists('description', $record['_source']))
+            @endif
+
+          </div>
+        </div>
+        <a href="/object/id/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
       </div>
-  @endforeach
+    </div>
+    @endforeach
+
+</div>
   <nav aria-label="Page navigation">
     {{ $paginate->links() }}
   </nav>
-
-@else
-  <p>No results to display.</p>
-@endif
-</div>
-</div>
 @endsection
