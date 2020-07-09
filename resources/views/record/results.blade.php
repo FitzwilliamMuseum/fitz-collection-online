@@ -31,8 +31,8 @@
             {{ ucfirst($record['_source']['summary_title']) }}
             </h3>
             <p>
-              {{ $record['_source']['department']['value'] }}<br/>
-              {{ $record['_source']['identifier'][0]['accession_number'] }}:
+              Holding department: {{ $record['_source']['department']['value'] }}<br/>
+              Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
             </p>
           </div>
         </div>
