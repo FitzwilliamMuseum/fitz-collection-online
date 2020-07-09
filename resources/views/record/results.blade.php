@@ -28,12 +28,12 @@
           <!-- <pre>@php(var_dump($record['_source']))</pre> -->
           <div class="contents-label mb-3">
             <h3>
-              {{ $record['_source']['identifier'][0]['accession_number'] }}: {{ ucfirst($record['_source']['summary_title']) }}
+            {{ ucfirst($record['_source']['summary_title']) }}
             </h3>
-            <p>{{ $record['_source']['department']['value'] }}</p>
-            @if(array_key_exists('description', $record['_source']))
-            @endif
-
+            <p>
+              {{ $record['_source']['department']['value'] }}<br/>
+              {{ $record['_source']['identifier'][0]['accession_number'] }}:
+            </p>
           </div>
         </div>
         <a href="/object/id/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
