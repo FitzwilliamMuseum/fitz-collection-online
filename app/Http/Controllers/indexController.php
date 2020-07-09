@@ -90,7 +90,7 @@ class indexController extends Controller
     ]);
 
     $queryString = \Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
-    $perPage = 20;
+    $perPage = 24;
     $from = ($request->get('page', 1) - 1) * $perPage;
     $client = ClientBuilder::create()->setHosts($hosts)->build();
     $params = [
