@@ -46,6 +46,14 @@
           @endif
 
           @if(array_key_exists('lifecycle',$record['_source'] ))
+
+            @if(array_key_exists('acquisition', $record['_source']['lifecycle']))
+            <h4>Acquisition and important dates</h4>
+              <ul>
+                <li>Method of acquisition: {{ $record['_source']['lifecycle']['acquisition'][0]['method']['value'] }} {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
+              </ul>
+            @endif
+
             @if(array_key_exists('creation', $record['_source']['lifecycle']))
             <h4>Dating</h4>
             <ul>
@@ -79,12 +87,6 @@
 
           <p>Associated department: {{ $record['_source']['department']['value'] }}</p>
 
-          @if(array_key_exists('acquisition', $record['_source']['lifecycle']))
-          <h4>Acquisition and important dates</h4>
-            <ul>
-              <li>Method of acquisition: {{ $record['_source']['lifecycle']['acquisition'][0]['method']['value'] }} {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
-            </ul>
-          @endif
 
           @if(array_key_exists('publications', $record['_source']))
           <h4>References and bibliographic entries</h4>
