@@ -96,6 +96,7 @@ class indexController extends Controller
     $params = [
       'index' => 'ciim',
       'size' => $perPage,
+      'from' => $from,
       'body' => [
         'query' => [
           "bool" => [
