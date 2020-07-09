@@ -23,7 +23,7 @@ class indexController extends Controller
     $hosts = [
       'http://api.fitz.ms:9200',        // SSL to localhost
     ];
-    $perPage = 12;
+    $perPage = 24;
     $total = 8000;
     $page = $request->page;
     if(!is_null($page)){
