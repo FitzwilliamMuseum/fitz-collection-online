@@ -25,13 +25,14 @@
            loading="lazy"
           /></a>
         @endif
-          <!-- <pre>@php(var_dump($record['_source']))</pre> -->
           <div class="contents-label mb-3">
             <h3>
             {{ ucfirst($record['_source']['summary_title']) }}
             </h3>
             <p>
-              Holding department: {{ $record['_source']['department']['value'] }}<br/>
+              @if(array_key_exists('department', $record['_source']))
+                Holding department: {{ $record['_source']['department']['value'] }}<br/>
+              @endif
               Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
             </p>
           </div>
