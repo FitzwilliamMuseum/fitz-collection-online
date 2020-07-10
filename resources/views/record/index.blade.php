@@ -87,8 +87,9 @@
           </ul>
           @endif
 
+          @if(array_key_exists('department, '$record['_source']))
           <p>Associated department: {{ $record['_source']['department']['value'] }}</p>
-
+          @endif
 
           @if(array_key_exists('publications', $record['_source']))
           <h4>References and bibliographic entries</h4>
