@@ -28,7 +28,6 @@
     </div>
     @endif
 
-    <!-- <pre>@php(var_dump($record['_source']))</pre> -->
     <div class="col mb-3">
       <div class="card card-body h-100">
         <div class="container h-100">
