@@ -72,7 +72,7 @@ class indexController extends Controller
 
   public function search()
   {
-    return view('record.landing');
+    return view('record.search');
   }
 
   /** Get results for search
@@ -98,22 +98,20 @@ class indexController extends Controller
       'size' => $perPage,
       'from' => $from,
       'body' => [
-        'query' => [
+        "query" => [
           "bool" => [
-            "must" => [
-              [
-                "match" => [
-                  "_generic_all_std" => $queryString
-                ]
-              ],
-              [
-                "match" => [
-                  "type.base" => 'object'
-                ]
+              "must" => [
+                 [
+                      "match" => [
+                        "_generic_all_std" => $queryString
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
               ]
-            ],
-          ],
-        ],
+           ]
+        ]
       ],
     ];
     $response = $client->search($params);
