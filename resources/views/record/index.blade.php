@@ -51,7 +51,10 @@
             @if(array_key_exists('acquisition', $record['_source']['lifecycle']))
             <h4>Acquisition and important dates</h4>
               <ul>
-                <li>Method of acquisition: {{ $record['_source']['lifecycle']['acquisition'][0]['method']['value'] }} {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
+                <li>Method of acquisition: {{ $record['_source']['lifecycle']['acquisition'][0]['method']['value'] }}</li>
+                @if(array_key_exists('date', $record['_source']['lifecycle']['acquisition'][0]))
+                <li>Dates: {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
+                @endif
               </ul>
             @endif
 
