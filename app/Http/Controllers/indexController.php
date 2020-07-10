@@ -70,7 +70,7 @@ class indexController extends Controller
     return view('record.index', compact('data'));
   }
 
-  public function landing()
+  public function search()
   {
     return view('record.landing');
   }
