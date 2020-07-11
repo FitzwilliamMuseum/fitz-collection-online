@@ -70,6 +70,28 @@ class indexController extends Controller
     return view('record.index', compact('data'));
   }
 
+  public function recordSwitch($priref,$format)
+  {
+    $hosts = [
+      'http://api.fitz.ms:9200',        // SSL to localhost
+    ];
+    $client = ClientBuilder::create()->setHosts($hosts)->build();
+    $params = [
+      'index' => 'ciim',
+      'size' => 1,
+      'body'  => [
+        'query' => [
+          'match' => [
+            'identifier.priref' => $priref
+          ]
+        ]
+      ]
+    ];
+    $response = $client->search($params);
+    $data = $response['hits']['hits'];
+    return response(view('record.json',array('data'=>$data)),200, ['Content-Type' => 'application/json']);
+  }
+
   public function search()
   {
     return view('record.search');

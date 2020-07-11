@@ -53,7 +53,7 @@
               <ul>
                 <li>Method of acquisition: {{ $record['_source']['lifecycle']['acquisition'][0]['method']['value'] }}</li>
                 @if(array_key_exists('date', $record['_source']['lifecycle']['acquisition'][0]))
-                <li>Dates: {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
+                  <li>Dates: {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
                 @endif
               </ul>
             @endif
@@ -108,8 +108,20 @@
                 <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
               @endforeach
             </ul>
+          <h4>Audit data</h4>
+          <ul>
+            <li>Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('d-m-Y') }}</li>
+            <li>Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('d-m-Y') }}</li>
+            <li>Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('d-m-Y') }}</li>
+            <li>Data source: {{ $record['_source']['admin']['source'] }}</li>
+          </ul>
+          <div class="share">
+            <btn class="btn btn-wine m-1"><a href="{{ url()->current() }}/json">json</a></btn>
+          </div>
+
         </div>
       </div>
+
     </div>
     @foreach($record['_source']['identifier'] as $id)
       @if($id['type'] == 'Online 3D model')
