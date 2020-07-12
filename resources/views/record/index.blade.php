@@ -42,7 +42,7 @@
             new IIPMooViewer( "viewer", {
         	image: image,
         	credit: credit,
-          server: 'http://api.fitz.ms/iipsrv/iipsrv.fcgi',
+          server: 'https://api.fitz.ms/iipsrv/iipsrv.fcgi',
         	viewport: {resolution:3}
             });
 
