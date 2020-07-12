@@ -12,9 +12,9 @@
 
     @include('includes.structure.manifest')
     @yield('jsonld')
-    @hasSection('iiif')
+    <!-- @hasSection('iiif')
       @yield('iiif')
-    @endif
+    @endif -->
 </head>
 <body class="doc-body">
 
@@ -99,8 +99,6 @@
   @hasSection('timeline')
     @include('includes.scripts.timeline-js')
   @endif
-
-
 
 </body>
 </html>
