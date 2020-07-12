@@ -12,9 +12,9 @@
 
     @include('includes.structure.manifest')
     @yield('jsonld')
-    <!-- @hasSection('iiif')
+    @hasSection('iiif')
       @yield('iiif')
-    @endif -->
+    @endif
 </head>
 <body class="doc-body">
 

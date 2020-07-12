@@ -9,7 +9,7 @@
     // The *full* image path on the server. This path does *not* need to be in the web
     // server root directory. On Windows, use Unix style forward slash paths without
     // the "c:" prefix
-    var image = '/{{ str_replace(".jpg", ".ptif", $record["_source"]["multimedia"][0]["processed"]["original"]["location"])}}';
+    var image = '/{{ $record["_source"]["multimedia"][0]["processed"]["zoom"]["location"] }}';
 
     // Copyright or information message
     var credit = 'fitzwilliam Museum';
