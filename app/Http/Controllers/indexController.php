@@ -31,8 +31,6 @@ class indexController extends Controller
     } else {
       $offset = 0;
     }
-
-
     $client = ClientBuilder::create()->setHosts($hosts)->build();
     $params = [
       'index' => 'ciim',
@@ -44,12 +42,11 @@ class indexController extends Controller
     $response = $client->search($params);
     $data = $response['hits']['hits'];
     $paginator = new LengthAwarePaginator($data, $total, $perPage, $currentPage);
-    $paginator->setPath('/');
+    $paginator->setPath('/spelunker');
     return view('index', compact('data', 'paginator'));
   }
 
-  public function record($priref)
-  {
+  public function record($priref) {
     $hosts = [
       'http://api.fitz.ms:9200',        // SSL to localhost
     ];
@@ -70,8 +67,7 @@ class indexController extends Controller
     return view('record.index', compact('data'));
   }
 
-  public function recordSwitch($priref,$format)
-  {
+  public function recordSwitch($priref,$format) {
     $hosts = [
       'http://api.fitz.ms:9200',        // SSL to localhost
     ];
@@ -92,8 +88,7 @@ class indexController extends Controller
     return response(view('record.json',array('data'=>$data)),200, ['Content-Type' => 'application/json']);
   }
 
-  public function search()
-  {
+  public function search() {
     return view('record.search');
   }
 
@@ -139,7 +134,8 @@ class indexController extends Controller
     $response = $client->search($params);
     $number = $response['hits']['total']['value'];
     $records = $response['hits']['hits'];
-    $paginate = new LengthAwarePaginator($records, $number, $perPage);
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
     $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
     return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
   }

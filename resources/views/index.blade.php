@@ -10,10 +10,13 @@
     <div class="card card-body h-100">
       <div class="container h-100">
         @if(array_key_exists('multimedia', $record['_source']))
-        <a href="/object/id/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
          loading="lazy"
         /></a>
-      @endif
+        @else
+        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
+        alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
+        @endif
         <!-- <pre>@php(var_dump($record['_source']))</pre> -->
         <div class="contents-label mb-3">
           <h3>
@@ -26,7 +29,7 @@
 
         </div>
       </div>
-      <a href="/object/id/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
+      <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
     </div>
   </div>
   @endforeach

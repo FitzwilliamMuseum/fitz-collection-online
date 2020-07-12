@@ -17,13 +17,54 @@
   @if(array_key_exists('multimedia', $record['_source']))
   <div class="col mb-3">
     <div class="card card-body h-100">
-      <div class="container h-100">
+      <div class="container">
         @if(array_key_exists('multimedia', $record['_source']))
         <img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           />
-          @endif
+        @section('iiif')
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js"></script>
+        <script type="text/javascript" src="/js/iipmooviewer-2.0-min.js"></script>
+
+        <script type="text/javascript">
+
+            // IIPMooViewer options: See documentation at http://iipimage.sourceforge.net for more details
+
+            // The *full* image path on the server. This path does *not* need to be in the web
+            // server root directory. On Windows, use Unix style forward slash paths without
+            // the "c:" prefix
+            var image = '/{{ str_replace(".jpg", ".ptif", $record["_source"]["multimedia"][0]["processed"]["original"]["location"])}}';
+
+            // Copyright or information message
+            var credit = 'fitzwilliam Museum';
+
+            // Create our iipmooviewer object
+            new IIPMooViewer( "viewer", {
+        	image: image,
+        	credit: credit,
+          server: 'http://api.fitz.ms/iipsrv/iipsrv.fcgi',
+        	viewport: {resolution:3}
+            });
+
+          </script>
+        @endsection
+        <div id="viewer"></div>
+
+
+        @endif
         </div>
+        @if(array_key_exists('multimedia', $record['_source']))
+
+        <div class="row">
+        @foreach(array_slice($record['_source']['multimedia'],1) as $media)
+        <div class="col-md-4 mx-auto">
+        <img class="img-fluid img-thumbnail mt-4" src="http://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
+          loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
+          />
+        </div>
+        @endforeach
+        </div>
+        @endif
       </div>
     </div>
     @endif
