@@ -7,7 +7,7 @@
   @if(array_key_exists('multimedia', $record['_source']))
   @section('hero_image_title', ucfirst($record['_source']['summary_title']))
 
-  @section('hero_image','http://api.fitz.ms/mediaLib/' . $record['_source']['multimedia'][0]['processed']['original']['location'])
+  @section('hero_image','https://api.fitz.ms/mediaLib/' . $record['_source']['multimedia'][0]['processed']['original']['location'])
   @else
   @section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/img_20190105_153947.jpg')
   @section('hero_image_title', "The inside of our Founder's entrance")
@@ -19,7 +19,7 @@
     <div class="card card-body h-100">
       <div class="container">
         @if(array_key_exists('multimedia', $record['_source']))
-        <img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
+        <img class="img-fluid" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           />
         @section('iiif')
@@ -58,7 +58,7 @@
         <div class="row">
         @foreach(array_slice($record['_source']['multimedia'],1) as $media)
         <div class="col-md-4 mx-auto">
-        <img class="img-fluid img-thumbnail mt-4" src="http://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
+        <img class="img-fluid img-thumbnail mt-4" src="https://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           />
         </div>
