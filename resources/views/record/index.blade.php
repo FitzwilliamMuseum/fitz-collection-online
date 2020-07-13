@@ -28,6 +28,7 @@
     @endif
 
     @if(array_key_exists('multimedia', $record['_source']))
+    @if(!empty(array_slice($record['_source']['multimedia'],1)))
     <h3>Alternative views</h3>
     <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
       <div class="row">
@@ -40,7 +41,9 @@
         @endforeach
       </div>
     </div>
+    @endif
   </div>
+
   @include('includes/structure/iiif')
   @endif
 
@@ -84,14 +87,13 @@
         <ul>
           @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
           @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)
-          <li>{{ ucfirst($date['summary_title']) }}</li>
+            <li>{{ ucfirst($date['summary_title']) }}</li>
           @endforeach
           @endif
 
           @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
-          <li>Date: {{$record['_source']['lifecycle']['creation'][0]['date'][0]['value']}}</li>
+            <li>Date: {{$record['_source']['lifecycle']['creation'][0]['date'][0]['value']}}</li>
           @endif
-
         </ul>
 
         @if(array_key_exists('maker', $record['_source']['lifecycle']['creation'][0]))
