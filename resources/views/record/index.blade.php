@@ -44,14 +44,18 @@
   @include('includes/structure/iiif')
   @endif
 
+  @if(array_key_exists('multimedia', $record['_source']))
   <div class="col-md-6 mb-3">
+  @else
+  <div class="col-md-12 mb-3">
+  @endif
     <h2>Object information</h2>
     <div class="card card-body">
       <div class="container">
         @section('title', ucfirst($record['_source']['summary_title']))
 
         @if(array_key_exists('description', $record['_source']))
-        <p>{{ ucfirst($record['_source']['description'][0]['value']) }} </p>
+          <p>{{ ucfirst($record['_source']['description'][0]['value']) }} </p>
         @endif
 
         @if(array_key_exists('note', $record['_source']))
@@ -111,9 +115,16 @@
         @if(array_key_exists('techniques', $record['_source']))
         <h4>Techniques used in production</h4>
         <ul>
-          <li>{{ ucfirst($record['_source']['techniques'][0]['description'][0]['value'])}}
-          </ul>
+          @foreach($record['_source']['techniques'] as $techniques)
+          @if(array_key_exists('description', $techniques))
+          <li>{{ ucfirst($techniques['description'][0]['value'])}}
           @endif
+          @if(array_key_exists('reference', $techniques))
+          <li>{{ ucfirst($techniques['reference']['summary_title'])}}
+          @endif
+          @endforeach
+        </ul>
+        @endif
 
           @if(array_key_exists('inscription', $record['_source']))
           <h4>Inscription or legend</h4>
