@@ -24,6 +24,7 @@
     });
 
   </script>
+  @endif
 @endsection
-@endif
+
 <div id="viewer"></div>

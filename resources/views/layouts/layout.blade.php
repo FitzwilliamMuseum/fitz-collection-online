@@ -38,7 +38,6 @@
   <div class="container">
     @include('includes.structure.breadcrumb')
     @yield('content')
-    @yield('timeline')
   </div>
 
   @hasSection('map')
