@@ -18,7 +18,7 @@
     new IIPMooViewer( "viewer", {
   image: image,
   credit: credit,
-  server: 'https://api.fitz.ms/iipsrv/iipsrv.fcgi',
+  server: '/yiipsrv/iipsrv.fcgi',
   viewport: {resolution:3}
     });
 

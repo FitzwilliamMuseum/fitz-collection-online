@@ -15,7 +15,7 @@ $(document).on('click', '[data-toggle="lightbox"]', function(event) {
 </script>
 <!-- Cookie management -->
 <script defer type="text/javascript" src="/js/config.js"></script>
-<script defer type="text/javascript" src="/js/klaro.js"></script>
+<!-- <script defer type="text/javascript" src="/js/klaro.js"></script> -->
 <!-- End of body -->
 
 @hasSection('audio-guide')
