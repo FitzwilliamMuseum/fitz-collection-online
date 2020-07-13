@@ -50,7 +50,7 @@
   <div class="col-md-12 mb-3">
   @endif
     <h2>Object information</h2>
-    <div class="card card-body">
+    <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
       <div class="container">
         @section('title', ucfirst($record['_source']['summary_title']))
 
