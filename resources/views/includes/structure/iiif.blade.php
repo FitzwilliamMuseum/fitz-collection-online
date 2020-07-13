@@ -1,4 +1,5 @@
 @section('iiif')
+@if(array_key_exists('zoom', $record["_source"]["multimedia"][0]["processed"]))
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/mootools/1.6.0/mootools.min.js"></script>
 <script type="text/javascript" src="/js/iipmooviewer-2.0-min.js"></script>
 
@@ -24,4 +25,5 @@
 
   </script>
 @endsection
+@endif
 <div id="viewer"></div>
