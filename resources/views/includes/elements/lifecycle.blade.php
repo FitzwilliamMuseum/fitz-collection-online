@@ -46,7 +46,7 @@
       @endforeach
       @endif
       @if(array_key_exists('admin', $maker))
-      <li><a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a></li>
+    <a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a>
       @else
       <li>{{ $maker['summary_title']}}
       @endif
