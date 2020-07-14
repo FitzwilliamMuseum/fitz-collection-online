@@ -114,15 +114,50 @@
         </ul>
         @endif
 
+        @if(array_key_exists('content',$record['_source']))
+        @if(array_key_exists('agents', $record['_source']['content']))
+        <h4>Agents depicted</h4>
+        <ul>
+        @foreach($record['_source']['content']['agents'] as $agent)
+          <li><a href="/id/agent/{{ $agent['admin']['id']}}">{{ ucfirst($agent['summary_title'])}}</a></li>
+        @endforeach
+        </ul>
+        @endif
+        @if(array_key_exists('subjects', $record['_source']['content']))
+        <h4>Subjects depicted</h4>
+        <ul>
+        @foreach($record['_source']['content']['subjects'] as $subject)
+          <li><a href="/id/terminology/{{ $subject['admin']['id']}}">{{ ucfirst($subject['summary_title'])}}</a></li>
+        @endforeach
+        </ul>
+        @endif
+        @endif
+
+        @if(array_key_exists('medium', $record['_source']))
+        <h4>Materials used in production</h4>
+        <ul>
+          @foreach($record['_source']['medium'] as $materials)
+            @foreach($materials as $material)
+            @if(array_key_exists('description', $material[0]))
+            <li>{{ ucfirst($material[0]['description'][0]['value'])}}</li>
+            @endif
+            @if(array_key_exists('reference', $material[0]))
+            <li><a href="/id/terminology/{{ $material[0]['reference']['admin']['id']}}">{{ ucfirst($material[0]['reference']['summary_title'])}}</a></li>
+            @endif
+          @endforeach
+          @endforeach
+        </ul>
+        @endif
+
         @if(array_key_exists('techniques', $record['_source']))
         <h4>Techniques used in production</h4>
         <ul>
           @foreach($record['_source']['techniques'] as $techniques)
           @if(array_key_exists('description', $techniques))
-          <li>{{ ucfirst($techniques['description'][0]['value'])}}
+          <li>{{ ucfirst($techniques['description'][0]['value'])}}</li>
           @endif
           @if(array_key_exists('reference', $techniques))
-          <li>{{ ucfirst($techniques['reference']['summary_title'])}}
+          <li><a href="/id/terminology/{{ $techniques['reference']['admin']['id']}}">{{ ucfirst($techniques['reference']['summary_title'])}}</a></li>
           @endif
           @endforeach
         </ul>
@@ -156,7 +191,7 @@
           <h4>References and bibliographic entries</h4>
           <ul>
             @foreach($record['_source']['publications'] as $pub)
-            <li>{{ $pub['summary_title'] }}</li>
+            <li><a href="/id/publication/{{ $pub['admin']['id']}}">{{ $pub['summary_title'] }}</a></li>
             @endforeach
           </ul>
           @endif
