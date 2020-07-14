@@ -30,7 +30,7 @@
           @endif
           <div class="contents-label mb-3">
             <h3>
-            {{ ucfirst($record['_source']['summary_title']) }}
+            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
             </h3>
             <p>
               @if(array_key_exists('department', $record['_source']))
