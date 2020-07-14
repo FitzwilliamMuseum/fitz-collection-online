@@ -48,7 +48,7 @@
       @if(array_key_exists('admin', $maker))
       <a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a>
       @else
-      {{ $maker['summary_title']}}
+      <li>{{ $maker['summary_title']}}
       @endif
     @endif
     </li>
