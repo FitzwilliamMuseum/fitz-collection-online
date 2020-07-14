@@ -39,16 +39,16 @@
   <ul>
   @foreach($record['_source']['lifecycle']['creation'][0]['maker'] as $maker)
   @if(array_key_exists('@link', $maker))
-      @if(array_key_exists('role', $maker['@link']))
       <li>
+      @if(array_key_exists('role', $maker['@link']))
       @foreach($maker['@link']['role'] as $role)
         {{ ucfirst($role['value'])}}:
       @endforeach
       @endif
       @if(array_key_exists('admin', $maker))
-      <li><a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a></li>
+      <a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a></li>
       @else
-      <li>{{ $maker['summary_title']}}
+      {{ $maker['summary_title']}}
       @endif
     @endif
     </li>
