@@ -99,7 +99,7 @@
         @if(array_key_exists('maker', $record['_source']['lifecycle']['creation'][0]))
         <h4>Production</h4>
         <ul>
-          <li>Made by: {{ $record['_source']['lifecycle']['creation'][0]['maker'][0]['summary_title']}}</li>
+          <li>Made by: <a href="/id/agent/{{ $record['_source']['lifecycle']['creation'][0]['maker'][0]['admin']['id'] }}">{{ $record['_source']['lifecycle']['creation'][0]['maker'][0]['summary_title']}}</a></li>
         </ul>
         @endif
         @endif
@@ -133,6 +133,25 @@
         @endif
         @endif
 
+        @if(array_key_exists('component', $record['_source']))
+        <h4>Components of work</h4>
+        <ul>
+        @foreach($record['_source']['component'] as $component)
+        <li>
+          {{ $component['name']}}
+          @if(array_key_exists('measurements', $component))
+          : dimensions -
+
+          @foreach($component['measurements']['dimensions'] as $dims)
+          {{ $dims['value']}}
+          @endforeach
+          @endif
+        </li>
+
+        @endforeach
+        </ul>
+        @endif
+
         @if(array_key_exists('medium', $record['_source']))
         <h4>Materials used in production</h4>
         <ul>
@@ -153,11 +172,10 @@
         <h4>Techniques used in production</h4>
         <ul>
           @foreach($record['_source']['techniques'] as $techniques)
-          @if(array_key_exists('description', $techniques))
-          <li>{{ ucfirst($techniques['description'][0]['value'])}}</li>
-          @endif
           @if(array_key_exists('reference', $techniques))
-          <li><a href="/id/terminology/{{ $techniques['reference']['admin']['id']}}">{{ ucfirst($techniques['reference']['summary_title'])}}</a></li>
+          <li><a href="/id/terminology/{{ $techniques['reference']['admin']['id']}}">{{ ucfirst($techniques['reference']['summary_title'])}}</a> @if(array_key_exists('description', $techniques))
+          : {{ ucfirst($techniques['description'][0]['value'])}}
+          @endif</li>
           @endif
           @endforeach
         </ul>
@@ -191,7 +209,11 @@
           <h4>References and bibliographic entries</h4>
           <ul>
             @foreach($record['_source']['publications'] as $pub)
-            <li><a href="/id/publication/{{ $pub['admin']['id']}}">{{ $pub['summary_title'] }}</a></li>
+              <li><a href="/id/publication/{{ $pub['admin']['id']}}">{{ $pub['summary_title'] }}</a>
+              @if(array_key_exists('page', $pub['@link']))
+              page(s): {{ $pub['@link']['page']}}
+              @endif
+              </li>
             @endforeach
           </ul>
           @endif
