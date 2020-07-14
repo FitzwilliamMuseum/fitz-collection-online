@@ -144,10 +144,16 @@
           @endif
           @if(array_key_exists('measurements', $component))
           : dimensions -
-
+          @php
+          $measurements = array();
+          @endphp
           @foreach($component['measurements']['dimensions'] as $dims)
-          {{ $dims['value']}}
+          @php
+          $measurements[] = $dims['value'];
+          @endphp
+
           @endforeach
+          {{ implode(' by ' , $measurements) }}
           @endif
         </li>
 
