@@ -138,7 +138,7 @@
         <ul>
         @foreach($record['_source']['component'] as $component)
         <li>
-          {{ $component['name']}}
+          {{ $component['name']}}: <a href="/id/terminology/{{ $component['materials'][0]['reference']['admin']['id']}}">{{ $component['materials'][0]['reference']['summary_title']}}</a>
           @if(array_key_exists('measurements', $component))
           : dimensions -
 
