@@ -21,7 +21,7 @@
       <div class="card card-body h-100">
         <div class="container h-100">
           @if(array_key_exists('multimedia', $record['_source']))
-          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="http://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
            loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           /></a>
           @else
