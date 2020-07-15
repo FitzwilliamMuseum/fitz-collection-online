@@ -705,3 +705,7 @@ img.img-fluid.twitter {
 .container li {
     list-style: square;
 }
+
+ul.pagination li {
+    list-style: none;
+}
