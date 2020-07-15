@@ -20,9 +20,9 @@
     <div class="row">
       @foreach(array_slice($record['_source']['multimedia'],1) as $media)
       <div class="col-md-4 mx-auto">
-        <img class="img-fluid  mt-4" src="https://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
+        <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid  mt-4" src="https://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
         loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-        />
+        /></a>
       </div>
       @endforeach
     </div>
