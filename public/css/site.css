@@ -701,3 +701,7 @@ img.img-fluid.twitter {
 .pagination, .breadcrumb {
   background-color: #fff !important;
 }
+
+.container li {
+    list-style: square;
+}
