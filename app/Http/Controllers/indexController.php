@@ -139,4 +139,35 @@ class indexController extends Controller
     $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
     return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
   }
+
+  public function image($id){
+    $hosts = [
+      'http://api.fitz.ms:9200',        // SSL to localhost
+    ];
+    $client = ClientBuilder::create()->setHosts($hosts)->build();
+    $params = [
+      'index' => 'ciim',
+      'body'  => [
+        'query' => [
+          'match' => [
+            'multimedia.admin.id' => $id
+          ]
+        ]
+      ]
+    ];
+
+    $response = $client->search($params);
+    $data = $response['hits']['hits'][0]['_source']['multimedia'];
+
+    function filter_array($array, $term){
+      $matches = array();
+      foreach($array as $a){
+        if($a['admin']['id'] == $term)
+          $matches[] = $a;
+      }
+      return $matches;
+    }
+    $filtered = filter_array($data,$id);
+    return view('record.image', compact('filtered'));
+  }
 }

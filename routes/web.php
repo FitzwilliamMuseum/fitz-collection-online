@@ -18,6 +18,7 @@ Route::get('/search', 'indexController@search');
 Route::get('/spelunker', 'indexController@index');
 Route::get('/id/object/{priref}', 'indexController@record');
 Route::get('/id/object/{priref}/{format}', 'indexController@recordSwitch');
+Route::get('/id/image/{id}/', 'indexController@image');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results');
 Route::get('/id/publication/{id}', 'publicationsController@record');
 Route::get('/id/publication/{id}/{format}', 'publicationsController@recordSwitch');

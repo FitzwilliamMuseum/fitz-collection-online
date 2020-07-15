@@ -5,9 +5,9 @@
     <div>
 
       @if(array_key_exists('multimedia', $record['_source']))
-      <img class="img-fluid mx-auto d-block" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
+      <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
       loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-      />
+      /></a>
       @endif
     </div>
   </div>
