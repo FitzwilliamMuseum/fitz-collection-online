@@ -19,7 +19,7 @@
   <ul>
     @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
     @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)
-      <li>{{ ucfirst($date['summary_title']) }}</li>
+      <li><a href="/id/terminology/{{ $date['admin']['id']}}">{{ ucfirst($date['summary_title']) }}</a></li>
     @endforeach
     @endif
 
@@ -28,7 +28,16 @@
         @if(isset($record['_source']['lifecycle']['creation'][0]['date'][0]['precision']))
         {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['precision'] }}
         @endif
-        {{$record['_source']['lifecycle']['creation'][0]['date'][0]['value']}}
+        @php
+        $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
+        if($dateTime < 0){
+          $suffix = 'BCE';
+          $string = abs($dateTime) . ' ' . $suffix;
+        } else {
+          $string = $dateTime;
+        }
+        @endphp
+        {{ $string }}
       </li>
     @endif
   </ul>
