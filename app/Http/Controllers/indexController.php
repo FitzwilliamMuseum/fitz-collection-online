@@ -91,15 +91,21 @@ class indexController extends Controller
               }
             }
           ],
-          "filter": {
-            "term": {
-              "type.base": "object"
+          "filter": [
+            {
+              "exists": {
+                "field": "multimedia"
+              }
+            },
+            {
+              "term": {
+                "type.base": "object"
+              }
             }
-          }
+          ]
         }
       }
     }';
-
 
     $paramsMLT = [
       'index' => 'ciim',
