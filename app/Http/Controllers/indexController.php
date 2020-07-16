@@ -64,7 +64,51 @@ class indexController extends Controller
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-    return view('record.index', compact('data'));
+
+    $query = $data[0]['_source']['summary_title'];
+    $id = $data[0]['_id'];
+    $string = '{ "_id" : "' . $id . '"},"' . $query .'"';
+    $json = '{
+      "query": {
+        "bool": {
+          "must": [
+            {
+              "more_like_this": {
+                "fields": [
+                  "_generic_all_std"
+                ],
+                "like": [
+
+                  ' . $string . '
+
+                ],
+                "min_term_freq": 1,
+                "min_doc_freq": 1,
+                "max_query_terms": 15,
+                "stop_words": [],
+                "boost": 2,
+                "include": false
+              }
+            }
+          ],
+          "filter": {
+            "term": {
+              "type.base": "object"
+            }
+          }
+        }
+      }
+    }';
+
+
+    $paramsMLT = [
+      'index' => 'ciim',
+      'size' => 3,
+      'body'  => $json
+    ];
+    $response2 = $client->search($paramsMLT);
+    $mlt = $response2['hits']['hits'];
+    return view('record.index', compact('data', 'mlt'));
   }
 
   public function recordSwitch($priref,$format) {
@@ -117,17 +161,17 @@ class indexController extends Controller
       'body' => [
         "query" => [
           "bool" => [
-              "must" => [
-                 [
-                      "match" => [
-                        "_generic_all_std" => $queryString
-                      ]
-                 ],
-                 [
-                      "term"=> [ "type.base" => 'object']
-                 ]
+            "must" => [
+              [
+                "match" => [
+                  "_generic_all_std" => $queryString
+                ]
+              ],
+              [
+                "term"=> [ "type.base" => 'object']
               ]
-           ]
+            ]
+          ]
         ]
       ],
     ];
@@ -163,7 +207,7 @@ class indexController extends Controller
       $matches = array();
       foreach($array as $a){
         if($a['admin']['id'] == $term)
-          $matches[] = $a;
+        $matches[] = $a;
       }
       return $matches;
     }
