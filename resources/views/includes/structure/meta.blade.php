@@ -18,7 +18,7 @@
     <meta property="og:url" content="{{ URL::current() }}" />
     <meta property="og:site_name" content="The Fitzwilliam Museum" />
 
-    @hasSection('social_thumbnail')
+    @hasSection('hero_image')
       <meta property="og:image" content="@yield('hero_image')" />
       <meta name="twitter:image" content="@yield('hero_image')" />
     @else
