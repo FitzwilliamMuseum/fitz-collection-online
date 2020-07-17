@@ -20,9 +20,9 @@
     $title = str_replace("-", " ", $title);
     $title = ucwords($title);
     @endphp
-
-    <li class="breadcrumb-item active" aria-current="page"><a
-      href="{{ $bread }}">{{ $title }}</a></li>
+    @if($title != 'Id')
+    <li class="breadcrumb-item active" aria-current="page">{{ $title }}</li>
+    @endif
       @endfor
 
       @endif
