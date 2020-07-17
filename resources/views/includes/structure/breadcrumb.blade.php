@@ -2,8 +2,8 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ URL::to('/') }}">Home</a></li>
-
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ URL::to('https://beta.fitz.ms') }}">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ URL::to('https://collection.beta.fitz.ms') }}">Objects and Artworks</a></li>
 
     @php
     $bread = URL::to('/');
