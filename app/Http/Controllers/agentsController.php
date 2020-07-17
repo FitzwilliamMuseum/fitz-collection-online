@@ -33,22 +33,46 @@ class agentsController extends Controller
       'body' => [
         "query" => [
           "bool" => [
-              "must" => [
-                 [
-                      "match" => [
-                        "admin.id" => $id
-                      ]
-                 ],
-                 [
-                      "term"=> [ "type.base" => 'agent']
-                 ]
+            "must" => [
+              [
+                "match" => [
+                  "admin.id" => $id
+                ]
+              ],
+              [
+                "term"=> [ "type.base" => 'agent']
               ]
-           ]
+            ]
+          ]
         ]
       ],
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-    return view('agents.record', compact('data'));
+
+    $paramsTerm = [
+      'index' => 'ciim',
+      'size' => 3,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "reference_links" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
+              ]
+           ]
+        ]
+      ],
+
+    ];
+    $response2 = $client->search($paramsTerm);
+    $use = $response2['hits'];
+    return view('agents.record', compact('data', 'use'));
   }
 }

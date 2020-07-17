@@ -49,6 +49,29 @@ class biographiesController extends Controller
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-    return view('biographies.record', compact('data'));
+
+    $paramsTerm = [
+      'index' => 'ciim',
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "reference_links" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
+              ]
+           ]
+        ]
+      ],
+    ];
+    $response2 = $client->search($paramsTerm);
+    $use = $response2['hits']['hits'];
+
+    return view('biographies.record', compact('data', 'use'));
   }
 }

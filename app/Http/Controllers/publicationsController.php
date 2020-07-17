@@ -49,6 +49,31 @@ class publicationsController extends Controller
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-    return view('publications.record', compact('data'));
+
+    $paramsTerm = [
+      'index' => 'ciim',
+      'size' => 3,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "reference_links" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
+              ]
+           ]
+        ]
+      ],
+
+    ];
+    $response2 = $client->search($paramsTerm);
+    $use = $response2['hits'];
+
+    return view('publications.record', compact('data', 'use'));
   }
 }

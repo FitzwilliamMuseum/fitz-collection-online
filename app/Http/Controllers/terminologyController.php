@@ -49,6 +49,38 @@ class terminologyController extends Controller
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-    return view('terminology.term', compact('data'));
+
+    $json = '{
+      "query": {
+        "match": {
+          "reference_links" : "' . $id . '"
+        }
+      }
+    }';
+    $paramsTerm = [
+      'index' => 'ciim',
+      'size' => 3,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "reference_links" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
+              ]
+           ]
+        ]
+      ],
+
+    ];
+    $response2 = $client->search($paramsTerm);
+    $use = $response2['hits'];
+    // dd($use);
+    return view('terminology.term', compact('data', 'use'));
   }
 }
