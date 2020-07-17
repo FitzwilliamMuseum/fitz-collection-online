@@ -1,11 +1,11 @@
 @extends('layouts/layout')
-@section('title', 'Our objects and artworks')
+@section('title', 'Our objects and works of art')
 @section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/cupidpsychelarge.jpg')
 @section('hero_image_title', 'Cupid and Psyche - del Sallaio')
 @section('description','A search page for our highlight objects')
 @section('keywords', 'search,highlights, objects')
 @section('content')
-  
+
 <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
   {{ \Form::open(['url' => url('/search/results'),'method' => 'GET', 'class' => 'text-center']) }}
   <div class="row center-block">
