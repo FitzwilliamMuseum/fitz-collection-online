@@ -1,6 +1,5 @@
 @if(array_key_exists('multimedia', $record['_source']))
 <div class="col-md-12 mb-3">
-  <h2>Principal image</h2>
   <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
     <div>
 
