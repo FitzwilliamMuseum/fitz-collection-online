@@ -67,7 +67,7 @@ class indexController extends Controller
 
     $query = $data[0]['_source']['summary_title'];
     $id = $data[0]['_id'];
-    $string = '{ "_id" : "' . $id . '"},"' . $query .'"';
+    $string = '{ "_id" : "' . $id . '"},"' . urlencode($query) .'"';
     $json = '{
       "query": {
         "bool": {
