@@ -14,7 +14,7 @@
   <h4>Dating</h4>
 
   @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
-    <p>{{ $record['_source']['lifecycle']['creation'][0]['note'][0]['value'] }}</p>
+    <p>Production note: {{ $record['_source']['lifecycle']['creation'][0]['note'][0]['value'] }}</p>
   @endif
   <ul>
     @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
@@ -24,7 +24,7 @@
     @endif
 
     @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
-      <li>Date:
+      <li>Production date:
         @if(isset($record['_source']['lifecycle']['creation'][0]['date'][0]['precision']))
         {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['precision'] }}
         @endif
@@ -38,6 +38,9 @@
         }
         @endphp
         {{ $string }}
+        @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]['date'][0]))
+        : {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['note'][0]['value']}}
+        @endif
       </li>
     @endif
   </ul>
