@@ -35,17 +35,17 @@ class departmentsController extends Controller
       'body' => [
         "query" => [
           "bool" => [
-              "must" => [
-                 [
-                      "match" => [
-                        "department.value" => $id
-                      ]
-                 ],
-                 [
-                      "term"=> [ "type.base" => 'object']
-                 ]
+            "must" => [
+              [
+                "match" => [
+                  "department.value" => $id
+                ]
+              ],
+              [
+                "term"=> [ "type.base" => 'object']
               ]
-           ]
+            ]
+          ]
         ]
       ],
 
@@ -59,17 +59,28 @@ class departmentsController extends Controller
       'body' => [
         "query" => [
           "bool" => [
-              "must" => [
-                 [
-                      "match" => [
-                        "department.value" => $id
-                      ]
-                 ],
-                 [
-                      "term"=> [ "type.base" => 'object']
-                 ]
-              ]
-           ]
+            "must" => [
+              [
+                "match" => [
+                  "department.value" => urlencode($id)
+                ]
+              ],
+              [
+                "term"=> [ "type.base" => 'object']
+              ],
+              [
+                "exists" => ['field' => 'multimedia']
+              ],
+            ]
+          ],
+
+        ],
+        'sort' => [
+          [
+            "admin.modified" =>  [
+              "order" =>  "desc"
+            ]
+          ]
         ]
       ],
 

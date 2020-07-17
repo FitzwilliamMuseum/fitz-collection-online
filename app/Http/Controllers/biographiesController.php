@@ -63,7 +63,10 @@ class biographiesController extends Controller
                  ],
                  [
                       "term"=> [ "type.base" => 'object']
-                 ]
+                 ],
+                 [
+                      "exists" => ['field' => 'multimedia']
+                 ],
               ]
            ]
         ]

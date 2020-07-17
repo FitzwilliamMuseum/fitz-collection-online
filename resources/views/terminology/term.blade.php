@@ -16,6 +16,8 @@
       @else
       <p>No supplementary data available</p>
       @endif
+      <p>This term has <strong>{{ number_format($count['count'])}}</strong> records attributed within our system.</p>
+
     </div>
 @endforeach
 <h3>Example connected records</h3>

@@ -36,7 +36,7 @@ class terminologyController extends Controller
               "must" => [
                  [
                       "match" => [
-                        "admin.id" => $id
+                        "admin.id" => urlencode($id)
                       ]
                  ],
                  [
@@ -49,7 +49,7 @@ class terminologyController extends Controller
     ];
     $response = $client->search($params);
     $data = $response['hits']['hits'];
-
+    $count  = $client->count($params);
     $json = '{
       "query": {
         "match": {
@@ -57,9 +57,14 @@ class terminologyController extends Controller
         }
       }
     }';
+    $cParams = [
+      'index' => 'ciim',
+      'body' => $json
+    ];
+    $count  = $client->count($cParams);
     $paramsTerm = [
       'index' => 'ciim',
-      'size' => 3,
+      'size' => 12,
       'body' => [
         "query" => [
           "bool" => [
@@ -71,9 +76,19 @@ class terminologyController extends Controller
                  ],
                  [
                       "term"=> [ "type.base" => 'object']
-                 ]
+                 ],
+                 [
+                      "exists" => ['field' => 'multimedia']
+                 ],
               ]
            ]
+        ],
+        'sort' => [
+          [
+            "admin.modified" =>  [
+              "order" =>  "desc"
+            ]
+          ]
         ]
       ],
 
@@ -81,6 +96,6 @@ class terminologyController extends Controller
     $response2 = $client->search($paramsTerm);
     $use = $response2['hits'];
     // dd($use);
-    return view('terminology.term', compact('data', 'use'));
+    return view('terminology.term', compact('data', 'use', 'count'));
   }
 }
