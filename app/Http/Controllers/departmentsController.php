@@ -52,6 +52,30 @@ class departmentsController extends Controller
     ];
     $use = $client->count($paramsTerm);
     $name = urldecode($id);
-    return view('departments.record', compact( 'use', 'name'));
+
+    $params = [
+      'index' => 'ciim',
+      'size' => 12,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "department.value" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'object']
+                 ]
+              ]
+           ]
+        ]
+      ],
+
+    ];
+    $response = $client->search($params);
+    $data = $response['hits']['hits'];
+    return view('departments.record', compact('data', 'use', 'name'));
   }
 }
