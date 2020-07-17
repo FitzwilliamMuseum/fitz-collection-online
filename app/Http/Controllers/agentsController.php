@@ -63,8 +63,11 @@ class agentsController extends Controller
                       ]
                  ],
                  [
-                      "term"=> [ "type.base" => 'object']
-                 ]
+                      "term" => [ "type.base" => 'object']
+                 ],
+                 [
+                      "exists" => ['field' => 'multimedia']
+                 ],
               ]
            ]
         ]
