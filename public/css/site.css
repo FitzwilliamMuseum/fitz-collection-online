@@ -706,6 +706,6 @@ img.img-fluid.twitter {
     list-style: square;
 }
 
-ul.pagination li {
+ul.pagination li, .share li {
     list-style: none;
 }
