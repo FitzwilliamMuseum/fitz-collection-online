@@ -52,13 +52,13 @@
       <li>
       @if(array_key_exists('role', $maker['@link']))
       @foreach($maker['@link']['role'] as $role)
-        {{ ucfirst($role['value'])}}:
+        {{ preg_replace('@\x{FFFD}@u', 'î',(ucfirst($role['value'])))}}:
       @endforeach
       @endif
       @if(array_key_exists('admin', $maker))
-      <a href="/id/agent/{{ $maker['admin']['id']}}">{{ $maker['summary_title']}}</a></li>
+      <a href="/id/agent/{{ $maker['admin']['id']}}">{{ preg_replace('@\x{FFFD}@u', 'î',($maker['summary_title']))}}</a></li>
       @else
-      {{ $maker['summary_title']}}
+      {{ preg_replace('@\x{FFFD}@u', 'î',($maker['summary_title']))}}
       @endif
     @endif
     </li>
@@ -71,7 +71,7 @@
   <h4>Place(s) associated</h4>
   <ul>
   @foreach($record['_source']['lifecycle']['creation'][0]['places'] as $place)
-  <li>{{ $place['summary_title'] }}</li>
+  <li>{{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}</li>
   @endforeach
   </ul>
   @endif
