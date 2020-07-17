@@ -26,3 +26,4 @@ Route::get('/id/terminology/{id}', 'terminologyController@record');
 Route::get('/id/terminology/{id}/{format}', 'terminologyController@recordSwitch');
 Route::get('/id/agent/{id}', 'agentsController@record');
 Route::get('/id/agent/{id}/{format}', 'agentsController@recordSwitch');
+Route::get('/id/departments/{id}', 'departmentsController@record');
