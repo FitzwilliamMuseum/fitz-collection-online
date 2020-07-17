@@ -43,6 +43,7 @@
   </ul>
   @endif
 
+  @if(array_key_exists('creation', $record['_source']['lifecycle']))
   @if(array_key_exists('maker',$record['_source']['lifecycle']['creation'][0]))
   <h4>Maker(s)</h4>
   <ul>
@@ -65,6 +66,7 @@
   </ul>
   @endif
 
+
   @if(array_key_exists('places', $record['_source']['lifecycle']['creation'][0]))
   <h4>Place(s) associated</h4>
   <ul>
@@ -73,7 +75,7 @@
   @endforeach
   </ul>
   @endif
-
+@endif
 
 
 @endif
