@@ -19,6 +19,7 @@
     new IIPMooViewer( "viewer", {
   image: image,
   credit: credit,
+  server: '/iipsrv/iipsrv.fcgi',
   viewport: {resolution:3}
     });
 
