@@ -26,7 +26,7 @@
       <div class="container">
 
         @include('includes/elements/descriptive')
-
+      
         @include('includes/elements/legal')
 
         @include('includes/elements/lifecycle')
