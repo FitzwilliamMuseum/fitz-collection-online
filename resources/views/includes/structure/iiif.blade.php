@@ -26,5 +26,6 @@
   </script>
   @endif
 @endsection
-
+<div class="col-md-12 mb-3">
 <div id="viewer" style="width:100%;height:100%"></div>
+</div>
