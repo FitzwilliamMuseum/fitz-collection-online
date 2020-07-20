@@ -23,11 +23,11 @@
         <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/galleries') }}">Galleries</a>
         <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/press-room') }}">Press room</a>
         <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/directors') }}">Our directors</a>
+        <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/exhibitions') }}">Exhibitions</a>
+
       </div>
     </li>
-    <li class="nav-item active">
-      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/exhibitions') }}">Exhibitions</a>
-    </li>
+
     <li class="nav-item active">
       <a class="nav-link" href="https://tickets.museums.cam.ac.uk">Tickets</a>
     </li>
