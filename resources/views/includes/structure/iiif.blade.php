@@ -25,7 +25,7 @@ new IIPMooViewer( "viewer", {
 @endsection
 <h3>Deep zooming IIIF image</h3>
 <div class="col-md-12 mb-3">
-<div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+<div>
   <div id="viewer"></div>
 </div>
 </div>
