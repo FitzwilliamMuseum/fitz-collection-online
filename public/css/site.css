@@ -709,3 +709,6 @@ img.img-fluid.twitter {
 ul.pagination li, .share li {
     list-style: none;
 }
+#viewer {
+  min-height: 500px;
+}
