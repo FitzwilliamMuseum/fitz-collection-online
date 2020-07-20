@@ -7,29 +7,43 @@
 @section('content')
 
 <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
-  {{ \Form::open(['url' => url('/search/results'),'method' => 'GET', 'class' => 'text-center']) }}
-  <div class="row center-block">
-    <div class="col-lg-6 center-block searchform">
-      <div class="input-group mr-3">
-        <input type="text" id="query" name="query" value="" class="form-control input-lg mr-4"
-        placeholder="Search our collection" required value="{{ old('query') }}&contentType:pharos">
-        <span class="input-group-btn">
-          <button class="btn btn-dark" type="submit">Search...</button>
-        </span>
-      </div>
-    </div>
-  </div>
-  @if(count($errors))
+  {{ \Form::open(['url' => url('/search/results'),'method' => 'GET']) }}
   <div class="form-group">
-    <div class="alert alert-danger">
-      <ul>
-        @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
+    <input type="text" id="query" name="query" value="" class="form-control input-lg mr-4"
+    placeholder="Search our collection" required value="{{ old('query') }}">
   </div>
-  @endif
-  {!! Form::close() !!}
+  <div class="form-group form-check ">
+    <input type="checkbox" class="form-check-input" id="images" name="images">
+    <label class="form-check-label" for="images">Images</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="sort" id="sort" value="desc">
+    <label class="form-check-label" for="sort">
+      Descending
+    </label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="sort" id="sort" value="asc" checked>
+    <label class="form-check-label" for="exampleRadios1">
+      Ascending 
+    </label>
+  </div>
+
+  <div class="form-group">
+  <button type="submit" class="btn btn-dark">Submit</button>
+</div>
+</div>
+@if(count($errors))
+<div class="form-group">
+  <div class="alert alert-danger">
+    <ul>
+      @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+</div>
+@endif
+{!! Form::close() !!}
 </div>
 @endsection
