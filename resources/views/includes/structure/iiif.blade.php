@@ -24,9 +24,13 @@ new IIPMooViewer( "viewer", {
 </script>
 @endif
 @endsection
-<h3>Deep zooming IIIF image</h3>
+@if(array_key_exists('zoom', $record["_source"]["multimedia"][0]["processed"]))
+
 <div class="col-md-12 mb-3">
+  <h2>Deep zooming IIIF image</h2>
+
 <div>
   <div id="viewer"></div>
 </div>
 </div>
+@endif
