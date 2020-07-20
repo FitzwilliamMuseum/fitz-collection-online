@@ -6,10 +6,10 @@
 @endif
 <ul>
   @if(array_key_exists('transcription', $inscription))
-  <li>Text present: {{ $inscription['transcription'][0]['value'] }}</li>
+  <li>Text: {{ $inscription['transcription'][0]['value'] }}</li>
   @endif
   @if(array_key_exists('location',$inscription ))
-  <li>Located on object: {{ ucfirst($inscription['location']) }}</li>
+  <li>Location: {{ ucfirst($inscription['location']) }}</li>
   @endif
   @if(array_key_exists('method',$inscription))
   <li>Method of creation: {{ ucfirst($inscription['method']) }}</li>
