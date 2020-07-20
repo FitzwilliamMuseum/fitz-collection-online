@@ -715,3 +715,7 @@ ul.pagination li, .share li {
 .iipmooviewer img.logo {
   display: none!important;
 }
+.navcontainer {
+  top: 60px!important;
+  right:60px!important;
+}
