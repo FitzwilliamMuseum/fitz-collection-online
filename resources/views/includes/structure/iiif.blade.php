@@ -12,17 +12,12 @@
 // the "c:" prefix
 var image = '/{{ $record["_source"]["multimedia"][0]["processed"]["zoom"]["location"] }}';
 
-// Copyright or information message
-var credit = 'The Fitzwilliam Museum, University of Cambridge';
-
 // Create our iipmooviewer object
 new IIPMooViewer( "viewer", {
   image: image,
-  credit: credit,
   server: '/iipsrv/iipsrv.fcgi',
-  showNavWindow: false,
+  showNavWindow: true,
   prefix: "/images/",
-  enableFullscreen: true
 });
 
 </script>
@@ -30,7 +25,7 @@ new IIPMooViewer( "viewer", {
 @endsection
 <h3>Deep zooming IIIF image</h3>
 <div class="col-md-12 mb-3">
-<div class="p-2">
-  <div id="viewer" class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded"></div>
+<div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+  <div id="viewer"></div>
 </div>
 </div>
