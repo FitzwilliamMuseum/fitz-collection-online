@@ -712,3 +712,6 @@ ul.pagination li, .share li {
 #viewer {
   min-height: 500px;
 }
+.iipmooviewer img.logo {
+  display: none!important;
+}
