@@ -169,19 +169,76 @@ class indexController extends Controller
           "bool" => [
             "must" => [
               [
-                "match" => [
-                  "_generic_all_std" => $queryString
-                ]
+                "multi_match" => [
+                  "fields" => "_generic_all_std",
+                  "query" => $queryString,
+                  "operator" =>  "and"
+                ],
+
               ],
-              [
-                "term"=> [ "type.base" => 'object']
-              ]
-            ]
+
+            ],
+            "filter" =>
+            [
+              "term"=> [ "type.base" => 'object'],
+              // "term" => ["lifecycle.creation.periods.admin.id" => "term-111888"],
+            ],
+
           ]
-        ]
+        ],
       ],
     ];
+
+    $facets = array(
+      'institutions' => [
+        'terms' =>
+          ["field" => 'institutions.admin.id',"size" => 10]
+        ],
+      'materials' => [
+        'terms' =>
+          ["field" => 'materials.reference.admin.id',"size" => 10]
+         ],
+      'periods' => [
+        'terms' =>
+          ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
+         ],
+      'object-name' => [
+           'terms' =>
+             ["field" => 'name.reference.admin.id',"size" => 10]
+            ],
+      'maker' => [
+           'terms' =>
+             ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
+            ],
+      'agents' => [
+           'terms' =>
+             ["field" => 'content.agents.admin.id',"size" => 10]
+            ],
+    );
+    $params['body']['aggs'] = $facets;
+    // Add images filter
+    if(!is_null($request->get('images'))){
+      $filter  =  array("exists" => [
+        "field" => "multimedia"]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+    // Add sort filter
+    if(!is_null($request->get('sort'))){
+      $order = $request->get('sort');
+      $sort = array(
+
+            "admin.modified" =>  [
+              "order" =>  $order
+            ]
+      );
+      $params['body']['sort'] = $sort;
+    }
+    // dd($params);
+    // Get response
     $response = $client->search($params);
+    // dd($response);
+
     $number = $response['hits']['total']['value'];
     $records = $response['hits']['hits'];
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
@@ -189,6 +246,8 @@ class indexController extends Controller
     $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
     return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
   }
+
+
 
   public function image($id){
     $hosts = [
