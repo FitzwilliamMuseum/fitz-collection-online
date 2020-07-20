@@ -20,11 +20,17 @@ new IIPMooViewer( "viewer", {
   image: image,
   credit: credit,
   server: '/iipsrv/iipsrv.fcgi',
+  showNavWindow: false,
+  prefix: "/images/",
+  enableFullscreen: true
 });
 
 </script>
 @endif
 @endsection
+<h3>Deep zooming IIIF image</h3>
 <div class="col-md-12 mb-3">
-  <div id="viewer" style="width:100%;height:100%" class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded"></div>
+<div class="p-2">
+  <div id="viewer" class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded"></div>
+</div>
 </div>
