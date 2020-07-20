@@ -8,30 +8,39 @@
 
 <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
   {{ \Form::open(['url' => url('/search/results'),'method' => 'GET']) }}
-  <div class="form-group">
+<div class="row">
+  <div class="form-group col-md-12">
     <input type="text" id="query" name="query" value="" class="form-control input-lg mr-4"
     placeholder="Search our collection" required value="{{ old('query') }}">
   </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h4>Visual results</h4>
   <div class="form-group form-check ">
     <input type="checkbox" class="form-check-input" id="images" name="images">
-    <label class="form-check-label" for="images">Images</label>
+    <label class="form-check-label" for="images">Only with images?</label>
   </div>
-
+</div>
+<div class="col">
   <h4>Operand for your search</h4>
   <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="operator" id="operator" value="AND" checked>
     <label class="form-check-label" for="operator">
-      AND query
-    </label>
-  </div>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="operator" id="operator" value="OR" >
-    <label class="form-check-label" for="operator">
-      OR query
+      AND
     </label>
   </div>
 
-  <h4>Sort by update</h4>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="operator" id="operator" value="OR" >
+    <label class="form-check-label" for="operator">
+      OR
+    </label>
+  </div>
+</div>
+<div class="col">
+  <h4>Sort by last update</h4>
   <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="sort" id="sort" value="desc" checked>
     <label class="form-check-label" for="sort">
@@ -44,8 +53,11 @@
       Ascending
     </label>
   </div>
+</div>
 
-  <div class="form-group">
+</div>
+<div class="row">
+  <div class="form-group col-md-12">
   <button type="submit" class="btn btn-dark">Submit</button>
 </div>
 </div>
