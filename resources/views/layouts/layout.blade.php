@@ -46,25 +46,9 @@
   </div>
   @endif
 
-    @yield('releases')
-    @yield('resources-plans')
-    @yield('diy')
-    @yield('publications')
-    @yield('research-projects')
-    @yield('research-funders')
-    @yield('themes')
-    @yield('collections')
-    @yield('departments')
-    @yield('galleries')
-    @yield('associated_pages')
-    @yield('360')
-    @yield('youtube')
-    @yield('youtube-playlist')
-    @yield('sketchfab-collection')
     @yield('sketchfab')
-    @yield('audio-guide')
-    @yield('pharos-pages')
     @yield('mlt')
+
 
   @include('includes.structure.share')
 

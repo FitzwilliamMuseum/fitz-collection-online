@@ -26,7 +26,7 @@
       <div class="container">
 
         @include('includes/elements/descriptive')
-      
+
         @include('includes/elements/legal')
 
         @include('includes/elements/lifecycle')
@@ -64,8 +64,11 @@
     @endforeach
   </div>
   @if(!empty($mlt))
-  <h3>More objects and works of art you might like</h3>
-  <div class="row">
+  @section('mlt')
+
+  <div class="container">
+    <h3>More objects and works of art you might like</h3>
+    <div class="row">
     @foreach($mlt as $record)
     <div class="col-md-4 mb-3">
       <div class="card card-body h-100">
@@ -94,6 +97,9 @@
       </div>
     </div>
     @endforeach
- @endif
+    @endif
   </div>
+     </div>
+    @endsection
+
 @endsection
