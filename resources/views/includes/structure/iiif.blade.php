@@ -18,7 +18,8 @@ new IIPMooViewer( "viewer", {
   server: '/iipsrv/iipsrv.fcgi',
   showNavWindow: true,
   prefix: "/images/",
-  preload: true
+  preload: true,
+  enableFullscreen: false
 });
 
 </script>
@@ -28,9 +29,6 @@ new IIPMooViewer( "viewer", {
 
 <div class="col-md-12 mb-3">
   <h2>Deep zooming IIIF image</h2>
-
-<div>
   <div id="viewer"></div>
-</div>
 </div>
 @endif
