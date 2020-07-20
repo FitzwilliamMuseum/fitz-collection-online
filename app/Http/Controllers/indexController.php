@@ -250,7 +250,8 @@ class indexController extends Controller
     $records = $response['hits']['hits'];
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
     $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
-    $paginate->setPath($request->getBaseUrl() . '?query='. $queryString);
+    // dd(\Request::getRequestUri());
+    $paginate->setPath($request->getBaseUrl() . \Request::getRequestUri());
     return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
   }
 
