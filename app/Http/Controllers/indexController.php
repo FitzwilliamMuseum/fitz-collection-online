@@ -114,6 +114,7 @@ class indexController extends Controller
     ];
     $response2 = $client->search($paramsMLT);
     $mlt = $response2['hits']['hits'];
+    // dd($data);
     return view('record.index', compact('data', 'mlt'));
   }
 

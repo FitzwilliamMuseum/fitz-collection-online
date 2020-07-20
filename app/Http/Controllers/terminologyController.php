@@ -93,6 +93,7 @@ class terminologyController extends Controller
       ],
 
     ];
+    // dd($paramsTerm);
     $response2 = $client->search($paramsTerm);
     $use = $response2['hits'];
     // dd($use);
