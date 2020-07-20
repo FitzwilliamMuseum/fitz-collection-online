@@ -1,6 +1,4 @@
 @extends('layouts/layout')
-
-
 @section('content')
 <div class="row">
   @foreach($data as $record)
@@ -16,90 +14,87 @@
   @include('includes/elements/media')
   <!-- multimedia section end -->
 
-  @if(array_key_exists('multimedia', $record['_source']))
   <div class="col-md-12 mb-3">
-  @else
-  <div class="col-md-12 mb-3">
-  @endif
-    <h2>Object information</h2>
-    <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
-      <div class="container">
+      <h2>Object information</h2>
+      <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+        <div class="container">
 
-        @include('includes/elements/descriptive')
+          @include('includes/elements/descriptive')
 
-        @include('includes/elements/legal')
+          @include('includes/elements/legal')
 
-        @include('includes/elements/lifecycle')
+          @include('includes/elements/lifecycle')
 
-        @include('includes/elements/measurements')
+          @include('includes/elements/measurements')
 
-        @include('includes/elements/agents-subjects')
+          @include('includes/elements/agents-subjects')
 
-        @include('includes/elements/medium')
+          @include('includes/elements/medium')
 
-        @include('includes/elements/materials')
+          @include('includes/elements/materials')
 
-        @include('includes/elements/techniques')
+          @include('includes/elements/techniques')
 
-        @include('includes/elements/inscriptions')
+          @include('includes/elements/inscriptions')
 
-        @include('includes/elements/department')
+          @include('includes/elements/department')
 
-        @include('includes/elements/publications')
+          @include('includes/elements/publications')
 
-        @include('includes/elements/identification')
+          <!-- @include('includes/elements/identification') -->
 
-        @include('includes/elements/institutions')
+          @include('includes/elements/institutions')
 
-        @include('includes/elements/formats')
+          @include('includes/elements/formats')
 
         </div>
       </div>
-
     </div>
 
-    @include('includes/elements/sketchfab')
 
 
-    @endforeach
   </div>
-  @if(!empty($mlt))
-  @section('mlt')
+@endsection
 
-  <div class="container">
-    <h3>More objects and works of art you might like</h3>
-    <div class="row">
+@include('includes/elements/sketchfab')
+
+@if(!empty($mlt))
+@section('mlt')
+
+<div class="container">
+  <h3>More objects and works of art you might like</h3>
+  <div class="row">
     @foreach($mlt as $record)
+
     <div class="col-md-4 mb-3">
       <div class="card card-body h-100">
         <div class="container h-100">
           @if(array_key_exists('multimedia', $record['_source']))
           <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
-           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-          /></a>
-          @else
-          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
-          alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
-          @endif
-          <div class="contents-label mb-3">
-            <h3>
-            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
-            </h3>
-            <p>
-              @if(array_key_exists('department', $record['_source']))
-                Holding department: {{ $record['_source']['department']['value'] }}<br/>
+            loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
+            /></a>
+            @else
+            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
+              alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
               @endif
-              Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
-            </p>
+              <div class="contents-label mb-3">
+                <h3>
+                  <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                </h3>
+                <p>
+                  @if(array_key_exists('department', $record['_source']))
+                  Holding department: {{ $record['_source']['department']['value'] }}<br/>
+                  @endif
+                  Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
+                </p>
+              </div>
+            </div>
+            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
           </div>
         </div>
-        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
+        @endforeach
       </div>
     </div>
-    @endforeach
-    @endif
-  </div>
-     </div>
     @endsection
-
-@endsection
+@endif
+@endforeach
