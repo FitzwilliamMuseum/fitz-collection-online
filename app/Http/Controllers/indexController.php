@@ -160,6 +160,11 @@ class indexController extends Controller
     $perPage = 24;
     $from = ($request->get('page', 1) - 1) * $perPage;
     $client = ClientBuilder::create()->setHosts($hosts)->build();
+    if(!is_null($request->get('operator'))){
+      $operator  =  $request->get('operator');
+    } else {
+      $operator = 'AND';
+    }
     $params = [
       'index' => 'ciim',
       'size' => $perPage,
@@ -172,7 +177,7 @@ class indexController extends Controller
                 "multi_match" => [
                   "fields" => "_generic_all_std",
                   "query" => $queryString,
-                  "operator" =>  "and"
+                  "operator" =>  $operator
                 ],
 
               ],
@@ -223,6 +228,8 @@ class indexController extends Controller
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
+
+
     // Add sort filter
     if(!is_null($request->get('sort'))){
       $order = $request->get('sort');
