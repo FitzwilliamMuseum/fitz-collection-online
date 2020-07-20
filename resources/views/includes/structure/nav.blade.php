@@ -28,9 +28,9 @@
     <li class="nav-item active">
       <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/exhibitions') }}">Exhibitions</a>
     </li>
-    <!-- <li class="nav-item active">
-      <a class="nav-link" href="https://my.fitzmuseum.cam.ac.uk">Events</a>
-    </li> -->
+    <li class="nav-item active">
+      <a class="nav-link" href="https://tickets.museums.cam.ac.uk">Tickets</a>
+    </li>
     <li class="nav-item active">
       <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/news') }}">News</a>
     </li>
