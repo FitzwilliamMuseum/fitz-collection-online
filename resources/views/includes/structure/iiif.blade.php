@@ -18,6 +18,7 @@ new IIPMooViewer( "viewer", {
   server: '/iipsrv/iipsrv.fcgi',
   showNavWindow: true,
   prefix: "/images/",
+  preload: true
 });
 
 </script>
