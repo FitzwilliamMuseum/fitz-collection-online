@@ -31,10 +31,11 @@
         @php
         $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
         if($dateTime < 0){
-          $suffix = 'BCE';
-          $string = abs($dateTime) . ' ' . $suffix;
+          $suffix = ' BCE';
+          $string = abs($dateTime) . '' . $suffix;
         } else {
-          $string = $dateTime;
+          $suffix = 'AD ';
+          $string = $suffix . '' . $dateTime;
         }
         @endphp
         {{ $string }}
