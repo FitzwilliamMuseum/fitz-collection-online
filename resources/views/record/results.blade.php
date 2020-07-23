@@ -12,6 +12,7 @@
     Your search for <strong>{{ $queryString }}</strong> returned <strong>{{ $number }}</strong> results.
   </p>
 </div>
+<div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
 {{ \Form::open(['url' => url('/search/results'),'method' => 'GET']) }}
 <div class="row">
 <div class="form-group col-md-12">
@@ -78,7 +79,7 @@
 </div>
 @endif
 {!! Form::close() !!}
-
+</div>
 
   <div class="row">
     @foreach($records as $record)
