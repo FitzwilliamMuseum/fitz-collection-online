@@ -119,6 +119,6 @@
 
 </div>
   <nav aria-label="Page navigation">
-    {{ $paginate->links() }}
+    {{ $paginate->appends(request()->except('page'))->links() }}
   </nav>
 @endsection

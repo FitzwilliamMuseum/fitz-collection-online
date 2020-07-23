@@ -262,7 +262,7 @@ class indexController extends Controller
     $facets = $response['aggregations'];
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
     $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
-    $paginate->setPath($request->getBaseUrl() . \Request::getRequestUri());
+    $paginate->setPath($request->getBaseUrl());
     return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
   }
 
