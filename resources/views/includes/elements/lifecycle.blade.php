@@ -3,10 +3,14 @@
   @if(array_key_exists('acquisition', $record['_source']['lifecycle']))
   <h4>Acquisition and important dates</h4>
   <ul>
-    <li>Method of acquisition: {{ ucfirst($record['_source']['lifecycle']['acquisition'][0]['method']['value']) }}</li>
-    @if(array_key_exists('date', $record['_source']['lifecycle']['acquisition'][0]))
-    <li>Dates: {{ $record['_source']['lifecycle']['acquisition'][0]['date'][0]['value'] }}</li>
-    @endif
+    @foreach($record['_source']['lifecycle']['acquisition'] as $acquistion)
+      @if(array_key_exists('method', $acquistion))
+        <li>Method of acquisition: {{ ucfirst($acquistion['method']['value']) }}</li>
+      @endif
+      @if(array_key_exists('date', $acquistion))
+        <li>Dates: {{ $acquistion['date'][0]['value'] }}</li>
+      @endif
+    @endforeach
   </ul>
   @endif
 
