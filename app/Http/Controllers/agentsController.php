@@ -23,11 +23,7 @@ class agentsController extends Controller
     return view('agents.index', compact('data', 'paginator'));
   }
 
-  public function record( $id) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+  public function record($id) {
     $params = [
       'index' => 'ciim',
       'body' => [
@@ -47,7 +43,7 @@ class agentsController extends Controller
         ]
       ],
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
 
     $paramsTerm = [
@@ -72,9 +68,8 @@ class agentsController extends Controller
            ]
         ]
       ],
-
     ];
-    $response2 = $client->search($paramsTerm);
+    $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $use = $response2['hits'];
     return view('agents.record', compact('data', 'use'));
   }

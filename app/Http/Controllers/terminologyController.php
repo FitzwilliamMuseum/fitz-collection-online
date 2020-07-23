@@ -24,10 +24,7 @@ class terminologyController extends Controller
   }
 
   public function record( $id) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+
     $params = [
       'index' => 'ciim',
       'body' => [
@@ -47,9 +44,10 @@ class terminologyController extends Controller
         ]
       ],
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    $count  = $client->count($params);
+    //$count  = $this->getElastic()->setParams($params)->getCount();
+
     $json = '{
       "query": {
         "match": {
@@ -61,7 +59,7 @@ class terminologyController extends Controller
       'index' => 'ciim',
       'body' => $json
     ];
-    $count  = $client->count($cParams);
+    $count  = $this->getElastic()->setParams($cParams)->getCount();
     $paramsTerm = [
       'index' => 'ciim',
       'size' => 12,
@@ -94,7 +92,7 @@ class terminologyController extends Controller
 
     ];
     // dd($paramsTerm);
-    $response2 = $client->search($paramsTerm);
+    $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $use = $response2['hits'];
     // dd($use);
     return view('terminology.term', compact('data', 'use', 'count'));

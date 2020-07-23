@@ -24,10 +24,7 @@ class publicationsController extends Controller
   }
 
   public function record( $id) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+
     $params = [
       'index' => 'ciim',
       'body' => [
@@ -47,7 +44,7 @@ class publicationsController extends Controller
         ]
       ],
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
 
     $paramsTerm = [
@@ -71,7 +68,7 @@ class publicationsController extends Controller
       ],
 
     ];
-    $response2 = $client->search($paramsTerm);
+    $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $use = $response2['hits'];
 
     return view('publications.record', compact('data', 'use'));

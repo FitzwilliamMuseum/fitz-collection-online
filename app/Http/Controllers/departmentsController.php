@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 
+use App\FitzElastic\Elastic;
 
 class departmentsController extends Controller
 {
@@ -24,11 +25,6 @@ class departmentsController extends Controller
   }
 
   public function record($id) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
-
 
     $paramsTerm = [
       'index' => 'ciim',
@@ -48,9 +44,9 @@ class departmentsController extends Controller
           ]
         ]
       ],
-
     ];
-    $use = $client->count($paramsTerm);
+    $use = $this->getElastic()->setParams($paramsTerm)->getCount();
+
     $name = urldecode($id);
 
     $params = [
@@ -73,7 +69,6 @@ class departmentsController extends Controller
               ],
             ]
           ],
-
         ],
         'sort' => [
           [
@@ -83,9 +78,8 @@ class departmentsController extends Controller
           ]
         ]
       ],
-
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
     return view('departments.record', compact('data', 'use', 'name'));
   }
