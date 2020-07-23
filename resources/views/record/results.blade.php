@@ -12,35 +12,106 @@
     Your search for <strong>{{ $queryString }}</strong> returned <strong>{{ $number }}</strong> results.
   </p>
 </div>
+{{ \Form::open(['url' => url('/search/results'),'method' => 'GET']) }}
+<div class="row">
+<div class="form-group col-md-12">
+  <input type="text" id="query" name="query"  class="form-control input-lg mr-4"
+  placeholder="Search our collection" required value="{{ old('query') }}">
+</div>
+</div>
 
+<div class="row">
+<div class="col">
+  <h4>Visual results</h4>
+<div class="form-group form-check ">
+  <input type="checkbox" class="form-check-input" id="images" name="images">
+  <label class="form-check-label" for="images">Only with images?</label>
+</div>
+</div>
+<div class="col">
+<h4>Operand for your search</h4>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="operator" id="operator" value="AND" checked>
+  <label class="form-check-label" for="operator">
+    AND
+  </label>
+</div>
+
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="operator" id="operator" value="OR" >
+  <label class="form-check-label" for="operator">
+    OR
+  </label>
+</div>
+</div>
+<div class="col">
+<h4>Sort by last update</h4>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="sort" id="sort" value="desc" checked>
+  <label class="form-check-label" for="sort">
+    Descending
+  </label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="sort" id="sort" value="asc" >
+  <label class="form-check-label" for="sort">
+    Ascending
+  </label>
+</div>
+</div>
+
+</div>
+<div class="row">
+<div class="form-group col-md-12">
+<button type="submit" class="btn btn-dark">Submit</button>
+</div>
+</div>
+@if(count($errors))
+<div class="form-group">
+<div class="alert alert-danger">
+  <ul>
+    @foreach($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+</div>
+@endif
+{!! Form::close() !!}
 
 
   <div class="row">
     @foreach($records as $record)
+
+    @php
+    $pris = Arr::pluck($record['_source']['identifier'],'priref');
+    $pris = array_filter($pris);
+    $pris= Arr::flatten($pris);
+    @endphp
+
     <div class="col-md-4 mb-3">
       <div class="card card-body h-100">
         <div class="container h-100">
           @if(array_key_exists('multimedia', $record['_source']))
-          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
-           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-          /></a>
+            <a href="/id/object/{{ $pris[0] }}"><img class="img-fluid" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
+            /></a>
           @else
-          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
-          alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
+            <a href="/id/object/{{ $pris[0] }}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
+            alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
           @endif
           <div class="contents-label mb-3">
             <h3>
-            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+            <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
             </h3>
             <p>
               @if(array_key_exists('department', $record['_source']))
                 Holding department: {{ $record['_source']['department']['value'] }}<br/>
               @endif
-              Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
             </p>
           </div>
         </div>
-        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
+        <a href="/id/object/{{ $pris[0] }}" class="btn btn-dark">Read more</a>
       </div>
     </div>
     @endforeach

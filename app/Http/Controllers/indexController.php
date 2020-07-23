@@ -20,9 +20,7 @@ class indexController extends Controller
   */
   public function index(Request $request)
   {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
+
     $perPage = 24;
     $total = 8000;
     $page = $request->page;
@@ -31,7 +29,6 @@ class indexController extends Controller
     } else {
       $offset = 0;
     }
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
     $params = [
       'index' => 'ciim',
       'size' => $perPage,
@@ -39,7 +36,7 @@ class indexController extends Controller
 
     ];
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
     $paginator = new LengthAwarePaginator($data, $total, $perPage, $currentPage);
     $paginator->setPath('/spelunker');
@@ -47,10 +44,7 @@ class indexController extends Controller
   }
 
   public function record($priref) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+
     $params = [
       'index' => 'ciim',
       'size' => 1,
@@ -62,7 +56,7 @@ class indexController extends Controller
         ]
       ]
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
 
     $query = $data[0]['_source']['summary_title'];
@@ -112,17 +106,13 @@ class indexController extends Controller
       'size' => 3,
       'body'  => $json
     ];
-    $response2 = $client->search($paramsMLT);
+    $response2 = $this->getElastic()->setParams($paramsMLT)->getSearch();
     $mlt = $response2['hits']['hits'];
-    // dd($data);
     return view('record.index', compact('data', 'mlt'));
   }
 
   public function recordSwitch($priref,$format) {
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+
     $params = [
       'index' => 'ciim',
       'size' => 1,
@@ -134,7 +124,7 @@ class indexController extends Controller
         ]
       ]
     ];
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
     return response(view('record.json',array('data'=>$data)),200, ['Content-Type' => 'application/json']);
   }
@@ -151,7 +141,7 @@ class indexController extends Controller
   public function results(Request $request)
   {
     $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
+      env('ELASTIC_API'),        // SSL to localhost
     ];
     $this->validate($request, [
       'query' => 'required|max:200|min:3',
@@ -160,7 +150,6 @@ class indexController extends Controller
     $queryString = \Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
     $perPage = 24;
     $from = ($request->get('page', 1) - 1) * $perPage;
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
     if(!is_null($request->get('operator'))){
       $operator  =  $request->get('operator');
     } else {
@@ -178,7 +167,7 @@ class indexController extends Controller
                 "multi_match" => [
                   "fields" => "_generic_all_std",
                   "query" => $queryString,
-                  "operator" =>  $operator
+                  "operator" =>  $operator,
                 ],
 
               ],
@@ -187,7 +176,6 @@ class indexController extends Controller
             "filter" =>
             [
               "term"=> [ "type.base" => 'object'],
-              // "term" => ["lifecycle.creation.periods.admin.id" => "term-111888"],
             ],
 
           ]
@@ -198,11 +186,14 @@ class indexController extends Controller
     $facets = array(
       'institutions' => [
         'terms' =>
-          ["field" => 'institutions.admin.id',"size" => 10]
+          [
+            "field" => 'institutions.admin.id',
+            "size" => 10,
+          ]
         ],
       'materials' => [
         'terms' =>
-          ["field" => 'materials.reference.admin.id',"size" => 10]
+          ["field" => 'materials.reference.summary_title.exact',"size" => 10]
          ],
       'periods' => [
         'terms' =>
@@ -214,7 +205,7 @@ class indexController extends Controller
             ],
       'maker' => [
            'terms' =>
-             ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
+             ["field" => 'lifecycle.creation.maker.admin.id',"size" => 10]
             ],
       'agents' => [
            'terms' =>
@@ -222,6 +213,7 @@ class indexController extends Controller
             ],
     );
     $params['body']['aggs'] = $facets;
+
     // Add images filter
     if(!is_null($request->get('images'))){
       $filter  =  array("exists" => [
@@ -229,7 +221,27 @@ class indexController extends Controller
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
-
+    // Maker filter
+    if(!is_null($request->get('maker'))){
+      $filter  =  array("term" => [
+        "lifecycle.creation.maker.admin.id" => $request->get('maker')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+    // Material filter
+    if(!is_null($request->get('material'))){
+      $filter  =  array("term" => [
+        "materials.reference.admin.id" => $request->get('material')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+    // Period filter
+    if(!is_null($request->get('period'))){
+      $filter  =  array("term" => [
+        "lifecycle.creation.periods.admin.id" => $request->get('period')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
 
     // Add sort filter
     if(!is_null($request->get('sort'))){
@@ -242,27 +254,22 @@ class indexController extends Controller
       );
       $params['body']['sort'] = $sort;
     }
-    // dd($params);
     // Get response
-    $response = $client->search($params);
-    // dd($response);
+    $response = $this->getElastic()->setParams($params)->getSearch();
 
     $number = $response['hits']['total']['value'];
     $records = $response['hits']['hits'];
+    $facets = $response['aggregations'];
     $currentPage = LengthAwarePaginator::resolveCurrentPage();
     $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
-    // dd(\Request::getRequestUri());
     $paginate->setPath($request->getBaseUrl() . \Request::getRequestUri());
-    return view('record.results', compact('records', 'number', 'paginate', 'queryString'));
+    return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
   }
 
 
 
   public function image($id){
-    $hosts = [
-      'http://api.fitz.ms:9200',        // SSL to localhost
-    ];
-    $client = ClientBuilder::create()->setHosts($hosts)->build();
+
     $params = [
       'index' => 'ciim',
       'body'  => [
@@ -274,9 +281,8 @@ class indexController extends Controller
       ]
     ];
 
-    $response = $client->search($params);
+    $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'][0]['_source']['multimedia'];
-
     function filter_array($array, $term){
       $matches = array();
       foreach($array as $a){
