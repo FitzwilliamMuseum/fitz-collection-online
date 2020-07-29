@@ -24,7 +24,6 @@ class Elastic {
   }
 
   public function getElasticClient(){
-    // dd($this->getHosts());
     $client = ClientBuilder::create()->setHosts($this->getHosts())->build();
     return $client;
   }
@@ -52,13 +51,12 @@ class Elastic {
   {
     $key = $this->getKey();
     $expiresAt = now()->addMinutes(60);
-    // if (Cache::has($key)) {
-    //   $data = Cache::get($key);
-    // } else {
+    if (Cache::has($key)) {
+      $data = Cache::get($key);
+    } else {
       $data = $this->getElasticClient()->search($this->getParams());
-    //   Cache::put($key, $data, $expiresAt);
-    // }
-    dd($data);
+      Cache::put($key, $data, $expiresAt);
+    }
     return $data;
   }
 
