@@ -715,3 +715,6 @@ ul.pagination li, .share li {
   top: 60px!important;
   right:60px!important;
 }
+.col-md-6.mb-3.mt-3.mx-auto.d-block.book {
+    margin-top: 100px!important;
+}
