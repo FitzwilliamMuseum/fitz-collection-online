@@ -718,7 +718,11 @@ ul.pagination li, .share li {
 .col-md-6.mb-3.mt-3.mx-auto.d-block.book {
     margin-top: 100px!important;
 }
-
+h3 > a {
+  position: relative;
+  color: #000;
+  text-decoration: none !important;
+}
 h3 > a:hover {
   color: #000;
 }
