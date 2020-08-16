@@ -44,7 +44,6 @@
               </p>
             </div>
           </div>
-          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}" class="btn btn-dark">Read more</a>
         </div>
       </div>
       @endforeach
