@@ -18,7 +18,7 @@
       <div class="row">
       @foreach($use['hits'] as $record)
       <div class="col-md-4 mb-3">
-        <div class="card  h-100">
+        <div class="card">
           <div class="embed-responsive embed-responsive-1by1">
           @if(array_key_exists('multimedia', $record['_source']))
           <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid embed-responsive-item" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
