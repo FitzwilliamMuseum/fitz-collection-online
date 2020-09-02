@@ -58,7 +58,7 @@ Route::get('/id/departments/{id}', 'departmentsController@record');
 /*
 * Cache clear route
 */
-Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    return "Cache is cleared";
-})->name('cache');
+Route::get('/clear-cache', [
+    'as' => 'cache-clear',
+    'uses' => 'Controller@clearCache'
+])->middleware('auth.very_basic', 'doNotCacheResponse');

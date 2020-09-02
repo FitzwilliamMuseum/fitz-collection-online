@@ -19,10 +19,11 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
         "mews/purifier": "^3.2",
+        "olssonm/l5-very-basic-auth": "^6.3",
         "predis/predis": "^1.1",
         "spatie/laravel-responsecache": "^6.6",
-        "toin0u/geocoder-laravel": "^4.3",
-        "symfony/http-kernel": "5.1.5"
+        "symfony/http-kernel": "5.1.5",
+        "toin0u/geocoder-laravel": "^4.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
