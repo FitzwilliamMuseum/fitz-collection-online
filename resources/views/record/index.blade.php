@@ -65,12 +65,11 @@
   <h3>More objects and works of art you might like</h3>
   <div class="row">
     @foreach($mlt as $record)
-
     <div class="col-md-4 mb-3">
       <div class="card  h-100">
         <div class="embed-responsive embed-responsive-1by1">
         @if(array_key_exists('multimedia', $record['_source']))
-        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid embed-responsive-item" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+        <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}"><img class="img-fluid embed-responsive-item" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
           loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           /></a>
           @else
@@ -85,7 +84,7 @@
                 </h3>
                 <p>
                   @if(array_key_exists('department', $record['_source']))
-                  Holding department: {{ $record['_source']['department']['value'] }}<br/>
+                    Holding department: {{ $record['_source']['department']['value'] }}<br/>
                   @endif
                   Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
                 </p>
