@@ -744,3 +744,8 @@ h3 > a:hover::before {
 p.small-font {
   font-size: 1rem!important;
 }
+img.results_image__thumbnail {
+  width: 348px;
+  height: 348px;
+  object-fit: none;
+}
