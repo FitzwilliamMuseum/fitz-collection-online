@@ -16,44 +16,44 @@ use Illuminate\Support\Facades\Route;
 /*
 * Basic search routes
 */
-Route::get('/', 'indexController@search');
-Route::get('/search', 'indexController@search');
-Route::match(array('GET','POST'),'/search/results/', 'indexController@results');
+Route::get('/', 'indexController@search')->name('home');
+Route::get('/search', 'indexController@search')->name('search');
+Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
 /*
 * Spelunker route for all records
 */
-Route::get('/spelunker', 'indexController@index');
+Route::get('/spelunker', 'indexController@index')->name('spelunker');
 
 /*
 * Object based routes
 */
-Route::get('/id/object/{priref}', 'indexController@record');
-Route::get('/id/object/{priref}/{format}', 'indexController@recordSwitch');
-Route::get('/id/image/{id}/', 'indexController@image');
+Route::get('/id/object/{priref}', 'indexController@record')->name('record');
+Route::get('/id/object/{priref}/{format}', 'indexController@recordSwitch')->name('record.context');
+Route::get('/id/image/{id}/', 'indexController@image')->name('image.single');
 
 /*
 * Publication routes
 */
-Route::get('/id/publication/{id}', 'publicationsController@record');
-Route::get('/id/publication/{id}/{format}', 'publicationsController@recordSwitch');
+Route::get('/id/publication/{id}', 'publicationsController@record')->name('publication.record');
+Route::get('/id/publication/{id}/{format}', 'publicationsController@recordSwitch')->name('publication.context');
 
 /*
 * Terminology routes
 */
-Route::get('/id/terminology/{id}', 'terminologyController@record');
-Route::get('/id/terminology/{id}/{format}', 'terminologyController@recordSwitch');
+Route::get('/id/terminology/{id}', 'terminologyController@record')->name('terminology');
+Route::get('/id/terminology/{id}/{format}', 'terminologyController@recordSwitch')->name('terminology.switch');
 
 /*
 *  Agent based routes
 */
-Route::get('/id/agent/{id}', 'agentsController@record');
-Route::get('/id/agent/{id}/{format}', 'agentsController@recordSwitch');
+Route::get('/id/agent/{id}', 'agentsController@record')->name('agent');
+Route::get('/id/agent/{id}/{format}', 'agentsController@recordSwitch')->name('agent.switch');
 
 /*
 * Department page
 */
-Route::get('/id/departments/{id}', 'departmentsController@record');
+Route::get('/id/departments/{id}', 'departmentsController@record')->name('department');
 
 /*
 * Cache clear route
