@@ -98,7 +98,7 @@
            loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
           /></a>
         @else
-          <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
+          <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
           alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
         @endif
         </div>
