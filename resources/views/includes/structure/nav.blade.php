@@ -16,12 +16,9 @@
         About us</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us') }}">About the Museum</a>
-          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/collections') }}">Collection areas</a>
-          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/departments') }}">Departments</a>
-          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/galleries') }}">Galleries</a>
+          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/collections') }}">Collection areas</a>
+          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/departments') }}">Departments</a>
           <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/press-room') }}">Press room</a>
-          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/directors') }}">Our directors</a>
-          <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/exhibitions') }}">Exhibitions</a>
           <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/objects-and-artworks/image-library/') }}">Image library</a>
         </div>
       </li>
