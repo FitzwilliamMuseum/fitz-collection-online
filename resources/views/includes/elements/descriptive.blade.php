@@ -2,7 +2,7 @@
 
 @if(array_key_exists('description', $record['_source']))
 @foreach($record['_source']['description'] as $description)
-  <p>{{ ucfirst($description['value']) }} </p>
+  <p>{{ ucfirst(nl2br($description['value'])) }} </p>
 @endforeach
 @endif
 
