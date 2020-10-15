@@ -54,7 +54,7 @@
 }
 
 footer, .chip-icon {
-  background-color: #a3c1ad ;
+  background-color: #ffffff;
 }
 
 .bg-black {
@@ -798,4 +798,13 @@ a.free_ticket  {
 .twitter__thumbnail img.portrait {
   width: 100%;
   height: auto;
+}
+.insta-wrap {
+  word-break: break-all;
+}
+.collections li {
+  list-style: square;
+}
+ul.text-center.conversation-footer {
+  padding-inline-start: 0px!important;
 }

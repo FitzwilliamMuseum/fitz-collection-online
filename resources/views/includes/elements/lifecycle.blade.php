@@ -27,12 +27,13 @@
     @endforeach
     @endif
 
-    @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
+    @if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0]))
       <li>Production date:
         @if(isset($record['_source']['lifecycle']['creation'][0]['date'][0]['precision']))
         {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['precision'] }}
         @endif
         @php
+        if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0])) {
         $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
         if($dateTime < 0){
           $suffix = ' BCE';
@@ -41,6 +42,7 @@
           $suffix = 'AD ';
           $string = $suffix . '' . $dateTime;
         }
+      }
         @endphp
         {{ $string }}
         @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]['date'][0]))
