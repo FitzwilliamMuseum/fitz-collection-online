@@ -20,8 +20,11 @@
   <h4>Dating</h4>
 
   @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
-    <p>Production note: {{ $record['_source']['lifecycle']['creation'][0]['note'][0]['value'] }}</p>
+    @foreach($record['_source']['lifecycle']['creation'][0]['note'] as $note)
+      <p>{{ $note['value'] }}</p>
+    @endforeach
   @endif
+
   <ul>
     @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
     @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)

@@ -2,12 +2,15 @@
 <div class="col-md-12 mb-3">
   <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
     <div>
-
       @if(array_key_exists('multimedia', $record['_source']))
       <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}"
       loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
       /></a>
       @endif
+      <span class="btn btn-wine m-1 p-2 share">
+          <a href="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}" target="_blank"
+           download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
+        </span>
     </div>
   </div>
   @endif
@@ -29,5 +32,5 @@
   @endif
 </div>
 
-@include('includes/structure/iiif')
+{{-- @include('includes/structure/iiif') --}}
 @endif

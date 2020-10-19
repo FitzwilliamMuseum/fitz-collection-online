@@ -3,7 +3,10 @@
   @foreach($record['_source']['identifier'] as $id)
   @if(array_key_exists('type', $id))
     @if($id['type'] === 'uri')
-    <li><a href="{{ $id['value']}}">Stable URI</a></li>
+    {{-- <li><a href="{{ $id['value']}}">Stable URI</a></li> --}}
+    @elseif($id['type'] === 'priref')
+    <li>Primary reference Number: <a href="{{ $id['value']}}">{{ $id['value']}}</a></li>
+
     @else
     <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
   @endif
@@ -17,5 +20,5 @@
   <li>Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('l j F Y') }}</li>
   <li>Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</li>
   <li>Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</li>
-  <li>Data source: {{ $record['_source']['admin']['source'] }}</li>
+  <li>Data source: {{ ucfirst($record['_source']['admin']['source']) }}</li>
 </ul>

@@ -4,17 +4,16 @@
   @foreach($record['_source']['medium'] as $materials)
 
     @foreach($materials as $material)
-
-      @if(array_key_exists('description', $material[0]))
-        <li>{{ ucfirst($material[0]['description'][0]['value'])}}</li>
-      @endif
-
-      @if(array_key_exists('reference', $material[0]))
-        <li><a href="/id/terminology/{{ $material[0]['reference']['admin']['id']}}">{{ ucfirst($material[0]['reference']['summary_title'])}}</a></li>
-      @endif
-
+      @foreach($material as $fabric)
+        @if(array_key_exists('reference', $fabric))
+          <li><a href="/id/terminology/{{ $fabric['reference']['admin']['id']}}">{{ ucfirst($fabric['reference']['summary_title'])}}</a>
+              @if(array_key_exists('description', $fabric))
+                : {{ ucfirst($fabric['description']['value'])}}
+              @endif
+              </li>
+        @endif
+      @endforeach
     @endforeach
-
   @endforeach
 </ul>
 @endif

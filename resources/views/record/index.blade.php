@@ -31,6 +31,8 @@
 
           @include('includes/elements/medium')
 
+          @include('includes/elements/component')
+
           @include('includes/elements/materials')
 
           @include('includes/elements/techniques')
