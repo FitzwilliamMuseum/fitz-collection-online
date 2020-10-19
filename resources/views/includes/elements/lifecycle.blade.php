@@ -15,6 +15,8 @@
   @endif
 
   @if(array_key_exists('creation', $record['_source']['lifecycle']))
+  @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
+
   <h4>Dating</h4>
 
   @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
@@ -49,8 +51,10 @@
         : {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['note'][0]['value']}}
         @endif
       </li>
-    @endif
+  @endif
   </ul>
+@endif
+
   @endif
 
   @if(array_key_exists('creation', $record['_source']['lifecycle']))
