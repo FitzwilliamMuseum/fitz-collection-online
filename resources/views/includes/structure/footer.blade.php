@@ -55,13 +55,13 @@
               of Cambridge Museums</a>
             </li>
             <li>
-              <a href="" aria-label="Website terms and conditions">Website Terms of Use</a>
+              <a href="https://beta.fitz.ms/about-us/terms-of-use" aria-label="Website terms and conditions">Website Terms of Use</a>
             </li>
             <li>
-              <a href="">Cookies, privacy & accessibility</a>
+              <a href="https://beta.fitz.ms/about-us/privacy-and-cookies">Cookies, privacy & accessibility</a>
             </li>
             <li>
-              <a aria-label="Contact the museum" href="">Contact us</a>
+              <a aria-label="Contact the museum" href="https://beta.fitz.ms/about-us/contact-us">Contact us</a>
             </li>
 
             <li>
@@ -83,7 +83,8 @@
           </ul>
           <h4 class="sr-only">License</h4>
           <ul class="share">
-            <li>Content: CC-BY</li>
+            <li>Metadata: CC-BY</li>
+            <li>Images: CC-BY-NC</li>
             <li>Code: GPL-V3</li>
           </ul>
         </div>
