@@ -1,18 +1,19 @@
 <h4>Identification numbers</h4>
 <ul>
   @foreach($record['_source']['identifier'] as $id)
-  @if(array_key_exists('type', $id))
-    @if($id['type'] === 'uri')
-    {{-- <li><a href="{{ $id['value']}}">Stable URI</a></li> --}}
-    @elseif($id['type'] === 'priref')
-    <li>Primary reference Number: <a href="{{ $id['value']}}">{{ $id['value']}}</a></li>
-
+    @if(array_key_exists('type', $id))
+      @if($id['type'] === 'uri')
+        <li class="sr-only"><a href="{{ $id['value']}}">Stable URI</a></li>
+      @elseif($id['type'] === 'priref')
+        <li>Primary reference Number: <a href="{{ $id['value']}}">{{ $id['value']}}</a></li>
+      @elseif($id['type'] === 'Online_3d_model')
+        <li class="sr-only">Sketchfab ID: {{ $id['value']}}</li>
+      @else
+        <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
+      @endif
     @else
-    <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
-  @endif
-  @else
-    <li>{{ $id['value']}}</li>
-  @endif
+      <li>{{ $id['value']}}</li>
+    @endif
   @endforeach
 </ul>
 <h4>Audit data</h4>
