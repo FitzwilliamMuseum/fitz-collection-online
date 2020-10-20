@@ -127,7 +127,7 @@ class indexController extends Controller
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
     if($format == 'json'){
-      return response(view('record.json',array('data' => $data)),200, ['Content-Type' => 'application/json']);
+      return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
     } elseif($format == 'xml'){
       $data = $this->utf8_converter($data[0]['_source']);
       $data = $this->replaceKeys('@link', 'link', $data);
