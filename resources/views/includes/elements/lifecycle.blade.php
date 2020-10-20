@@ -68,7 +68,9 @@
           @if(array_key_exists('@link', $maker))
             <li>
               @if(array_key_exists('@link', $maker))
-                {{ ucfirst($maker['@link']['qualifier']) }}
+                @if(array_key_exists('qualifier',$maker['@link']))
+                  {{ ucfirst($maker['@link']['qualifier']) }}
+                @endif
               @endif
 
               @if(array_key_exists('admin', $maker))
