@@ -49,13 +49,18 @@
 
           @include('includes/elements/formats')
 
+
+        </div>
+      </div>
+      <h4>How to cite this record</h4>
+      <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+        <div class="container">
+          @include('includes/elements/citation')
         </div>
       </div>
     </div>
+    </div>
 
-
-
-  </div>
 @endsection
 
 @include('includes/elements/sketchfab')
