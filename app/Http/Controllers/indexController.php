@@ -9,7 +9,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
-
+use Spatie\ArrayToXml\ArrayToXml;
 
 class indexController extends Controller
 {
@@ -126,8 +126,46 @@ class indexController extends Controller
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    return response(view('record.json',array('data'=>$data)),200, ['Content-Type' => 'application/json']);
+    if($format == 'json'){
+      return response(view('record.json',array('data' => $data)),200, ['Content-Type' => 'application/json']);
+    } elseif($format == 'xml'){
+      $data = $this->utf8_converter($data[0]['_source']);
+      $data = $this->replaceKeys('@link', 'link', $data);
+      $arrayToXml = new ArrayToXml($data);
+      $xml = $arrayToXml->prettify()->toXml();
+      return response($xml, 200)->header('Content-Type', 'application/xml');
+    } else {
+      abort('404');
+    }
   }
+
+
+  public function replaceKeys($oldKey, $newKey, array $input){
+    $return = array();
+    foreach ($input as $key => $value) {
+        if ($key===$oldKey)
+            $key = $newKey;
+
+        if (is_array($value))
+            $value = $this->replaceKeys( $oldKey, $newKey, $value);
+
+        $return[$key] = $value;
+    }
+    return $return;
+  }
+
+  function utf8_converter($array){
+    array_walk_recursive($array, function(&$item, $key){
+      if(!mb_detect_encoding($item, 'utf-8', true)){
+        $item = utf8_encode($item);
+        $item = str_replace('\u','u',$item);
+        $item = preg_replace('/u([\da-fA-F]{4})/', '&#x\1;', $item);
+
+      }
+    });
+    return $array;
+  }
+
 
   public function search() {
     return view('record.search');
@@ -186,112 +224,112 @@ class indexController extends Controller
     $facets = array(
       'institutions' => [
         'terms' =>
-          [
-            "field" => 'institutions.admin.id',
-            "size" => 10,
+        [
+          "field" => 'institutions.admin.id',
+          "size" => 10,
           ]
-        ],
-      'materials' => [
-        'terms' =>
-          ["field" => 'materials.reference.summary_title.exact',"size" => 10]
-         ],
-      'periods' => [
-        'terms' =>
-          ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
-         ],
-      'object-name' => [
-           'terms' =>
-             ["field" => 'name.reference.admin.id',"size" => 10]
+          ],
+          'materials' => [
+            'terms' =>
+            ["field" => 'materials.reference.summary_title.exact',"size" => 10]
             ],
-      'maker' => [
-           'terms' =>
-             ["field" => 'lifecycle.creation.maker.admin.id',"size" => 10]
-            ],
-      'agents' => [
-           'terms' =>
-             ["field" => 'content.agents.admin.id',"size" => 10]
-            ],
-    );
-    $params['body']['aggs'] = $facets;
+            'periods' => [
+              'terms' =>
+              ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
+              ],
+              'object-name' => [
+                'terms' =>
+                ["field" => 'name.reference.admin.id',"size" => 10]
+                ],
+                'maker' => [
+                  'terms' =>
+                  ["field" => 'lifecycle.creation.maker.admin.id',"size" => 10]
+                  ],
+                  'agents' => [
+                    'terms' =>
+                    ["field" => 'content.agents.admin.id',"size" => 10]
+                    ],
+                  );
+                  $params['body']['aggs'] = $facets;
 
-    // Add images filter
-    if(!is_null($request->get('images'))){
-      $filter  =  array("exists" => [
-        "field" => "multimedia"]
-      );
-      array_push($params['body']['query']['bool']['must'], [$filter]);
-    }
-    // Maker filter
-    if(!is_null($request->get('maker'))){
-      $filter  =  array("term" => [
-        "lifecycle.creation.maker.admin.id" => $request->get('maker')]
-      );
-      array_push($params['body']['query']['bool']['must'], [$filter]);
-    }
-    // Material filter
-    if(!is_null($request->get('material'))){
-      $filter  =  array("term" => [
-        "materials.reference.admin.id" => $request->get('material')]
-      );
-      array_push($params['body']['query']['bool']['must'], [$filter]);
-    }
-    // Period filter
-    if(!is_null($request->get('period'))){
-      $filter  =  array("term" => [
-        "lifecycle.creation.periods.admin.id" => $request->get('period')]
-      );
-      array_push($params['body']['query']['bool']['must'], [$filter]);
-    }
+                  // Add images filter
+                  if(!is_null($request->get('images'))){
+                    $filter  =  array("exists" => [
+                      "field" => "multimedia"]
+                    );
+                    array_push($params['body']['query']['bool']['must'], [$filter]);
+                  }
+                  // Maker filter
+                  if(!is_null($request->get('maker'))){
+                    $filter  =  array("term" => [
+                      "lifecycle.creation.maker.admin.id" => $request->get('maker')]
+                    );
+                    array_push($params['body']['query']['bool']['must'], [$filter]);
+                  }
+                  // Material filter
+                  if(!is_null($request->get('material'))){
+                    $filter  =  array("term" => [
+                      "materials.reference.admin.id" => $request->get('material')]
+                    );
+                    array_push($params['body']['query']['bool']['must'], [$filter]);
+                  }
+                  // Period filter
+                  if(!is_null($request->get('period'))){
+                    $filter  =  array("term" => [
+                      "lifecycle.creation.periods.admin.id" => $request->get('period')]
+                    );
+                    array_push($params['body']['query']['bool']['must'], [$filter]);
+                  }
 
-    // Add sort filter
-    if(!is_null($request->get('sort'))){
-      $order = $request->get('sort');
-      $sort = array(
+                  // Add sort filter
+                  if(!is_null($request->get('sort'))){
+                    $order = $request->get('sort');
+                    $sort = array(
 
-            "admin.modified" =>  [
-              "order" =>  $order
-            ]
-      );
-      $params['body']['sort'] = $sort;
-    }
-    // Get response
-    $response = $this->getElastic()->setParams($params)->getSearch();
+                      "admin.modified" =>  [
+                        "order" =>  $order
+                        ]
+                      );
+                      $params['body']['sort'] = $sort;
+                    }
+                    // Get response
+                    $response = $this->getElastic()->setParams($params)->getSearch();
 
-    $number = $response['hits']['total']['value'];
-    $records = $response['hits']['hits'];
-    $facets = $response['aggregations'];
-    $currentPage = LengthAwarePaginator::resolveCurrentPage();
-    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
-    $paginate->setPath($request->getBaseUrl());
-    return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
-  }
+                    $number = $response['hits']['total']['value'];
+                    $records = $response['hits']['hits'];
+                    $facets = $response['aggregations'];
+                    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+                    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+                    $paginate->setPath($request->getBaseUrl());
+                    return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
+                  }
 
 
 
-  public function image($id){
+                  public function image($id){
 
-    $params = [
-      'index' => 'ciim',
-      'body'  => [
-        'query' => [
-          'match' => [
-            'multimedia.admin.id' => $id
-          ]
-        ]
-      ]
-    ];
+                    $params = [
+                      'index' => 'ciim',
+                      'body'  => [
+                        'query' => [
+                          'match' => [
+                            'multimedia.admin.id' => $id
+                          ]
+                        ]
+                      ]
+                    ];
 
-    $response = $this->getElastic()->setParams($params)->getSearch();
-    $data = $response['hits']['hits'][0]['_source']['multimedia'];
-    function filter_array($array, $term){
-      $matches = array();
-      foreach($array as $a){
-        if($a['admin']['id'] == $term)
-        $matches[] = $a;
-      }
-      return $matches;
-    }
-    $filtered = filter_array($data,$id);
-    return view('record.image', compact('filtered'));
-  }
-}
+                    $response = $this->getElastic()->setParams($params)->getSearch();
+                    $data = $response['hits']['hits'][0]['_source']['multimedia'];
+                    function filter_array($array, $term){
+                      $matches = array();
+                      foreach($array as $a){
+                        if($a['admin']['id'] == $term)
+                        $matches[] = $a;
+                      }
+                      return $matches;
+                    }
+                    $filtered = filter_array($data,$id);
+                    return view('record.image', compact('filtered'));
+                  }
+                }
