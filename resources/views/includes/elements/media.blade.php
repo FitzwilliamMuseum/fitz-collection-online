@@ -19,13 +19,13 @@
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
         <h3>Alternative views</h3>
         <div class="row ">
-          @foreach(array_slice($record['_source']['multimedia'],1) as $media)
+          @foreach(array_slice($record['_source']['multimedia'],1,9) as $media)
             <div class="col-md-4 mt-3">
               <div class="card card-body h-100">
                 <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="https://api.fitz.ms/mediaLib/{{ $media['processed']['preview']['location'] }}"
                   loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
                   /></a>
-                  <span class="btn btn-wine m-1 p-2 share">
+                  <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
                     <a href="https://api.fitz.ms/mediaLib/{{ $media['processed']['original']['location'] }}" target="_blank"
                     download="{{ basename($media['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
                   </span>
@@ -33,6 +33,15 @@
               </div>
             @endforeach
           </div>
+          @php
+            $records = count($record['_source']['multimedia']);
+          @endphp
+          @if($records > 9)
+            <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share d-block">
+              <a href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
+              ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
+            </span>
+          @endif
         @endif
       </div>
 
