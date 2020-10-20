@@ -8,7 +8,9 @@
         @if(array_key_exists('reference', $fabric))
           <li><a href="/id/terminology/{{ $fabric['reference']['admin']['id']}}">{{ ucfirst($fabric['reference']['summary_title'])}}</a>
               @if(array_key_exists('description', $fabric))
-                : {{ ucfirst($fabric['description']['value'])}}
+                @foreach($fabric['description'] as $desc)
+                : {{ ucfirst($desc['value'])}}
+                @endforeach
               @endif
               </li>
         @endif
