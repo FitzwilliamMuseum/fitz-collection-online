@@ -6,7 +6,7 @@
         <li class="sr-only"><a href="{{ $id['value']}}">Stable URI</a></li>
       @elseif($id['type'] === 'priref')
         <li>Primary reference Number: <a href="{{ $id['value']}}">{{ $id['value']}}</a></li>
-      @elseif($id['type'] === 'Online_3d_model')
+      @elseif($id['type'] === 'Online 3d model')
         <li class="sr-only">Sketchfab ID: {{ $id['value']}}</li>
       @else
         <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
