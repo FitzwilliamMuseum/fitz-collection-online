@@ -17,7 +17,7 @@
 <div class="row">
 <div class="form-group col-md-12">
   <input type="text" id="query" name="query"  class="form-control input-lg mr-4"
-  placeholder="Search our collection" required value="{{ old('query') }}">
+  placeholder="Search our collection" required value="{{ $queryString }}">
 </div>
 </div>
 
