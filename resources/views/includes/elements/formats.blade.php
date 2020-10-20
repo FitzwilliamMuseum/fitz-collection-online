@@ -1,3 +1,4 @@
+<h4>Machine readable data</h4>
 <div class="share">
   <btn class="btn btn-wine m-1"><a href="{{ url()->current() }}/json">json</a></btn>
   <btn class="btn btn-wine m-1"><a href="{{ url()->current() }}/xml">xml</a></btn>

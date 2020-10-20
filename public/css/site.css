@@ -808,3 +808,6 @@ a.free_ticket  {
 ul.text-center.conversation-footer {
   padding-inline-start: 0px!important;
 }
+.object-info li {
+    list-style: square;
+}
