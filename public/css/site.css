@@ -811,3 +811,12 @@ ul.text-center.conversation-footer {
 .object-info li {
     list-style: square;
 }
+.swatch {
+    display: inline-block;
+    background: #dddddd;
+    border-radius: 50%;
+}
+.swatch {
+    width: 3rem;
+    height: 3rem;
+}

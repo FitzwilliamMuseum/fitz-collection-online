@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Spatie\ArrayToXml\ArrayToXml;
+use ColorThief\ColorThief;
 
 class indexController extends Controller
 {
@@ -368,6 +369,9 @@ class indexController extends Controller
         return $matches;
       }
       $filtered = filter_array($data,$id);
-      return view('record.image', compact('filtered'));
+      $image = $data[0]['processed']['large']['location'];
+      $path = env('CIIM_IMAGE_URL') . $image;
+      $palette = ColorThief::getPalette( $path, 8);
+      return view('record.image', compact('filtered', 'palette'));
     }
   }
