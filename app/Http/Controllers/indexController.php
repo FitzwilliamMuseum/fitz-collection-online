@@ -375,6 +375,32 @@ class indexController extends Controller
       $palette = ColorThief::getPalette( $path, 12);
       $reader = Reader::factory(Reader::TYPE_NATIVE);
       $exif = $reader->read($path);
-      return view('record.image', compact('filtered', 'palette', 'exif'));
+
+      $paramsTerm = [
+        'index' => 'ciim',
+        'size' => 1,
+        'body' => [
+          "query" => [
+            "bool" => [
+                "must" => [
+                   [
+                        "match" => [
+                          "reference_links" => $id
+                        ]
+                   ],
+                   [
+                        "term" => [ "type.base" => 'object']
+                   ],
+                   [
+                        "exists" => ['field' => 'multimedia']
+                   ],
+                ]
+             ]
+          ]
+        ],
+      ];
+      $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+      $object = $response2['hits']['hits'][0]['_source'];
+      return view('record.image', compact('filtered', 'object','palette', 'exif'));
     }
   }

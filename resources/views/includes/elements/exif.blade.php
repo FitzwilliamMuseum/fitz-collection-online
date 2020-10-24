@@ -3,6 +3,8 @@
 
   @if(!empty($exif->getHeadline()))
     @section('title', $exif->getHeadline())
+  @else
+    @section('title', $object['title'][0]['value'])
   @endif
 
   @if(!empty($exif->getCaption()))
