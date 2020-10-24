@@ -7,13 +7,15 @@
             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
           @endif
-          <span class="btn btn-wine m-1 p-2 share">
-            <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
-          </span>
-          <span class="btn btn-wine m-1 p-2 share">
-            <a href="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}" target="_blank"
-            download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
-          </span>
+          <div class="text-center mt-2">
+            <span class="btn btn-wine m-1 p-2 share">
+              <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
+            </span>
+            <span class="btn btn-wine m-1 p-2 share">
+              <a href="https://api.fitz.ms/mediaLib/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}" target="_blank"
+              download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
+            </span>
+          </div>
         </div>
       </div>
     @endif
