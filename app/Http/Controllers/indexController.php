@@ -369,7 +369,7 @@ class indexController extends Controller
         }
         return $matches;
       }
-      $filtered = filter_array($data,$id);
+      $filtered = filter_array($data, $id);
       $image = $data[0]['processed']['large']['location'];
       $path = env('CIIM_IMAGE_URL') . $image;
       $palette = ColorThief::getPalette( $path, 12);

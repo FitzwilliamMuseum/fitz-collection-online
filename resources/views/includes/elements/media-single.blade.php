@@ -6,3 +6,5 @@
       /></a>
     </div>
   </div>
+
+@section('hero_image', 'https://api.fitz.ms/mediaLib/' . $record['processed']['original']['location'])
