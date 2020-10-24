@@ -11,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Spatie\ArrayToXml\ArrayToXml;
 use ColorThief\ColorThief;
+use PHPExif\Reader\Reader;
 
 class indexController extends Controller
 {
@@ -372,6 +373,8 @@ class indexController extends Controller
       $image = $data[0]['processed']['large']['location'];
       $path = env('CIIM_IMAGE_URL') . $image;
       $palette = ColorThief::getPalette( $path, 12);
-      return view('record.image', compact('filtered', 'palette'));
+      $reader = Reader::factory(Reader::TYPE_NATIVE);
+      $exif = $reader->read($path);
+      return view('record.image', compact('filtered', 'palette', 'exif'));
     }
   }
