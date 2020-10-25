@@ -2,9 +2,13 @@
 <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
 
   @if(!empty($exif->getHeadline()))
-    @section('title', $exif->getHeadline())
+    @section('title', ucfirst($exif->getHeadline()))
+  @elseif(array_key_exists('title', $object))
+    @section('title', ucfirst($object['title'][0]['value']))
+  @elseif(array_key_exists('summary_title', $object))
+    @section('title', ucfirst($object['summary_title']))
   @else
-    @section('title', $object['title'][0]['value'])
+    @section('title', 'No title available')
   @endif
 
   @if(!empty($exif->getCaption()))
@@ -20,8 +24,11 @@
       <li>Accession Number: {{ $exif->getTitle() }}</li>
     @endif
     @if(!empty($exif->getCopyright() ))
-      <li>{{  $exif->getCopyright() }}</li>
+      <li>{{ $exif->getCopyright() }}</li>
+    @else
+      <li>Copyright © The Fitzwilliam Museum</li>
     @endif
+
     @if(!empty($exif->getAperture()))
       <li>Aperture: {{ $exif->getAperture() }}</li>
     @endif
