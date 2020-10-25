@@ -13,12 +13,12 @@
             </span>
             <span class="btn btn-wine m-1 p-2 share">
               <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['original']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
+              download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
             </span>
             @if(array_key_exists('multimedia', $record['_source']))
               @if(array_key_exists('zoom', $record['_source']['multimedia'][0]['processed']))
                 <span class="btn btn-wine m-1 p-2 share">
-                  <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> IIIF</a>
+                  <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" /></a>
                 </span>
               @endif
             @endif
