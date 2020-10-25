@@ -21,7 +21,7 @@
         <div class="card  h-100">
           <div class="results_image">
           @if(array_key_exists('multimedia', $record['_source']))
-            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="results_image__thumbnail" src="/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="results_image__thumbnail" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
              loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
           @else

@@ -13,7 +13,7 @@
 
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        About us</a>
+        About</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us') }}">About the Museum</a>
           <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/about-us/collections') }}">Collection areas</a>
@@ -25,7 +25,7 @@
       </li>
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visit us</a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visit</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="https://beta.fitz.ms/visit-us">Your visit</a>
           <a class="dropdown-item" href="https://beta.fitz.ms/visit-us/exhibitions">Exhibitions</a>
@@ -47,13 +47,18 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Learning</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning') }}">Learn with us</a>
-              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/look-think-do') }}">Look, Think, Do</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning') }}">Learning</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/families') }}">Families</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/young-people') }}">Young people</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/school-sessions') }}">Schools</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/adult-programming') }}">Adults</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/community-programming') }}">Communities</a>
+              <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/group-activities') }}">Groups</a>
               <a class="dropdown-item" href="{{ URL::to('https://beta.fitz.ms/learning/resources') }}">Resources</a>
             </div>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/support-us') }}">Support us</a>
+            <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/support-us') }}">Support</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
