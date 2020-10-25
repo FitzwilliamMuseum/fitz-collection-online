@@ -27,8 +27,5 @@ new IIPMooViewer( "viewer", {
 @endsection
 
 @if(array_key_exists('zoom', $filtered[0]["processed"]))
-<div class="col-md-12 mb-3">
-  <h2>Deep zooming IIIF image</h2>
   <div id="viewer"></div>
-</div>
 @endif

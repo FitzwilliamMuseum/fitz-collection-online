@@ -18,9 +18,7 @@
 </head>
 <body class="doc-body">
 
-  <div class="container mt-3">
     @yield('content')
-  </div>
 
 </body>
 </html>
