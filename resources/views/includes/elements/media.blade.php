@@ -18,7 +18,7 @@
             @if(array_key_exists('multimedia', $record['_source']))
               @if(array_key_exists('zoom', $record['_source']['multimedia'][0]['processed']))
                 <span class="btn btn-wine m-1 p-2 share">
-                  <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" /></a>
+                  <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
                 </span>
               @endif
             @endif

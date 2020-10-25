@@ -23,8 +23,8 @@
     @if(!empty($exif->getTitle()))
       <li>Accession Number: {{ $exif->getTitle() }}</li>
     @endif
-    @if(!empty($exif->getCopyright() ))
-      <li>{{ $exif->getCopyright() }}</li>
+    @if(!empty($exif->getCopyright()) )
+      <li>{{ utf8_encode($exif->getCopyright()) }}</li>
     @else
       <li>Copyright © The Fitzwilliam Museum</li>
     @endif
@@ -73,7 +73,7 @@
     @endif
   </ul>
 
-  @if(!empty($exif->getKeywords()))
+  @if(!empty($exif->getKeywords()) && is_array($exif->getKeywords()))
     <h5>Key words</h5>
     <div id="keywords">
       @foreach ($exif->getKeywords() as $key)
