@@ -13,6 +13,13 @@
     <span class="btn-wine btn m-1 p-2 share">
       <a href="/id/object/{{ $object['identifier'][1]['priref']}}">Back to record</a>
     </span>
+    @if(array_key_exists('multimedia', $object))
+      @if(array_key_exists('zoom', $object['multimedia'][0]['processed']))
+        <span class="btn btn-wine m-1 p-2 share">
+          <a href="/id/image/iiif/{{ $object['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
+        </span>
+      @endif
+    @endif
   </div>
 </div>
 
