@@ -31,6 +31,7 @@ Route::get('/spelunker', 'indexController@index')->name('spelunker');
 Route::get('/id/object/{priref}', 'indexController@record')->name('record');
 Route::get('/id/object/{priref}/{format}', 'indexController@recordSwitch')->name('record.context');
 Route::get('/id/image/{id}/', 'indexController@image')->name('image.single');
+Route::get('/id/image/iiif/{id}/', 'indexController@iiif')->name('image.iiif');
 Route::match(array('GET','POST'),'/images/id/{priref}/', 'indexController@images')->name('images.multiple');
 
 /*

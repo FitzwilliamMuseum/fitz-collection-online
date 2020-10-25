@@ -403,4 +403,62 @@ class indexController extends Controller
       $object = $response2['hits']['hits'][0]['_source'];
       return view('record.image', compact('filtered', 'object','palette', 'exif'));
     }
+
+    public function iiif($id){
+
+      $params = [
+        'index' => 'ciim',
+        'body'  => [
+          'query' => [
+            'match' => [
+              'multimedia.admin.id' => $id
+            ]
+          ]
+        ]
+      ];
+
+      $response = $this->getElastic()->setParams($params)->getSearch();
+      $data = $response['hits']['hits'][0]['_source']['multimedia'];
+      function filter_array($array, $term){
+        $matches = array();
+        foreach($array as $a){
+          if($a['admin']['id'] == $term)
+          $matches[] = $a;
+        }
+        return $matches;
+      }
+      $filtered = filter_array($data, $id);
+      $image = $data[0]['processed']['large']['location'];
+      $path = env('CIIM_IMAGE_URL') . $image;
+      $palette = ColorThief::getPalette( $path, 12);
+      $reader = Reader::factory(Reader::TYPE_NATIVE);
+      $exif = $reader->read($path);
+
+      $paramsTerm = [
+        'index' => 'ciim',
+        'size' => 1,
+        'body' => [
+          "query" => [
+            "bool" => [
+                "must" => [
+                   [
+                        "match" => [
+                          "reference_links" => $id
+                        ]
+                   ],
+                   [
+                        "term" => [ "type.base" => 'object']
+                   ],
+                   [
+                        "exists" => ['field' => 'multimedia']
+                   ],
+                ]
+             ]
+          ]
+        ],
+      ];
+      $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+      $object = $response2['hits']['hits'][0]['_source'];
+      return view('record.iiif', compact('filtered', 'object','palette', 'exif'));
+    }
   }
