@@ -18,17 +18,6 @@
 </head>
 <body class="doc-body">
 
-  @include('includes.structure.accessibility')
-
-  @include('includes.structure.nav')
-
-  @include('includes.structure.head')
-  @include('includes.structure.beta')
-  @include('includes.structure.open')
-
-
-
-
   <div class="container mt-3">
     @yield('content')
   </div>
