@@ -21,6 +21,8 @@
 
             @include('includes/elements/descriptive')
 
+            @include('includes/elements/name')
+
             @include('includes/elements/legal')
 
             @include('includes/elements/lifecycle')

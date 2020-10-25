@@ -223,34 +223,48 @@ class indexController extends Controller
       ],
     ];
 
-    $facets = array(
-      'institutions' => [
-        'terms' =>
+$facets = array(
+  // 'institutions' => [
+  //   'terms' =>
+  //   [
+  //     "field" => 'institutions.admin.id',
+  //     "size" => 10,
+  //     ]
+  // ],
+  'materials' => [
+    'terms' =>
+    [
+      "field" => 'materials.reference.admin.id',
+      "size" => 10
+    ]
+  ],
+  'periods' => [
+    'terms' =>
+      [
+       "field" => 'lifecycle.creation.periods.admin.id',
+       "size" => 10]
+  ],
+  'object-name' => [
+      'terms' =>
+      [
+        "field" => 'name.reference.admin.id',
+        "size" => 10
+      ]
+  ],
+  'maker' => [
+    'terms' =>
         [
-          "field" => 'institutions.admin.id',
-          "size" => 10,
+        "field" => 'lifecycle.creation.maker.admin.id',
+        "size" => 10
+        ]
+  ],
+  'departments' => [
+      'terms' =>
+        [
+          "field" => 'department',
+          "size" => 10
           ]
-      ],
-      'materials' => [
-        'terms' =>
-        ["field" => 'materials.reference.summary_title.exact',"size" => 10]
-        ],
-        'periods' => [
-          'terms' =>
-          ["field" => 'lifecycle.creation.periods.admin.id',"size" => 10]
-          ],
-          'object-name' => [
-            'terms' =>
-            ["field" => 'name.reference.admin.id',"size" => 10]
-            ],
-            'maker' => [
-              'terms' =>
-              ["field" => 'lifecycle.creation.maker.admin.id',"size" => 10]
-              ],
-              'agents' => [
-                'terms' =>
-                ["field" => 'content.agents.admin.id',"size" => 10]
-                ],
+        ]
     );
     $params['body']['aggs'] = $facets;
 
