@@ -25,7 +25,11 @@
       <div class="col">
         <h4>Visual results</h4>
         <div class="form-group form-check ">
-          <input type="checkbox" class="form-check-input" id="images" name="images">
+          <input type="checkbox" class="form-check-input" id="images" name="images"
+          @if(request()->has('images'))
+            checked
+          @endif
+          >
           <label class="form-check-label" for="images">Only with images?</label>
         </div>
       </div>
