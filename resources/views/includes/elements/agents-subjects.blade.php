@@ -4,9 +4,13 @@
   <ul>
   @foreach($record['_source']['agents'] as $agent)
     @if(array_key_exists('admin', $agent))
-      <li><a href="/id/agent/{{ $agent['admin']['id']}}">{{ ucfirst($agent['summary_title'])}}</a></li>
+      <li>
+        <a href="/id/agent/{{ $agent['admin']['id']}}">{{ ucfirst($agent['summary_title'])}}</a>
+      </li>
     @else
-      <li>{{ ucfirst($agent['summary_title'])}}</li>
+      <li>
+        {{ ucfirst($agent['summary_title'])}}
+      </li>
     @endif
   @endforeach
   </ul>
@@ -17,9 +21,9 @@
   <ul>
   @foreach($record['_source']['subjects'] as $subject)
     @if(array_key_exists('admin', $subject))
-      <li><a href="/id/terminology/{{ $subject['admin']['id']}}">{{ ucfirst($subject['summary_title'])}}</a></li>
-    @else
-      <li>{{ ucfirst($subject['summary_title'])}}</li>
+      <li>
+        <a href="/id/terminology/{{ $subject['admin']['id']}}">{{ ucfirst($subject['summary_title'])}}</a>
+      </li>
     @endif
   @endforeach
   </ul>
