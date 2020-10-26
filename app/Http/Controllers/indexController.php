@@ -224,44 +224,38 @@ class indexController extends Controller
     ];
 
 $facets = array(
-  // 'institutions' => [
-  //   'terms' =>
-  //   [
-  //     "field" => 'institutions.admin.id',
-  //     "size" => 10,
-  //     ]
-  // ],
-  'materials' => [
+  'material' => [
     'terms' =>
     [
-      "field" => 'materials.reference.admin.id',
+      "field" => 'materials.reference.summary_title.keyword',
       "size" => 10
     ]
   ],
-  'periods' => [
+  'period' => [
     'terms' =>
       [
-       "field" => 'lifecycle.creation.periods.admin.id',
-       "size" => 10]
+       "field" => 'lifecycle.creation.periods.summary_title.keyword',
+       "size" => 10
+       ]
   ],
-  'object-name' => [
+  'object_type' => [
       'terms' =>
       [
-        "field" => 'name.reference.admin.id',
+        "field" => 'name.reference.summary_title.keyword',
         "size" => 10
       ]
   ],
   'maker' => [
     'terms' =>
         [
-        "field" => 'lifecycle.creation.maker.admin.id',
+        "field" => 'lifecycle.creation.maker.summary_title.keyword',
         "size" => 10
         ]
   ],
-  'departments' => [
+  'department' => [
       'terms' =>
         [
-          "field" => 'department',
+          "field" => 'department.value.keyword',
           "size" => 10
           ]
         ]
@@ -278,21 +272,37 @@ $facets = array(
     // Maker filter
     if(!is_null($request->get('maker'))){
       $filter  =  array("term" => [
-        "lifecycle.creation.maker.admin.id" => $request->get('maker')]
+        "lifecycle.creation.maker.summary_title.keyword" => $request->get('maker')]
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
     // Material filter
     if(!is_null($request->get('material'))){
       $filter  =  array("term" => [
-        "materials.reference.admin.id" => $request->get('material')]
+        "materials.reference.summary_title.keyword" => $request->get('material')]
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
     // Period filter
     if(!is_null($request->get('period'))){
       $filter  =  array("term" => [
-        "lifecycle.creation.periods.admin.id" => $request->get('period')]
+        "lifecycle.creation.periods.summary_title.keyword" => $request->get('period')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+
+    // Period filter
+    if(!is_null($request->get('department'))){
+      $filter  =  array("term" => [
+        "department.value.keyword" => $request->get('department')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+
+    // Period filter
+    if(!is_null($request->get('object_type'))){
+      $filter  =  array("term" => [
+        "name.reference.summary_title.keyword" => $request->get('object_type')]
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
