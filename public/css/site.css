@@ -824,3 +824,7 @@ ul.text-center.conversation-footer {
    width:100vw;
    height:100vh;
 }
+ul.stats {
+  list-style: none;
+  font-size: 4rem;
+}

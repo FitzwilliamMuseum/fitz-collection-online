@@ -170,7 +170,61 @@ class indexController extends Controller
 
 
   public function search() {
-    return view('record.search');
+    $objects = '{
+      "query": {
+        "match": {
+          "type.base": "object"
+        }
+      }
+    }';
+
+    $oParams = [
+      'index' => 'ciim',
+      'body' => $objects
+    ];
+    $images = '{
+      "query": {
+        "match": {
+          "type.base": "media"
+        }
+      }
+    }';
+
+    $iParams = [
+      'index' => 'ciim',
+      'body' => $images
+    ];
+
+    $agents = '{
+      "query": {
+        "match": {
+          "type.base": "agent"
+        }
+      }
+    }';
+    $aParams = [
+      'index' => 'ciim',
+      'body' => $agents
+    ];
+
+    $publications = '{
+      "query": {
+        "match": {
+          "type.base": "publication"
+        }
+      }
+    }';
+    $pParams = [
+      'index' => 'ciim',
+      'body' => $publications
+    ];
+
+    $count = [];
+    $count['records']  = $this->getElastic()->setParams($oParams)->getCount();
+    $count['images'] = $this->getElastic()->setParams($iParams)->getCount();
+    $count['agents'] = $this->getElastic()->setParams($aParams)->getCount();
+    $count['publications'] = $this->getElastic()->setParams($pParams)->getCount();
+    return view('record.search', compact('count'));
   }
 
   /** Get results for search

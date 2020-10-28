@@ -1,1 +1,1 @@
-{!! json_encode($data,JSON_PRETTY_PRINT) !!}
+{!! json_encode($data, JSON_PRETTY_PRINT) !!}

@@ -74,4 +74,12 @@
 @endif
 {!! Form::close() !!}
 </div>
+<div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
+<ul class="stats text-center">
+  <li>Objects {{ number_format($count['records']['count']) }}</li>
+  <li>Images {{ number_format($count['images']['count']) }}</li>
+  <li>People {{ number_format($count['agents']['count']) }}</li>
+  <li>Publications  {{ number_format($count['publications']['count']) }}</li>
+</ul>
+</div>
 @endsection
