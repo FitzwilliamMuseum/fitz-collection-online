@@ -224,7 +224,28 @@ class indexController extends Controller
     $count['images'] = $this->getElastic()->setParams($iParams)->getCount();
     $count['agents'] = $this->getElastic()->setParams($aParams)->getCount();
     $count['publications'] = $this->getElastic()->setParams($pParams)->getCount();
-    return view('record.search', compact('count'));
+
+    $latest = '{
+      "sort": [{
+          "admin.created": {
+            "order": "desc"
+          }
+        },
+        {
+          "_score": {
+            "order": "desc"
+          }
+        }
+      ],
+      "size": 3
+    }';
+    $lParams = [
+      'index' => 'ciim',
+      'body'  => $latest
+    ];
+    $response = $this->getElastic()->setParams($lParams)->getSearch();
+    $records = $response['hits']['hits'];
+    return view('record.search', compact('count', 'records'));
   }
 
   /** Get results for search
