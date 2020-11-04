@@ -91,7 +91,7 @@
     @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
 
     <!-- Departments -->
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
       <div class="card h-100">
         <div class="card-body ">
 
@@ -104,7 +104,7 @@
               <ul>
               @foreach ($facets['department']['buckets'] as $bucket)
                 <li>
-                  <a href="{{ Request::fullUrl() }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
+                  <a href="{{ Request::fullUrl() }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
                 </li>
               @endforeach
               </ul>
@@ -117,9 +117,37 @@
     @endif
     <!-- End of departments -->
 
+
+    @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
+
+    <!-- Makers -->
+    <div class="col-md-3 mb-3">
+      <div class="card h-100">
+        <div class="card-body ">
+
+          <div class="contents-label mb-3">
+            <h5>
+            Maker
+          </h5>
+
+              @if(array_key_exists('maker', $facets))
+              <ul>
+              @foreach ($facets['maker']['buckets'] as $bucket)
+                <li>
+                  <a href="{{ Request::fullUrl() }}&maker={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                </li>
+              @endforeach
+              </ul>
+              @endif
+
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
     <!-- Meterials -->
     @if(array_key_exists('material', $facets) && !empty($facets['material']['buckets']) )
-      <div class="col-md-4 mb-3">
+      <div class="col-md-3 mb-3">
         <div class="card h-100">
           <div class="card-body ">
 
@@ -132,7 +160,7 @@
                 <ul>
                   @foreach ($facets['material']['buckets'] as $bucket)
                     <li>
-                      <a href="{{ Request::fullUrl() }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
+                      <a href="{{ Request::fullUrl() }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count'])}}</a>
                     </li>
                   @endforeach
                 </ul>
@@ -148,7 +176,7 @@
     <!-- Periods -->
     @if(array_key_exists('period', $facets) && !empty($facets['period']['buckets']) )
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
       <div class="card h-100">
         <div class="card-body ">
 
@@ -161,7 +189,7 @@
               <ul>
               @foreach ($facets['period']['buckets'] as $bucket)
                 <li>
-                  <a href="{{ Request::fullUrl() }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
+                  <a href="{{ Request::fullUrl() }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
                 </li>
               @endforeach
               </ul>
