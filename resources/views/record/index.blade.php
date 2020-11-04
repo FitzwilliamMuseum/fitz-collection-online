@@ -45,6 +45,8 @@
 
             @include('includes/elements/publications')
 
+            @include('includes/elements/exhibitions')
+
             @include('includes/elements/identification')
 
             @include('includes/elements/institutions')
