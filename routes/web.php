@@ -41,6 +41,13 @@ Route::get('/id/publication/{id}', 'publicationsController@record')->name('publi
 Route::get('/id/publication/{id}/{format}', 'publicationsController@recordSwitch')->name('publication.context');
 
 /*
+* Publication routes
+*/
+Route::get('/id/exhibition/{id}', 'exhibitionsController@exhibition')->name('exhibition.record');
+Route::get('/id/exhibition/{id}/{format}', 'exhibitionsController@recordSwitch')->name('exhibition.context');
+
+
+/*
 * Terminology routes
 */
 Route::get('/id/terminology/{id}', 'terminologyController@record')->name('terminology');
