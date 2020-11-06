@@ -234,7 +234,7 @@
   @endif
 
   @if(!empty($records))
-    <h3>Results</h3>
+  <h3>Results</h3>
   <div class="row">
     @foreach($records as $record)
 

@@ -46,6 +46,32 @@ class exhibitionsController extends Controller
     ];
     $exhibition = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $exhibition = $exhibition['hits']['hits'][0]['_source'];
-    return view('exhibitions.exhibition', compact('exhibition'));
+
+    $paramsTerm = [
+      'index' => 'ciim',
+      'size' => 100,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+                 [
+                      "match" => [
+                        "reference_links" => $id
+                      ]
+                 ],
+                 [
+                      "term" => [ "type.base" => 'object']
+                 ],
+                 [
+                      "exists" => ['field' => 'multimedia']
+                 ],
+              ]
+           ]
+        ]
+      ],
+    ];
+    $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+    $records = $response2['hits']['hits'];
+    return view('exhibitions.exhibition', compact('exhibition', 'records'));
   }
 }
