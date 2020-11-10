@@ -104,7 +104,18 @@
     <h4>Place(s) associated</h4>
     <ul>
       @foreach($record['_source']['lifecycle']['creation'][0]['places'] as $place)
-        <li>{{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}</li>
+        <li>
+          {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
+          @if(array_key_exists('hierarchies', $place))
+            @foreach ($place['hierarchies'] as $hierarchies)
+              @foreach ($hierarchies as $hierarchy)
+                @if(array_key_exists('summary_title', $hierarchy))
+                &Sc; {{ $hierarchy['summary_title'] ?? ''}}
+                @endif
+              @endforeach
+            @endforeach
+          @endif
+        </li>
       @endforeach
     </ul>
   @endif
