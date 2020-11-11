@@ -108,6 +108,9 @@
           {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
           @if(array_key_exists('hierarchies', $place))
             @foreach ($place['hierarchies'] as $hierarchies)
+              @php
+                $hierarchies = array_reverse($hierarchies, true);
+              @endphp
               @foreach ($hierarchies as $hierarchy)
                 @if(array_key_exists('summary_title', $hierarchy))
                 &Sc; {{ $hierarchy['summary_title'] ?? ''}}

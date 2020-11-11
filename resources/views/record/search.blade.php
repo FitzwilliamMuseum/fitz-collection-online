@@ -82,7 +82,7 @@
     <li>Publications  {{ number_format($count['publications']['count']) }}</li>
   </ul>
 </div>
-@if(!empty($records))
+{{-- @if(!empty($records))
 <h3>Latest records</h3>
 <div class="row">
   @foreach($records as $record)
@@ -122,5 +122,5 @@
   </div>
   @endforeach
 </div>
-@endif
+@endif --}}
 @endsection
