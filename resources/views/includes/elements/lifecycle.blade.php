@@ -16,7 +16,6 @@
 
   @if(array_key_exists('creation', $record['_source']['lifecycle']))
     @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
-
       <h4>Dating</h4>
 
       @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
@@ -31,12 +30,44 @@
             <li><a href="/id/terminology/{{ $date['admin']['id']}}">{{ ucfirst($date['summary_title']) }}</a></li>
           @endforeach
         @endif
+        @if(!empty($record['_source']['lifecycle']['creation'][0]['date']))
+          @foreach ($record['_source']['lifecycle']['creation'][0]['date'] as $dating)
+            @if(array_key_exists('range', $dating))
+              @if($dating['range'])
+                @if(array_key_exists('from', $dating))
+                  @if(array_key_exists('precision', $dating['from']))
+                    {{ ucfirst($dating['from']['precision']) }}
+                  @endif
+                  {{ $dating['from']['earliest'] }}
+                  @if(array_key_exists('era', $dating['from']))
+                    @foreach($dating['from']['era'] as $era)
+                      {{ $era }}
+                    @endforeach
+                  @endif
+                  -
+                  @if(array_key_exists('to', $dating))
+                    @if(array_key_exists('precision', $dating['to']))
+                      {{ ucfirst($dating['to']['precision']) }}
+                    @endif
+                    {{ $dating['to']['earliest'] }}
+                    @if(array_key_exists('era', $dating['to']))
+                      @foreach($dating['to']['era'] as $era)
+                        {{ $era }}
+                      @endforeach
+                    @endif
+                  @endif
+                @endif
+              @endif
+            @endif
+          @endforeach
+        @endif
 
         @if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0]))
           <li>Production date:
             @if(isset($record['_source']['lifecycle']['creation'][0]['date'][0]['precision']))
               {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['precision'] }}
             @endif
+
             @php
             if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0])) {
               $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
@@ -44,7 +75,7 @@
                 $suffix = ' BCE';
                 $string = abs($dateTime) . '' . $suffix;
               } else {
-                $suffix = 'AD ';
+                $suffix = 'CE ';
                 $string = $suffix . '' . $dateTime;
               }
             }
@@ -90,12 +121,12 @@
       @endforeach
     </ul>
     @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]))
-    <h4>Note</h4>
-    @foreach($record['_source']['lifecycle']['creation'][0]['note'] as $note)
-    <p>
-      {{ ucfirst($note['value']) }}
-    </p>
-    @endforeach
+      <h4>Note</h4>
+      @foreach($record['_source']['lifecycle']['creation'][0]['note'] as $note)
+        <p>
+          {{ ucfirst($note['value']) }}
+        </p>
+      @endforeach
     @endif
   @endif
 
@@ -109,11 +140,11 @@
           @if(array_key_exists('hierarchies', $place))
             @foreach ($place['hierarchies'] as $hierarchies)
               @php
-                $hierarchies = array_reverse($hierarchies, true);
+              $hierarchies = array_reverse($hierarchies, true);
               @endphp
               @foreach ($hierarchies as $hierarchy)
                 @if(array_key_exists('summary_title', $hierarchy))
-                &Sc; {{ $hierarchy['summary_title'] ?? ''}}
+                  &Sc; {{ $hierarchy['summary_title'] ?? ''}}
                 @endif
               @endforeach
             @endforeach
@@ -121,6 +152,30 @@
         </li>
       @endforeach
     </ul>
+  @endif
+  @if(array_key_exists('collection', $record['_source']['lifecycle']))
+    @if(array_key_exists('places', $record['_source']['lifecycle']['collection'][0]))
+      <h4>Find spot</h4>
+      <ul>
+        @foreach($record['_source']['lifecycle']['collection'][0]['places'] as $place)
+          <li>
+            {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
+            @if(array_key_exists('hierarchies', $place))
+              @foreach ($place['hierarchies'] as $hierarchies)
+                @php
+                $hierarchies = array_reverse($hierarchies, true);
+                @endphp
+                @foreach ($hierarchies as $hierarchy)
+                  @if(array_key_exists('summary_title', $hierarchy))
+                    &Sc; {{ $hierarchy['summary_title'] ?? ''}}
+                  @endif
+                @endforeach
+              @endforeach
+            @endif
+          </li>
+        @endforeach
+      </ul>
+    @endif
   @endif
 @endif
 

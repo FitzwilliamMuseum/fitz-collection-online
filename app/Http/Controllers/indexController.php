@@ -225,24 +225,61 @@ class indexController extends Controller
     $count['agents'] = $this->getElastic()->setParams($aParams)->getCount();
     $count['publications'] = $this->getElastic()->setParams($pParams)->getCount();
 
-    $latest = '{
-      "sort": [{
-          "admin.created": {
-            "order": "desc"
-          }
-        },
-        {
-          "_score": {
-            "order": "desc"
-          }
-        }
-      ],
-      "size": 3
-    }';
+    // $latest = '{
+    //   "sort": [{
+    //       "admin.created": {
+    //         "order": "desc"
+    //       }
+    //     },
+    //     {
+    //       "_score": {
+    //         "order": "desc"
+    //       }
+    //     },
+    //   ],
+    //   "size": 50
+    // }';
+    $latest = '[
+      "query" => [
+        "bool" => [
+            "must" => [
+               [
+                    "match" => [
+                      "reference_links" => $id
+                    ]
+               ],
+               [
+                    "term" => [ "type.base" => "object"]
+               ],
+               [
+                    "exists" => ["field" => "multimedia"]
+               ],
+            ]
+         ]
+      ]
+    ],';
     $lParams = [
       'index' => 'ciim',
-      'body'  => $latest
+      'size' => 50,
+      'body' => [
+        "query" => [
+          "bool" => [
+              "must" => [
+
+                 [
+                      "term" => [ "type.base" => 'object']
+                 ],
+                 [
+                      "exists" => ['field' => 'multimedia']
+                 ],
+              ]
+           ]
+        ]
+      ],
     ];
+    $filter  =  array("exists" => [
+      "field" => "multimedia"]
+    );
     $response = $this->getElastic()->setParams($lParams)->getSearch();
     $records = $response['hits']['hits'];
     return view('record.search', compact('count', 'records'));
