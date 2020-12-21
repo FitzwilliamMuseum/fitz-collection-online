@@ -1,6 +1,6 @@
 <div class="mb-2">
   <p>
-    This record can be cited in the Havard Bibliographic style using the text below:
+    This record can be cited in the Harvard Bibliographic style using the text below:
   </p>
 
   <code>
