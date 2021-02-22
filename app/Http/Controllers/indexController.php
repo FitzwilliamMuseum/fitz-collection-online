@@ -411,6 +411,14 @@ $facets = array(
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
 
+    // Accession filter
+    if(!is_null($request->get('accession_number'))){
+      $filter  =  array("term" => [
+        "identifier.accession_number" => $request->get('accession_number')]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+
     // Period filter
     if(!is_null($request->get('object_type'))){
       $filter  =  array("term" => [
