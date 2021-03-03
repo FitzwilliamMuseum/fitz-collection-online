@@ -7,7 +7,7 @@
   </div>
   <div class="text-center mb-2 mt-2">
     <span class="btn btn-wine m-1 p-2 share">
-      <a href="{{ env('APP_URL')}}/imagestore/{{ $object['multimedia'][0]['processed']['original']['location'] }}" target="_blank"
+      <a href="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['original']['location'] }}" target="_blank"
       download="{{ basename($object['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
     </span>
     <span class="btn-wine btn m-1 p-2 share">
