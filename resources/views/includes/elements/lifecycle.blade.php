@@ -18,11 +18,11 @@
     @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
       <h4>Dating</h4>
 
-      @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
+      {{-- @if(array_key_exists('note',$record['_source']['lifecycle']['creation'][0]))
         @foreach($record['_source']['lifecycle']['creation'][0]['note'] as $note)
           <p>{{ $note['value'] }}</p>
         @endforeach
-      @endif
+      @endif --}}
 
       <ul>
         @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
