@@ -121,8 +121,11 @@
       @endforeach
     </ul>
     @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]))
+      @php
+      $notes = array_reverse($record['_source']['lifecycle']['creation'][0]['note'], true);
+      @endphp
       <h4>Note</h4>
-      @foreach($record['_source']['lifecycle']['creation'][0]['note'] as $note)
+      @foreach($notes as $note)
         <p>
           {{ ucfirst($note['value']) }}
         </p>
