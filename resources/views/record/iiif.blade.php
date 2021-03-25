@@ -1,4 +1,4 @@
 @extends('layouts.iiif')
-@section('content')
+@section('iiif')
   @include('includes/structure/iiif')
 @endsection

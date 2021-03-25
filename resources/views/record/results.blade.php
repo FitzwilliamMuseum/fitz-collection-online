@@ -69,6 +69,9 @@
     <div class="row">
       <div class="form-group col-md-12">
         <button type="submit" class="btn btn-dark">Submit</button>
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal2">
+              Filter
+          </button>
       </div>
     </div>
     @if(count($errors))
@@ -85,153 +88,7 @@
     {!! Form::close() !!}
   </div>
 
-  @if(!empty($facets))
-  <h3>Filters</h3>
-  <div class="filters row">
-    @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
 
-    <!-- Departments -->
-    <div class="col-md-3 mb-3">
-      <div class="card h-100">
-        <div class="card-body ">
-
-          <div class="contents-label mb-3">
-            <h5>
-            Department
-          </h5>
-
-              @if(array_key_exists('department', $facets))
-              <ul>
-              @foreach ($facets['department']['buckets'] as $bucket)
-                <li>
-                  <a href="{{ Request::fullUrl() }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
-                </li>
-              @endforeach
-              </ul>
-              @endif
-
-          </div>
-        </div>
-      </div>
-    </div>
-    @endif
-    <!-- End of departments -->
-
-
-    @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
-
-    <!-- Makers -->
-    <div class="col-md-3 mb-3">
-      <div class="card h-100">
-        <div class="card-body ">
-
-          <div class="contents-label mb-3">
-            <h5>
-            Maker
-          </h5>
-
-              @if(array_key_exists('maker', $facets))
-              <ul>
-              @foreach ($facets['maker']['buckets'] as $bucket)
-                <li>
-                  <a href="{{ Request::fullUrl() }}&maker={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
-                </li>
-              @endforeach
-              </ul>
-              @endif
-
-          </div>
-        </div>
-      </div>
-    </div>
-    @endif
-    <!-- Meterials -->
-    @if(array_key_exists('material', $facets) && !empty($facets['material']['buckets']) )
-      <div class="col-md-3 mb-3">
-        <div class="card h-100">
-          <div class="card-body ">
-
-            <div class="contents-label mb-3">
-              <h5>
-                Material
-              </h5>
-
-              @if(array_key_exists('material', $facets))
-                <ul>
-                  @foreach ($facets['material']['buckets'] as $bucket)
-                    <li>
-                      <a href="{{ Request::fullUrl() }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count'])}}</a>
-                    </li>
-                  @endforeach
-                </ul>
-              @endif
-
-            </div>
-          </div>
-        </div>
-      </div>
-    @endif
-    <!-- End of materials -->
-
-    <!-- Periods -->
-    @if(array_key_exists('period', $facets) && !empty($facets['period']['buckets']) )
-
-    <div class="col-md-3 mb-3">
-      <div class="card h-100">
-        <div class="card-body ">
-
-          <div class="contents-label mb-3">
-            <h5>
-              Period
-            </h5>
-
-              @if(array_key_exists('period', $facets))
-              <ul>
-              @foreach ($facets['period']['buckets'] as $bucket)
-                <li>
-                  <a href="{{ Request::fullUrl() }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
-                </li>
-              @endforeach
-              </ul>
-              @endif
-
-          </div>
-        </div>
-      </div>
-    </div>
-    @endif
-    <!-- End of periods -->
-    {{-- <!-- object_type -->
-    @if(array_key_exists('object_type', $facets) && !empty($facets['object_type']['buckets']) )
-
-    <div class="col-md-4 mb-3">
-      <div class="card h-100">
-        <div class="card-body ">
-
-          <div class="contents-label mb-3">
-            <h5>
-            Object type
-            </h5>
-
-              @if(array_key_exists('object_type', $facets))
-              <ul>
-              @foreach ($facets['object_type']['buckets'] as $bucket)
-                <li>
-                  <a href="{{ Request::fullUrl() }}&object_type={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
-                </li>
-              @endforeach
-              </ul>
-              @endif
-
-          </div>
-        </div>
-      </div>
-    </div>
-  @endif --}}
-    <!-- End of object_type -->
-
-  </div>
-  @endif
 
   @if(!empty($records))
   <h3>Results</h3>
@@ -279,4 +136,166 @@
     {{ $paginate->appends(request()->except('page'))->links() }}
   </nav>
 @endif
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-slideout" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filter your search</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @if(!empty($facets))
+        <div class="filters">
+          @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
+
+          <!-- Departments -->
+          <div class="col mb-3" >
+
+                <div class="contents-label mb-3">
+                  <h5>
+                    <a data-toggle="collapse" href="#department">Department</a>
+                  </h5>
+
+                    @if(array_key_exists('department', $facets))
+                    <ul  class="collapse" id="department">
+                    @foreach ($facets['department']['buckets'] as $bucket)
+                      <li>
+                        <a href="{{ Request::fullUrl() }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                      </li>
+                    @endforeach
+                    </ul>
+                    @endif
+
+                </div>
+          </div>
+          @endif
+          <!-- End of departments -->
+
+
+          @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
+
+          <!-- Makers -->
+          <div class="col mb-3">
+            <div >
+              <div >
+
+                <div class="contents-label mb-3">
+                  <h5>
+                    <a data-toggle="collapse" href="#maker">Maker</a>
+                  </h5>
+
+                    @if(array_key_exists('maker', $facets))
+                    <ul  class="collapse" id="maker">
+                    @foreach ($facets['maker']['buckets'] as $bucket)
+                      <li>
+                        <a href="{{ Request::fullUrl() }}&maker={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                      </li>
+                    @endforeach
+                    </ul>
+                    @endif
+
+                </div>
+              </div>
+            </div>
+          </div>
+          @endif
+          <!-- Meterials -->
+          @if(array_key_exists('material', $facets) && !empty($facets['material']['buckets']) )
+            <div class="col mb-3">
+
+                  <div class="contents-label mb-3">
+                    <h5>
+                      <a data-toggle="collapse" href="#material">Material</a>
+                    </h5>
+
+                    @if(array_key_exists('material', $facets))
+                      <ul  class="collapse" id="material">
+                        @foreach ($facets['material']['buckets'] as $bucket)
+                          <li>
+                            <a href="{{ Request::fullUrl() }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count'])}}</a>
+                          </li>
+                        @endforeach
+                      </ul>
+                    @endif
+
+                  </div>
+
+            </div>
+          @endif
+          <!-- End of materials -->
+
+          <!-- Periods -->
+          @if(array_key_exists('period', $facets) && !empty($facets['period']['buckets']) )
+
+          <div class="col mb-3">
+
+                <div class="contents-label mb-3">
+                  <h5>
+                    <a data-toggle="collapse" href="#period">Period</a>
+                  </h5>
+
+                    @if(array_key_exists('period', $facets))
+                    <ul class="collapse" id="period">
+                    @foreach ($facets['period']['buckets'] as $bucket)
+                      <li>
+                        <a href="{{ Request::fullUrl() }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                      </li>
+                    @endforeach
+                    </ul>
+                    @endif
+
+                </div>
+
+          </div>
+          @endif
+          <!-- End of periods -->
+          {{-- <!-- object_type -->
+          @if(array_key_exists('object_type', $facets) && !empty($facets['object_type']['buckets']) )
+
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body ">
+
+                <div class="contents-label mb-3">
+                  <h5>
+                  Object type
+                  </h5>
+
+                    @if(array_key_exists('object_type', $facets))
+                    <ul>
+                    @foreach ($facets['object_type']['buckets'] as $bucket)
+                      <li>
+                        <a href="{{ Request::fullUrl() }}&object_type={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
+                      </li>
+                    @endforeach
+                    </ul>
+                    @endif
+
+                </div>
+              </div>
+            </div>
+          </div>
+        @endif --}}
+          <!-- End of object_type -->
+
+        </div>
+        @endif
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.modal-dialog-slideout {min-height: 100%; margin: 0 0 0 auto;background: #fff;}
+.modal.fade .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(0,100%)scale(1);transform: translate(100%,0)scale(1);}
+.modal.fade.show .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(0,0);transform: translate(0,0);display: flex;align-items: stretch;-webkit-box-align: stretch;height: 100%;}
+.modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body{overflow-y: auto;overflow-x: hidden;}
+.modal-dialog-slideout .modal-content{border: 0;}
+.modal-dialog-slideout .modal-header, .modal-dialog-slideout .modal-footer {height: 69px; display: block;}
+.modal-dialog-slideout .modal-header h5 {float:left;}
+</style>
 @endsection

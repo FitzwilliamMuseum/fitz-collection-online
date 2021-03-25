@@ -7,10 +7,17 @@
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "copy": "npm run copy-uv-assets && npm run copy-uv-dist-umd && npm run copy-uv-html && npm run copy-uv-css",
+    "copy-uv-assets": "cp -R node_modules/universalviewer/dist/uv-assets ./public",
+    "copy-uv-dist-umd": "cp -R node_modules/universalviewer/dist/uv-dist-umd ./public",
+    "copy-uv-html": "cp -R node_modules/universalviewer/dist/uv.html ./public",
+    "copy-uv-css": "cp -R node_modules/universalviewer/dist/uv.css ./public/css/",
+    "postinstall": "npm run copy"
   },
   "dependencies": {
-    "node-forge": ">=0.10.0"
+    "node-forge": ">=0.10.0",
+    "universalviewer": "^4.0.0-pre.16"
   },
   "devDependencies": {
     "axios": ">=0.21.1",

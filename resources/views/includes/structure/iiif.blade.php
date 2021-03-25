@@ -1,31 +1,18 @@
-@section('iiif')
-@if(array_key_exists('zoom', $filtered[0]["processed"]))
-<script type="text/javascript" src="/js/mootools-core-1.6.0-compressed.js"></script>
-<script type="text/javascript" src="/js/iipmooviewer-2.0-min.js"></script>
-<link rel="stylesheet" type="text/css" media="all" href="/css/iip.css" />
-<script type="text/javascript">
+@section('content')
 
-// IIPMooViewer options: See documentation at http://iipimage.sourceforge.net for more details
+<div id="uv" class="uv"></div>
+<script>
+  var uv = UV.init(
+    "uv",
+    {
+      manifestUri: "https://api.fitz.ms/data-distributor/iiif/{{$object['admin']['id']}}/manifest",
+      configUri: "{{ url('/') }}/config.json",
+    },
+    new UV.URLDataProvider()
+  );
 
-// The *full* image path on the server. This path does *not* need to be in the web
-// server root directory. On Windows, use Unix style forward slash paths without
-// the "c:" prefix
-var image = '/{{ $filtered[0]["processed"]["zoom"]["location"] }}';
-
-// Create our iipmooviewer object
-new IIPMooViewer( "viewer", {
-  image: image,
-  server: '/iipsrv/iipsrv.fcgi',
-  showNavWindow: true,
-  prefix: "/images/",
-  preload: true,
-  enableFullscreen: false
-});
-
+  uv.on("created", function () {
+    uv.resize();
+  });
 </script>
-@endif
 @endsection
-
-@if(array_key_exists('zoom', $filtered[0]["processed"]))
-  <div id="viewer"></div>
-@endif

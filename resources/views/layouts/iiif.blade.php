@@ -12,11 +12,29 @@
 
     @include('includes.structure.manifest')
     @yield('jsonld')
-    @hasSection('iiif')
-      @yield('iiif')
-    @endif
+
+    <link rel="stylesheet" type="text/css" href="/css/uv.css" />
+    <!-- include this if using 3D: https://github.com/UniversalViewer/universalviewer/issues/716 -->
+    <script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+    <!-- must include jQuery and jsViews for the UV for now -->
+    <script src="{{ url('/') }}/uv-assets/js/bundle.js"></script>
+    <script src="{{ url('/') }}/uv-dist-umd/UV.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+      #uv {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
 </head>
 <body class="doc-body">
+  @include('includes.structure.accessibility')
+
+  @include('includes.structure.nav')
+
+
 
     @yield('content')
 
