@@ -58,8 +58,11 @@ class indexController extends Controller
         ]
       ]
     ];
+
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
+    dump($data);
+    // $data = $this->replaceKeys('@link', 'link', $data);
 
     $query = $data[0]['_source']['summary_title'];
     $id = $data[0]['_id'];
@@ -128,6 +131,7 @@ class indexController extends Controller
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
+    dd($data);
     if($format == 'json'){
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
     } elseif($format == 'xml'){

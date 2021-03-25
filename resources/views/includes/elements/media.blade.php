@@ -16,7 +16,6 @@
               download="{{ basename($record['_source']['multimedia'][0]['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
             </span>
             @if(array_key_exists('multimedia', $record['_source']))
-              @dump($record['_source'])
               @if(array_key_exists('zoom', $record['_source']['multimedia'][0]['processed']))
                 <span class="btn btn-wine m-1 p-2 share">
                   <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
@@ -38,6 +37,11 @@
                 <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
                   loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
                   /></a>
+                    @if(array_key_exists('zoom', $media['processed']))
+                      <span class="btn btn-wine m-1 p-2 share">
+                        <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
+                      </span>
+                    @endif
                   <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
                     <a href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['original']['location'] }}" target="_blank"
                     download="{{ basename($media['processed']['original']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
