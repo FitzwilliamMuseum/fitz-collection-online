@@ -4,7 +4,6 @@
 @section('title', 'Image gallery for ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @section('content')
   <div class="row ">
-    @dump($paginate)
     @foreach($paginate as $media)
       <div class="col-md-4 mt-3">
         <div class="card card-body h-100">
