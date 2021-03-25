@@ -25,7 +25,16 @@
       }
       #uv {
         width: 100vw;
-        height: 100vh;
+        height: 87vh;
+        margin-bottom: 0px;
+      }
+      .objectInfo {
+          margin-top: 55px;
+          margin-left: -15px;
+          margin-right: -15px;
+      }
+      .objectInfo p {
+        margin-top: 5px;
       }
     </style>
 </head>
@@ -35,8 +44,11 @@
   @include('includes.structure.nav')
 
 
-
+    @yield('objectInfo')
     @yield('content')
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script><!-- Back to top script -->
 
 </body>
+
 </html>
