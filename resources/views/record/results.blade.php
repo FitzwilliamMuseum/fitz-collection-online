@@ -32,6 +32,14 @@
           >
           <label class="form-check-label" for="images">Only with images?</label>
         </div>
+        <div class="form-group form-check ">
+          <input type="checkbox" class="form-check-input" id="iiif" name="iiif"
+          @if(request()->has('iiif'))
+            checked
+          @endif
+          >
+          <label class="form-check-label" for="images">IIIF enabled?</label>
+        </div>
       </div>
       <div class="col">
         <h4>Operand for your search</h4>

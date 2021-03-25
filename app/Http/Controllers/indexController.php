@@ -61,7 +61,6 @@ class indexController extends Controller
 
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    dump($data);
     // $data = $this->replaceKeys('@link', 'link', $data);
 
     $query = $data[0]['_source']['summary_title'];
@@ -381,7 +380,8 @@ $facets = array(
     // Add images filter
     if(!is_null($request->get('images'))){
       $filter  =  array("exists" => [
-        "field" => "multimedia"]
+        "field" => "multimedia"
+        ]
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
@@ -392,7 +392,15 @@ $facets = array(
       );
       array_push($params['body']['query']['bool']['must'], [$filter]);
     }
-    // Material filter
+    // Add iiif filter
+    if(!is_null($request->get('iiif'))){
+      $filter  =  array("exists" => [
+        "field" => "multimedia.processed.zoom"
+        ]
+      );
+      array_push($params['body']['query']['bool']['must'], [$filter]);
+    }
+    //  Material filter
     if(!is_null($request->get('material'))){
       $filter  =  array("term" => [
         "materials.reference.summary_title.keyword" => $request->get('material')]

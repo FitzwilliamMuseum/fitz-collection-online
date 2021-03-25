@@ -17,7 +17,6 @@
         <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="img-fluid" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
         alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
         @endif
-        <!-- <pre>@php(var_dump($record['_source']))</pre> -->
         <div class="contents-label mb-3">
           <h3>
             {{ $record['_source']['identifier'][0]['accession_number'] }}: {{ ucfirst($record['_source']['summary_title']) }}
