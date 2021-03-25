@@ -2,9 +2,9 @@
 <html lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/  dc: http://purl.org/dc/terms/  foaf: http://xmlns.com/foaf/0.1/  og: http://ogp.me/ns#  rdfs: http://www.w3.org/2000/01/rdf-schema#  schema: http://schema.org/  sioc: http://rdfs.org/sioc/ns#  sioct: http://rdfs.org/sioc/types#  skos: http://www.w3.org/2004/02/skos/core#  xsd: http://www.w3.org/2001/XMLSchema# ">
 <head>
 
-    @include('includes.structure.meta')
+    @include('includes.structure.metaIIIF')
 
-    @include('includes.css.css')
+    @include('includes.css.cssIIIF')
 
     @hasSection('map')
       @mapstyles
@@ -20,6 +20,12 @@
     <script src="{{ url('/') }}/uv-assets/js/bundle.js"></script>
     <script src="{{ url('/') }}/uv-dist-umd/UV.js"></script>
     <style>
+    .navbar-dark .navbar-nav .nav-link {
+      color: #f5f5f5!important;
+    }
+    .bg-black {
+      background-color: #000000!important;
+    }
       body {
         margin: 0;
       }
