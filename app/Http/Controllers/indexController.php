@@ -130,7 +130,6 @@ class indexController extends Controller
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    dd($data);
     if($format == 'json'){
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
     } elseif($format == 'xml'){
