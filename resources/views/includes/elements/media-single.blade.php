@@ -1,7 +1,7 @@
 <h2>Full size image</h2>
 <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
   <div>
-    <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['original']['location'] }}"
+    <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['large']['location'] }}"
     loading="lazy" alt="An image of "
     /></a>
   </div>
