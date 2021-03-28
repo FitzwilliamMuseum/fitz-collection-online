@@ -21,4 +21,4 @@
   </div>
 </div>
 
-@section('hero_image', env('APP_URL'). '/imagestore/' . $record['processed']['original']['location'])
+@section('hero_image', env('APP_URL'). '/imagestore/' . $record['processed']['large']['location'])
