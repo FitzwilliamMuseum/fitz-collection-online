@@ -18,10 +18,19 @@
   </p>
   @endif
 
+
   <h5>Image data</h5>
   <ul>
     @if(!empty($exif->getTitle()))
       <li>Accession Number: {{ $exif->getTitle() }}</li>
+    @endif
+    @php
+    $raw = $exif->getRawData();
+    @endphp
+    @if(array_key_exists('COMMENT', $raw) && is_array($raw['COMMENT']))
+      @foreach($raw['COMMENT'] as $com)
+      <li>{{ utf8_encode($com) }}</li>
+      @endforeach
     @endif
     @if(!empty($exif->getCopyright()) )
       <li>{{ utf8_encode($exif->getCopyright()) }}</li>
