@@ -15,8 +15,12 @@
     @hasSection('iiif')
       @yield('iiif')
     @endif
+    @include('googletagmanager::head')
+
 </head>
 <body class="doc-body">
+  @include('googletagmanager::body')
+
 
   @include('includes.structure.accessibility')
 

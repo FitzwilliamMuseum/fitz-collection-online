@@ -24,6 +24,7 @@
         "olssonm/l5-very-basic-auth": "^6.3",
         "predis/predis": "^1.1",
         "spatie/array-to-xml": "^2.14",
+        "spatie/laravel-googletagmanager": "^2.6",
         "spatie/laravel-responsecache": "^6.6",
         "symfony/http-kernel": "5.1.5",
         "toin0u/geocoder-laravel": "^4.3"
