@@ -1,14 +1,14 @@
 @extends('layouts.iiif')
-@section('title', 'A IIIF Universal view of ' . ucfirst($object['summary_title'] . ' : ' . $object['identifier'][0]['accession_number'] ))
+@section('title', 'An IIIF Universal view of ' . ucfirst($object['summary_title'] . ' : ' . $object['identifier'][0]['accession_number'] ))
 @section('objectInfo')
   <div class="container-fluid" >
     <div class="bg-dark text-white p-2 objectInfo text-center row">
-      <div class="mx-auto">{{ ucfirst($object['summary_title']) }} : {{  $object['identifier'][0]['accession_number'] }}  <a href="/id/object/{{  $object['identifier'][1]['value'] }}" class="btn btn-outline-light">Return to record</a></div>
+      <div class="mx-auto">{{ ucfirst($object['summary_title']) }} : {{  $object['identifier'][0]['accession_number'] }}  <a href="/id/object/{{  $object['identifier'][1]['value'] }}" class="btn btn-outline-light btn-sm ml-2">Return to record</a></div>
   </div>
   </div>
 @endsection
 @section('description')
-  A IIIF Universal view of  {{ ucfirst($object['summary_title']) }} : {{  $object['identifier'][0]['accession_number'] }}
+  An IIIF Universal view of  {{ ucfirst($object['summary_title']) }} : {{  $object['identifier'][0]['accession_number'] }}
 @endsection
 @if(array_key_exists('multimedia', $object))
 @section('hero_image', env('APP_URL') . '/imagestore/' . $object['multimedia'][0]['processed']['original']['location'])
