@@ -1,6 +1,5 @@
 <h4>About this image</h4>
 <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
-
   @if(!empty($exif->getHeadline()))
     @section('title', ucfirst($exif->getHeadline()))
   @elseif(array_key_exists('title', $object))

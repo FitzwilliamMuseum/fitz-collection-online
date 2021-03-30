@@ -1,17 +1,27 @@
+{{-- Check if  images exist for record--}}
+
 @if(array_key_exists('multimedia', $record['_source']))
   <div class="col-md-12 mb-3">
+
     <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
       <div>
-        @if(array_key_exists('multimedia', $record['_source']))
+
+          @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+            {{-- Check if admin source filled in --}}
+            <p>The image of this work is under copright or restricted access.</p>
+          @else
+            {{-- If not load image --}}
           <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
-          @endif
+
           <div class="text-center mt-2">
             <span class="btn btn-wine m-1 p-2 share">
               <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
             </span>
+
             @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+              {{-- Check for download --}}
             <span class="btn btn-wine m-1 p-2 share">
               <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
               download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
@@ -21,24 +31,15 @@
               <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
               download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
             </span> --}}
-            @endif
-            @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
-            <style>
-            .main-image  {
-              -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-              filter: blur(15px);
-              }
-            </style>
-            @endif
-            @if(array_key_exists('multimedia', $record['_source']))
-              @php
-              $con = array();
-              foreach ($record['_source']['multimedia'] as $image ){
+            @php
+            $con = array();
+            foreach ($record['_source']['multimedia'] as $image ){
               $con['zoom'] = Arr::has($image, 'processed.zoom');
-              }
-              @endphp
+            }
+            @endphp
 
               @if(Arr::get($con, 'zoom', true))
+                {{-- Check for IIIF --}}
                 <span class="btn btn-wine m-1 p-2 share">
                   <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
                 </span>
@@ -46,27 +47,50 @@
                   <a href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF Manifest</a>
                 </span>
               @endif
+
             @endif
+          @endif
+
+
+          @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+            {{-- Add an  image blur if needed --}}
+          <style>
+          .main-image  {
+            -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+            filter: blur(15px);
+            }
+          </style>
+          @endif
+
           </div>
+
         </div>
       </div>
+
     @endif
 
     @if(array_key_exists('multimedia', $record['_source']))
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
+
         @php
-        $images = [];
-        $ports = array();
-        foreach (array_slice($record['_source']['multimedia'],1,9) as $image ){
-        $ports[] = array('portfolio', Arr::has($image, 'admin.source'));
-        if(Arr::get($ports, 'portfolio', true)){
-          unset($image['processed']);
-        }
-        $images[] = $image;
-        }
+          $images = [];
+
+          foreach (array_slice($record['_source']['multimedia'],1,9) as $image ){
+            if(!Arr::has($image, 'admin.source')){
+              // dump(Arr::pluck($image, 'processed'));
+              // dump($image['processed']);
+              $images[] = array(
+                'admin' => $image['admin'],
+                'processed' => $image['processed']
+              );
+            }
+            // dd($images);
+          }
         @endphp
 
-        @if(Arr::has($images,'processed'))
+        {{-- @dump($images) --}}
+
+        @if(sizeof($images) > 0)
         <h3>Alternative views</h3>
         <div class="row ">
           @foreach($images as $media)
@@ -77,12 +101,12 @@
                   /></a>
 
 
-                 @if($media['admin']['source'] != 'portfolio')
+                 {{-- @if($media['admin']['source'] != 'portfolio') --}}
                     <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
                       <a href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['large']['location'] }}" target="_blank"
                       download="{{ basename($media['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
                     </span>
-                  @endif
+                  {{-- @endif --}}
                 </div>
               </div>
             @endforeach
