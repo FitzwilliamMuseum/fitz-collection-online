@@ -3,7 +3,7 @@
     <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
       <div>
         @if(array_key_exists('multimedia', $record['_source']))
-          <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
+          <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
           @endif
@@ -11,26 +11,34 @@
             <span class="btn btn-wine m-1 p-2 share">
               <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
             </span>
+            @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+            <span class="btn btn-wine m-1 p-2 share">
+              <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
+              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
+            </span>
+            {{-- @else
+            <span class="btn btn-wine m-1 p-2 share">
+              <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
+              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
+            </span> --}}
+            @endif
             @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
-            <span class="btn btn-wine m-1 p-2 share">
-              <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
-            </span>
-          @else
-            <span class="btn btn-wine m-1 p-2 share">
-              <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
-            </span>
+            <style>
+            .main-image  {
+              -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
+              filter: blur(15px);
+              }
+            </style>
             @endif
             @if(array_key_exists('multimedia', $record['_source']))
               @php
               $con = array();
               foreach ($record['_source']['multimedia'] as $image ){
-              $con[] = array('zoom',Arr::has($image, 'processed.zoom'));
+              $con['zoom'] = Arr::has($image, 'processed.zoom');
               }
               @endphp
 
-              @if($discount = Arr::get($con, 'zoom', true))
+              @if(Arr::get($con, 'zoom', true))
                 <span class="btn btn-wine m-1 p-2 share">
                   <a href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
                 </span>
@@ -51,14 +59,13 @@
         $ports = array();
         foreach (array_slice($record['_source']['multimedia'],1,9) as $image ){
         $ports[] = array('portfolio', Arr::has($image, 'admin.source'));
-        // dump($ports);
         if(Arr::get($ports, 'portfolio', true)){
           unset($image['processed']);
         }
         $images[] = $image;
         }
-        // dump($images);
         @endphp
+
         @if(Arr::has($images,'processed'))
         <h3>Alternative views</h3>
         <div class="row ">
