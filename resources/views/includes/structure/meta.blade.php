@@ -66,7 +66,6 @@
     "description":"The Fitzwilliam Museum is the principal museum of the University of Cambridge",
     "@context":"https://schema.org"}
     </script>
-    right, you just add this line:
 
 <script type="text/javascript">
 
