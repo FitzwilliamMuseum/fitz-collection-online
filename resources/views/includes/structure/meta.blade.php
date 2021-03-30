@@ -66,4 +66,17 @@
     "description":"The Fitzwilliam Museum is the principal museum of the University of Cambridge",
     "@context":"https://schema.org"}
     </script>
-    <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g" async="true"></script>
+    right, you just add this line:
+
+<script type="text/javascript">
+
+  var BugHerdConfig = {"feedback":{"tab_position":"bottom-left"}};
+
+  (function (d, t) {
+    var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
+    bh.type = 'text/javascript';
+    bh.src = '//www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g';
+    s.parentNode.insertBefore(bh, s);
+  })(document, 'script');
+</script>
+    {{-- <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g" async="true"></script> --}}
