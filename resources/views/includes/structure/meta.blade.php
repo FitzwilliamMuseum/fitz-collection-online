@@ -70,7 +70,10 @@
 
 <script type="text/javascript">
 
-  var BugHerdConfig = {"feedback":{"tab_position":"bottom-left"}};
+  var BugHerdConfig = {
+    feedback:{"tab_position":"bottom-left"},
+    reporter: {required: "true"}
+  };
 
   (function (d, t) {
     var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
