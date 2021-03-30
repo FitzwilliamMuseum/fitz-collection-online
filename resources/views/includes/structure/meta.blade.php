@@ -71,9 +71,9 @@
 <script type="text/javascript">
 
   var BugHerdConfig = {
-    feedback:{"tab_position":"bottom-left"},
     reporter: {required: "true"},
     feedback: {
+      "tab_position":"bottom-left",
  			tab_text: "Report a problem/ give feedback"
  		}
   };
