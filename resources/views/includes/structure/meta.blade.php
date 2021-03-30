@@ -73,7 +73,9 @@
   var BugHerdConfig = {
     feedback:{"tab_position":"bottom-left"},
     reporter: {required: "true"},
-    tab_text: {"Report a problem/ Give feedback"}
+    feedback: {
+ 			tab_text: "Report a problem/ give feedback"
+ 		}
   };
 
   (function (d, t) {
