@@ -56,9 +56,9 @@
                 <span class="btn btn-wine m-1 p-2 share">
                   <a href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF Manifest</a>
                 </span>
-                {{-- <span class="btn btn-wine m-1 p-2 share">
+                <span class="btn btn-wine m-1 p-2 share">
                   <a href="/id/image/slow/iiif/?image={{ $slow[0] }}" ><i class="fas fa-eye"></i> Slow looking</a>
-                </span> --}}
+                </span>
               @endif
             @endif
 
