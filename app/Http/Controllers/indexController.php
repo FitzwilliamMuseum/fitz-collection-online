@@ -559,6 +559,9 @@ $facets = array(
       return view('record.image', compact('filtered', 'object','palette', 'exif'));
     }
 
+    public function slowiiif(){
+      return view('record.slow');
+    }
     public function iiif($id){
 
       $params = [
