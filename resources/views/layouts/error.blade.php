@@ -36,6 +36,7 @@
         @yield('content')
   </div>
 
+  @include('includes.structure.emailsignup')
 
   @include('includes.structure.footer')
   @include('includes.structure.modal')

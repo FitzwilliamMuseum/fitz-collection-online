@@ -724,4 +724,3 @@ function initialiseViewer(fitzImage) {
     $('#modal').fadeIn();
   });
 }
-//# sourceMappingURL=viewer.js.map

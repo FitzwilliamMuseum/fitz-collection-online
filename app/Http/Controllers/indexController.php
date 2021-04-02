@@ -559,9 +559,23 @@ $facets = array(
       return view('record.image', compact('filtered', 'object','palette', 'exif'));
     }
 
-    public function slowiiif(){
-      return view('record.slow');
+    public function slowiiif(Request $request){
+      $params = [
+        'index' => 'ciim',
+        'body'  => [
+          'query' => [
+            'match' => [
+              'multimedia.admin.id' => $request->get('image')
+            ]
+          ]
+        ]
+      ];
+
+      $response = $this->getElastic()->setParams($params)->getSearch();
+      $object = $response['hits']['hits'][0]['_source'];
+      return view('record.slow', compact('object'));
     }
+
     public function iiif($id){
 
       $params = [

@@ -1,4 +1,8 @@
 @extends('layouts.slow')
+@section('title','Take a slow look at ' . $object['title'][0]['value'])
+@section('description', 'A slow looking IIIF image of '. $object['title'][0]['value'])
+@section('hero_image_title', ucfirst($object['title'][0]['value']))
+@section('hero_image', env('APP_URL') . '/imagestore/' . $object['multimedia'][0]['processed']['mid']['location'])
 @section('content')
 <div id="osd-viewer">
     <div id="modal" class="modal">
@@ -21,5 +25,4 @@
       </div>
     </div>
   </div>
-  <div class="intro">
 @endsection
