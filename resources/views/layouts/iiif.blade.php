@@ -19,30 +19,8 @@
     <!-- must include jQuery and jsViews for the UV for now -->
     <script src="{{ url('/') }}/uv-assets/js/bundle.js"></script>
     <script src="{{ url('/') }}/uv-dist-umd/UV.js"></script>
-    <style>
-    .navbar-dark .navbar-nav .nav-link {
-      color: #f5f5f5!important;
-    }
-    .bg-black {
-      background-color: #000000!important;
-    }
-      body {
-        margin: 0;
-      }
-      #uv {
-        width: 100vw;
-        height: 87vh;
-        margin-bottom: 0px;
-      }
-      .objectInfo {
-          margin-top: 55px;
-          margin-left: -15px;
-          margin-right: -15px;
-      }
-      .objectInfo p {
-        margin-top: 5px;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/iiif.css" />
+
     @include('googletagmanager::head')
 
 </head>
