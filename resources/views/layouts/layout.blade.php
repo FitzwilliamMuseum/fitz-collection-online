@@ -53,7 +53,7 @@
     @yield('sketchfab')
     @yield('mlt')
 
-
+  @include('includes.structure.emailsignup')
   @include('includes.structure.share')
 
   @include('includes.structure.footer')
