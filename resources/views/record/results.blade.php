@@ -4,6 +4,14 @@
 @section('hero_image_title', "The inside of our Founder's entrance")
 @section('description', 'Search results from our highlights')
 @section('keywords', 'search,results,collection,highlights,fitzwilliam')
+
+@php
+$base = Request::query();
+if(array_key_exists('page', $base)){
+  unset($base['page']);
+}
+$query = http_build_query($base);
+@endphp
 @section('content')
 
   <h2>Search results</h2>
@@ -170,7 +178,7 @@
                     <ul  class="collapse" id="department">
                     @foreach ($facets['department']['buckets'] as $bucket)
                       <li>
-                        <a href="{{ Request::fullUrl() }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                        <a href="/search/results?{{ $query  }}&department={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
                       </li>
                     @endforeach
                     </ul>
@@ -198,7 +206,7 @@
                     <ul  class="collapse" id="maker">
                     @foreach ($facets['maker']['buckets'] as $bucket)
                       <li>
-                        <a href="{{ Request::fullUrl() }}&maker={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                        <a href="/search/results?{{ $query  }}&maker={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
                       </li>
                     @endforeach
                     </ul>
@@ -222,7 +230,7 @@
                       <ul  class="collapse" id="material">
                         @foreach ($facets['material']['buckets'] as $bucket)
                           <li>
-                            <a href="{{ Request::fullUrl() }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count'])}}</a>
+                            <a href="/search/results?{{ $query  }}&material={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count'])}}</a>
                           </li>
                         @endforeach
                       </ul>
@@ -248,7 +256,7 @@
                     <ul class="collapse" id="period">
                     @foreach ($facets['period']['buckets'] as $bucket)
                       <li>
-                        <a href="{{ Request::fullUrl() }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                        <a href="/search/results?{{ $query  }}&period={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
                       </li>
                     @endforeach
                     </ul>
@@ -259,33 +267,30 @@
           </div>
           @endif
           <!-- End of periods -->
-          {{-- <!-- object_type -->
+          <!-- object_type -->
           @if(array_key_exists('object_type', $facets) && !empty($facets['object_type']['buckets']) )
 
-          <div class="col-md-4 mb-3">
-            <div class="card h-100">
-              <div class="card-body ">
+            <div class="col mb-3">
 
-                <div class="contents-label mb-3">
-                  <h5>
-                  Object type
-                  </h5>
+                  <div class="contents-label mb-3">
+                    <h5>
+                      <a data-toggle="collapse" href="#object_type">Object Type</a>
+                    </h5>
 
-                    @if(array_key_exists('object_type', $facets))
-                    <ul>
-                    @foreach ($facets['object_type']['buckets'] as $bucket)
-                      <li>
-                        <a href="{{ Request::fullUrl() }}&object_type={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ $bucket['doc_count'] }}</a>
-                      </li>
-                    @endforeach
-                    </ul>
-                    @endif
+                      @if(array_key_exists('object_type', $facets))
+                      <ul class="collapse" id="object_type">
+                      @foreach ($facets['object_type']['buckets'] as $bucket)
+                        <li>
+                          <a href="/search/results?{{ $query  }}&object_type={{  $bucket['key'] }}">{{  ucfirst($bucket['key']) }}: {{ number_format($bucket['doc_count']) }}</a>
+                        </li>
+                      @endforeach
+                      </ul>
+                      @endif
 
-                </div>
-              </div>
+                  </div>
+
             </div>
-          </div>
-        @endif --}}
+        @endif
           <!-- End of object_type -->
 
         </div>
@@ -297,13 +302,4 @@
     </div>
   </div>
 </div>
-<style>
-.modal-dialog-slideout {min-height: 100%; margin: 0 0 0 auto;background: #fff;}
-.modal.fade .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(0,100%)scale(1);transform: translate(100%,0)scale(1);}
-.modal.fade.show .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(0,0);transform: translate(0,0);display: flex;align-items: stretch;-webkit-box-align: stretch;height: 100%;}
-.modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body{overflow-y: auto;overflow-x: hidden;}
-.modal-dialog-slideout .modal-content{border: 0;}
-.modal-dialog-slideout .modal-header, .modal-dialog-slideout .modal-footer {height: 69px; display: block;}
-.modal-dialog-slideout .modal-header h5 {float:left;}
-</style>
 @endsection

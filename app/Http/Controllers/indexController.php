@@ -172,75 +172,7 @@ class indexController extends Controller
 
 
   public function search() {
-    $objects = '{
-      "query": {
-        "match": {
-          "type.base": "object"
-        }
-      }
-    }';
 
-    $oParams = [
-      'index' => 'ciim',
-      'body' => $objects
-    ];
-    $images = '{
-      "query": {
-        "match": {
-          "type.base": "media"
-        }
-      }
-    }';
-
-    $iParams = [
-      'index' => 'ciim',
-      'body' => $images
-    ];
-
-    $agents = '{
-      "query": {
-        "match": {
-          "type.base": "agent"
-        }
-      }
-    }';
-    $aParams = [
-      'index' => 'ciim',
-      'body' => $agents
-    ];
-
-    $publications = '{
-      "query": {
-        "match": {
-          "type.base": "publication"
-        }
-      }
-    }';
-    $pParams = [
-      'index' => 'ciim',
-      'body' => $publications
-    ];
-
-    $count = [];
-    $count['records']  = $this->getElastic()->setParams($oParams)->getCount();
-    $count['images'] = $this->getElastic()->setParams($iParams)->getCount();
-    $count['agents'] = $this->getElastic()->setParams($aParams)->getCount();
-    $count['publications'] = $this->getElastic()->setParams($pParams)->getCount();
-
-    // $latest = '{
-    //   "sort": [{
-    //       "admin.created": {
-    //         "order": "desc"
-    //       }
-    //     },
-    //     {
-    //       "_score": {
-    //         "order": "desc"
-    //       }
-    //     },
-    //   ],
-    //   "size": 50
-    // }';
     $latest = '[
       "query" => [
         "bool" => [
@@ -262,7 +194,7 @@ class indexController extends Controller
     ],';
     $lParams = [
       'index' => 'ciim',
-      'size' => 50,
+      'size' => 9,
       'body' => [
         "query" => [
           "bool" => [
@@ -276,6 +208,11 @@ class indexController extends Controller
                  ],
               ]
            ]
+        ],
+        'sort' => [
+          "admin.modified" =>  [
+            "order" =>  'DESC'
+            ]
         ]
       ],
     ];
@@ -284,7 +221,7 @@ class indexController extends Controller
     );
     $response = $this->getElastic()->setParams($lParams)->getSearch();
     $records = $response['hits']['hits'];
-    return view('record.search', compact('count', 'records'));
+    return view('record.search', compact('records'));
   }
 
   /** Get results for search
