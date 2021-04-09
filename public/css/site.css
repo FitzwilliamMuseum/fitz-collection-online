@@ -184,6 +184,9 @@ video {
 }
 
 @media only screen and (min-width: 1024px) {
+  .logo {
+    margin-top: 100px!important;
+  }
   .cd-top {
     height: 60px;
     width: 60px;
