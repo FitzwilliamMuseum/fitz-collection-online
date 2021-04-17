@@ -84,4 +84,3 @@
     s.parentNode.insertBefore(bh, s);
   })(document, 'script');
 </script>
-    {{-- <script type="text/javascript" src="https://www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g" async="true"></script> --}}
