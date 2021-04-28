@@ -67,7 +67,7 @@
     "@context":"https://schema.org"}
     </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 
   var BugHerdConfig = {
     reporter: {required: "true"},
@@ -83,4 +83,4 @@
     bh.src = '//www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g';
     s.parentNode.insertBefore(bh, s);
   })(document, 'script');
-</script>
+</script> --}}
