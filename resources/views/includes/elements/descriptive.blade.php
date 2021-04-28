@@ -1,5 +1,5 @@
-@section('title', ucfirst($record['_source']['summary_title']))
-
+@section('title', ucfirst($record['_source']['summary_title'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number']))
+@section('description', 'A record for a Fitzwilliam Museum object: ' . ucfirst($record['_source']['summary_title']) . ' ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @if(array_key_exists('title', $record['_source']))
 
   <h4>
