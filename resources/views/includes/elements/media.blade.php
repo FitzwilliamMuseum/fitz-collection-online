@@ -88,7 +88,7 @@
         @php
           $images = [];
 
-          foreach (array_slice($record['_source']['multimedia'],1,9) as $image ){
+          foreach (array_slice($record['_source']['multimedia'],1,3) as $image ){
             if(!Arr::has($image, 'admin.source')){
               $images[] = array(
                 'admin' => $image['admin'],
@@ -123,7 +123,7 @@
           @php
             $records = count($record['_source']['multimedia']);
           @endphp
-          @if($records > 9)
+          @if($records > 4)
             <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share d-block">
               <a href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
               ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
