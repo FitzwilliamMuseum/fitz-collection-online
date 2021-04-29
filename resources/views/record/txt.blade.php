@@ -173,8 +173,8 @@ title:	{{ $exhibition['summary_title'] }}
 @endforeach
 @endisset
 @isset($data['publications'])
-
 CITATIONS
+--------
 @foreach ($data['publications'] as $publication)
 {!! $publication['summary_title'] !!}
 @endforeach
