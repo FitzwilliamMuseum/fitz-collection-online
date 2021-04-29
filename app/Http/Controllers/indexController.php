@@ -132,6 +132,8 @@ class indexController extends Controller
     $data = $response['hits']['hits'];
     if($format == 'json'){
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
+    } elseif ($format = 'txt') {
+      return response(view('record.txt',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'text/plain']);
     } elseif($format == 'xml'){
       $data = $this->utf8_converter($data[0]['_source']);
       $data = $this->replaceKeys('@link', 'link', $data);
