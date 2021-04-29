@@ -9,7 +9,6 @@ $uri = Arr::pluck($data['identifier'],'uri');
 $uri = array_filter($uri);
 $uri= Arr::flatten($uri);
 @endphp
-{{-- @dd($data) --}}
 IDENTIFIERS
 -----------
 id:	{{ $pris[0] }}
@@ -96,12 +95,16 @@ COMPONENTS
 @endisset
 
 @isset($data['techniques'])
+
+@foreach ($data['techniques'] as $technique)
 TECHNIQUES
 ----------
-@foreach ($data['techniques'] as $technique)
-@foreach ($technique['description'] as $tech)
-{{ $tech['value'] }}
+@isset($technique['description'])
+@foreach($technique['description'] as $k => $v)
+{{$v['value']}}
 @endforeach
+@endisset
+{{$technique['reference']['summary_title']}}
 @endforeach
 @endisset
 
