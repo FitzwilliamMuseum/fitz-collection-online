@@ -130,11 +130,11 @@ class indexController extends Controller
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    if($format == 'json'){
+    if($format === 'json'){
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
-    } elseif ($format = 'txt') {
+    } elseif ($format === 'txt') {
       return response(view('record.txt',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'text/plain']);
-    } elseif($format == 'xml'){
+    } elseif($format === 'xml'){
       $data = $this->utf8_converter($data[0]['_source']);
       $data = $this->replaceKeys('@link', 'link', $data);
       $arrayToXml = new ArrayToXml($data);
