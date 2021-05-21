@@ -122,7 +122,7 @@
     </ul>
     @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]))
       @php
-      $notes = array_reverse($record['_source']['lifecycle']['creation'][0]['note'], true);
+      $notes = $record['_source']['lifecycle']['creation'][0]['note'];
       @endphp
       <h4>Note</h4>
       @foreach($notes as $note)
