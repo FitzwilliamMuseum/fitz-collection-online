@@ -23,7 +23,7 @@
 
 
     <li class="nav-item active">
-      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/objects-and-artworks/') }}" id="navbarDropdownCollections" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/objects-and-artworks/') }}" >
         Our Collection</a>
       </li>
       <li class="nav-item">
