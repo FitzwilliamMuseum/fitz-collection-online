@@ -110,12 +110,10 @@
                   /></a>
 
 
-                 {{-- @if($media['admin']['source'] != 'portfolio') --}}
                     <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
                       <a href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['large']['location'] }}" target="_blank"
                       download="{{ basename($media['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
                     </span>
-                  {{-- @endif --}}
                 </div>
               </div>
             @endforeach
@@ -132,5 +130,5 @@
         @endif
       </div>
       @endif
-      {{-- @include('includes/structure/iiif') --}}
+      @include('includes/structure/iiif')
     @endif
