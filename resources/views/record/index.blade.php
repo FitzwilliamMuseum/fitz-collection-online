@@ -1,4 +1,4 @@
-@extends('layouts/layout')
+@extends('layouts.layout')
 @section('content')
   <div class="row">
     @foreach($data as $record)

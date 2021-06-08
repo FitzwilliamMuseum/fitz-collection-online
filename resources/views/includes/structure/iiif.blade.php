@@ -1,5 +1,5 @@
 @section('content')
-<div id="uv" class="uv"></div>
+{{-- <div id="uv" class="uv"></div>
 <script>
   var uv = UV.init(
     "uv",
@@ -13,5 +13,5 @@
   uv.on("created", function () {
     uv.resize();
   });
-</script>
+</script> --}}
 @endsection
