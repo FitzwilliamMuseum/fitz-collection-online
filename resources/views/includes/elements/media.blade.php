@@ -22,11 +22,8 @@
                 download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
               </span>
 
-            @else
-            <span class="btn btn-wine m-1 p-2 share">
-              <a href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
-            </span>
+
+          
             @php
             $con = array();
             foreach ($record['_source']['multimedia'] as $image ){
