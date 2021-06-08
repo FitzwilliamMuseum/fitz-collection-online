@@ -45,6 +45,11 @@ class indexController extends Controller
     return view('index', compact('data', 'paginator'));
   }
 
+  /**
+   * [record description]
+   * @param  [type] $priref [description]
+   * @return [type]         [description]
+   */
   public function record($priref) {
 
     $params = [
@@ -114,8 +119,13 @@ class indexController extends Controller
     $mlt = $response2['hits']['hits'];
     return view('record.index', compact('data', 'mlt'));
   }
-
-  public function recordSwitch($priref,$format) {
+  /**
+   * [recordSwitch description]
+   * @param  string $priref [description]
+   * @param  string $format [description]
+   * @return [type]         [description]
+   */
+  public function recordSwitch(string $priref, string $format) {
 
     $params = [
       'index' => 'ciim',
@@ -145,7 +155,13 @@ class indexController extends Controller
     }
   }
 
-
+  /**
+   * [replaceKeys description]
+   * @param  [type] $oldKey [description]
+   * @param  [type] $newKey [description]
+   * @param  array  $input  [description]
+   * @return [type]         [description]
+   */
   public function replaceKeys($oldKey, $newKey, array $input){
     $return = array();
     foreach ($input as $key => $value) {
@@ -160,6 +176,11 @@ class indexController extends Controller
     return $return;
   }
 
+  /**
+   * [utf8_converter description]
+   * @param  [type] $array [description]
+   * @return [type]        [description]
+   */
   public function utf8_converter($array){
     array_walk_recursive($array, function(&$item, $key){
       if(!mb_detect_encoding($item, 'utf-8', true)){

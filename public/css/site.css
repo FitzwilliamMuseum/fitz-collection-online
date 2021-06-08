@@ -872,3 +872,11 @@ ul.stats {
 code {
   color: purple!important;
 }
+li.nav-item.active {
+  border-bottom: solid 5px #fff!important;
+}
+
+a.nav-link {
+  color: hsla(0,0%,100%,.5);
+  background-color: transparent;
+}
