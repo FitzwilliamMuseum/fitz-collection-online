@@ -1,5 +1,6 @@
 @foreach($record['_source']['identifier'] as $id)
-  @if($id['type'] == 'Online 3D model')
+  @isset($id['type'])
+  @if($id['type'] === 'Online 3D model')
     @section('sketchfab')
     <div class="container">
       <h3>3D scan</h3>
@@ -13,4 +14,5 @@
     </div>
     @endsection
   @endif
+@endisset
 @endforeach
