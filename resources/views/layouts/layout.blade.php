@@ -32,9 +32,14 @@
   @hasSection('360')
     @include('includes.css.photosphere-css')
   @endif
-
-  <div class="container mt-3">
+  <div class="container mt-3 bg-white">
     @include('includes.structure.breadcrumb')
+  </div>
+  @hasSection('media-files')
+    @yield('media-files')
+  @endif
+  <div class="container mt-3">
+
     @yield('content')
   </div>
 
