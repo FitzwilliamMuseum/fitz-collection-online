@@ -1,4 +1,7 @@
-
+[aria-expanded="false"] > .expanded,
+[aria-expanded="true"] > .collapsed {
+  display: none;
+}
 .parallax {
   min-height: 400px;
   background-attachment: fixed;

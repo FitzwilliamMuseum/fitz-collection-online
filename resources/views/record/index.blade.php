@@ -25,7 +25,14 @@
 
             @include('includes/elements/measurements')
             <div class="text-center">
-              <button type="button" class="btn btn-dark btn-circle btn-xl" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">More<br />@fa('plus')</button>
+              <button type="button" class="btn btn-dark btn-circle btn-xl" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">
+                <span class="collapsed">
+                  Read More<br />@fa('plus')
+                </span>
+                <span class="expanded">
+                  Read Less<br />@fa('minus')
+                </span>
+              </button>
             </div>
             <div id="expand-more" class="collapse">
               @include('includes/elements/lifecycle')
