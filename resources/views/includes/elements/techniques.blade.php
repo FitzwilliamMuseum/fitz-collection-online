@@ -1,12 +1,14 @@
 @if(array_key_exists('techniques', $record['_source']))
-<h4>Techniques used in production</h4>
-<ul>
+<h3 class="lead collection">
+  Techniques used in production
+</h4>
+<p>
   @foreach($record['_source']['techniques'] as $techniques)
   @if(array_key_exists('reference', $techniques))
-  <li><a href="/id/terminology/{{ $techniques['reference']['admin']['id']}}">{{ ucfirst($techniques['reference']['summary_title'])}}</a> @if(array_key_exists('description', $techniques))
-  : {{ ucfirst($techniques['description'][0]['value'])}}
+  <a  href="/id/terminology/{{ $techniques['reference']['admin']['id']}}">{{ ucfirst($techniques['reference']['summary_title'])}}</a> @if(array_key_exists('description', $techniques))
+  : {{ ucfirst($techniques['description'][0]['value'])}}<br/>
   @endif</li>
   @endif
   @endforeach
-</ul>
+</p>
 @endif

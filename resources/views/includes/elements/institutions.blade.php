@@ -1,8 +1,10 @@
 @if(array_key_exists('institutions', $record['_source']))
-<h4>Associated institutions</h4>
-<ul>
+<h3 class="lead collection">
+  Associated institutions
+</h3>
+<p>
   @foreach($record['_source']['institutions'] as $institution)
-  <li><a href="/id/agent/{{ $institution['admin']['id']}}">{{ $institution['summary_title'] }}</a></li>
+  <a href="/id/agent/{{ $institution['admin']['id']}}">{{ $institution['summary_title'] }}</a><br/>
   @endforeach
-</ul>
+</p>
 @endif

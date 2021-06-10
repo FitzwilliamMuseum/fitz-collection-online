@@ -64,7 +64,19 @@ footer, .chip-icon {
   background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(163, 193, 173));
 }
 ol.breadcrumb {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
+}
+ul.entities {
+  margin-left: -40px!important;
+}
+.entities li {
+  list-style: none!important;
+  display: inline;
+}
+h3.lead.collection {
+  width: fit-content;
+  border-bottom: 0.5px #000 double;
+  margin-bottom: 10px;
 }
 body {
   font-family: 'Roboto', sans-serif;

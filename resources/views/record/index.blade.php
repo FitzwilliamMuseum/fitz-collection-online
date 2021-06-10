@@ -14,7 +14,7 @@
       <!-- multimedia section end -->
 
       <div class="col-md-12 mb-3 object-info">
-        <h2>Object information</h2>
+        <h2 class="sr-only">Object information</h2>
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
           <div class="container">
 
@@ -48,16 +48,19 @@
 
             @include('includes/elements/identification')
 
-            @include('includes/elements/institutions')
           </div>
         </div>
-        <h4>How to cite this record</h4>
+        <h3 class="lead">
+          How to cite this record
+        </h3>
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
           <div class="container">
             @include('includes/elements/citation')
           </div>
         </div>
-        <h4>Machine readable data</h4>
+        <h3 class="lead">
+          Machine readable data
+        </h3>
 
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
           <div class="container">
@@ -75,7 +78,9 @@
     @section('mlt')
 
       <div class="container">
-        <h3>More objects and works of art you might like</h3>
+        <h3 class="lead">
+          More objects and works of art you might like
+        </h3>
         <div class="row">
           @foreach($mlt as $record)
             <div class="col-md-4 mb-3">

@@ -1,8 +1,9 @@
 @if(array_key_exists('materials', $record['_source']))
-<h4>Materials used in production</h4>
-<ul>
+<h3 class="lead collection">
+  Materials used in production
+</h3>
+<p>
   @foreach($record['_source']['materials'] as $material)
-    <li>
     @if(array_key_exists('note', $material))
       @foreach ($material['note'] as $note)
         {{ $note['value'] }}
@@ -11,9 +12,10 @@
     @foreach($material as $mat)
       @if(array_key_exists('admin', $mat))
         <a href="/id/terminology/{{ $mat['admin']['id']}}">{{ ucfirst($mat['summary_title'])}}</a>
-      </li>
+
       @endif
     @endforeach
+    <br />
   @endforeach
-</ul>
+</p>
 @endif

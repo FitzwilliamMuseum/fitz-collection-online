@@ -1,5 +1,7 @@
 @if(array_key_exists('publications', $record['_source']))
-<h4>References and bibliographic entries</h4>
+<h3 class="lead collection">
+  References and bibliographic entries
+</h3>
 <ul>
   @foreach($record['_source']['publications'] as $pub)
     <li><a href="/id/publication/{{ $pub['admin']['id']}}">{{ $pub['summary_title'] }}</a>

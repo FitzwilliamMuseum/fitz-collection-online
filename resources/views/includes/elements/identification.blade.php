@@ -1,25 +1,29 @@
-<h4>Identification numbers</h4>
-<ul>
+<h3 class="lead collection">
+  Identification numbers
+</h3>
+<p>
   @foreach($record['_source']['identifier'] as $id)
     @if(array_key_exists('type', $id))
       @if($id['type'] === 'uri')
-        <li class="sr-only"><a href="{{ $id['value']}}">Stable URI</a></li>
+        <span class="sr-only"><a href="{{ $id['value']}}">Stable URI</a><br/></span>
       @elseif($id['type'] === 'priref')
-        <li>Primary reference Number: <a href="/id/object/{{ $id['value']}}">{{ $id['value']}}</a></li>
+        Primary reference Number: <a href="/id/object/{{ $id['value']}}">{{ $id['value']}}</a><br />
       @elseif($id['type'] === 'Online 3D model')
-        <li class="sr-only"><a href="https://sketchfab.com/3d-models/{{ $id['value']}}">Sketchfab model</a></li>
+        <span class="sr-only"><a href="https://sketchfab.com/3d-models/{{ $id['value']}}">Sketchfab model</a><br/></span>
       @else
-        <li>{{ ucfirst($id['type']) }}: {{ $id['value']}}</li>
+        {{ ucfirst($id['type']) }}: {{ $id['value']}}<br />
       @endif
     @else
-      <li>{{ $id['value']}}</li>
+      {{ $id['value']}}<br/>
     @endif
   @endforeach
+</p>
+<h3 class="lead collection">
+  Audit data
+</h4>
+<ul class="entities">
+  <li class="btn btn-sm btn-outline-dark">Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('l j F Y') }}</li>
+  <li class="btn btn-sm btn-outline-dark">Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</li>
+  <li class="sr-only">Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</li>
 </ul>
-<h4>Audit data</h4>
-<ul>
-  <li>Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('l j F Y') }}</li>
-  <li>Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</li>
-  <li>Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</li>
-  <li>Data source: {{ ucfirst($record['_source']['admin']['source']) }}</li>
-</ul>
+@include('includes/elements/institutions')

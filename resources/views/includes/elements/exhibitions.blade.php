@@ -1,5 +1,5 @@
 @if(array_key_exists('exhibitions', $record['_source']))
-  <h4>
+  <h3 class="lead collection">
     Related exhibitions
   </h4>
   <ul>
