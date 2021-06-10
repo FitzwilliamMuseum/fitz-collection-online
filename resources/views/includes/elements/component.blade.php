@@ -4,7 +4,7 @@
   </h3>
   <p>
   @foreach($record['_source']['component'] as $component)
-      {{ $component['name'] }}
+      {{ $component['name'] }}:
 
     @if(array_key_exists('materials', $component))
       composed of
@@ -22,11 +22,10 @@
     @endif
 
     @if(array_key_exists('measurements', $component))
-
        @foreach($component['measurements']['dimensions'] as $dim)
          {{$dim['dimension']}} {{$dim['value']}} {{$dim['units']}}
        @endforeach
-
+       <br/>
     @endif
 
   @endforeach
