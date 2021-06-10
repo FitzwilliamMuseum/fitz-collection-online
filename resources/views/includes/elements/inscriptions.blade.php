@@ -6,18 +6,18 @@
 @if(array_key_exists('description', $inscription))
 <p><strong>Inscription present:</strong> {{ $inscription['description'][0]['value'] }}</p>
 @endif
-<ul>
+<ul class="entities">
   @if(array_key_exists('transcription', $inscription))
-  <li>Text: {{ $inscription['transcription'][0]['value'] }}</li>
+  <li><em>Text:</em> <span class="text-info">{{ $inscription['transcription'][0]['value'] }}</span></li>
   @endif
   @if(array_key_exists('location',$inscription ))
-  <li>Location: {{ ucfirst($inscription['location']) }}</li>
+  <li><em>Location:</em> {{ ucfirst($inscription['location']) }}</li>
   @endif
   @if(array_key_exists('method',$inscription))
-  <li>Method of creation: {{ ucfirst($inscription['method']) }}</li>
+  <li><em>Method of creation:</em> {{ ucfirst($inscription['method']) }}</li>
   @endif
   @if(array_key_exists('type',$inscription))
-  <li>Type: {{ ucfirst($inscription['type']) }}</li>
+  <li><em<Type:</em> {{ ucfirst($inscription['type']) }}</li>
   @endif
 </ul>
 @endforeach
