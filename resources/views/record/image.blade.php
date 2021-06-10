@@ -7,6 +7,7 @@
 @section('exif-palette')
 <div class="container-fluid bg-grey">
   <div class="container">
+  
   @include('includes.elements.exif')
   @include('includes.elements.palette')
   </div>

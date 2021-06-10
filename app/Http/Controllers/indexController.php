@@ -120,7 +120,16 @@ class indexController extends Controller
     ];
     $response2 = $this->getElastic()->setParams($paramsMLT)->getSearch();
     $mlt = $response2['hits']['hits'];
-    return view('record.index', compact('data', 'mlt'));
+    if(array_key_exists('multimedia', $data['0']['_source'])){
+      $image = $data[0]['_source']['multimedia'][0]['processed']['original']['location'];
+      $path = env('CIIM_IMAGE_URL') . $image;
+      $palette = ColorThief::getPalette( $path, 12);
+      $reader = Reader::factory(Reader::TYPE_NATIVE);
+      $exif = $reader->read($path);
+    } else {
+      $exif = NULL;
+    }
+    return view('record.index', compact('data', 'mlt', 'exif'));
   }
   /**
    * [recordSwitch description]
