@@ -66,12 +66,10 @@
             <div class="row">
               @foreach($images as $media)
                 <div class="col-md-2 mt-3">
-                  <div class="card card-body h-100">
+                  <div class="h-100">
                     <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
                       loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
                       /></a>
-                      {{-- <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['large']['location'] }}" target="_blank"
-                      download="{{ basename($media['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a> --}}
                     </div>
                   </div>
                 @endforeach
