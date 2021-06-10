@@ -13,14 +13,24 @@ if(array_key_exists('page', $base)){
 $query = http_build_query($base);
 @endphp
 @section('content')
+@endsection
 
-  <h2>Search results</h2>
-  <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
+@section('search-box')
+  <div class="container-fluid bg-grey">
+  <div class="container">
+  <h3 class="lead collection">Search results</h3>
+  <div class="col-12  p-3 mx-auto mb-3 rounded">
     <p>
       Your search for <strong>{{ $queryString }}</strong> returned <strong>{{ $number }}</strong> results.
     </p>
   </div>
-  <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
+  </div
+</div>
+@endsection
+
+@section('search-results')
+  <div class="container">
+  <div class="col-12 shadow-sm bg-grey p-3 mx-auto mb-3 rounded">
     {{ \Form::open(['url' => url('/search/results'),'method' => 'GET']) }}
     <div class="row">
       <div class="form-group col-md-12">
@@ -31,7 +41,7 @@ $query = http_build_query($base);
 
     <div class="row">
       <div class="col">
-        <h4>Visual results</h4>
+        <h3 class="lead collection">Visual results</h4>
         <div class="form-group form-check ">
           <input type="checkbox" class="form-check-input" id="images" name="images"
           @if(request()->has('images'))
@@ -46,11 +56,11 @@ $query = http_build_query($base);
             checked
           @endif
           >
-          <label class="form-check-label" for="images">IIIF enabled?</label>
+          <label class="form-check-label" for="images">Deep zoom enabled?</label>
         </div>
       </div>
       <div class="col">
-        <h4>Operand for your search</h4>
+        <h3 class="lead collection">Operand for your search</h4>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="operator" id="operator" value="AND" checked>
           <label class="form-check-label" for="operator">
@@ -66,7 +76,7 @@ $query = http_build_query($base);
         </div>
       </div>
       <div class="col">
-        <h4>Sort by last update</h4>
+        <h3 class="collection lead">Sort by last update</h3>
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="sort" id="sort" value="desc" checked>
           <label class="form-check-label" for="sort">
@@ -86,7 +96,7 @@ $query = http_build_query($base);
       <div class="form-group col-md-12">
         <button type="submit" class="btn btn-dark">Submit</button>
         <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal2">
-              Filter
+              Filter your search
           </button>
       </div>
     </div>
@@ -132,14 +142,11 @@ $query = http_build_query($base);
         <div class="card-body ">
 
           <div class="contents-label mb-3">
-            <h3>
+            <h3 class="lead collection">
             <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
             </h3>
-            <p>
-              @if(array_key_exists('department', $record['_source']))
-                Holding department: {{ $record['_source']['department']['value'] }}<br/>
-              @endif
-            </p>
+            <p class="text-info">{{ $record['_source']['identifier'][0]['accession_number'] }}</p>
+
           </div>
         </div>
       </div>
@@ -301,5 +308,6 @@ $query = http_build_query($base);
       </div>
     </div>
   </div>
+</div>
 </div>
 @endsection

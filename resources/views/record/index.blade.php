@@ -26,7 +26,7 @@
             @include('includes/elements/measurements')
             {{-- https://stackoverflow.com/a/44242233 --}}
             <div class="text-center">
-              <button type="button" class="btn btn-dark btn-circle btn-xl" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">
+              <button type="button" class="btn btn-dark btn-circle btn-xl mb-5" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">
                 <span class="collapsed">
                   Read More<br />@fa('plus')
                 </span>
@@ -59,7 +59,7 @@
     <div class="container-fluid bg-grey">
       <div class="container">
         <h3 class="lead">
-          How to cite this record
+          Cite this record
         </h3>
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
           <div class="container">
@@ -69,7 +69,6 @@
         <h3 class="lead">
           Machine readable data
         </h3>
-
         <div class="shadow-sm p-3 mx-auto  mt-3 rounded">
           <div class="container">
             @include('includes/elements/formats')

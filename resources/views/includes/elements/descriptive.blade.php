@@ -14,6 +14,7 @@
     @endforeach
   </p>
 @endif
+@include('includes/elements/makers')
 
 @if(array_key_exists('description', $record['_source']))
   <h3 class="lead collection">

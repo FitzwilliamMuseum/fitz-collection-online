@@ -42,6 +42,8 @@
 
     @yield('content')
   </div>
+    @yield('search-box')
+    @yield('search-results')
     @yield('exif-palette')
     @yield('machine')
   @hasSection('map')
