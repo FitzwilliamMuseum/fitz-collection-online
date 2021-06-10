@@ -16,38 +16,30 @@
       <div class="col-md-12 mb-3 object-info">
         <h2 class="sr-only">Object information</h2>
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+
           <div class="container">
 
             @include('includes/elements/descriptive')
-            @include('includes/elements/lifecycle')
+            @include('includes/elements/legal')
             @include('includes/elements/name')
 
-            @include('includes/elements/legal')
-
-
-
             @include('includes/elements/measurements')
-
+            <div class="text-center">
+              <button type="button" class="btn btn-dark btn-circle btn-xl" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">More<br />@fa('plus')</button>
+            </div>
+            <div id="expand-more" class="collapse">
+            @include('includes/elements/lifecycle')
             @include('includes/elements/agents-subjects')
-
             @include('includes/elements/medium')
-
             @include('includes/elements/component')
-
             @include('includes/elements/materials')
-
             @include('includes/elements/techniques')
-
             @include('includes/elements/inscriptions')
-
             @include('includes/elements/department')
-
             @include('includes/elements/publications')
-
             @include('includes/elements/exhibitions')
-
             @include('includes/elements/identification')
-
+          </div>
           </div>
         </div>
       </div>
@@ -91,7 +83,7 @@
             @foreach($mlt as $record)
               <div class="col-md-4 mb-3">
                 <div class="card  h-100">
-                  <div class="results_image">
+                  <div class="card-body results_image">
                     @if(array_key_exists('multimedia', $record['_source']))
                       <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}"><img class="results_image__thumbnail" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
                         loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
@@ -107,9 +99,6 @@
                             <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                           </h3>
                           <p>
-                            @if(array_key_exists('department', $record['_source']))
-                              Holding department: {{ $record['_source']['department']['value'] }}<br/>
-                            @endif
                             Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
                           </p>
                         </div>
