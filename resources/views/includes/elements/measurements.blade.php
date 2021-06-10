@@ -14,7 +14,7 @@
             measurements. We will rectify this as soon as possible.
           </p>
       @endsection
-        <li>{{ $dim['value'] }}</li>
+        {{ $dim['value'] }}<br/>
     @endif
   @endforeach
 </p>
