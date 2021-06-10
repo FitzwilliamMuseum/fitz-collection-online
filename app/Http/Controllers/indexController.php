@@ -115,7 +115,7 @@ class indexController extends Controller
 
     $paramsMLT = [
       'index' => 'ciim',
-      'size' => 3,
+      'size' => 4,
       'body'  => $json
     ];
     $response2 = $this->getElastic()->setParams($paramsMLT)->getSearch();
