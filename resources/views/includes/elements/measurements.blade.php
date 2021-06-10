@@ -6,7 +6,7 @@
 <p>
   @foreach($record['_source']['measurements']['dimensions'] as $dim)
     @if(array_key_exists('dimension',$dim) && array_key_exists('units',$dim))
-      <li>{{ $dim['dimension'] }}: {{ $dim['value'] }} {{  $dim['units'] }}</li>
+      {{ $dim['dimension'] }}: {{ $dim['value'] }} {{  $dim['units'] }}<br/>
     @else
       @section('dims-message')
           <p class="text-info">
