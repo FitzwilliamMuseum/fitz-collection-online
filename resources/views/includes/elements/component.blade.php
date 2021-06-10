@@ -20,7 +20,9 @@
 
     @if(array_key_exists('measurements', $component))
        @foreach($component['measurements']['dimensions'] as $dim)
-         {{$dim['dimension']}} {{$dim['value']}} {{$dim['units']}}
+         @if(array_key_exists('dimension',$dim) && array_key_exists('units',$dim))
+           {{$dim['dimension']}} {{$dim['value']}} {{$dim['units']}}
+         @endif
        @endforeach
        <br/>
     @endif
