@@ -50,7 +50,7 @@
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
         @php
         $images = [];
-        foreach (array_slice($record['_source']['multimedia'],1,3) as $image ){
+        foreach (array_slice($record['_source']['multimedia'],1,6) as $image ){
           if(!Arr::has($image, 'admin.source')){
             $images[] = array(
               'admin' => $image['admin'],
@@ -65,13 +65,13 @@
             <h3>Alternative views</h3>
             <div class="row">
               @foreach($images as $media)
-                <div class="col-md-4 mt-3">
+                <div class="col-md-2 mt-3">
                   <div class="card card-body h-100">
                     <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
                       loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
                       /></a>
-                      <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['large']['location'] }}" target="_blank"
-                      download="{{ basename($media['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
+                      {{-- <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['large']['location'] }}" target="_blank"
+                      download="{{ basename($media['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>  Download this image</a> --}}
                     </div>
                   </div>
                 @endforeach
@@ -82,8 +82,10 @@
             @endphp
 
             @if($records > 4)
-              <a class="btn btn-sm btn-sm btn-dark m-1 d-block " href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
-              ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
+              <div class="container">
+                <a class="btn btn-sm btn-sm btn-dark m-1 mt-2" href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
+                ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
+              </div>
             @endif
 
           @endif
