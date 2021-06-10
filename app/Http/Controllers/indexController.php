@@ -207,6 +207,7 @@ class indexController extends Controller
 
 
   public function search() {
+    return \Redirect::to(env('MAIN_URL') . '/objects-and-artworks');
 
     $latest = '[
       "query" => [
