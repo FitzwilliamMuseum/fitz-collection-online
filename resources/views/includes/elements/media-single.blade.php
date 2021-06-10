@@ -1,4 +1,4 @@
-<h2>Image attached to {{ $object['identifier'][0]['accession_number'] }}</h2>
+<h2 class="lead ">Image attached to {{ $object['identifier'][0]['accession_number'] }}</h2>
 <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
   <div>
     <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['large']['location'] }}"

@@ -1,5 +1,5 @@
-<h4>About this image</h4>
-<div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
+<h3 class="lead collection">About this image</h4>
+<div class="col-12 p-3 mx-auto mb-3 rounded">
   @if(!empty($exif->getHeadline()))
     @section('title', ucfirst($exif->getHeadline()))
   @elseif(array_key_exists('title', $object))
@@ -18,7 +18,7 @@
   @endif
 
 
-  <h5>Image data</h5>
+  <h3 class="lead collection">Image data</h3>
   <ul>
     @if(!empty($exif->getTitle()))
       <li>Accession Number: {{ $exif->getTitle() }}</li>
@@ -82,7 +82,7 @@
   </ul>
 
   @if(!empty($exif->getKeywords()) && is_array($exif->getKeywords()))
-    <h5>Key words</h5>
+    <h3 class="collection lead">Key words</h3>
     <div id="keywords">
       @foreach ($exif->getKeywords() as $key)
           <span class="badge badge-dark">{{ $key }}</span>

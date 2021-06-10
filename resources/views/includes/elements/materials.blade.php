@@ -11,11 +11,10 @@
     @endif
     @foreach($material as $mat)
       @if(array_key_exists('admin', $mat))
-        <a href="/id/terminology/{{ $mat['admin']['id']}}">{{ ucfirst($mat['summary_title'])}}</a>
-
+        <a href="/id/terminology/{{ $mat['admin']['id']}}">{{ ucfirst($mat['summary_title'])}}</a> 
       @endif
     @endforeach
-    <br />
+
   @endforeach
 </p>
 @endif

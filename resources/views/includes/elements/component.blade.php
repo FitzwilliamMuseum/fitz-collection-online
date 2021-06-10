@@ -8,17 +8,14 @@
 
     @if(array_key_exists('materials', $component))
       composed of
-
           @foreach($component['materials'] as $material)
-            <a href="/id/terminology/{{ $material['reference']['admin']['id'] }}">{{ $material['reference']['summary_title'] }}</a><br/>
+            <a href="/id/terminology/{{ $material['reference']['admin']['id'] }}">{{ $material['reference']['summary_title'] }}</a>
             @if(array_key_exists('note', $material))
               @foreach ($material['note'] as $note)
                 ( {{ $note['value'] }})
               @endforeach
             @endif
           @endforeach
-
-
     @endif
 
     @if(array_key_exists('measurements', $component))

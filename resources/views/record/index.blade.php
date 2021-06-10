@@ -28,18 +28,17 @@
               <button type="button" class="btn btn-dark btn-circle btn-xl" data-toggle="collapse" data-target="#expand-more" aria-expanded="false" aria-controls="expand-more">More<br />@fa('plus')</button>
             </div>
             <div id="expand-more" class="collapse">
-            @include('includes/elements/lifecycle')
-            @include('includes/elements/agents-subjects')
-            @include('includes/elements/medium')
-            @include('includes/elements/component')
-            @include('includes/elements/materials')
-            @include('includes/elements/techniques')
-            @include('includes/elements/inscriptions')
-            @include('includes/elements/department')
-            @include('includes/elements/publications')
-            @include('includes/elements/exhibitions')
-            @include('includes/elements/identification')
-          </div>
+              @include('includes/elements/lifecycle')
+              @include('includes/elements/agents-subjects')
+              @include('includes/elements/medium')
+              @include('includes/elements/component')
+              @include('includes/elements/materials')
+              @include('includes/elements/techniques')
+              @include('includes/elements/inscriptions')
+              @include('includes/elements/publications')
+              @include('includes/elements/exhibitions')
+              @include('includes/elements/identification')
+            </div>
           </div>
         </div>
       </div>
@@ -48,32 +47,34 @@
   @endsection
 
   {{-- @include('includes/elements/sketchfab') --}}
-@section('machine')
-<div class="container-fluid bg-grey">
-  <div class="container">
-  <h3 class="lead">
-    How to cite this record
-  </h3>
-  <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
-    <div class="container">
-      @include('includes/elements/citation')
-    </div>
-  </div>
-  <h3 class="lead">
-    Machine readable data
-  </h3>
+  @section('machine')
+    <div class="container-fluid bg-grey">
+      <div class="container">
+        <h3 class="lead">
+          How to cite this record
+        </h3>
+        <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+          <div class="container">
+            @include('includes/elements/citation')
+          </div>
+        </div>
+        <h3 class="lead">
+          Machine readable data
+        </h3>
 
-  <div class="shadow-sm p-3 mx-auto  mt-3 rounded">
-    <div class="container">
-      @include('includes/elements/formats')
-    </div>
-  </div>
-</div>
-
+        <div class="shadow-sm p-3 mx-auto  mt-3 rounded">
+          <div class="container">
+            @include('includes/elements/formats')
+          </div>
+        </div>
       </div>
-    @endforeach
-    @if(!empty($mlt))
-      @section('mlt')
+
+    </div>
+  @endforeach
+
+
+  @if(!empty($mlt))
+    @section('mlt')
       <div class="container-fluid bg-grey">
         <div class="container">
           <h3 class="lead">
@@ -86,27 +87,27 @@
                   <div class="card-body results_image">
                     @if(array_key_exists('multimedia', $record['_source']))
                       <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}"><img class="img-fluid " src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}" loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"/></a>
-                      @else
-                        <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
-                          alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
-                        @endif
-                      </div>
-                      <div class="card-body ">
-                        <div class="contents-label mb-3">
-                          <h3>
-                            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
-                          </h3>
-                          <p>
-                            Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
-                          </p>
-                        </div>
+                    @else
+                      <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
+                        alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
+                      @endif
+                    </div>
+                    <div class="card-body ">
+                      <div class="contents-label mb-3">
+                        <h3>
+                          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                        </h3>
+                        <p>
+                          Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
+                        </p>
                       </div>
                     </div>
                   </div>
-                @endforeach
-              </div>
+                </div>
+              @endforeach
             </div>
-  </div>
-          @endsection
-        @endif
+          </div>
+        </div>
+      @endsection
+    @endif
   @endsection
