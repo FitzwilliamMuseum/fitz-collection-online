@@ -19,12 +19,12 @@
           <div class="container">
 
             @include('includes/elements/descriptive')
-
+            @include('includes/elements/lifecycle')
             @include('includes/elements/name')
 
             @include('includes/elements/legal')
 
-            @include('includes/elements/lifecycle')
+
 
             @include('includes/elements/measurements')
 
@@ -50,33 +50,36 @@
 
           </div>
         </div>
-        <h3 class="lead">
-          How to cite this record
-        </h3>
-        <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
-          <div class="container">
-            @include('includes/elements/citation')
-          </div>
-        </div>
-        <h3 class="lead">
-          Machine readable data
-        </h3>
-
-        <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
-          <div class="container">
-            @include('includes/elements/formats')
-          </div>
-        </div>
       </div>
     </div>
 
   @endsection
 
-  @include('includes/elements/sketchfab')
+  {{-- @include('includes/elements/sketchfab') --}}
+@section('machine')
+<div class="container-fluid bg-grey">
+  <div class="container">
+  <h3 class="lead">
+    How to cite this record
+  </h3>
+  <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
+    <div class="container">
+      @include('includes/elements/citation')
+    </div>
+  </div>
+  <h3 class="lead">
+    Machine readable data
+  </h3>
 
+  <div class="shadow-sm p-3 mx-auto  mt-3 rounded">
+    <div class="container">
+      @include('includes/elements/formats')
+    </div>
+  </div>
+</div>
   @if(!empty($mlt))
     @section('mlt')
-
+    <div class="container-fluid bg-grey">
       <div class="container">
         <h3 class="lead">
           More objects and works of art you might like
@@ -113,6 +116,9 @@
               @endforeach
             </div>
           </div>
+
         @endsection
       @endif
+      </div>
     @endforeach
+  @endsection

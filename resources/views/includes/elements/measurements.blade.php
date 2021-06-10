@@ -1,5 +1,5 @@
 @if(array_key_exists('measurements', $record['_source']))
-<h3>
+<h3 class="lead collection">
   Measurements and weight
 </h3>
 

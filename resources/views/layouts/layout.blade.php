@@ -42,7 +42,7 @@
 
     @yield('content')
   </div>
-
+    @yield('machine')
   @hasSection('map')
   <div class="container-fluid map-box mb-3">
     @yield('map')

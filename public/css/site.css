@@ -78,9 +78,13 @@ h3.lead.collection {
   border-bottom: 0.5px #000 double;
   margin-bottom: 10px;
 }
+.bg-grey{
+  background-color: #97816224;
+  padding-top: 10px;
+}
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #97816224;
+  background-color: #fff;
   font-size: 1rem;
 }
 .shadow-sm {

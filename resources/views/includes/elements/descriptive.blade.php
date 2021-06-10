@@ -6,7 +6,11 @@
   </h3>
   <p>
     @foreach($record['_source']['title'] as $titles)
-      {{ $titles['value'] }} </br>
+      {{ $titles['value'] }}
+    @if(array_key_exists('translation',$titles))
+      <br/><span class="text-info">Translated as: {{ $titles['translation'][0]['value'] }}</span>
+    @endif
+    </br>
     @endforeach
   </p>
 @endif
