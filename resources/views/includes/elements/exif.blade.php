@@ -32,7 +32,7 @@
       @endforeach
     @endif
     @if(!empty($exif->getCopyright()) )
-      <li>{{ utf8_encode($exif->getCopyright()) }}</li>
+      <li>{{ str_replace('Â','',utf8_encode($exif->getCopyright())) }}</li>
     @else
       <li>Copyright © The Fitzwilliam Museum</li>
     @endif
