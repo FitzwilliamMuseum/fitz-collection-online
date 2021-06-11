@@ -37,7 +37,6 @@
           @endif
           </div>
           <div class="card-body h-100">
-
             <div class="contents-label mb-3">
               <h3 class="lead">
                 @if(array_key_exists('title',$record['_source'] ))
@@ -47,7 +46,6 @@
                 @endif
               </h3>
               <p class="text-info">
-
                 Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
               </p>
             </div>
