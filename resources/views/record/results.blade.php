@@ -147,7 +147,7 @@ $query = http_build_query($base);
                 </div>
                 <div class="card-body ">
                   <div class="contents-label mb-3">
-                    <h3 class="lead collection">
+                    <h3 class="lead ">
                       @if(array_key_exists('title',$record['_source'] ))
                         <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
                       @else
