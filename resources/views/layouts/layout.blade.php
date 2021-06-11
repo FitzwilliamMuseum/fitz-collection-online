@@ -42,9 +42,10 @@
 
     @yield('content')
   </div>
-    @yield('connected')
+
     @yield('search-box')
     @yield('search-results')
+    @yield('connected')
     @yield('exif-palette')
     @yield('machine')
   @hasSection('map')
