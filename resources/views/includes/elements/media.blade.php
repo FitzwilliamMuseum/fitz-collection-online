@@ -37,7 +37,7 @@
                   $slow = Arr::pluck($con, 'image');
                   @endphp
                   {{-- Check for IIIF --}}
-                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
+                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  Deep zoom</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF Manifest</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}" ><i class="fas fa-eye"></i> Slow looking</a>
                 @endif
@@ -53,7 +53,7 @@
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
         @php
         $images = [];
-        foreach (array_slice($record['_source']['multimedia'],1,6) as $image ){
+        foreach (array_slice($record['_source']['multimedia'],1) as $image ){
           if(!Arr::has($image, 'admin.source')){
             $images[] = array(
               'admin' => $image['admin'],
