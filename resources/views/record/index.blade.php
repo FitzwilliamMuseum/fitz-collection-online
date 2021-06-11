@@ -106,14 +106,14 @@
                     </div>
                     <div class="card-body ">
                       <div class="contents-label mb-3">
-                        <h3>
+                        <h3 class="lead">
                         @if(array_key_exists('title',$record['_source'] ))
                           <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
                         @else
                           <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                         @endif
                         </h3>
-                        <p>
+                        <p class="text-info">
                           Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
                         </p>
                       </div>

@@ -143,8 +143,11 @@ $query = http_build_query($base);
 
           <div class="contents-label mb-3">
             <h3 class="lead collection">
-            <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
-            </h3>
+              @if(array_key_exists('title',$record['_source'] ))
+                <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+              @else
+                <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+              @endif            </h3>
             <p class="text-info">{{ $record['_source']['identifier'][0]['accession_number'] }}</p>
 
           </div>
