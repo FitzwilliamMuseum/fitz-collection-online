@@ -46,6 +46,7 @@
     @yield('search-box')
     @yield('search-results')
     @yield('connected')
+    @yield('pagination')
     @yield('exif-palette')
     @yield('machine')
   @hasSection('map')
