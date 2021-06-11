@@ -42,6 +42,7 @@
 
     @yield('content')
   </div>
+    @yield('connected')
     @yield('search-box')
     @yield('search-results')
     @yield('exif-palette')

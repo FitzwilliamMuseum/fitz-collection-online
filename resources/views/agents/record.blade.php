@@ -6,15 +6,17 @@
 @section('title', ucfirst($agent['_source']['summary_title']))
 
 <div class="shadow-sm p-3 mx-auto mb-3 rounded">
-  <ul>
-    <li>Fullname: {{ $agent['_source']['name'][0]['value']}}</pre></li>
-  </ul>
+  <p>Fullname: {{ $agent['_source']['name'][0]['value']}}</p>
   <p>
-    This term has been used <strong>{{ $use['total']['value'] }}</strong> times within our collections systems as the maker of an object.
+    This agent has been used <strong>{{ $use['total']['value'] }}</strong> times within our collections systems.
   </p>
 </div>
 @endforeach
-  <h3>Example connected records</h3>
+@endsection
+@section('connected')
+<div class="bg-grey container-fluid">
+  <div class="container">
+  <h3 class="mb-3 lead collection">Example connected records</h3>
       <div class="row">
       @foreach($use['hits'] as $record)
       <div class="col-md-4 mb-3">
@@ -47,5 +49,6 @@
       @endforeach
 
     </div>
-
+  </div>
+  </div>
 @endsection
