@@ -17,7 +17,9 @@
         $title = urldecode($subs[$i]);
         $title = ucwords($title);
         if(is_numeric($title)){
-          $title = $data[0]['_source']['identifier'][0]['accession_number'];
+          if(array_key_exists(0,$data)){
+            $title = $data[0]['_source']['identifier'][0]['accession_number'];
+          }
         }
         @endphp
         @if($title != 'Id')

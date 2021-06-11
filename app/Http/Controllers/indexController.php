@@ -606,4 +606,32 @@ $facets = array(
       $object = $response2['hits']['hits'][0]['_source'];
       return view('record.iiif', compact('filtered', 'object','palette', 'exif'));
     }
+
+    public function sketchfab($id){
+
+      $paramsTerm = [
+        'index' => 'ciim',
+        'size' => 1,
+        'body' => [
+          "query" => [
+            "bool" => [
+                "must" => [
+                   [
+                        "match" => [
+                          "identifier.priref" => $id
+                        ]
+                   ],
+                   [
+                        "term" => [ "type.base" => 'object']
+                   ],
+
+                ]
+             ]
+          ]
+        ],
+      ];
+      $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+      $data = $response2['hits']['hits'][0];
+      return view('record.3d', compact('data'));
+    }
   }

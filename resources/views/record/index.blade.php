@@ -59,7 +59,6 @@
 
   @endsection
 
-  {{-- @include('includes/elements/sketchfab') --}}
   @section('machine')
     <div class="container-fluid bg-grey">
       <div class="container">
