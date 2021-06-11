@@ -17,7 +17,11 @@
       @endif
     </div>
   @endforeach
-  <h3>Example connected records</h3>
+@endsection
+@section('connected')
+  <div class="container-fluid bg-grey">
+    <div class="container">
+  <h3 class="collection lead">Example connected records</h3>
       <div class="row">
       @foreach($use['hits'] as $record)
       <div class="col-md-4 mb-3">
@@ -35,13 +39,15 @@
           <div class="card-body h-100">
 
             <div class="contents-label mb-3">
-              <h3>
-              <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
-              </h3>
-              <p>
-                @if(array_key_exists('department', $record['_source']))
-                  Holding department: {{ $record['_source']['department']['value'] }}<br/>
+              <h3 class="lead">
+                @if(array_key_exists('title',$record['_source'] ))
+                  <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+                @else
+                  <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                 @endif
+              </h3>
+              <p class="text-info">
+
                 Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
               </p>
             </div>
@@ -51,4 +57,6 @@
       @endforeach
 
     </div>
+  </div>
+</div>
 @endsection
