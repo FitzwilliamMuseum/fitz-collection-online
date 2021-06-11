@@ -7,7 +7,7 @@
     <div class="shadow-sm p-3 mx-auto mb-3 rounded">
       @if(array_key_exists('lifecycle', $publication['_source']))
         @if(array_key_exists('publication', $publication['_source']['lifecycle']))
-        <h3>Publication Date</h3>
+        <h3 class="lead">Publication Date</h3>
         @foreach($publication['_source']['lifecycle']['publication'][0]['date'] as $date)
           <p>
               {{ $date['value'] }}

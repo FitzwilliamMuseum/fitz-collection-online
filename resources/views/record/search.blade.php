@@ -17,7 +17,7 @@
 
 <div class="row">
   <div class="col">
-    <h4>Visual results</h4>
+    <h4 class="lead">Visual results</h4>
   <div class="form-group form-check ">
     <input type="checkbox" class="form-check-input" id="images" name="images">
     <label class="form-check-label" for="images">Only with images?</label>
@@ -28,7 +28,7 @@
   </div>
 </div>
 <div class="col">
-  <h4>Operand for your search</h4>
+  <h4 class="lead">Operand for your search</h4>
   <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="operator" id="operator" value="AND" checked>
     <label class="form-check-label" for="operator">
@@ -44,7 +44,7 @@
   </div>
 </div>
 <div class="col">
-  <h4>Sort by last update</h4>
+  <h4 class="lead">Sort by last update</h4>
   <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="sort" id="sort" value="desc" checked>
     <label class="form-check-label" for="sort">
@@ -78,7 +78,7 @@
 @endif
 {!! Form::close() !!}
 </div>
-  <h2>Recently updated records</h2>
+  <h2 class="lead">Recently updated records</h2>
   <div class="row">
     @foreach($records as $record)
 
@@ -103,7 +103,7 @@
         <div class="card-body ">
 
           <div class="contents-label mb-3">
-            <h3>
+            <h3 class="lead">
             <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
             </h3>
             <p>

@@ -8,7 +8,7 @@
     <div class="shadow-sm p-3 mx-auto mb-3 rounded">
       @if(array_key_exists('description', $term['_source']))
         @foreach($term['_source']['description'] as $description)
-          <h3>{{ ucfirst($description['type']) }}</h3>
+          <h3 class="lead">{{ ucfirst($description['type']) }}</h3>
           <p>
             {{ ucfirst($description['value']) }}
           </p>

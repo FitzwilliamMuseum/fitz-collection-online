@@ -18,7 +18,7 @@
         alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
         @endif
         <div class="contents-label mb-3">
-          <h3>
+          <h3 class="lead">
             {{ $record['_source']['identifier'][0]['accession_number'] }}: {{ ucfirst($record['_source']['summary_title']) }}
           </h3>
           <p>{{ $record['_source']['department']['value'] }}</p>

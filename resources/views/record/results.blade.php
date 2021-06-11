@@ -186,7 +186,7 @@ $query = http_build_query($base);
                     <div class="col mb-3" >
 
                       <div class="contents-label mb-3">
-                        <h5>
+                        <h5 class="lead">
                           <a data-toggle="collapse" href="#department">Department</a>
                         </h5>
 
@@ -214,7 +214,7 @@ $query = http_build_query($base);
                         <div >
 
                           <div class="contents-label mb-3">
-                            <h5>
+                            <h5 class="lead">
                               <a data-toggle="collapse" href="#maker">Maker</a>
                             </h5>
 
@@ -238,7 +238,7 @@ $query = http_build_query($base);
                     <div class="col mb-3">
 
                       <div class="contents-label mb-3">
-                        <h5>
+                        <h5 class="lead">
                           <a data-toggle="collapse" href="#material">Material</a>
                         </h5>
 
@@ -264,7 +264,7 @@ $query = http_build_query($base);
                     <div class="col mb-3">
 
                       <div class="contents-label mb-3">
-                        <h5>
+                        <h5 class="lead">
                           <a data-toggle="collapse" href="#period">Period</a>
                         </h5>
 
@@ -289,7 +289,7 @@ $query = http_build_query($base);
                     <div class="col mb-3">
 
                       <div class="contents-label mb-3">
-                        <h5>
+                        <h5 class="lead">
                           <a data-toggle="collapse" href="#object_type">Object Type</a>
                         </h5>
 

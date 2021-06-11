@@ -66,7 +66,7 @@
 
         @if(sizeof($images) > 0)
           <div class="container">
-            <h3>Alternative views</h3>
+            <h3 class="lead">Alternative views</h3>
             <div class="row">
               @foreach($images as $media)
                 <div class="col-md-2 mt-3">
