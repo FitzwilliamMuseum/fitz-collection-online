@@ -12,6 +12,12 @@
         @if(array_key_exists('date', $acquistion))
           ({{ $acquistion['date'][0]['value'] }})
         @endif
+        @if(array_key_exists('agents',$acquistion))
+          by
+          @foreach ($acquistion['agents'] as $agent)
+             <a href="{{ route('agent', [$agent['admin']['id']]) }}">{{ $agent['summary_title'] }}</a>
+          @endforeach
+        @endif
       <br/>
       @endforeach
     </p>
@@ -97,7 +103,7 @@
 
   @if(array_key_exists('creation', $record['_source']['lifecycle']))
     @if(array_key_exists('maker',$record['_source']['lifecycle']['creation'][0]))
-      
+
     @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]))
       @php
       $notes = $record['_source']['lifecycle']['creation'][0]['note'];
@@ -167,4 +173,16 @@
 @endif
 
 
+
+@endif
+
+@if(array_key_exists('school_or_style', $record['_source']))
+<h3 class="lead collection">
+  School or Style
+</h3>
+<p>
+@foreach($record['_source']['school_or_style'] as $school)
+  <a href="{{  route('terminology',[$school['admin']['id']]) }}">{{ $school['summary_title'] }}</a>
+@endforeach
+</p>
 @endif

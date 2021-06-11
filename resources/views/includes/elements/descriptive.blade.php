@@ -1,4 +1,4 @@
-@section('title', ucfirst($record['_source']['summary_title'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
+@section('title', ucfirst($record['_source']['title'][0]['value'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @section('description', 'A record for a Fitzwilliam Museum object: ' . ucfirst($record['_source']['summary_title']) . ' ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @if(array_key_exists('title', $record['_source']))
   <h3 class="lead collection">

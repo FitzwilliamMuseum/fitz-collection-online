@@ -21,9 +21,7 @@
 <h3 class="lead collection">
   Audit data
 </h4>
-<ul class="entities">
-  <li class="btn btn-sm btn-outline-dark mb-2 mr-1">Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('l j F Y') }}</li>
-  <li class="btn btn-sm btn-outline-dark mb-2 mr-1">Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</li>
-  <li class="sr-only">Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</li>
-</ul>
+  <span class="btn btn-sm btn-outline-dark mb-2 mr-1">Created: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['created']/ 1000)->format('l j F Y') }}</span>
+  <span class="btn btn-sm btn-outline-dark mb-2 mr-1">Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</span>
+  <span class="sr-only">Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</span>
 @include('includes/elements/institutions')
