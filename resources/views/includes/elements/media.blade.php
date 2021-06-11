@@ -40,7 +40,7 @@
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  Deep zoom</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF Manifest</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}" ><i class="fas fa-eye"></i> Slow looking</a>
-                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}" ><i class="fas fa-eye"></i> 3D view</a>
+                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/3d/{{ $record['_source']['identifier'][1]['priref'] }}" ><i class="fas fa-eye"></i> 3D view</a>
                 @endif
               @endif
             @endif
