@@ -3,7 +3,12 @@
   <div class="row">
     @foreach($data as $record)
       @if(array_key_exists('multimedia', $record['_source']))
+        @if(array_key_exists('title', $record['_source']))
         @section('hero_image_title', ucfirst($record['_source']['title'][0]['value']))
+        @else
+          @section('hero_image_title', ucfirst($record['_source']['summary_title']))
+
+        @endif
         @section('hero_image', env('APP_URL') . '/imagestore/' . $record['_source']['multimedia'][0]['processed']['mid']['location'])
       @else
         @section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/img_20190105_153947.jpg')
@@ -102,7 +107,11 @@
                     <div class="card-body ">
                       <div class="contents-label mb-3">
                         <h3>
+                        @if(array_key_exists('title',$record['_source'] ))
                           <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+                        @else
+                          <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                        @endif
                         </h3>
                         <p>
                           Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
