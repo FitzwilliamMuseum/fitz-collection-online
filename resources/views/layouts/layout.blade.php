@@ -42,7 +42,7 @@
 
     @yield('content')
   </div>
-
+    @yield('connected-images')
     @yield('search-box')
     @yield('search-results')
     @yield('connected')
