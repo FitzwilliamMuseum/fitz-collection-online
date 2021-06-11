@@ -121,7 +121,7 @@ class indexController extends Controller
     $response2 = $this->getElastic()->setParams($paramsMLT)->getSearch();
     $mlt = $response2['hits']['hits'];
     if(array_key_exists('multimedia', $data['0']['_source'])){
-      $image = $data[0]['_source']['multimedia'][0]['processed']['original']['location'];
+      $image = $data[0]['_source']['multimedia'][0]['processed']['large']['location'];
       $path = env('CIIM_IMAGE_URL') . $image;
       $palette = ColorThief::getPalette( $path, 12);
       $reader = Reader::factory(Reader::TYPE_NATIVE);
