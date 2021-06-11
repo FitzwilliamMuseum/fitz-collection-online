@@ -5,6 +5,7 @@
 @section('connected-images')
   <div class="container-fluid bg-grey mb-3">
     <div class="container mb-3">
+      <a class="mt-3 mb-3 btn btn-dark" href="{{ route('record', [$data[0]['_source']['identifier'][1]['priref']]) }}">Return to record</a>
       <div class="row mb-3">
         @foreach($paginate as $media)
           <div class="col-md-4 mt-3 mb-3">
