@@ -4,9 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use ImLiam\BladeHelper\Facades\BladeHelper;
-use Geocoder\Query\GeocodeQuery;
 use Illuminate\Support\Facades\Http;
 use Storage;
+use App\LookupPlace;
+
 class AppServiceProvider extends ServiceProvider
 {
   /**
@@ -52,5 +53,17 @@ class AppServiceProvider extends ServiceProvider
         $factor = floor((strlen($bytes) - 1) / 3);
         return sprintf("%.{$precision}f", $bytes / pow(1024, $factor)) . @$size[$factor];
       });
+
+    BladeHelper::directive('geo', function ($place) {
+      $geo  = new LookupPlace;
+      $geo->setPlace($place);
+      $results = $geo->lookup();
+
+      if(!empty($results)){
+        $coords = $results->first()->getCoordinates();
+        return $coords->getLatitude().',' .$coords->getLongitude();
+      }
+
+    });
   }
 }

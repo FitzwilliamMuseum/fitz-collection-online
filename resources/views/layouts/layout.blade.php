@@ -49,11 +49,6 @@
     @yield('pagination')
     @yield('exif-palette')
     @yield('machine')
-  @hasSection('map')
-  <div class="container-fluid map-box mb-3">
-    @yield('map')
-  </div>
-  @endif
 
     @yield('sketchfab')
     @yield('mlt')

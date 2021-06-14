@@ -153,6 +153,27 @@
         @foreach($record['_source']['lifecycle']['collection'][0]['places'] as $place)
           <li>
             {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
+            @php
+              $geo = new \App\LookupPlace();
+              $geo->setPlace($place['summary_title']);
+              $geodata = $geo->lookup()->first()->getCoordinates();
+              $lat = $geodata->getLatitude();
+              $lon = $geodata->getLongitude();
+
+            @endphp
+            @section('map')
+            @map([
+              'lat' => $lat,
+              'lng' => $lon,
+              'zoom' => 6,
+              'markers' => [
+                ['title' => 'Place of origin',
+                'lat' => $lat,
+                'lng' => $lon,
+                'popup' => 'Place of origin',],
+              ],
+            ])
+            @endsection
             @if(array_key_exists('hierarchies', $place))
               @foreach ($place['hierarchies'] as $hierarchies)
                 @php

@@ -13,6 +13,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 use ColorThief\ColorThief;
 use PHPExif\Reader\Reader;
 
+
 class indexController extends Controller
 {
   /**
@@ -22,7 +23,6 @@ class indexController extends Controller
   */
   public function index(Request $request)
   {
-
     $perPage = 24;
     $total = 8000;
     $page = $request->page;

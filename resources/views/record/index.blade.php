@@ -29,9 +29,16 @@
             @include('includes/elements/name')
 
             @include('includes/elements/measurements')
+            @include('includes/elements/lifecycle')
+            @hasSection('map')
+            <div class="map-box container mb-3">
+              @yield('map')
+            </div>
+
+            @endif
             @include('includes/elements/expander')
             <div id="expand-more" class="collapse">
-              @include('includes/elements/lifecycle')
+
               @include('includes/elements/agents-subjects')
               @include('includes/elements/medium')
               @include('includes/elements/component')
