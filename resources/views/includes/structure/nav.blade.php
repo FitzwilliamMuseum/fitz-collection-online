@@ -1,6 +1,6 @@
 <!-- Nav bars -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
-  <a class="navbar-brand">
+  <a class="navbar-brand" href="{{ route('home') }}">
     <img src="/images/logos/Fitz_logo_white.png" alt="The Fitzwilliam Museum Logo" height="60" width="" class="ml-1 mr-1">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
