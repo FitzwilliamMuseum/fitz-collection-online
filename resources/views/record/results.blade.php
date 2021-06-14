@@ -154,6 +154,7 @@ $query = http_build_query($base);
                         <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                       @endif            </h3>
                       <p class="text-info">{{ $record['_source']['identifier'][0]['accession_number'] }}</p>
+                      @include('includes.elements.makers')
 
                     </div>
                   </div>
