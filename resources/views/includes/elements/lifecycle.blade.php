@@ -127,22 +127,14 @@
     <ul class="entities">
       @php
         $coord =  array();
+        $placeName = '';
       @endphp
       @foreach($record['_source']['lifecycle']['creation'][0]['places'] as $place)
+        @php
+          $placeName .= $place['summary_title'];
+        @endphp
         <li>
           {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
-          @php
-            $geo = new \App\LookupPlace();
-            $geo->setPlace($place['summary_title']);
-            $gd = $geo->lookup();
-            if(!$gd->isEmpty()){
-              $geodata = $gd->first()->getCoordinates();
-              $lat = $geodata->getLatitude();
-              $lon = $geodata->getLongitude();
-              $coord[] = array('lat' => $lat, 'lng' => $lon);
-            }
-          @endphp
-
           @if(array_key_exists('hierarchies', $place))
             @foreach ($place['hierarchies'] as $hierarchies)
               @php
@@ -151,16 +143,31 @@
               @foreach($hierarchies as $hierarchy)
                 @if(array_key_exists('summary_title', $hierarchy))
                   &Sc; {{ $hierarchy['summary_title'] ?? ''}}
+                  @php
+                    $placeName .= ', ';
+                    $placeName .= $hierarchy['summary_title'] ?? '';
+                  @endphp
                 @endif
               @endforeach
             @endforeach
           @endif
         </li>
+        @php
+          $geo = new \App\LookupPlace();
+          $geo->setPlace($placeName);
+          $gd = $geo->lookup();
+          if(!$gd->isEmpty()){
+            $geodata = $gd->first()->getCoordinates();
+            $lat = $geodata->getLatitude();
+            $lon = $geodata->getLongitude();
+            $coord[] = array('lat' => $lat, 'lng' => $lon);
+          }
+        @endphp
+
       @endforeach
     </ul>
     @if(!empty($coord))
     @section('map')
-      {{-- @dd($coord); --}}
     @map([
       'lat' => $coord[0]['lat'],
       'lng' => $coord[0]['lng'],
