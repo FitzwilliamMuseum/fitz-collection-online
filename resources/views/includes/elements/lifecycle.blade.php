@@ -170,8 +170,8 @@
                 ['title' => 'Place of origin',
                 'lat' => $lat,
                 'lng' => $lon,
-                'popup' => 'Place of origin',],
-              ],
+                'popup' => 'Place of origin'],
+              ]
             ])
             @endsection
             @if(array_key_exists('hierarchies', $place))
