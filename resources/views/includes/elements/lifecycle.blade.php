@@ -134,10 +134,13 @@
           @php
             $geo = new \App\LookupPlace();
             $geo->setPlace($place['summary_title']);
-            $geodata = $geo->lookup()->first()->getCoordinates();
-            $lat = $geodata->getLatitude();
-            $lon = $geodata->getLongitude();
-            $coord[] = array('lat' => $lat, 'lng' => $lon);
+            $gd = $geo->lookup();
+            if(!$gd->isEmpty()){
+              $geodata = $gd->first()->getCoordinates();
+              $lat = $geodata->getLatitude();
+              $lon = $geodata->getLongitude();
+              $coord[] = array('lat' => $lat, 'lng' => $lon);
+            }
           @endphp
 
           @if(array_key_exists('hierarchies', $place))
@@ -184,11 +187,14 @@
             @php
               $geo = new \App\LookupPlace();
               $geo->setPlace($place['summary_title']);
-              $geodata = $geo->lookup()->first()->getCoordinates();
-              $lat = $geodata->getLatitude();
-              $lon = $geodata->getLongitude();
-
+              $gd = $geo->lookup();
+              if(!$gd->isEmpty()){
+                $geodata = $geo->lookup()->first()->getCoordinates();
+                $lat = $geodata->getLatitude();
+                $lon = $geodata->getLongitude();
+              }
             @endphp
+
             @isset($lat)
             @section('map')
             @map([
