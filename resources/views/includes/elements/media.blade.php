@@ -66,7 +66,7 @@
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
         @php
         $images = [];
-        foreach (array_slice($record['_source']['multimedia'],1) as $image ){
+        foreach (array_slice($record['_source']['multimedia'],1,6) as $image ){
           if(!Arr::has($image, 'admin.source')){
             $images[] = array(
               'admin' => $image['admin'],
