@@ -155,6 +155,7 @@
         </li>
       @endforeach
     </ul>
+    @if(!empty($coord))
     @section('map')
       {{-- @dd($coord); --}}
     @map([
@@ -169,6 +170,7 @@
       ]
     ])
     @endsection
+  @endif
   @endif
   @if(array_key_exists('collection', $record['_source']['lifecycle']))
     @if(array_key_exists('places', $record['_source']['lifecycle']['collection'][0]))
@@ -187,6 +189,7 @@
               $lon = $geodata->getLongitude();
 
             @endphp
+            @isset($lat)
             @section('map')
             @map([
               'lat' => $lat,
@@ -200,6 +203,7 @@
               ]
             ])
             @endsection
+            @endisset
             @if(array_key_exists('hierarchies', $place))
               @foreach ($place['hierarchies'] as $hierarchies)
                 @php
