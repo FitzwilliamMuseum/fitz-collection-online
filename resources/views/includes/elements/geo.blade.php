@@ -1,5 +1,5 @@
 @if(array_key_exists('lifecycle',$record['_source'] ))
-
+  @if(array_key_exists('creation',$record['_source']['lifecycle']))
   @if(array_key_exists('places', $record['_source']['lifecycle']['creation'][0]))
     <h3 class="lead collection">
       Place(s) associated
@@ -114,4 +114,5 @@
       </ul>
     @endif
   @endif
+@endif
 @endif
