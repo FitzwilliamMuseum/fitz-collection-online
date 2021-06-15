@@ -38,7 +38,7 @@
             Research</a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="{{ URL::to('https://curatingcambridge.com') }}" >
+            <a class="nav-link" href="{{ URL::to('https://curatingcambridge.co.uk/collections/the-fitzwilliam-museum') }}" >
               Shop</a>
             </li>
         </ul>
