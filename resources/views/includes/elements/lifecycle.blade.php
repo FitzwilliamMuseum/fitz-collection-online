@@ -125,15 +125,27 @@
       Place(s) associated
     </h4>
     <ul class="entities">
+      @php
+        $coord =  array();
+      @endphp
       @foreach($record['_source']['lifecycle']['creation'][0]['places'] as $place)
         <li>
           {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
+          @php
+            $geo = new \App\LookupPlace();
+            $geo->setPlace($place['summary_title']);
+            $geodata = $geo->lookup()->first()->getCoordinates();
+            $lat = $geodata->getLatitude();
+            $lon = $geodata->getLongitude();
+            $coord[] = array('lat' => $lat, 'lng' => $lon);
+          @endphp
+
           @if(array_key_exists('hierarchies', $place))
             @foreach ($place['hierarchies'] as $hierarchies)
               @php
               $hierarchies = array_reverse($hierarchies, true);
               @endphp
-              @foreach ($hierarchies as $hierarchy)
+              @foreach($hierarchies as $hierarchy)
                 @if(array_key_exists('summary_title', $hierarchy))
                   &Sc; {{ $hierarchy['summary_title'] ?? ''}}
                 @endif
@@ -143,6 +155,20 @@
         </li>
       @endforeach
     </ul>
+    @section('map')
+      {{-- @dd($coord); --}}
+    @map([
+      'lat' => $coord[0]['lat'],
+      'lng' => $coord[0]['lng'],
+      'zoom' => 6,
+      'markers' => [
+        ['title' => 'Place associated',
+        'lat' => $coord[0]['lat'],
+        'lng' => $coord[0]['lng'],
+        'popup' => 'Place associated'],
+      ]
+    ])
+    @endsection
   @endif
   @if(array_key_exists('collection', $record['_source']['lifecycle']))
     @if(array_key_exists('places', $record['_source']['lifecycle']['collection'][0]))
