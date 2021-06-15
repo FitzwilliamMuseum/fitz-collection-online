@@ -44,10 +44,12 @@
                     $three = [];
                   @endphp
                   @foreach($record['_source']['identifier'] as $key => $rep)
-                    @if($rep['type'] ===  'Online 3D model')
-                      @php
-                        $three[] = true;
-                      @endphp
+                    @if(array_key_exists('type',$rep))
+                      @if($rep['type'] ===  'Online 3D model')
+                        @php
+                          $three[] = true;
+                        @endphp
+                      @endif
                     @endif
                   @endforeach
                   @if(!empty($three))
