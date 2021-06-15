@@ -171,7 +171,7 @@
     @map([
       'lat' => $coord[0]['lat'],
       'lng' => $coord[0]['lng'],
-      'zoom' => 6,
+      'zoom' => 8,
       'markers' => [
         ['title' => 'Place associated',
         'lat' => $coord[0]['lat'],
@@ -207,7 +207,7 @@
             @map([
               'lat' => $lat,
               'lng' => $lon,
-              'zoom' => 6,
+              'zoom' => 8,
               'markers' => [
                 ['title' => 'Place of origin',
                 'lat' => $lat,
