@@ -60,4 +60,5 @@
   @include('includes/elements/machine-cite')
   @endforeach
   @include('includes/elements/morelike')
+
   @endsection
