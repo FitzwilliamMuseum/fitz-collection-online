@@ -31,13 +31,6 @@
         </li>
       @endif
     @endforeach
-    @foreach($record['_source']['subjects'] as $subject)
-      @if(array_key_exists('admin', $subject))
-        <li>
-          <a class="btn btn-sm btn-outline-dark mb-1" href="/id/terminology/{{ $subject['admin']['id']}}">{{ ucfirst($subject['summary_title'])}}</a>
-        </li>
-      @endif
-    @endforeach
     @if(array_key_exists('subjects', $record['_source']))
       @foreach($record['_source']['subjects'] as $subject)
         @if(array_key_exists('admin', $subject))
