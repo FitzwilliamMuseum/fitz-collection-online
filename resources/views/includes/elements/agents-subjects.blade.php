@@ -1,7 +1,7 @@
 
   @if(array_key_exists('agents', $record['_source']))
   <h3 class="lead collection">
-    Agents depicted
+    People, subjects and objects depicted
   </h4>
   <ul class="entities">
   @foreach($record['_source']['agents'] as $agent)
@@ -15,14 +15,6 @@
       </li>
     @endif
   @endforeach
-  </ul>
-  @endif
-
-  @if(array_key_exists('subjects', $record['_source']))
-  <h3 class="lead collection">
-    Subjects depicted
-  </h3>
-  <ul class="entities">
   @foreach($record['_source']['subjects'] as $subject)
     @if(array_key_exists('admin', $subject))
       <li>
@@ -30,5 +22,14 @@
       </li>
     @endif
   @endforeach
+  @if(array_key_exists('subjects', $record['_source']))
+    @foreach($record['_source']['subjects'] as $subject)
+      @if(array_key_exists('admin', $subject))
+        <li>
+          <a class="btn btn-sm btn-outline-dark mb-1" href="/id/terminology/{{ $subject['admin']['id']}}">{{ ucfirst($subject['summary_title'])}}</a>
+        </li>
+      @endif
+    @endforeach
+  @endif
   </ul>
   @endif
