@@ -12,13 +12,9 @@
           </div>
           <div class="text-center mt-2">
             <a class="btn btn-sm btn-sm btn-dark m-1" href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
-
             @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
-
-              <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
-
-
+              <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
+              ><i class="fas fa-download mr-2"></i> Download this image</a>
               @php
               $con = array();
               foreach ($record['_source']['multimedia'] as $image ){
@@ -59,6 +55,14 @@
               @endif
             @endif
           </div>
+          @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+          <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
+            <h3 class="lead collection">Terms of use</h3>
+            <p class="text-info">These images are provided for non-commercial use under a Creative Commons License (BY-NC-ND). To license a high resolution version, please contact our image library who will discuss terms and fee waivers.</p>
+              <a class="btn btn-sm btn-sm btn-dark m-1 d-block " href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
+              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
+          </div>
+          @endif
         </div>
       </div>
     @endif
