@@ -57,10 +57,7 @@
           </div>
           @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
           <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
-            <h3 class="lead collection">Terms of use</h3>
-            <p class="text-info">These images are provided for non-commercial use under a Creative Commons License (BY-NC-ND). To license a high resolution version, please contact our image library who will discuss terms and fee waivers.</p>
-              <a class="btn btn-sm btn-sm btn-dark m-1 d-block " href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}" target="_blank"
-              download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i> Download this image</a>
+            @include('includes.elements.terms')
           </div>
           @endif
         </div>
