@@ -14,7 +14,7 @@
             <a class="btn btn-sm btn-sm btn-dark m-1" href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
             @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
               <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
-              ><i class="fas fa-download mr-2"></i> Download this image</a>
+              ><i class="fas fa-download mr-2"></i> Use this image</a>
               @php
               $con = array();
               foreach ($record['_source']['multimedia'] as $image ){
