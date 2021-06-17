@@ -163,9 +163,11 @@ $query = http_build_query($base);
           @endforeach
         </div>
         @section('pagination')
+        <div class="container mt-1 p-2 text-center">
         <nav aria-label="Page navigation" >
           {{ $paginate->appends(request()->except('page'))->links() }}
         </nav>
+        </div>
         @endsection
       @endif
 
