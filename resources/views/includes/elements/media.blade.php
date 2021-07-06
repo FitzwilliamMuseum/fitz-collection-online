@@ -1,5 +1,7 @@
 @if(array_key_exists('multimedia', $record['_source']))
+
   @section('media-files')
+    @if(array_key_exists('large', $record['_source']['multimedia'][0]['processed']))
     <div class="container-fluid bg-white">
       <div class="shadow-sm p-3 mx-auto mb-3">
         <div>
@@ -108,5 +110,7 @@
           @endif
 
         @endif
+      @endif
       @endsection
+
     @endif

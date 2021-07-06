@@ -9,7 +9,9 @@
           @section('hero_image_title', ucfirst($record['_source']['summary_title']))
 
         @endif
-        @section('hero_image', env('APP_URL') . '/imagestore/' . $record['_source']['multimedia'][0]['processed']['mid']['location'])
+        @if(array_key_exists('mid',$record['_source']['multimedia'][0]['processed']))
+          @section('hero_image', env('APP_URL') . '/imagestore/' . $record['_source']['multimedia'][0]['processed']['mid']['location'])
+        @endif
       @else
         @section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/img_20190105_153947.jpg')
         @section('hero_image_title', "The inside of our Founder's entrance")

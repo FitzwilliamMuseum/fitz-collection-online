@@ -11,7 +11,9 @@
               <div class="card  h-100">
                 <div class="card-body results_image">
                   @if(array_key_exists('multimedia', $record['_source']))
-                    <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}"><img class="img-fluid " src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}" loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"/></a>
+                    @if(array_key_exists('preview',$record['_source']['multimedia'][0]['processed']))
+                      <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}"><img class="img-fluid " src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}" loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"/></a>
+                    @endif
                   @else
                     <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-large-crop"
                       alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
