@@ -11,30 +11,30 @@
   <ul class="navbar-nav mr-auto">
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/') }}">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-link" href="{{ URL::to(env('MAIN_URL')) }}">Home <span class="sr-only">(current)</span></a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="https://beta.fitz.ms/visit-us">Visit</a>
+      <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/visit-us/') }}">Visit</a>
     </li>
 
     <li class="nav-item ">
-      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/events') }}">Events & tickets</a>
+      <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/events/') }}">Events & tickets</a>
     </li>
 
 
     <li class="nav-item active">
-      <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/objects-and-artworks/') }}" >
+      <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/objects-and-artworks/') }}" >
         Our Collection</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/learning') }}" >
+        <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/learning') }}" >
           Learning</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/about-us') }}" >About</a>
+          <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/about-us') }}" >About</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="{{ URL::to('https://beta.fitz.ms/research') }}" >
+          <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/research') }}" >
             Research</a>
           </li>
           <li class="nav-item ">
