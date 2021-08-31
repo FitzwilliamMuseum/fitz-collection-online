@@ -12,7 +12,7 @@
     "copy-uv-assets": "cp -R node_modules/universalviewer/dist/uv-assets ./public",
     "copy-uv-dist-umd": "cp -R node_modules/universalviewer/dist/uv-dist-umd ./public",
     "copy-uv-html": "cp -R node_modules/universalviewer/dist/uv.html ./public",
-    "copy-uv-css": "cp -R node_modules/universalviewer/dist/uv.css ./public/css/",
+    "copy-uv-css": "cp -R node_modules/universalviewer/dist/uv.css ./public/",
     "postinstall": "npm run copy"
   },
   "dependencies": {
@@ -22,11 +22,17 @@
   "devDependencies": {
     "axios": ">=0.21.1",
     "cross-env": "^7.0.3",
+    "glob-parent": ">=5.1.2",
+    "is-svg": ">=4.2.2",
     "laravel-mix": "^5.0.9",
     "lodash": "^4.17.21",
     "object-path": ">=0.11.5",
+    "postcss": ">=7.0.36",
     "resolve-url-loader": "^3.1.2",
     "sass": "^1.32.0",
-    "sass-loader": "^8.0.0"
+    "sass-loader": "^8.0.0",
+    "ssri": ">=7.1.1",
+    "vue-template-compiler": "^2.6.14",
+    "xmldom": ">=0.5.0"
   }
 }
