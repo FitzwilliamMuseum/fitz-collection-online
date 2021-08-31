@@ -7,6 +7,7 @@ use ImLiam\BladeHelper\Facades\BladeHelper;
 use Illuminate\Support\Facades\Http;
 use Storage;
 use App\LookupPlace;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,31 +29,24 @@ class AppServiceProvider extends ServiceProvider
   public function boot()
   {
     BladeHelper::directive('fa', function(string $iconName, string $text = null, $classes = '') {
-            if (is_array($classes)) {
-                $classes = join(' ', $classes);
-            }
+      if (is_array($classes)) {
+        $classes = join(' ', $classes);
+      }
 
-            $text = $text ?? $iconName;
+      $text = $text ?? $iconName;
 
-            return "<i class='fas fa-{$iconName} {$classes}' aria-hidden='true' title='{$text}'></i><span class='sr-only'>{$text}</span>";
+      return "<i class='fas fa-{$iconName} {$classes}' aria-hidden='true' title='{$text}'></i><span class='sr-only'>{$text}</span>";
     });
 
-    BladeHelper::directive('lookup_term', function( $term){
-        $json =  '[{"term": "term-14162","label": "Imperial (Roman)"},
-        {"term": "term-14163","label": "Imperial (Roman)"}]';
-        rtrim($json, "\0");
-        $arr = json_decode($json,true);
-        $filtered = array_filter($arr, function($object) use($term) {
-          return ($object['term'] === $term);
-        });
-       return($filtered[0]['label']);
-    });
+    Paginator::useBootstrap();
+    Paginator::defaultView('pagination::simple-tailwind');
+
 
     BladeHelper::directive('humansize', function ($bytes, $precision = 2) {
-        $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
-        $factor = floor((strlen($bytes) - 1) / 3);
-        return sprintf("%.{$precision}f", $bytes / pow(1024, $factor)) . @$size[$factor];
-      });
+      $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
+      $factor = floor((strlen($bytes) - 1) / 3);
+      return sprintf("%.{$precision}f", $bytes / pow(1024, $factor)) . @$size[$factor];
+    });
 
     BladeHelper::directive('geo', function ($place) {
       $geo  = new LookupPlace;
