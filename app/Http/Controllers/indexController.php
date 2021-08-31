@@ -296,7 +296,7 @@ class indexController extends Controller
             "must" => [
               [
                 "multi_match" => [
-                  "fields" => "_generic_all_std",
+                  "fields" => ["_generic_all_std","accession_number^3"],
                   "query" => $queryString,
                   "operator" =>  $operator,
                 ],
