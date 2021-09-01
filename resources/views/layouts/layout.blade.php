@@ -91,3 +91,4 @@
 
 </body>
 </html>
+{!!  GoogleReCaptchaV3::init() !!}

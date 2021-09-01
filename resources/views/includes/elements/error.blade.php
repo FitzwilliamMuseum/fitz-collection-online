@@ -51,6 +51,9 @@
             <span id="queryHelpBlock" class="form-text text-muted">Please enter your query with as much detail as possible</span>
           </div>
           <div class="form-group">
+          {!!  GoogleReCaptchaV3::renderField('contact_us_id','contact_us_action') !!}
+          </div>
+          <div class="form-group">
             <button name="submit" type="submit" class="btn btn-dark d-block">Submit your query</button>
           </div>
         </form>
