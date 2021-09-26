@@ -37,7 +37,7 @@
         "spatie/array-to-xml": "^2.14",
         "spatie/laravel-googletagmanager": "^2.6",
         "spatie/laravel-responsecache": "^6.6",
-        "symfony/http-kernel": "5.1.5",
+        "symfony/http-kernel": "^5.1.5",
         "timehunter/laravel-google-recaptcha-v3": "~2.5",
         "toin0u/geocoder-laravel": "^4.4",
         "upthemedia/xss-protection": "^0.0.8"
