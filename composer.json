@@ -7,14 +7,21 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": [
+    {
+        "type": "git",
+        "name": "fitzwilliammuseum/maps",
+        "url": "https://github.com/fitzwilliammuseum/maps.git"
+    }
+    ],
     "require": {
-        "php": "^7.2.5",
+        "php": "^7.2.5 | ^8.0.3",
         "elasticsearch/elasticsearch": "^7.11.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "geocoder-php/cache-provider": "^4.2",
         "geocoder-php/nominatim-provider": "^5.4",
-        "gonoware/laravel-maps": "^1.4",
+        "fitzwilliammuseum/maps": "master",
         "guzzlehttp/guzzle": "^7.3",
         "imliam/laravel-blade-helper": "^1.0",
         "ksubileau/color-thief-php": "^1.4",
@@ -32,7 +39,8 @@
         "spatie/laravel-responsecache": "^6.6",
         "symfony/http-kernel": "5.1.5",
         "timehunter/laravel-google-recaptcha-v3": "~2.5",
-        "toin0u/geocoder-laravel": "^4.4"
+        "toin0u/geocoder-laravel": "^4.4",
+        "upthemedia/xss-protection": "^0.0.8"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

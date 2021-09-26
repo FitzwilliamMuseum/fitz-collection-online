@@ -40,7 +40,6 @@
     @yield('media-files')
   @endif
   <div class="container mt-3">
-
     @yield('content')
   </div>
     @yield('connected-images')
@@ -61,23 +60,7 @@
 
   @include('includes.structure.modal')
 
-  @hasSection('lookanswers')
-    @yield('lookanswers')
-  @endif
-
-  @hasSection('thinkanswers')
-    @yield('thinkanswers')
-  @endif
-
-  @hasSection('doanswers')
-    @yield('doanswers')
-  @endif
-
   @include('includes.scripts.javascript')
-
-  @hasSection('360')
-    @include('includes.scripts.photosphere-js')
-  @endif
 
   @hasSection('map')
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin="" type="text/javascript"></script>
@@ -90,5 +73,5 @@
   @endif
 
 </body>
-</html>
 {!!  GoogleReCaptchaV3::init() !!}
+</html>

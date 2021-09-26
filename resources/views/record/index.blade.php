@@ -34,11 +34,11 @@
             <div class="map-box container mb-3">
               @yield('map')
             </div>
-
             @endif
+            @include('includes/elements/lifecycle')
+
             @include('includes/elements/expander')
             <div id="expand-more" class="collapse">
-              @include('includes/elements/lifecycle')
               @include('includes/elements/agents-subjects')
               @include('includes/elements/medium')
               @include('includes/elements/component')

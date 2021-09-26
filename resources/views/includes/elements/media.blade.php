@@ -67,50 +67,51 @@
     @endif
 
     @if(array_key_exists('multimedia', $record['_source']))
-
       @if(!empty(array_slice($record['_source']['multimedia'],1)))
         @php
         $images = [];
-        foreach (array_slice($record['_source']['multimedia'],1,6) as $image ){
-          if(!Arr::has($image, 'admin.source')){
+        foreach (array_slice($record['_source']['multimedia'],1,5) as $image ){
+          // if(Arr::has($image, 'admin.source')){
             $images[] = array(
               'admin' => $image['admin'],
               'processed' => $image['processed']
             );
-          }
+          // }
         }
         @endphp
 
         @if(sizeof($images) > 0)
-          <div class="container">
+          <div class="container-fluid bg-gbdo p-3">
+            <div class="container text-center">
             <h3 class="lead">Alternative views</h3>
             <div class="row">
               @foreach($images as $media)
-                <div class="col-md-2 mt-3">
+                <div class="col-md-2 mt-3 mx-2">
                   <div class="h-100">
-                    <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
-                      loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-                      /></a>
+                    <a href="/id/image/{{ $media['admin']['id']}}">
+                      <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
+                      loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"  />
+                    </a>
                     </div>
                   </div>
                 @endforeach
               </div>
-            </div>
-            @php
-            $records = count($record['_source']['multimedia']);
-            @endphp
 
-            @if($records > 4)
-              <div class="container">
-                <a class="btn btn-sm btn-sm btn-dark m-1 mt-2" href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
-                ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
+              @php
+              $records = count($record['_source']['multimedia']);
+              @endphp
+              @if($records > 4)
+                <div class="container">
+                  <a class="btn btn-sm btn-sm btn-dark m-1 mt-2" href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
+                  ><i class="fas fa-eye mr-2"></i>  View all {{ $records }} images attached </a>
+                </div>
+              @endif
+
               </div>
-            @endif
-
+            </div>
           @endif
-
         @endif
       @endif
-      @endsection
+    @endsection
 
-    @endif
+  @endif
