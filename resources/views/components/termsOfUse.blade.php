@@ -3,7 +3,7 @@
   These images are provided for non-commercial use under a Creative Commons
   License (BY-NC-ND). To license a high resolution version, please contact
   our <a href="{{ env('MAIN_URL')}}/commercial-services/image-library">image library</a>
-   who will discuss fees, terms and fee waivers.
+   who will discuss fees, terms and waivers.
 </p>
 <a class="btn btn-sm btn-sm btn-dark m-1 d-block"
 href="{{ env('APP_URL')}}/imagestore/{{ $path }}"

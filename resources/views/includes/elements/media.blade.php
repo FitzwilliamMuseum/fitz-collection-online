@@ -14,9 +14,10 @@
           </div>
           <div class="text-center mt-2">
             <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}" ><i class="fas fa-search mr-2"></i> View image details</a>
-            @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+
               <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
               ><i class="fas fa-download mr-2"></i> Use this image</a>
+              {{-- @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin'])) --}}
               @php
               $con = array();
               foreach ($record['_source']['multimedia'] as $image ){
@@ -55,13 +56,13 @@
                   @endif
                 @endif
               @endif
-            @endif
+            {{-- @endif --}}
           </div>
-          @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+          {{-- @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin'])) --}}
           <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
             <x-termsOfUse :path="$record['_source']['multimedia'][0]['processed']['large']['location']" />
           </div>
-          @endif
+          {{-- @endif --}}
         </div>
       </div>
     @endif
