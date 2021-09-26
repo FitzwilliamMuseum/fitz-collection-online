@@ -6,14 +6,15 @@
     /></a>
   </div>
   <div class="text-center mb-2 mt-2">
-      <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['large']['location'] }}" target="_blank"
-      download="{{ $record['processed']['original']['location'] }}"><i class="fas fa-download mr-2"></i>  Download this image</a>
-      <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/object/{{ $object['identifier'][1]['priref']}}">Back to record</a>
+    <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
+    ><i class="fas fa-download mr-2"></i> Use this image</a>
+      <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('record', $object['identifier'][1]['priref']) }}">Back to record</a>
     @if(Arr::has($filtered[0]['processed'], 'zoom'))
-        <span class="btn btn-sm btn-wine m-1 p-2 share">
-          <a href="/id/image/iiif/{{ $object['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
-        </span>
+      <a class="btn btn-sm btn-dark m-1" href="{{ route('image.iiif', $object['multimedia'][0]['admin']['id']) }}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
     @endif
+  </div>
+  <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
+    <x-termsOfUse :path="$record['processed']['large']['location']" />
   </div>
 </div>
 

@@ -5,7 +5,7 @@
     <div class="container-fluid bg-white">
       <div class="shadow-sm p-3 mx-auto mb-3">
         <div>
-          <a href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}"><img class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
+          <a href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}"><img class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
           </div>
@@ -13,8 +13,8 @@
             @include('includes.elements.exif-short')
           </div>
           <div class="text-center mt-2">
-            <a class="btn btn-sm btn-sm btn-dark m-1" href="/id/image/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><i class="fas fa-search mr-2"></i> View image details</a>
-            @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+            <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}" ><i class="fas fa-search mr-2"></i> View image details</a>
+            @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
               <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
               ><i class="fas fa-download mr-2"></i> Use this image</a>
               @php
@@ -35,7 +35,7 @@
                   $slow = Arr::pluck($con, 'image');
                   @endphp
                   {{-- Check for IIIF --}}
-                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/iiif/{{ $record['_source']['multimedia'][0]['admin']['id']}}" ><img src="/images/logos/iiif.svg" alt="IIIF icon - view image" width="20px" />  Deep zoom</a>
+                  <a class="btn btn-sm btn-sm btn-dark m-1 " href="{{ route('image.iiif', $record['_source']['multimedia'][0]['admin']['id']) }}" ><img src="/images/logos/iiif.svg" alt="IIIF icon - view image" width="20px" />  Deep zoom</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest" ><img src="/images/logos/iiif.svg" alt="IIIF Manifest" width="20px" />  IIIF Manifest</a>
                   <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}" ><i class="fas fa-eye"></i> Slow looking</a>
                   @php
@@ -57,9 +57,9 @@
               @endif
             @endif
           </div>
-          @if(!array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
+          @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin']))
           <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
-            @include('includes.elements.terms')
+            <x-termsOfUse :path="$record['_source']['multimedia'][0]['processed']['large']['location']" />
           </div>
           @endif
         </div>
@@ -88,7 +88,7 @@
               @foreach($images as $media)
                 <div class="col-md-2 mt-3 mx-2">
                   <div class="h-100">
-                    <a href="/id/image/{{ $media['admin']['id']}}">
+                    <a href="{{ route('image.single', $media['admin']['id']) }}">
                       <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
                       loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"  />
                     </a>

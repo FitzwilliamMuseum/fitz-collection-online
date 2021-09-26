@@ -6,7 +6,7 @@
    who will discuss fees, terms and fee waivers.
 </p>
 <a class="btn btn-sm btn-sm btn-dark m-1 d-block"
-href="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
+href="{{ env('APP_URL')}}/imagestore/{{ $path }}"
 target="_blank"
-download="{{ basename($record['_source']['multimedia'][0]['processed']['large']['location'] ) }}"><i class="fas fa-download mr-2"></i>
+download="{{ basename($path)}}"><i class="fas fa-download mr-2"></i>
 Download this image</a>

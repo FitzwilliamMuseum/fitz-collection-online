@@ -83,10 +83,10 @@
       if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0])) {
         $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
         if($dateTime < 0){
-          $suffix = ' BCE';
+          $suffix = ' <abbr title="Before Christ">BC</abbr>/<abbr title="Before Common Era">BCE</abbr>';
           $string = abs($dateTime) . '' . $suffix;
         } else {
-          $suffix = 'CE ';
+          $suffix = '<abbr title="Anno Domini">AD</abbr>/<abbr title="Common Era">CE</abbr> ';
           $string = $suffix . '' . $dateTime;
         }
       }
