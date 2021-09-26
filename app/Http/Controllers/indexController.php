@@ -419,7 +419,11 @@ $facets = array(
     if(!is_null($request->get('sort'))){
       $order = $request->get('sort');
       $sort = array(
-
+        "multimedia.admin.id" => [
+          "order" =>  $order,
+          "missing" => '_last'
+          ]
+        ,
         "admin.modified" =>  [
           "order" =>  $order
           ]
