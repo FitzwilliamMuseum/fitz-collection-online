@@ -87,7 +87,7 @@
             <h3 class="lead">Alternative views</h3>
             <div class="row">
               @foreach($images as $media)
-                <div class="col mt-3 ">
+                <div class="col-md-3 mt-3 mx-auto ">
                   <div class="h-100">
                     <a href="{{ route('image.single', $media['admin']['id']) }}">
                       <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
