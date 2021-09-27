@@ -18,7 +18,9 @@
         $title = ucwords($title);
         if(is_numeric($title)){
           if(array_key_exists(0,$data)){
-            $title = $data[0]['_source']['identifier'][0]['accession_number'];
+            if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0])){
+              $title = $data[0]['_source']['identifier'][0]['accession_number'];
+            }
           }
         }
         @endphp

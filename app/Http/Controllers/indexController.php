@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Spatie\ArrayToXml\ArrayToXml;
 use ColorThief\ColorThief;
 use PHPExif\Reader\Reader;
-
+use App\Models\FindMoreLikeThis;
 
 class indexController extends Controller
 {
@@ -68,6 +68,8 @@ class indexController extends Controller
     $data = $response['hits']['hits'];
     // $data = $this->replaceKeys('@link', 'link', $data);
     $query = $data[0]['_source']['summary_title'];
+    $shopify = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'], 'shopify');
+    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'], 'research');
     if(array_key_exists('title',$data[0]['_source'] )){
       $query .= ' ';
       $query .=  $data[0]['_source']['title'][0]['value'];
@@ -133,7 +135,7 @@ class indexController extends Controller
     } else {
       $exif = NULL;
     }
-    return view('record.index', compact('data', 'mlt', 'exif'));
+    return view('record.index', compact('data', 'mlt', 'exif', 'shopify', 'research'));
   }
   /**
    * [recordSwitch description]

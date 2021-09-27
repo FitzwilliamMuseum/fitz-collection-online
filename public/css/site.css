@@ -765,7 +765,7 @@ p.small-font {
 img.results_image__thumbnail {
   width: 348px;
   height: 348px;
-  object-fit: none;
+  object-fit: cover;
 }
 .free_ticket a {
   color: #000!important;

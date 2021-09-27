@@ -1,10 +1,13 @@
+@if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0]))
 @if(array_key_exists('title',$record['_source']))
   @section('title', ucfirst($record['_source']['title'][0]['value'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @else
-  @section('title', ucfirst($record['_source']['summary_title'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
 
+    @section('title', ucfirst($record['_source']['summary_title'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
 @endif
+
 @section('description', 'A record for a Fitzwilliam Museum object: ' . ucfirst($record['_source']['summary_title']) . ' ' . $data[0]['_source']['identifier'][0]['accession_number'])
+@endif
 @if(array_key_exists('title', $record['_source']))
   <h3 class="lead collection">
     Titles

@@ -52,7 +52,10 @@
 
     @yield('sketchfab')
     @yield('mlt')
-
+    @isset($shopify)
+    <x-fme-products :shopify="$shopify" />
+    <x-research-m-l-t :research="$research" />
+  @endif
   @include('includes.structure.emailsignup')
   @include('includes.structure.share')
 

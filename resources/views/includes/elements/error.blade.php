@@ -39,9 +39,11 @@
                   <i class="fa fa-object-group"></i>
                 </div>
               </div>
-              <input id="object" value="{{ $record['_source']['identifier'][0]['accession_number'] }}" disabled name="object" placeholder="The object you are commenting on" type="text" class="form-control" aria-describedby="objectHelpBlock">
-              <input type="hidden" name="entry.467390036"  value="{{ $record['_source']['identifier'][0]['accession_number'] }}">
+              @if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0]))
+                <input id="object" value="{{ $record['_source']['identifier'][0]['accession_number'] }}" disabled name="object" placeholder="The object you are commenting on" type="text" class="form-control" aria-describedby="objectHelpBlock">
 
+                <input type="hidden" name="entry.467390036"  value="{{ $record['_source']['identifier'][0]['accession_number'] }}">
+              @endif
             </div>
             <span id="objectHelpBlock" class="form-text text-muted">The object accession number - this is prefilled</span>
           </div>
