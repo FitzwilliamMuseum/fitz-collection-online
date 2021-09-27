@@ -42,10 +42,11 @@
   <div class="container mt-3">
     @yield('content')
   </div>
-    @yield('connected-images')
+
     @yield('search-box')
     @yield('search-results')
     @yield('connected')
+    @yield('connected-images')
     @yield('pagination')
     @yield('exif-palette')
     @yield('machine')
