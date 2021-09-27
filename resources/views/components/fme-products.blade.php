@@ -1,7 +1,7 @@
 @if(!empty($shopify))
 <div class="container-fluid bg-gbdo  p-3">
   <div class="container">
-    <h4 class="lead">Suggested FME products</h4>
+    <h4 class="lead">Suggested products from Curating Cambridge</h4>
     <div class="row ">
       @foreach($shopify as $record)
         <div class="col-md-3 mb-3">
