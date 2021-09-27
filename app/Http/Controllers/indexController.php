@@ -69,7 +69,7 @@ class indexController extends Controller
     // $data = $this->replaceKeys('@link', 'link', $data);
     $query = $data[0]['_source']['summary_title'];
     $shopify = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'], 'shopify');
-    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'], 'research');
+    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'], 'research-resource');
     if(array_key_exists('title',$data[0]['_source'] )){
       $query .= ' ';
       $query .=  $data[0]['_source']['title'][0]['value'];
