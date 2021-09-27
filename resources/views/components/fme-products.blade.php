@@ -1,4 +1,4 @@
-@isset($shopify)
+@if(!empty($shopify))
 <div class="container-fluid bg-gbdo  p-3">
   <div class="container">
     <h4 class="lead">Suggested FME products</h4>
@@ -41,4 +41,4 @@
         </div>
       </div>
     </div>
-@endisset
+@endif

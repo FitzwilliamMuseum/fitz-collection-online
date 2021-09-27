@@ -63,7 +63,7 @@ class MoreLikeThis {
         $query->setQuery('title:' . $queryString);
         $query->setMltFields('title,description');
         $query->setMinimumDocumentFrequency(1);
-        $query->setMinimumTermFrequency(2);
+        $query->setMinimumTermFrequency(1);
         $query->createFilterQuery('type')->setQuery('contentType:' . $this->getType());
         $query->setInterestingTerms('details');
         $query->setMatchInclude(true);
