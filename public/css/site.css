@@ -764,7 +764,6 @@ p.small-font {
 }
 img.results_image__thumbnail {
   width: 348px;
-  height: 348px;
   object-fit: cover;
 }
 .free_ticket a {
