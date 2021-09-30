@@ -1,4 +1,3 @@
-test
 @if(!empty($colours))
   <div class="container">
     <h3 class="lead collection mx-auto p-3">Colours in this image</h3>

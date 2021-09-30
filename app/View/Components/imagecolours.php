@@ -30,6 +30,7 @@ class imagecolours extends Component
     public function render()
     {
         $colours = $this->getColours($this->path);
+        dump($colours);
         return view('components.imagecolours', compact('colours'));
     }
 }
