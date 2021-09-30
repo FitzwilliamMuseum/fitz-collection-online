@@ -18,11 +18,14 @@ $query = http_build_query($base);
 @section('search-box')
   <div class="container-fluid ">
     <div class="container">
-      <h3 class="lead collection">Search results</h3>
-      <div class="col-12  p-3 mx-auto mb-3 rounded">
+      <div class="col-12 p-3 mx-auto mb-3 rounded">
         <p>
           Your search for <strong>{{ $queryString }}</strong> returned <strong>{{ $number }}</strong> results.
         </p>
+
+        @if($number > 9999)
+          <p>You may want to refine your search for better results</p>
+        @endif
       </div>
     </div>
   </div>
