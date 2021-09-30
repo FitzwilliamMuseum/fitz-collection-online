@@ -8,22 +8,15 @@ use ColorThief\ColorThief;
 
 class imagecolours extends Component
 {
-    public $path;
-
     public $palette;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($path, $palette = NULL)
+    public function __construct($palette)
     {
-        $this->path = $path;
-        $this->palette = $this->getColours($path);
-    }
-
-    public function getColours($path){
-      return ColorThief::getPalette($path, 12);
+        $this->palette = $palette;
     }
     /**
      * Get the view / contents that represent the component.

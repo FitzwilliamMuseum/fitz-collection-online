@@ -13,6 +13,7 @@ use Spatie\ArrayToXml\ArrayToXml;
 use ColorThief\ColorThief;
 use PHPExif\Reader\Reader;
 use App\Models\FindMoreLikeThis;
+use League\Csv\Writer;
 
 class indexController extends Controller
 {
@@ -69,7 +70,7 @@ class indexController extends Controller
     // $data = $this->replaceKeys('@link', 'link', $data);
     $query = $data[0]['_source']['summary_title'];
     $shopify = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, 'shopify');
-    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, 'research-resource');
+    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, '*');
     if(array_key_exists('title',$data[0]['_source'] )){
       $query .= ' ';
       $query .=  $data[0]['_source']['title'][0]['value'];
@@ -135,7 +136,7 @@ class indexController extends Controller
     } else {
       $exif = NULL;
     }
-    return view('record.index', compact('data', 'mlt', 'exif', 'shopify', 'research'));
+    return view('record.index', compact('data', 'mlt', 'exif', 'shopify', 'research', 'palette'));
   }
   /**
    * [recordSwitch description]
@@ -162,6 +163,19 @@ class indexController extends Controller
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
     } elseif ($format === 'txt') {
       return response(view('record.txt',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'text/plain']);
+    } elseif ($format === 'csv'){
+      $header = array_keys($data[0]['_source']);
+      dd($header);
+      $records = array_values($data[0]['_source']);
+      $csv = Writer::createFromString();
+      $csv->insertOne($header);
+      $csv->insertAll($records);
+      return response($csv->toString(), 200, [
+          'Content-Encoding' => 'none',
+          'Content-Type' => 'text/csv; charset=UTF-8',
+          'Content-Disposition' => 'attachment; filename="name-for-your-file.csv"',
+          'Content-Description' => 'File Transfer',
+      ]);
     } elseif($format === 'xml'){
       $data = $this->utf8_converter($data[0]['_source']);
       $data = $this->replaceKeys('@link', 'link', $data);
@@ -418,20 +432,20 @@ $facets = array(
     }
 
     // Add sort filter
-    if(!is_null($request->get('sort'))){
+    // if(!is_null($request->get('sort'))){
       $order = $request->get('sort');
       $sort = array(
         "multimedia.admin.id" => [
-          "order" =>  $order,
+          "order" =>  'ASC',
           "missing" => '_last'
           ]
         ,
-        "admin.modified" =>  [
-          "order" =>  $order
-          ]
+        // "admin.modified" =>  [
+        //   "order" =>  'ASC'
+        //   ]
         );
         $params['body']['sort'] = $sort;
-      }
+      // }
       // Get response
       $response = $this->getElastic()->setParams($params)->getSearch();
 
