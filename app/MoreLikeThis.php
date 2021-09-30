@@ -61,10 +61,12 @@ class MoreLikeThis {
         $client = new Client(new Curl(), new EventDispatcher(), $configSolr);
         $query = $client->createMoreLikeThis();
         $query->setQuery('title:' . $queryString);
-        $query->setMltFields('title,description');
-        $query->setMinimumDocumentFrequency(1);
+        $query->setMltFields('title,description,slug');
+        $query->setMinimumDocumentFrequency(2);
         $query->setMinimumTermFrequency(1);
         $query->createFilterQuery('type')->setQuery('contentType:' . $this->getType());
+        $query->createFilterQuery('insta')->setQuery('-contentType:instagram*');
+        $query->createFilterQuery('news')->setQuery('-contentType:news*');
         $query->setInterestingTerms('details');
         $query->setMatchInclude(true);
         $query->setRows($this->getLimit());
