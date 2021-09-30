@@ -13,6 +13,6 @@ download="{{ basename($path) }}"><i class="fas fa-download mr-2"></i>
 Download this image</a>
 
 <p>
-  <a href="{{ env('MAIN_URL') }}/about-us/creative-commons-licensing" title="Creative commons explained">Creative commons explained</a> - what it means, how you can use ours and other
+  <a href="{{ env('MAIN_URL') }}/about-us/creative-commons-licensing" title="Creative commons explained">Creative commons explained</a> - what it means, how you can use our's and other
   people's content.
 </p>
