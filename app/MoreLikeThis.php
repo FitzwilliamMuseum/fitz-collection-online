@@ -67,6 +67,7 @@ class MoreLikeThis {
         $query->createFilterQuery('type')->setQuery('contentType:' . $this->getType());
         $query->createFilterQuery('insta')->setQuery('-contentType:instagram*');
         $query->createFilterQuery('news')->setQuery('-contentType:news*');
+        $query->createFilterQuery('news')->setQuery('-contentType:twitter*');
         $query->setInterestingTerms('details');
         $query->setMatchInclude(true);
         $query->setRows($this->getLimit());
