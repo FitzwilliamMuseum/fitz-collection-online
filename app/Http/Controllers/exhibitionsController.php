@@ -14,17 +14,9 @@ use App\FitzElastic\Elastic;
 
 class exhibitionsController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-  }
 
-  public function exhibition($id) {
-
+  public function exhibition(Request $request) {
+    $id = urlencode($request->segment(3));
     $paramsTerm = [
       'index' => 'ciim',
       'body' => [
@@ -46,10 +38,13 @@ class exhibitionsController extends Controller
     ];
     $exhibition = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $exhibition = $exhibition['hits']['hits'][0]['_source'];
+    $perPage = 24;
+    $from = ($request->get('page', 1) - 1) * $perPage;
 
     $paramsTerm = [
       'index' => 'ciim',
-      'size' => 100,
+      'size' => $perPage,
+      'from' => $from,
       'body' => [
         "query" => [
           "bool" => [
@@ -71,7 +66,11 @@ class exhibitionsController extends Controller
       ],
     ];
     $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+    $number = $response2['hits']['total']['value'];
     $records = $response2['hits']['hits'];
-    return view('exhibitions.exhibition', compact('exhibition', 'records'));
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+    $paginate->setPath($request->getBaseUrl());
+    return view('exhibitions.exhibition', compact('exhibition', 'records', 'paginate'));
   }
 }

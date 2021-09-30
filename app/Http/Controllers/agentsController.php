@@ -13,42 +13,50 @@ use Illuminate\Support\Facades\Cache;
 
 class agentsController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-    return view('agents.index', compact('data', 'paginator'));
-  }
 
-  public function record($id) {
+  public function record(Request $request) {
+    $id = $request->segment(3);
     $params = [
       'index' => 'ciim',
       'body' => [
         "query" => [
           "bool" => [
-            "must" => [
-              [
-                "match" => [
-                  "admin.id" => $id
-                ]
-              ],
-              [
-                "term"=> [ "type.base" => 'agent']
+              "must" => [
+                 [
+                      "match" => [
+                        "admin.id" => $id
+                      ]
+                 ],
+                 [
+                      "term"=> [ "type.base" => 'agent']
+                 ]
               ]
-            ]
-          ]
+           ]
         ]
       ],
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
 
+    $json = '{
+      "query": {
+        "match": {
+          "reference_links" : "' . $id . '"
+        }
+      }
+    }';
+    $cParams = [
+      'index' => 'ciim',
+      'body' => $json
+    ];
+    $count  = $this->getElastic()->setParams($cParams)->getCount();
+    $perPage = 24;
+    $from = ($request->get('page', 1) - 1) * $perPage;
+
     $paramsTerm = [
       'index' => 'ciim',
-      'size' => 3,
+      'size' => $perPage,
+      'from' => $from,
       'body' => [
         "query" => [
           "bool" => [
@@ -59,18 +67,31 @@ class agentsController extends Controller
                       ]
                  ],
                  [
-                      "term" => [ "type.base" => 'object']
+                      "term"=> [ "type.base" => 'object']
                  ],
                  [
                       "exists" => ['field' => 'multimedia']
                  ],
               ]
            ]
+        ],
+        'sort' => [
+          [
+            "admin.modified" =>  [
+              "order" =>  "desc"
+            ]
+          ]
         ]
       ],
+
     ];
     $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $use = $response2['hits'];
-    return view('agents.record', compact('data', 'use'));
+    $number = $response2['hits']['total']['value'];
+    $records = $response2['hits']['hits'];
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+    $paginate->setPath($request->getBaseUrl());
+    return view('agents.record', compact('data', 'records', 'paginate', 'use', 'count'));
   }
 }

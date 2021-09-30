@@ -13,18 +13,9 @@ use Illuminate\Support\Facades\Cache;
 
 class terminologyController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-    return view('terminology.index', compact('data', 'paginator'));
-  }
 
-  public function record( $id) {
-
+  public function record(Request $request) {
+    $id = $request->segment(3);
     $params = [
       'index' => 'ciim',
       'body' => [
@@ -33,7 +24,7 @@ class terminologyController extends Controller
               "must" => [
                  [
                       "match" => [
-                        "admin.id" => urlencode($id)
+                        "admin.id" => $id
                       ]
                  ],
                  [
@@ -46,7 +37,6 @@ class terminologyController extends Controller
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
-    //$count  = $this->getElastic()->setParams($params)->getCount();
 
     $json = '{
       "query": {
@@ -60,9 +50,13 @@ class terminologyController extends Controller
       'body' => $json
     ];
     $count  = $this->getElastic()->setParams($cParams)->getCount();
+    $perPage = 24;
+    $from = ($request->get('page', 1) - 1) * $perPage;
+
     $paramsTerm = [
       'index' => 'ciim',
-      'size' => 12,
+      'size' => $perPage,
+      'from' => $from,
       'body' => [
         "query" => [
           "bool" => [
@@ -91,10 +85,13 @@ class terminologyController extends Controller
       ],
 
     ];
-    // dd($paramsTerm);
     $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
     $use = $response2['hits'];
-    // dd($use);
-    return view('terminology.term', compact('data', 'use', 'count'));
+    $number = $response2['hits']['total']['value'];
+    $records = $response2['hits']['hits'];
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+    $paginate->setPath($request->getBaseUrl());
+    return view('terminology.term', compact('data', 'records', 'paginate', 'use', 'count'));
   }
 }

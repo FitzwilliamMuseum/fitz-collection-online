@@ -3,7 +3,6 @@
 @section('hero_image_title', "The inside of our Founder's entrance")
 @section('title', $exhibition['summary_title'])
 @section('content')
-  <div class="shadow-sm p-3 mx-auto mb-3 rounded">
     @if(array_key_exists('venues', $exhibition))
       @foreach($exhibition['venues'] as $venue)
         <p>Held: {{ $venue['summary_title'] }}</p>
@@ -26,57 +25,55 @@
           No details recorded.
         </p>
       @endif
-    </div>
-
-
   @endsection
   @section('connected')
-    @if(!empty($records))
-      <div class="container-fluid bg-grey">
-        <div class="container">
-          <h3 class="lead collection">Connected records</h3>
-          <div class="row">
-            @foreach($records as $record)
+    <div class="container-fluid bg-white">
+      <div class="container">
+        <h3 class="lead collection">Connected records</h3>
+        <div class="row">
+          @foreach($records as $record)
+            <div class="col-md-4 mb-3">
+              <div class="card h-100">
+                  @if(array_key_exists('multimedia', $record['_source']))
+                    <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">
+                      <img class="card-img-top" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+                      loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
+                      /></a>
+                    @else
+                      <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}"><img class="card-img-top" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
+                        alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
+                      @endif
 
-              @php
-              $pris = Arr::pluck($record['_source']['identifier'],'priref');
-              $pris = array_filter($pris);
-              $pris= Arr::flatten($pris);
-              @endphp
-
-              <div class="col-md-4 mb-3">
-                <div class="card h-100">
-                  <div class="results_image">
-                    @if(array_key_exists('multimedia', $record['_source']))
-                      <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
-                        loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
-                        /></a>
-                      @else
-                        <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
-                          alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
-                        @endif
-                      </div>
-                      <div class="card-body ">
-
-                        <div class="contents-label mb-3">
-                          <h3 class="lead">
-                            @if(array_key_exists('title',$record['_source'] ))
-                              <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
-                            @else
-                              <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
-                            @endif
-                          </h3>
-                          <p class="text-info">
-                            Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
-                          </p>
-                        </div>
+                    <div class="card-body ">
+                      <div class="contents-label">
+                        <h3 class="lead">
+                          @if(array_key_exists('title',$record['_source'] ))
+                            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+                          @else
+                            <a href="/id/object/{{ $record['_source']['identifier'][1]['priref']}}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                          @endif
+                        </h3>
+                        <p class="text-info">
+                          Accession Number: {{ $record['_source']['identifier'][0]['accession_number'] }}
+                        </p>
                       </div>
                     </div>
                   </div>
-                @endforeach
+                </div>
+              @endforeach
 
-              </div>
             </div>
+
           </div>
+        </div>
+
+      @endsection
+      @section('pagination')
+        @if($paginate->total() > 24)
+        <div class="container-fluid bg-white mb-5 p-4 text-center">
+          <nav aria-label="Page navigation" >
+            {{ $paginate->appends(request()->except('page'))->links() }}
+          </nav>
+        </div>
         @endif
       @endsection

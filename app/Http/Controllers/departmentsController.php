@@ -14,18 +14,9 @@ use App\FitzElastic\Elastic;
 
 class departmentsController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-    return view('agents.index', compact('data', 'paginator'));
-  }
 
-  public function record($id) {
-
+  public function record(Request $request) {
+    $id = urlencode($request->segment(3));
     $paramsTerm = [
       'index' => 'ciim',
       'body' => [
@@ -48,17 +39,20 @@ class departmentsController extends Controller
     $use = $this->getElastic()->setParams($paramsTerm)->getCount();
 
     $name = urldecode($id);
+    $perPage = 24;
+    $from = ($request->get('page', 1) - 1) * $perPage;
 
     $params = [
       'index' => 'ciim',
-      'size' => 12,
+      'size' => $perPage,
+      'from' => $from,
       'body' => [
         "query" => [
           "bool" => [
             "must" => [
               [
                 "match" => [
-                  "department.value" => urlencode($id)
+                  "department.value" => $id
                 ]
               ],
               [
@@ -80,7 +74,11 @@ class departmentsController extends Controller
       ],
     ];
     $response = $this->getElastic()->setParams($params)->getSearch();
-    $data = $response['hits']['hits'];
-    return view('departments.record', compact('data', 'use', 'name'));
+    $number = $response['hits']['total']['value'];
+    $records = $response['hits']['hits'];
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+    $paginate->setPath($request->getBaseUrl());
+    return view('departments.record', compact('records', 'use', 'name', 'paginate'));
   }
 }

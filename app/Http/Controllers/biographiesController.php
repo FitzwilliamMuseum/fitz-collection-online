@@ -13,18 +13,9 @@ use Illuminate\Support\Facades\Cache;
 
 class biographiesController extends Controller
 {
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request)
-  {
-    return view('biographies.index', compact('data', 'paginator'));
-  }
 
-  public function record( $id) {
-
+  public function record(Request $request) {
+    $id = $request->segment(3);
     $params = [
       'index' => 'ciim',
       'body' => [
@@ -47,8 +38,25 @@ class biographiesController extends Controller
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
 
+    $json = '{
+      "query": {
+        "match": {
+          "reference_links" : "' . $id . '"
+        }
+      }
+    }';
+    $cParams = [
+      'index' => 'ciim',
+      'body' => $json
+    ];
+    $count  = $this->getElastic()->setParams($cParams)->getCount();
+    $perPage = 24;
+    $from = ($request->get('page', 1) - 1) * $perPage;
+
     $paramsTerm = [
       'index' => 'ciim',
+      'size' => $perPage,
+      'from' => $from,
       'body' => [
         "query" => [
           "bool" => [
@@ -66,12 +74,24 @@ class biographiesController extends Controller
                  ],
               ]
            ]
+        ],
+        'sort' => [
+          [
+            "admin.modified" =>  [
+              "order" =>  "desc"
+            ]
+          ]
         ]
       ],
+
     ];
     $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
-    $use = $response2['hits']['hits'];
-
-    return view('biographies.record', compact('data', 'use'));
+    $use = $response2['hits'];
+    $number = $response2['hits']['total']['value'];
+    $records = $response2['hits']['hits'];
+    $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+    $paginate->setPath($request->getBaseUrl());
+    return view('biographies.record', compact('data', 'records', 'paginate', 'use', 'count'));
   }
 }
