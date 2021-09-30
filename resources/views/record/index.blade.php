@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    
+
   @endsection
 
   @section('machine')
