@@ -21,7 +21,7 @@ class imagecolours extends Component
     }
 
     public function getColours($path){
-      return $palette = ColorThief::getPalette( $path, 12 );
+      return ColorThief::getPalette( $path, 12 );
     }
     /**
      * Get the view / contents that represent the component.

@@ -58,13 +58,14 @@
               @endif
             {{-- @endif --}}
           </div>
-          {{-- @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin'])) --}}
           <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
             <x-termsOfUse :path="$record['_source']['multimedia'][0]['processed']['large']['location']" />
           </div>
-          <x-imagecolours :path="env('CIIM_IMAGE_URL') . $record['_source']['multimedia'][0]['processed']['large']['location']" />
+          @php
+          $image = env('CIIM_IMAGE_URL') . $record['_source']['multimedia'][0]['processed']['large']['location'];
+          @endphp
+          <x-imagecolours :path="$image" />
 
-          {{-- @endif --}}
         </div>
       </div>
     @endif
