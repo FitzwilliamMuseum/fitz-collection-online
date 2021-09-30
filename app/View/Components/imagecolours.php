@@ -9,16 +9,14 @@ use ColorThief\ColorThief;
 class imagecolours extends Component
 {
     public $path;
-    public $colours;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($path, $colours = NULL)
+    public function __construct($path)
     {
         $this->path = $path;
-        $this->colours = $this->getColours($this->path);
     }
 
     public function getColours($path){
@@ -31,6 +29,7 @@ class imagecolours extends Component
      */
     public function render()
     {
-        return view('components.imagecolours');
+        $colours = $this->getColours($this->path);
+        return view('components.imagecolours', compact('colours'));
     }
 }
