@@ -1,7 +1,7 @@
 @if(!empty($research))
 <div class="container-fluid bg-grey p-3">
   <div class="container">
-    <h4 class="lead">Suggested Scholarly Content</h4>
+    <h4 class="lead">You might be interested in this...</h4>
     <div class="row ">
       @foreach($research as $record)
         <div class="col-md-3 mb-3">
