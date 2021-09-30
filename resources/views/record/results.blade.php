@@ -119,11 +119,11 @@ $query = http_build_query($base);
 @endsection
 
 @section('connected')
-<div class="container-fluid bg-grey">
+<div class="container-fluid bg-white p-3">
   <div class="container">
     @if(!empty($records))
       <h3 class="lead">
-        Results
+        Your Search Results
       </h3>
       <div class="row">
         @foreach($records as $record)

@@ -926,3 +926,6 @@ a.nav-link {
   font-size: 12px;
   text-align: center;
 }
+.card {
+  border: none!important;
+}
