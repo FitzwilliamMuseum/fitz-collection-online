@@ -16,7 +16,7 @@ class imagecolours extends Component
      *
      * @return void
      */
-    public function __construct($path, $colours = NULL)
+    public function __construct($path, $colours = 'boo')
     {
         $this->path = $path;
         $this->colours = $this->getColours($path);
