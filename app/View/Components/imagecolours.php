@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+
 use ColorThief\ColorThief;
 
 class imagecolours extends Component
@@ -14,7 +15,7 @@ class imagecolours extends Component
      *
      * @return void
      */
-    public function __construct($path)
+    public function __construct($path, $colours = NULL)
     {
         $this->path = $path;
         $this->colours = $this->getColours($this->path);
