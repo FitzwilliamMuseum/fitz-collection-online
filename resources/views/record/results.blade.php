@@ -170,11 +170,13 @@ $query = http_build_query($base);
 
       @endif
       @section('pagination')
+        @if($paginate->total() > 24)
         <div class="container-fluid bg-grey mb-5 p-4 text-center">
           <nav aria-label="Page navigation" >
             {{ $paginate->appends(request()->except('page'))->links() }}
           </nav>
         </div>
+        @endif
       @endsection
       <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
         <div class="modal-dialog modal-dialog-slideout" role="document">
