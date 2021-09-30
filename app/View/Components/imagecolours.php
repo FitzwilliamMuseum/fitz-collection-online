@@ -10,7 +10,7 @@ class imagecolours extends Component
 {
     public $path;
 
-    public $colours;
+    public $palette;
     /**
      * Create a new component instance.
      *
