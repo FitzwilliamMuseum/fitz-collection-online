@@ -5,7 +5,7 @@
     <div class="container-fluid bg-white">
       <div class="shadow-sm p-3 mx-auto mb-3">
         <div>
-          <a href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}"><img class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
+          <a href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}"><img width="100%" class="img-fluid mx-auto d-block main-image" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
             loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
             /></a>
           </div>
