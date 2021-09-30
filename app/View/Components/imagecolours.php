@@ -16,10 +16,10 @@ class imagecolours extends Component
      *
      * @return void
      */
-    public function __construct($path, $colours = 'boo')
+    public function __construct($path, $palette = NULL)
     {
         $this->path = $path;
-        $this->colours = $this->getColours($path);
+        $this->palette = $this->getColours($path);
     }
 
     public function getColours($path){

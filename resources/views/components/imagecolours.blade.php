@@ -1,10 +1,10 @@
-@dump(get_defined_vars()) 
-@if(!empty($colours))
+@dump(get_defined_vars())
+@if(!empty($palette))
   <div class="container">
     <h3 class="lead collection mx-auto p-3">Colours in this image</h3>
     <div class="col-12  p-3 mx-auto mb-3 rounded ">
       <div class="swatches text-center">
-        @foreach ($colours as $color)
+        @foreach ($palette as $color)
           <div class="swatch mr-2" style="background-color: rgb({{ $color[0] }}, {{ $color[1] }}, {{ $color[2] }})"></div>
         @endforeach
       </div>
