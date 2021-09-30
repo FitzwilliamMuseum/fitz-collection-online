@@ -9,18 +9,21 @@ use ColorThief\ColorThief;
 class imagecolours extends Component
 {
     public $path;
+
+    public $colours;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($path)
+    public function __construct($path, $colours = NULL)
     {
         $this->path = $path;
+        $this->colours = $this->getColours($path);
     }
 
     public function getColours($path){
-      return ;
+      return ColorThief::getPalette($path, 12);
     }
     /**
      * Get the view / contents that represent the component.
@@ -29,7 +32,6 @@ class imagecolours extends Component
      */
     public function render()
     {
-        $colours = ColorThief::getPalette( $this->path, 12 );
-        return view('components.imagecolours', compact('colours'));
+        return view('components.imagecolours');
     }
 }
