@@ -62,6 +62,8 @@
           <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
             <x-termsOfUse :path="$record['_source']['multimedia'][0]['processed']['large']['location']" />
           </div>
+          <x-imagecolours :path="env('CIIM_IMAGE_URL') . $record['_source']['multimedia'][0]['processed']['large']['location']" />
+
           {{-- @endif --}}
         </div>
       </div>
