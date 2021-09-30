@@ -135,13 +135,13 @@ $query = http_build_query($base);
 
         <div class="col-md-4 mb-3">
           <div class="card h-100">
-            <div class="results_image">
+            <div class="mx-auto">
               @if(array_key_exists('multimedia', $record['_source']))
-                <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
+                <a href="/id/object/{{ $pris[0] }}"><img class="card-image-top" src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
                   loading="lazy" alt="An image of {{ ucfirst($record['_source']['summary_title']) }}"
                   /></a>
                 @else
-                  <a href="/id/object/{{ $pris[0] }}"><img class="results_image__thumbnail" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
+                  <a href="/id/object/{{ $pris[0] }}"><img class="card-image-top" src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
                     alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"/></a>
                   @endif
                 </div>
