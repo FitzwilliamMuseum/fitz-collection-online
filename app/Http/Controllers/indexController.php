@@ -123,6 +123,7 @@ class indexController extends Controller
     ];
     $response2 = $this->getElastic()->setParams($paramsMLT)->getSearch();
     $mlt = $response2['hits']['hits'];
+    $palette = '';
     if(array_key_exists('multimedia', $data['0']['_source'])){
       if(array_key_exists('large', $data[0]['_source']['multimedia'][0]['processed'])){
         $image = $data[0]['_source']['multimedia'][0]['processed']['large']['location'];
