@@ -22,7 +22,7 @@
   </code>
 </div>
 
-
+@if(array_key_exists('multimedia', $record['_source'] ))
 @if(array_key_exists('processed', $record['_source']['multimedia'][0]))
 
 <h3 class="lead">Bootstrap HTML code for reuse</h3>
@@ -42,4 +42,5 @@ $image = env('APP_URL')  . '/imagestore/' . $record['_source']['multimedia'][0][
       &lt;/figure&gt;
     &lt;/div&gt;
   </code>
+@endif
 @endif
