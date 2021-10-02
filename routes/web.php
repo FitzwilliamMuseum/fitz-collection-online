@@ -34,6 +34,7 @@ Route::get('/id/image/{id}/', 'indexController@image')->name('image.single');
 Route::get('/id/image/3d/{id}/', 'indexController@sketchfab')->name('sketchfab');
 Route::get('/id/image/iiif/{id}/', 'indexController@iiif')->name('image.iiif');
 Route::get('/id/image/slow/iiif/', 'indexController@slowiiif')->name('slow.iiif');
+Route::get('/id/image/mirador/{id}/', 'indexController@mirador')->name('image.mirador');
 
 
 Route::match(array('GET','POST'),'/images/id/{priref}/', 'indexController@images')->name('images.multiple');

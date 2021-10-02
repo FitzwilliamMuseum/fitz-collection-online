@@ -659,4 +659,34 @@ $facets = array(
       $data = $response2['hits']['hits'][0];
       return view('record.3d', compact('data'));
     }
+
+    public function mirador(string $id)
+    {
+      $paramsTerm = [
+        'index' => 'ciim',
+        'size' => 1,
+        'body' => [
+          "query" => [
+            "bool" => [
+                "must" => [
+                   [
+                        "match" => [
+                          "reference_links" => $id
+                        ]
+                   ],
+                   [
+                        "term" => [ "type.base" => 'object']
+                   ],
+                   [
+                        "exists" => ['field' => 'multimedia']
+                   ],
+                ]
+             ]
+          ]
+        ],
+      ];
+      $response2 = $this->getElastic()->setParams($paramsTerm)->getSearch();
+      $object = $response2['hits']['hits'][0]['_source'];
+      return view('record.mirador', compact('object'));
+    }
   }
