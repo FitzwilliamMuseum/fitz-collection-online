@@ -1,3 +1,3 @@
 {!!
-  QrCode::size(400)->eyeColor(0, 255, 255, 255, 0, 0, 0)->generate($data['admin']['uri']);
+  QrCode::size(500)->format('svg')->margin(10)->generate($data['admin']['uri']);
 !!}
