@@ -164,6 +164,8 @@ class indexController extends Controller
       return response(view('record.json',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'application/json']);
     } elseif ($format === 'txt') {
       return response(view('record.txt',array('data' => $data[0]['_source'])),200, ['Content-Type' => 'text/plain']);
+    } elseif ($format === 'qr'){
+      return response(view('record.qr', array('data' => $data[0]['_source'])),200);
     } elseif ($format === 'csv'){
       $header = array_keys($data[0]['_source']);
       dd($header);
