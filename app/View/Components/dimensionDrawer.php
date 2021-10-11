@@ -23,14 +23,14 @@ class dimensionDrawer extends Component
      */
     public function __construct($viewWidth = NULL, $viewHeight = NULL, $units = NULL, $height = NULL, $width = NULL, $depth = 0.01, $scale =  1 )
     {
-        $this->height = $this->convertToCm($height, $units);
-        $this->width  = $this->convertToCm($width, $units);
-        $this->depth  = $this->convertToCm($depth, $units);
-        $this->units  = $units;
-        $this->viewWidth = $viewWidth;
+        $this->height     = $this->convertToCm($height, $units);
+        $this->width      = $this->convertToCm($width, $units);
+        $this->depth      = $this->convertToCm($depth, $units);
+        $this->units      = $units;
+        $this->viewWidth  = $viewWidth;
         $this->viewHeight = $viewHeight;
-        $this->scale = $this->setScale($scale);
-        $this->box  = $this->projectBox();
+        $this->scale      = $this->setScale($scale);
+        $this->box        = $this->projectBox();
         $this->tennisball = $this->comparison();
     }
 
@@ -44,16 +44,7 @@ class dimensionDrawer extends Component
       $totalWidth = $this->width + $this->width_given_angle_and_hyp($this->angle, $scaledDepth) + 6.7;
       $heightScale = ($this->viewHeight - ($margin * 2)) / $totalHeight;
       $widthScale = ($this->viewWidth - ($margin * 2)) / $totalWidth;
-
       $calculatedScale = min($heightScale, $widthScale);
-      // if(is_float($scale)){
-      //   $scale = $scale;
-      // } elseif(is_array($scale)) {
-      //   // $scale = @scale.sort.reverse.detect {|x| $calculatedScale > x } || $calculatedScale;
-      // } else {
-      //   $scale = $calculatedScale;
-      // }
-
       return $calculatedScale;
     }
 
@@ -146,11 +137,6 @@ class dimensionDrawer extends Component
       $radians = floatval($angle) / 180 * M_PI;
       return floatval($hyp) * cos($radians);
     }
-
-    // public function longest_length()
-    // {
-    //   return max($this->height,$this->width,$this->depth);
-    // }
 
     public function line($x1, $y1, $x2, $y2){
       return '<line x1="' . $x1 . '" y1="' . $y1 . '" x2="' . $x2 . '" y2="' . $y2 . '" class="edge"></line>';
