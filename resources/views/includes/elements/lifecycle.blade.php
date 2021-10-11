@@ -49,7 +49,12 @@
               @if(array_key_exists('precision', $dating['from']))
                 {{ ucfirst($dating['from']['precision']) }}
               @endif
+              @if(array_key_exists('earliest', $dating['from']))
               {{ $dating['from']['earliest'] }}
+              @endif
+              @if(array_key_exists('value', $dating['from']))
+              {{ abs($dating['from']['value']) }}
+              @endif
               @if(array_key_exists('era', $dating['from']))
                 @foreach($dating['from']['era'] as $era)
                   {{ $era }}
@@ -60,7 +65,12 @@
                 @if(array_key_exists('precision', $dating['to']))
                   {{ ucfirst($dating['to']['precision']) }}
                 @endif
+                @if(array_key_exists('earliest', $dating['to']))
                 {{ $dating['to']['earliest'] }}
+                @endif
+                @if(array_key_exists('value', $dating['to']))
+                {{ abs($dating['to']['value']) }}
+                @endif
                 @if(array_key_exists('era', $dating['to']))
                   @foreach($dating['to']['era'] as $era)
                     {{ $era }}
