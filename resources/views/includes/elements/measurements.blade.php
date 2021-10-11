@@ -2,23 +2,7 @@
 
 
 <div class="row">
-@php
-$dimensions = $record['_source']['measurements']['dimensions'];
-$dims = [];
-foreach($dimensions as $dim){
 
-  if($dim['dimension'] == 'Height')
-  {
-    $dims['height'] = $dim['value'];
-  }
-  if($dim['dimension'] == 'Width'){
-    $dims['width'] = $dim['value'];
-  }
-  if($dim['dimension'] == 'Depth'){
-    $dims['depth'] = $dim['value'];
-  }
-}
-@endphp
 
 <div class="col-md-6">
   <h3 class="lead collection">
@@ -40,7 +24,24 @@ foreach($dimensions as $dim){
   @endforeach
 </p>
 </div>
-@if(array_key_exists('height', $dims) && array_key_exists('width', $dims))
+@php
+$dimensions = $record['_source']['measurements']['dimensions'];
+$dims = [];
+foreach($dimensions as $dim){
+
+  if($dim['dimension'] == 'Height')
+  {
+    $dims['height'] = $dim['value'];
+  }
+  if($dim['dimension'] == 'Width'){
+    $dims['width'] = $dim['value'];
+  }
+  if($dim['dimension'] == 'Depth'){
+    $dims['depth'] = $dim['value'];
+  }
+}
+@endphp
+{{-- @if(array_key_exists('height', $dims) && array_key_exists('width', $dims))
   @php
   if(!array_key_exists('depth', $dims)){
     $dims['depth'] = 0.01;
@@ -55,7 +56,7 @@ foreach($dimensions as $dim){
   :viewHeight="320"
   :scale=1
   />
-@endif
+@endif --}}
 @endif
 @yield('dims-message')
 </div>
