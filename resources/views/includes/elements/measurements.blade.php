@@ -42,6 +42,9 @@ foreach($dimensions as $dim){
   if($dim['dimension'] == 'Thickness'){
     $dims['depth'] = $dim['value'];
   }
+  if($dim['dimension'] == 'Length'){
+    $dims['width'] = $dim['value'];
+  }
 }
 @endphp
 @if(array_key_exists('height', $dims) && array_key_exists('width', $dims))
