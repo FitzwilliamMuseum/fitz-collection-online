@@ -47,7 +47,7 @@ foreach($dimensions as $dim){
     $dims['depth'] = 0.01;
   }
   @endphp
-  {{-- <x-relative
+  <x-relative
   :height="$dims['height']"
   :width="$dims['width']"
   :depth="$dims['depth']"
@@ -55,8 +55,7 @@ foreach($dimensions as $dim){
   :viewWidth="400"
   :viewHeight="320"
   :scale=1
-  :comparison="NULL"
-  /> --}}
+  />
 @endif
 @endif
 @yield('dims-message')

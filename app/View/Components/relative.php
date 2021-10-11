@@ -22,7 +22,6 @@ class relative extends Component
    * @return void
    */
   public function __construct(
-    $comparison  = NULL,
     $viewWidth = NULL,
     $viewHeight = NULL,
     $units = NULL,
