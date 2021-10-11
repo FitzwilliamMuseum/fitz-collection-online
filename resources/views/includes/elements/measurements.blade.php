@@ -24,7 +24,7 @@
         @endforeach
       </p>
     </div>
-    @php
+    {{-- @php
     $dimensions = $record['_source']['measurements']['dimensions'];
     $dims = [];
     $width = [];
@@ -53,9 +53,9 @@
     } else {
       $d = 0.01;
     }
-  @endphp
+  @endphp --}}
 
-  @if(array_key_exists('height', $dims) && !empty($w))
+  {{-- @if(array_key_exists('height', $dims) && !empty($w))
     <x-Dimension-Drawer
     :height="$dims['height']"
     :width="$w"
@@ -65,7 +65,7 @@
     :viewHeight="320"
     :scale=1
     />
-  @endif
+  @endif --}}
 @endif
 @yield('dims-message')
 </div>
