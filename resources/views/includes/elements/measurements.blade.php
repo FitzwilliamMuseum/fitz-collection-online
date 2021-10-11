@@ -55,6 +55,7 @@ foreach($dimensions as $dim){
   :viewWidth="400"
   :viewHeight="320"
   :scale=1
+  :comparison="NULL"
   />
 @endif
 @endif
