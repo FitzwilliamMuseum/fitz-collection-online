@@ -48,9 +48,7 @@
       }
     }
     $w = max($width);
-    if(count($depth) < 2){
-      $d = min($width);
-    } elseif(count($depth) > 2) {
+    if(count($depth) > 2) {
       $d = max($depth);
     } else {
       $d = 0.01;

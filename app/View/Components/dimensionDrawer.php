@@ -161,7 +161,7 @@ class DimensionDrawer extends Component
 
     public function convertToCm($dim, $units){
       if($units === 'mm'){
-        return $dim * 10;
+        return $dim / 10;
       } elseif($units === 'm'){
         return $dim * 100;
       } else {
