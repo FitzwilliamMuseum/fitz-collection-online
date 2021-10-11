@@ -22,13 +22,15 @@ class dimensionDrawer extends Component
      * @return void
      */
     public function __construct(
+      $comparison  = NULL,
       $viewWidth = NULL,
       $viewHeight = NULL,
       $units = NULL,
       $height = NULL,
       $width = NULL,
       $depth = 0.01,
-      $scale =  1)
+      $scale =  1
+      )
     {
         $this->height     = $this->convertToCm($height, $units);
         $this->width      = $this->convertToCm($width, $units);
@@ -38,7 +40,7 @@ class dimensionDrawer extends Component
         $this->viewHeight = $viewHeight;
         $this->scale      = $this->setScale($scale);
         // $this->box        = $this->projectBox();
-        // $this->tennisball = $this->comparison();
+        $this->comparison = $this->comparison();
     }
 
     public function setScale($scale)
