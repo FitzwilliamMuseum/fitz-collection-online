@@ -24,7 +24,7 @@
         @endforeach
       </p>
     </div>
-    {{-- @php
+    @php
     $dimensions = $record['_source']['measurements']['dimensions'];
     $dims = [];
     $width = [];
@@ -34,10 +34,10 @@
       {
         $dims['height'] = $dim['value'];
       }
-      if($dim['dimension'] == 'Width'){
+      if($dim['dimension'] == 'Length'){
         array_push($width, $dim['value']);
       }
-      if($dim['dimension'] == 'Length'){
+      if($dim['dimension'] == 'Width'){
         array_push($width, $dim['value']);
       }
       if($dim['dimension'] == 'Depth'){
@@ -47,15 +47,16 @@
         array_push($depth, $dim['value']);
       }
     }
+
     $w = max($width);
-    if(count($depth) > 2) {
+    if(count($depth) >= 1) {
       $d = max($depth);
     } else {
-      $d = 0.01;
+      $d = 0.001;
     }
-  @endphp --}}
+  @endphp
 
-  {{-- @if(array_key_exists('height', $dims) && !empty($w))
+  @if(array_key_exists('height', $dims) && !empty($w))
     <x-Dimension-Drawer
     :height="$dims['height']"
     :width="$w"
@@ -65,7 +66,7 @@
     :viewHeight="320"
     :scale=1
     />
-  @endif --}}
+  @endif
 @endif
 @yield('dims-message')
 </div>

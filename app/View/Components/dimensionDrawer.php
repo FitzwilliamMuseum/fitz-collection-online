@@ -123,7 +123,7 @@ class DimensionDrawer extends Component
         $this->measurementLabel($this->height),
         'end'
       );
-      if($this->depth > 0.01){
+      if($this->depth > 0.1){
           # Depth text
           $lines[] = $this->text(
             $margin + ($this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) / 2) + 20,
@@ -169,19 +169,9 @@ class DimensionDrawer extends Component
       }
     }
 
-    public function measurementLabel($dim)
+    public function measurementLabel($value)
     {
-        if($dim < 1) {
-          $unit = 'mm';
-          $value = $dim / 10;
-        } elseif ($dim < 100) {
-          $unit = 'cm';
-          $value = $dim;
-        } else  {
-          $unit = 'm';
-          $value = $dim / 100;
-        }
-        return round($value, 1) . ' cm';
+        return $value . ' cm';
     }
 
     public function tennisBall($scale, $x, $y){

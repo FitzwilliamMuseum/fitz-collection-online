@@ -47,7 +47,7 @@
       @endforeach
     </ul>
     @if(!empty($coord))
-      @section('map')
+      {{-- @section('map')
         @map([
           'lat' => $coord[0]['lat'],
           'lng' => $coord[0]['lng'],
@@ -59,7 +59,7 @@
             'popup' => 'Place associated'],
           ]
         ])
-      @endsection
+      @endsection --}}
     @endif
   @endif
   @if(array_key_exists('collection', $record['_source']['lifecycle']))
