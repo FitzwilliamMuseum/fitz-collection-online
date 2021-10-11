@@ -74,6 +74,8 @@
             @php
             if($place['summary_title'] === 'Thebes (Egypt)'){
               $lookup = 'Luxor Egypt';
+            } elseif($place['summary_title'] === 'Abydos Egypt'){
+              $lookup = 'Sohag, Egypt';
             } else  {
               $lookup = $place['summary_title'];
             }
