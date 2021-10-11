@@ -2,7 +2,7 @@
   <h3 class="lead collection">Relative size of this object</h3>
   <div class="bg-pastel">
     @dump(get_defined_vars())
-      {{-- {!! $comparison !!} --}}
+      {!! $comparison !!}
       <h3 class="lead text-center text-info"><a data-toggle="collapse" href="#t-ball">What does this represent?</a></h4>
 
       <p class="collapse" id="t-ball">
