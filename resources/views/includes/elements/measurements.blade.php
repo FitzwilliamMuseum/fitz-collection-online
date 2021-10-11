@@ -47,8 +47,9 @@
         array_push($depth, $dim['value']);
       }
     }
-
-    $w = max($width);
+    if(!empty($width)){
+      $w = max($width);
+    }
     if(count($depth) >= 1) {
       $d = max($depth);
     } else {
