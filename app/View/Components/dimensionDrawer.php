@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class dimensionDrawer extends Component
+class DimensionDrawer extends Component
 {
     public $height;
     public $width;
@@ -15,6 +15,7 @@ class dimensionDrawer extends Component
     public $comparison;
     public $angle = 45;
     public $scale;
+
     // public $box;
     /**
      * Create a new component instance.
@@ -22,7 +23,6 @@ class dimensionDrawer extends Component
      * @return void
      */
     public function __construct(
-      $comparison  = NULL,
       $viewWidth = NULL,
       $viewHeight = NULL,
       $units = NULL,

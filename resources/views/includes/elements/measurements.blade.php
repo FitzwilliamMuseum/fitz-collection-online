@@ -47,7 +47,7 @@ foreach($dimensions as $dim){
     $dims['depth'] = 0.01;
   }
   @endphp
-  <x-relative
+  <x-Dimension-Drawer
   :height="$dims['height']"
   :width="$dims['width']"
   :depth="$dims['depth']"
