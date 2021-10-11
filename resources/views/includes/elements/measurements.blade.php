@@ -57,7 +57,7 @@
     }
   @endphp
 
-  @if(array_key_exists('height', $dims) && !empty($w))
+  @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$record['_source']['measurements']['dimensions'][0]))
     <x-Dimension-Drawer
     :height="$dims['height']"
     :width="$w"
