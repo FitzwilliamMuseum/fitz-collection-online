@@ -10,6 +10,8 @@
         Primary reference Number: <a href="/id/object/{{ $id['value']}}">{{ $id['value']}}</a><br />
       @elseif($id['type'] === 'Online 3D model')
         <span class="sr-only"><a href="https://sketchfab.com/3d-models/{{ $id['value']}}">Sketchfab model</a><br/></span>
+      @elseif($id['type'] === 'Wikidata')
+        Wikidata: <a href="https://www.wikidata.org/wiki/{{ $id['value'] }}">{{ $id['value'] }}</a><br />
       @else
         {{ ucfirst($id['type']) }}: {{ $id['value']}}<br />
       @endif

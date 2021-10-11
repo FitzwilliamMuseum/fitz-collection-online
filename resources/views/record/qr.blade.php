@@ -1,8 +1,8 @@
 @extends('layouts.qr')
 @section('content')
 <div class="container-fluid">
-  <div class="text-center">
-    <img src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(500)->generate($data['admin']['uri'])) !!}" class="py-5 img-fluid">
+  <div class="text-center py-5  ">
+    {!! QrCode::format('svg')->size(500)->generate($data['admin']['uri']) !!}
   </div>
 </div>
 @endsection

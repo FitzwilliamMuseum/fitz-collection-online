@@ -71,6 +71,7 @@
     <script src="https://collection.beta.fitz.ms/vendor/maps/js/index.js?id=1e6f34e45ce1f8e9666f" type="text/javascript"></script>
     @include('includes.scripts.mapjs')
   @endif
+  @stack('custom-scripts')
 
   @hasSection('timeline')
     @include('includes.scripts.timeline-js')

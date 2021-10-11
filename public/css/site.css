@@ -928,3 +928,19 @@ a.nav-link {
 .card {
   border: none!important;
 }
+svg.dimension-view {
+    max-width: 100%;
+}
+g[Attributes Style] {
+    fill-rule: evenodd;
+    transform: translate(301.176, 240.073);
+}
+
+.tennis-ball .ball {
+    fill: #EFFB00;
+}
+.edge {
+    stroke-width: 1;
+    stroke: red;
+    fill: pink;
+}
