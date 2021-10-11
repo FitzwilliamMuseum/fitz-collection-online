@@ -72,8 +72,15 @@
           <li>
             {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
             @php
+            if($place['summary_title'] === 'Thebes (Egypt)'){
+              $lookup = 'Luxor Egypt';
+            } else  {
+              $lookup = $place['summary_title'];
+            }
+            @endphp
+            @php
             $geo = new \App\LookupPlace();
-            $geo->setPlace($place['summary_title']);
+            $geo->setPlace($lookup);
             $gd = $geo->lookup();
             if(!$gd->isEmpty()){
               $geodata = $geo->lookup()->first()->getCoordinates();
