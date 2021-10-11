@@ -12,7 +12,7 @@ class dimensionDrawer extends Component
     public $viewWidth;
     public $viewHeight;
     public $units;
-    // public $tennisball;
+    public $comparison;
     public $angle = 45;
     public $scale;
     // public $box;
