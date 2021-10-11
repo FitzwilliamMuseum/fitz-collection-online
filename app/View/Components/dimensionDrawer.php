@@ -21,7 +21,15 @@ class dimensionDrawer extends Component
      *
      * @return void
      */
-    public function __construct($viewWidth = NULL, $viewHeight = NULL, $units = NULL, $height = NULL, $width = NULL, $depth = 0.01, $scale =  1 )
+    public function __construct(
+      $viewWidth = NULL,
+      $viewHeight = NULL,
+      $units = NULL,
+      $height = NULL,
+      $width = NULL,
+      $depth = 0.01,
+      $scale =  1,
+      $tennisball = NULL )
     {
         $this->height     = $this->convertToCm($height, $units);
         $this->width      = $this->convertToCm($width, $units);
