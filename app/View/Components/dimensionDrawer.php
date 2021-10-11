@@ -12,10 +12,10 @@ class dimensionDrawer extends Component
     public $viewWidth;
     public $viewHeight;
     public $units;
-    public $tennisball;
+    // public $tennisball;
     public $angle = 45;
     public $scale;
-    public $box;
+    // public $box;
     /**
      * Create a new component instance.
      *
@@ -28,8 +28,7 @@ class dimensionDrawer extends Component
       $height = NULL,
       $width = NULL,
       $depth = 0.01,
-      $scale =  1,
-      $tennisball = NULL )
+      $scale =  1)
     {
         $this->height     = $this->convertToCm($height, $units);
         $this->width      = $this->convertToCm($width, $units);
@@ -38,8 +37,8 @@ class dimensionDrawer extends Component
         $this->viewWidth  = $viewWidth;
         $this->viewHeight = $viewHeight;
         $this->scale      = $this->setScale($scale);
-        $this->box        = $this->projectBox();
-        $this->tennisball = $this->comparison();
+        // $this->box        = $this->projectBox();
+        // $this->tennisball = $this->comparison();
     }
 
     public function setScale($scale)
@@ -201,7 +200,7 @@ class dimensionDrawer extends Component
     {
       $margin = 20;
       return '<svg viewbox="0 0 400 320" class="dimension-view">' .
-        implode('',$this->projectBox()) .
+        implode('', $this->projectBox()) .
         $this->tennisBall($this->scale, $margin + ($this->scale * $this->width) + $margin, $this->viewHeight - $margin) .
       '</svg>';
     }

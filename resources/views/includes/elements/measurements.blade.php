@@ -41,7 +41,7 @@ foreach($dimensions as $dim){
   }
 }
 @endphp
-{{-- @if(array_key_exists('height', $dims) && array_key_exists('width', $dims))
+@if(array_key_exists('height', $dims) && array_key_exists('width', $dims))
   @php
   if(!array_key_exists('depth', $dims)){
     $dims['depth'] = 0.01;
@@ -56,7 +56,7 @@ foreach($dimensions as $dim){
   :viewHeight="320"
   :scale=1
   />
-@endif --}}
+@endif
 @endif
 @yield('dims-message')
 </div>
