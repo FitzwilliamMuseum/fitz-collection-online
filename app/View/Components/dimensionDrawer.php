@@ -118,8 +118,8 @@ class DimensionDrawer extends Component
 
       # Height text
       $lines[] = $this->text(
-        round($margin + ($this->scale * $this->width) - 2,0),
-        round($this->viewHeight - $margin - ($this->scale * $this->height) / 2,0),
+        $margin + ($this->scale * $this->width) - 2,
+        $this->viewHeight - $margin - ($this->scale * $this->height) / 2,
         $this->measurementLabel($this->height),
         'end'
       );
