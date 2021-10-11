@@ -173,7 +173,7 @@ class DimensionDrawer extends Component
     {
         if($dim < 1) {
           $unit = 'mm';
-          $value = $dim * 10;
+          $value = $dim / 10;
         } elseif ($dim < 100) {
           $unit = 'cm';
           $value = $dim;
@@ -181,7 +181,7 @@ class DimensionDrawer extends Component
           $unit = 'm';
           $value = $dim / 100;
         }
-        return round($value, 1) . ' ' . $unit;
+        return round($value, 1) . ' cm';
     }
 
     public function tennisBall($scale, $x, $y){
