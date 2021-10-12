@@ -53,7 +53,11 @@
               {{ $dating['from']['earliest'] }}
               @endif
               @if(array_key_exists('value', $dating['from']))
-              {{ abs($dating['from']['value']) }}
+                @if(!is_string($dating['from']['value']))
+                  {{ abs($dating['from']['value']) }}
+                @else
+                  {{ $dating['from']['value'] }}
+                @endif
               @endif
               @if(array_key_exists('era', $dating['from']))
                 @foreach($dating['from']['era'] as $era)
@@ -69,7 +73,11 @@
                 {{ $dating['to']['earliest'] }}
                 @endif
                 @if(array_key_exists('value', $dating['to']))
-                {{ abs($dating['to']['value']) }}
+                  @if(!is_string($dating['to']['value']))
+                    {{ abs($dating['to']['value']) }}
+                  @else
+                    {{ $dating['to']['value'] }}
+                  @endif
                 @endif
                 @if(array_key_exists('era', $dating['to']))
                   @foreach($dating['to']['era'] as $era)

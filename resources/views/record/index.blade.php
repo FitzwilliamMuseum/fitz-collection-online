@@ -24,7 +24,7 @@
         <h2 class="sr-only">Object information</h2>
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
 
-          <div class="container">
+          <div class="">
 
             @include('includes/elements/descriptive')
             @include('includes/elements/legal')
