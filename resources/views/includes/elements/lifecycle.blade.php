@@ -50,7 +50,7 @@
                 {{ ucfirst($dating['from']['precision']) }}
               @endif
               @if(array_key_exists('earliest', $dating['from']))
-              {{ $dating['from']['earliest'] }}
+              {{-- {{ $dating['from']['earliest'] }} --}}
               @endif
               @if(array_key_exists('value', $dating['from']))
                 @if(!is_string($dating['from']['value']))
