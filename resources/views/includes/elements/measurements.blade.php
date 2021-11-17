@@ -24,49 +24,51 @@
         @endforeach
       </p>
     </div>
-    @php
-    $dimensions = $record['_source']['measurements']['dimensions'];
-    $dims = [];
-    $width = [];
-    $depth = [];
-    foreach($dimensions as $dim){
-      if($dim['dimension'] == 'Height')
-      {
-        $dims['height'] = $dim['value'];
+    @if(array_key_exists('dimensions',$record['_source']['measurements']))
+      @php
+      $dimensions = $record['_source']['measurements']['dimensions'];
+      $dims = [];
+      $width = [];
+      $depth = [];
+      foreach($dimensions as $dim){
+        if($dim['dimension'] == 'Height')
+        {
+          $dims['height'] = $dim['value'];
+        }
+        if($dim['dimension'] == 'Length'){
+          array_push($width, $dim['value']);
+        }
+        if($dim['dimension'] == 'Width'){
+          array_push($width, $dim['value']);
+        }
+        if($dim['dimension'] == 'Depth'){
+          array_push($depth, $dim['value']);
+        }
+        if($dim['dimension'] == 'Thickness'){
+          array_push($depth, $dim['value']);
+        }
       }
-      if($dim['dimension'] == 'Length'){
-        array_push($width, $dim['value']);
+      if(!empty($width)){
+        $w = max($width);
       }
-      if($dim['dimension'] == 'Width'){
-        array_push($width, $dim['value']);
+      if(count($depth) >= 1) {
+        $d = max($depth);
+      } else {
+        $d = 0.001;
       }
-      if($dim['dimension'] == 'Depth'){
-        array_push($depth, $dim['value']);
-      }
-      if($dim['dimension'] == 'Thickness'){
-        array_push($depth, $dim['value']);
-      }
-    }
-    if(!empty($width)){
-      $w = max($width);
-    }
-    if(count($depth) >= 1) {
-      $d = max($depth);
-    } else {
-      $d = 0.001;
-    }
-  @endphp
+    @endphp
 
-  @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$record['_source']['measurements']['dimensions'][0]))
-    <x-Dimension-Drawer
-    :height="$dims['height']"
-    :width="$w"
-    :depth="$d"
-    :units="$record['_source']['measurements']['dimensions'][0]['units']"
-    :viewWidth="400"
-    :viewHeight="320"
-    :scale=1
-    />
+    @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$record['_source']['measurements']['dimensions'][0]))
+      <x-Dimension-Drawer
+      :height="$dims['height']"
+      :width="$w"
+      :depth="$d"
+      :units="$record['_source']['measurements']['dimensions'][0]['units']"
+      :viewWidth="400"
+      :viewHeight="320"
+      :scale=1
+      />
+    @endif
   @endif
 @endif
 @yield('dims-message')
