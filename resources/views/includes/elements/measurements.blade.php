@@ -24,7 +24,7 @@
         @endforeach
       </p>
     </div>
-    @if(array_key_exists('dimensions',$record['_source']['measurements']))
+    @if(array_key_exists('dimension',$record['_source']['measurements']['dimensions'][0]))
       @php
       $dimensions = $record['_source']['measurements']['dimensions'];
       $dims = [];
