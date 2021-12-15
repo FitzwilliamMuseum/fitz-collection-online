@@ -68,9 +68,14 @@ class indexController extends Controller
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
     // $data = $this->replaceKeys('@link', 'link', $data);
-    $query = $data[0]['_source']['summary_title'] ?? '';
-    $shopify = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, 'shopify');
-    $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, '*');
+    if(array_key_exists('summary_title',$data[0]['_source'])) {
+      $query = $data[0]['_source']['summary_title'];
+      $shopify = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, 'shopify');
+      $research = FindMoreLikeThis::find($data[0]['_source']['title'][0]['value'] ?? $query, '*');
+    } else {
+      $shopify = NULL;
+      $research = NULL;
+    }
     if(array_key_exists('title',$data[0]['_source'] )){
       $query .= ' ';
       $query .=  $data[0]['_source']['title'][0]['value'];
