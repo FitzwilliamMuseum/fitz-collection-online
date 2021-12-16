@@ -67,6 +67,9 @@ class indexController extends Controller
 
     $response = $this->getElastic()->setParams($params)->getSearch();
     $data = $response['hits']['hits'];
+    if(empty($data)){
+      abort('404');
+    }
     // $data = $this->replaceKeys('@link', 'link', $data);
     if(array_key_exists('summary_title',$data[0]['_source'])) {
       $query = $data[0]['_source']['summary_title'];
