@@ -16,7 +16,7 @@
     "postinstall": "npm run copy"
   },
   "dependencies": {
-    "node-forge": ">=0.10.0",
+    "node-forge": ">=1.0.0",
     "universalviewer": "^4.0.0-pre.16"
   },
   "devDependencies": {
