@@ -24,7 +24,7 @@ Route::match(array('GET','POST'),'/search/results/', 'indexController@results')-
 * Spelunker route for all records
 */
 Route::get('/spelunker', 'indexController@index')->name('spelunker');
-
+Route::get('/random', 'indexController@randomsearch')->name('random');
 /*
 * Object based routes
 */
