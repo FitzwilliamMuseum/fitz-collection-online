@@ -710,14 +710,20 @@ $facets = array(
         'body' => []
       ];
       $params['body']['query']['function_score']['functions'][]['random_score'] = $random;
-      $params['body']['query']['function_score']['query']['bool']['must'] = array(
-       'exists' => array(
-           'field' => 'multimedia',
-        )
-      );
-      $filter  =  array("exists" => [
-        "field" => "multimedia"]
-      );
+      $params['body']['query']['function_score']['query']['bool']['must'] = [
+         [
+              "match" => [
+                "department.value" => "Paintings, Drawings and Prints"
+              ]
+         ],
+         [
+              "term" => [ "type.base" => 'object']
+         ],
+         [
+              "exists" => ['field' => 'multimedia']
+         ],
+      ];
+
       $response = $this->getElastic()->setParams($params)->getSearch();
       return $response['hits']['hits'][0]["_source"];
     }
