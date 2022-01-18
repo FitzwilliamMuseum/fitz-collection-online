@@ -25,6 +25,8 @@ Route::match(array('GET','POST'),'/search/results/', 'indexController@results')-
 */
 Route::get('/spelunker', 'indexController@index')->name('spelunker');
 Route::get('/random', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearch'])->name('random');
+Route::get('/random/app', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearchapp'])->name('random.app');
+
 /*
 * Object based routes
 */
