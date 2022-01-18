@@ -755,7 +755,7 @@ $facets = array(
 
       $response = $this->getElastic()->setParams($params)->getSearch();
       $data = array();
-      $data['data'] = $response['hits']['hits'][0]["_source"];
+      $data['data'][] = $response['hits']['hits'][0]["_source"];
       return $data;
     }
   }
