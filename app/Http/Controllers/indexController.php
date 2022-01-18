@@ -728,4 +728,34 @@ $facets = array(
       return $response['hits']['hits'][0]["_source"];
     }
 
+
+    public function randomsearchapp()
+    {
+      $random = new \stdClass();
+      $random->seed = time();
+      $params = [
+        'index' => 'ciim',
+        'size' => 1,
+        'body' => []
+      ];
+      $params['body']['query']['function_score']['functions'][]['random_score'] = $random;
+      $params['body']['query']['function_score']['query']['bool']['must'] = [
+         [
+              "match" => [
+                "department.value" => "Paintings, Drawings and Prints"
+              ]
+         ],
+         [
+              "term" => [ "type.base" => 'object']
+         ],
+         [
+              "exists" => ['field' => 'multimedia']
+         ],
+      ];
+
+      $response = $this->getElastic()->setParams($params)->getSearch();
+      $data = array();
+      $data['data'] = $response['hits']['hits'][0]["_source"];
+      return $data;
+    }
   }
