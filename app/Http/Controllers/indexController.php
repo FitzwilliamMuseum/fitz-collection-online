@@ -466,7 +466,10 @@ $facets = array(
       $currentPage = LengthAwarePaginator::resolveCurrentPage();
       $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
       $paginate->setPath($request->getBaseUrl());
-      return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
+      if(is_null($request->get('format'))){
+        return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
+      } else {
+        return response(view('record.searchJson',array('data' => array('results' => $paginate))),200, ['Content-Type' => 'application/json']);      }
     }
 
     public function images(Request $request, $priref)
