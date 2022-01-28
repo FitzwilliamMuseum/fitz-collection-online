@@ -469,7 +469,7 @@ $facets = array(
       if(is_null($request->get('format'))){
         return view('record.results', compact('records', 'number', 'paginate', 'queryString', 'facets'));
       } else {
-        return response(view('record.searchJson',array('data' => array('results' => $paginate))),200, ['Content-Type' => 'application/json']);      }
+        return response(view('record.searchJson',array('data' => array('results' => $paginate->items(),'total' => $paginate->total()))),200, ['Content-Type' => 'application/json']);      }
     }
 
     public function images(Request $request, $priref)
