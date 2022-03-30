@@ -2,19 +2,22 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use JetBrains\PhpStorm\Pure;
 
-class DimensionDrawer extends Component
+class dimensionDrawer extends Component
 {
-    public $height;
-    public $width;
-    public $depth;
-    public $viewWidth;
-    public $viewHeight;
-    public $units;
-    public $comparison;
-    public $angle = 45;
-    public $scale;
+    public int $height;
+    public int $width;
+    public int $depth;
+    public int $viewWidth;
+    public int $viewHeight;
+    public string $units;
+    public string $comparison;
+    public int $angle = 45;
+    public int $scale;
+    public int $margin = 20;
 
     // public $box;
     /**
@@ -22,7 +25,7 @@ class DimensionDrawer extends Component
      *
      * @return void
      */
-    public function __construct(
+    #[Pure] public function __construct(
       $viewWidth = NULL,
       $viewHeight = NULL,
       $units = NULL,
@@ -43,91 +46,95 @@ class DimensionDrawer extends Component
         $this->comparison = $this->comparison();
     }
 
-    public function setScale($scale)
+    /**
+     * @param int $scale
+     * @return int
+     */
+    #[Pure] public function setScale(int $scale): int
     {
-      $margin = 20;
-      # This is an artificial number which approximates perspective.
       $depthScale = 0.5;
       $scaledDepth = $this->depth * $depthScale;
       $totalHeight = $this->height + $this->height_given_angle_and_hyp($this->angle, $scaledDepth);
       $totalWidth = $this->width + $this->width_given_angle_and_hyp($this->angle, $scaledDepth) + 6.7;
-      $heightScale = ($this->viewHeight - ($margin * 2)) / $totalHeight;
-      $widthScale = ($this->viewWidth - ($margin * 2)) / $totalWidth;
-      $calculatedScale = min($heightScale, $widthScale);
-      return $calculatedScale;
+      $heightScale = ($this->viewHeight - ($this->margin * 2)) / $totalHeight;
+      $widthScale = ($this->viewWidth - ($this->margin * 2)) / $totalWidth;
+      return min($heightScale, $widthScale);
     }
 
-    public function projectBox(){
-      $margin = 20;
+    /**
+     * @return array
+     */
+    #[Pure] public function projectBox(): array
+    {
       $depthScale = 0.5;
       $scaledDepth = $this->depth * $depthScale;
 
       $lines = [];
       $lines[] = $this->rect(
-        $margin,
-        $this->viewHeight - ($margin + ($this->scale * $this->height)),
+        $this->margin,
+        $this->viewHeight - ($this->margin + ($this->scale * $this->height)),
         $this->scale * $this->width,
         $this->scale *  $this->height
       );
       # first diagonal line
       $lines[] = $this->line(
-        $margin,
-        ($this->viewHeight - ($margin + ($this->scale * $this->height))),
-        $margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $this->depth * $depthScale),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
+          $this->margin,
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height))),
+          $this->margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $this->depth * $depthScale),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
       );
 
       # second diagonal line
       $lines[] = $this->line(
-        $margin + ($this->scale * $this->width),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height))),
-        $margin +  ($this->scale * $this->width) + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
+        $this->margin + ($this->scale * $this->width),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height))),
+        $this->margin +  ($this->scale * $this->width) + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
       );
 
       # third diagonal line
       $lines[] = $this->line(
-        $margin + ($this->scale * $this->width),
-        ($this->viewHeight - $margin),
-        $margin +  ($this->scale * $this->width) +  $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
-        ($this->viewHeight - ($margin + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
+        $this->margin + ($this->scale * $this->width),
+        ($this->viewHeight - $this->margin),
+        $this->margin +  ($this->scale * $this->width) +  $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
+        ($this->viewHeight - ($this->margin + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth)))
       );
 
       # top line
       $lines[] = $this->line(
-        $margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
-        $margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
+        $this->margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
+        $this->margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
       );
 
       # right line
       $lines[] = $this->line(
-        $margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
-        ($this->viewHeight - ($margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
-        $margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
-        ($this->viewHeight - $margin - $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))
+        $this->margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
+        ($this->viewHeight - ($this->margin + ($this->scale * $this->height) + $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))),
+        $this->margin + $this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) + ($this->scale * $this->width),
+        ($this->viewHeight - $this->margin - $this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth))
       );
 
       $lines[] = $this->text(
-        $margin + ($this->scale * $this->width) / 2,
-        $this->viewHeight - $margin - 4,
+        $this->margin + ($this->scale * $this->width) / 2,
+        $this->viewHeight - $this->margin - 4,
         $this->measurementLabel($this->width),
         'middle'
       );
 
       # Height text
       $lines[] = $this->text(
-        $margin + ($this->scale * $this->width) - 2,
-        $this->viewHeight - $margin - ($this->scale * $this->height) / 2,
+        $this->margin + ($this->scale * $this->width) - 2,
+        $this->viewHeight - $this->margin - ($this->scale * $this->height) / 2,
         $this->measurementLabel($this->height),
         'end'
       );
       if($this->depth > 0.1){
           # Depth text
           $lines[] = $this->text(
-            $margin + ($this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) / 2) + 20,
-            $this->viewHeight - $margin - ($this->scale * $this->height) - ($this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) / 2),
+            $this->margin + ($this->width_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) / 2) + 20,
+            $this->viewHeight - $this->margin - ($this->scale * $this->height) - ($this->height_given_angle_and_hyp($this->angle, $this->scale * $scaledDepth) / 2),
             $this->measurementLabel($this->depth),
             'start'
         );
@@ -135,46 +142,112 @@ class DimensionDrawer extends Component
       return $lines;
     }
 
-    public function height_given_angle_and_hyp($angle, $hyp)
+    /**
+     * @param $angle
+     * @param $hyp
+     * @return float
+     */
+    public function height_given_angle_and_hyp($angle, $hyp): float
     {
-      $radians = floatval($angle) / 180 * M_PI;
-      return floatval($hyp * sin($radians));
+      return floatval($hyp * sin(floatval($angle) / 180 * M_PI));
     }
 
-    public function width_given_angle_and_hyp($angle, $hyp)
+    /**
+     * @param $angle
+     * @param $hyp
+     * @return float|int
+     */
+    public function width_given_angle_and_hyp($angle, $hyp): float|int
     {
       $radians = floatval($angle) / 180 * M_PI;
       return floatval($hyp) * cos($radians);
     }
 
-    public function line($x1, $y1, $x2, $y2){
+    /**
+     * @param $x1
+     * @param $y1
+     * @param $x2
+     * @param $y2
+     * @return string
+     */
+    public function line($x1, $y1, $x2, $y2): string
+    {
       return '<line x1="' . $x1 . '" y1="' . $y1 . '" x2="' . $x2 . '" y2="' . $y2 . '" class="edge"></line>';
     }
 
-    public function rect($x, $y, $width, $height){
+    /**
+     * @param $x
+     * @param $y
+     * @param $width
+     * @param $height
+     * @return string
+     */
+    public function rect($x, $y, $width, $height): string
+    {
       return '<rect x="'. $x . '" y="' . $y .'" width="' . $width . '" height="' . $height .'" class="edge"></rect>';
     }
 
-    public function text($x, $y, $text_content, $text_anchor){
+    /**
+     * @param $x
+     * @param $y
+     * @param $text_content
+     * @param $text_anchor
+     * @return string
+     */
+    public function text($x, $y, $text_content, $text_anchor): string
+    {
       return '<text x="' . $x .'" y="' . $y .'" text-anchor="' . $text_anchor . '">' . $text_content . '</text>';
     }
 
-    public function convertToCm($dim, $units){
-      if($units === 'mm'){
-        return $dim / 10;
-      } elseif($units === 'm'){
-        return $dim * 100;
-      } else {
-        return $dim;
-      }
+    /**
+     * @param $dim
+     * @return float
+     */
+    public function is_numeric($dim)
+    {
+        if (is_numeric($dim)) {
+            return (float)$dim;
+        } else {
+            return $dim;
+        }
     }
 
-    public function measurementLabel($value)
+    /**
+     * @param $dim
+     * @param $units
+     * @return float|int
+     */
+    public function convertToCm($dim, $units): float|int
+    {
+        $factor = match ($units) {
+            'mm' => 0.1,
+            'cm' => 1,
+            'in' => 2.54,
+            'feet' => 30.48,
+            'm' => 100
+        };
+        $dim = $this->is_numeric($dim);
+        $dim = str_replace(array(' cm'),array(''), $dim);
+        return $dim * $factor;
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function measurementLabel($value): string
     {
         return $value . ' cm';
     }
 
-    public function tennisBall($scale, $x, $y){
+    /**
+     * @param $scale
+     * @param $x
+     * @param $y
+     * @return string
+     */
+    public function tennisBall($scale, $x, $y): string
+    {
 
         $tennis_ball_height = (6.7 * $scale);
 
@@ -188,21 +261,21 @@ class DimensionDrawer extends Component
         </g></g>';
     }
 
-    public function comparison()
+    /**
+     * @return string
+     */
+    #[Pure] public function comparison(): string
     {
-      $margin = 20;
       return '<svg viewbox="0 0 400 320" class="dimension-view">' .
         implode('', $this->projectBox()) .
-        $this->tennisBall($this->scale, $margin + ($this->scale * $this->width) + $margin, $this->viewHeight - $margin) .
+        $this->tennisBall($this->scale, $this->margin + ($this->scale * $this->width) + $this->margin, $this->viewHeight - $this->margin) .
       '</svg>';
     }
 
     /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View
      */
-    public function render()
+    public function render(): View
     {
         return view('components.dimension-drawer');
     }
