@@ -3,11 +3,10 @@
   <div>
       {!! $comparison !!}
       <a data-toggle="collapse" href="#t-ball" class="btn  btn-info btn-sm"><i class="fas fa-question-circle"></i> What does this represent?</a>
-
       <p class="collapse" id="t-ball">
         Relative size of this object is displayed using code inspired by
-        <a href="http://goodformandspectacle.com/">Good Form and Spectacle</a>'s
-        work on the <a href="http://wv.britishmuseum.org">British Museum's Waddeson Bequest website</a> and their
+        <a href="https://goodformandspectacle.com/">Good Form and Spectacle</a>'s
+        work on the <a href="https://wb.britishmuseum.org">British Museum's Waddeson Bequest website</a> and their
         <a href="https://github.com/goodformandspectacle/dimension-drawer">dimension drawer</a>.
         They chose a tennis ball to represent a universally sized object, from which you
         could envisage the size of an object.
