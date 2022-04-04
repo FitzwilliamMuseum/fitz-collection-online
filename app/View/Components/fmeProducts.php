@@ -2,27 +2,29 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class fmeProducts extends Component
 {
-    public $shopify;
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @var array
      */
-    public function __construct($shopify)
+    public array $shopify;
+
+    /**
+     * @param array $shopify
+     */
+    public function __construct(array $shopify)
     {
       $this->shopify  = $shopify;
     }
 
     /**
      * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View
      */
-    public function render()
+    public function render(): View
     {
         return view('components.fme-products');
     }

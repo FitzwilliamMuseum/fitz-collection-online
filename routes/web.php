@@ -32,16 +32,15 @@ Route::get('/random/app', ['middleware' => 'doNotCacheResponse', 'uses' => 'inde
 */
 Route::get('/id/object/{priref}', 'indexController@record')->name('record');
 Route::get('/id/object/{priref}/{format}', 'indexController@recordSwitch')->name('record.context');
-Route::get('/id/image/{id}/', 'indexController@image')->name('image.single');
-Route::get('/id/image/3d/{id}/', 'indexController@sketchfab')->name('sketchfab');
-Route::get('/id/image/iiif/{id}/', 'indexController@iiif')->name('image.iiif');
-Route::get('/id/image/flutter/iiif/{id}/', 'indexController@flutteriiif')->name('image.iiif.flutter');
 
-Route::get('/id/image/slow/iiif/', 'indexController@slowiiif')->name('slow.iiif');
-Route::get('/id/image/mirador/{id}/', 'indexController@mirador')->name('image.mirador');
+Route::get('/id/image/{id}/', 'imagesController@image')->name('image.single');
+Route::get('/id/image/3d/{id}/', 'imagesController@sketchfab')->name('sketchfab');
+Route::get('/id/image/iiif/{id}/', 'imagesController@iiif')->name('image.iiif');
+Route::get('/id/image/flutter/iiif/{id}/', 'imagesController@flutteriiif')->name('image.iiif.flutter');
 
-
-Route::match(array('GET','POST'),'/images/id/{priref}/', 'indexController@images')->name('images.multiple');
+Route::get('/id/image/slow/iiif/', 'imagesController@slowiiif')->name('slow.iiif');
+Route::get('/id/image/mirador/{id}/', 'imagesController@mirador')->name('image.mirador');
+Route::match(array('GET','POST'),'/images/id/{priref}/', 'imagesController@images')->name('images.multiple');
 
 /*
 * Publication routes

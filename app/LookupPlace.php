@@ -1,26 +1,49 @@
 <?php
 
 namespace App;
+
+use Geocoder\Collection;
+use Geocoder\Exception\Exception;
+use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Query\GeocodeQuery;
+use Geocoder\StatefulGeocoder;
 use Http\Adapter\Guzzle7\Client;
 
-class LookupPlace {
+class LookupPlace
+{
 
-  protected $_place;
+    /**
+     * @var string
+     */
+    protected string $_place;
 
-  public function setPlace(string $place){
-    $this->_place = $place;
-  }
+    /**
+     * @return Collection
+     * @throws Exception
+     */
+    public function lookup(): Collection
+    {
+        $httpClient = new Client;
+        $provider = Nominatim::withOpenStreetMapServer($httpClient, 'fitz-beta');
+        $geocoder = new StatefulGeocoder($provider, 'en');
+        return $geocoder->geocodeQuery(GeocodeQuery::create($this->getPlace()));
+    }
 
-  public function getPlace(){
-    return $this->_place;
-  }
+    /**
+     * @return string
+     */
+    public function getPlace(): string
+    {
+        return $this->_place;
+    }
 
-  public function lookup(){
-    $httpClient =  new \Http\Adapter\Guzzle7\Client;
-    $provider =  \Geocoder\Provider\Nominatim\Nominatim::withOpenStreetMapServer($httpClient, 'fitz-beta');
-    $geocoder = new \Geocoder\StatefulGeocoder($provider, 'en');
-    return $geocoder->geocodeQuery(GeocodeQuery::create($this->getPlace()));
-  }
+    /**
+     * @param string $place
+     * @return void
+     */
+    public function setPlace(string $place)
+    {
+        $this->_place = $place;
+    }
 
 }

@@ -30,7 +30,6 @@
 
   @include('includes.structure.head')
 
-  @include('includes.structure.beta')
   @include('includes.structure.open')
   <div class="container">
         @yield('content')
@@ -39,7 +38,6 @@
   @include('includes.structure.emailsignup')
 
   @include('includes.structure.footer')
-  @include('includes.structure.modal')
   @include('includes.scripts.javascript')
 
   @hasSection('360')

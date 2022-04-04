@@ -15,7 +15,7 @@
     }
     ],
     "require": {
-        "php": "^7.2.5 | ^8.0.3",
+        "php": "^8.1",
         "elasticsearch/elasticsearch": "^7.11.0",
         "fideloper/proxy": "^4.2",
         "fitzwilliammuseum/maps": "master",
@@ -43,7 +43,9 @@
         "symfony/http-kernel": "^5.1.5",
         "timehunter/laravel-google-recaptcha-v3": "~2.5",
         "toin0u/geocoder-laravel": "^4.4",
-        "upthemedia/xss-protection": "^0.0.8"
+        "upthemedia/xss-protection": "^0.0.8",
+        "ext-dom": "*",
+        "ext-http": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

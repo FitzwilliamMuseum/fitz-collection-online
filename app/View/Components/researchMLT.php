@@ -2,27 +2,25 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class researchMLT extends Component
 {
-    public $research;
+
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @param array $research
      */
-    public function __construct($research)
+    public function __construct(public array $research)
     {
-        $this->research = $research;
     }
 
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View
      */
-    public function render()
+    public function render(): View
     {
         return view('components.research-m-l-t');
     }

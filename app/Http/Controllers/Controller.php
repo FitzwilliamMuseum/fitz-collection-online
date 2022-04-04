@@ -8,18 +8,25 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Artisan;
 use App\FitzElastic\Elastic;
+use JetBrains\PhpStorm\Pure;
 
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function getElastic()
+    /**
+     * @return Elastic
+     */
+    #[Pure] public function getElastic(): Elastic
     {
       return new Elastic();
     }
 
-    public function clearCache()
+    /**
+     * @return string
+     */
+    public function clearCache(): String
     {
       Artisan::call('cache:clear');
       return "Cache is cleared";

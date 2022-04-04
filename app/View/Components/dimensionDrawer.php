@@ -25,7 +25,7 @@ class dimensionDrawer extends Component
      *
      * @return void
      */
-    #[Pure] public function __construct(
+    public function __construct(
       $viewWidth = NULL,
       $viewHeight = NULL,
       $units = NULL,
@@ -203,7 +203,7 @@ class dimensionDrawer extends Component
      * @param $dim
      * @return float
      */
-    public function is_numeric($dim)
+    public function is_numeric($dim): float
     {
         if (is_numeric($dim)) {
             return (float)$dim;

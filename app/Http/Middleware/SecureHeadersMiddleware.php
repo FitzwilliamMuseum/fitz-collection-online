@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 
 class SecureHeadersMiddleware
 {
-  // Enumerate headers which you do not want in your application's responses.
-  // Great starting point would be to go check out @Scott_Helme's:
-  // https://securityheaders.com/
-  private $unwantedHeaderList = [
+
+  private array $unwantedHeaderList = [
       'Server',
   ];
-  public function handle($request, Closure $next)
+
+    /**
+     * @param Request $request
+     * @param Closure $next
+     * @return mixed
+     */
+  public function handle(Request $request, Closure $next): mixed
   {
       $this->removeUnwantedHeaders($this->unwantedHeaderList);
       $response = $next($request);
@@ -23,7 +27,12 @@ class SecureHeadersMiddleware
       $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
       return $response;
   }
-  private function removeUnwantedHeaders($headerList)
+
+    /**
+     * @param array $headerList
+     * @return void
+     */
+  private function removeUnwantedHeaders(array $headerList)
   {
       foreach ($headerList as $header)
           header_remove($header);

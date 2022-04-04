@@ -3,7 +3,7 @@
   @if(array_key_exists('places', $record['_source']['lifecycle']['creation'][0]))
     <h3 class="lead collection">
       Place(s) associated
-    </h4>
+    </h3>
     <ul class="entities">
       @php
       $coord =  array();

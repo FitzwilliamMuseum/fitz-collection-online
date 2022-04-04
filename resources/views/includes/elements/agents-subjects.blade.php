@@ -1,8 +1,7 @@
-
 @if(array_key_exists('agents', $record['_source']))
   <h3 class="lead collection">
     People, subjects and objects depicted
-  </h4>
+  </h3>
   <ul class="entities">
 
     @if(array_key_exists('name', $record['_source']))
@@ -14,7 +13,7 @@
           </li>
         @else
           <li>
-            <a class="btn btn-sm btn-outline-dark " href="#">{{ ucfirst($name['value']) }}</a></li>
+            <a class="btn btn-sm btn-outline-dark " href="#">{{ ucfirst($name['value']) }}</a>
           </li>
         @endif
       @endforeach

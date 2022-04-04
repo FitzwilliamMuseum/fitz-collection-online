@@ -14,7 +14,7 @@
     @endif
   </div>
   <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
-    <x-termsOfUse :path="$record['processed']['large']['location']" />
+    <x-terms-of-use :path="$record['processed']['large']['location']" />
   </div>
 </div>
 

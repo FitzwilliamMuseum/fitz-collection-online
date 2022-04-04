@@ -4,8 +4,15 @@ use Closure;
 use Illuminate\Http\Request;
 use Upthemedia\XssProtection\XssProtectionTrait;
 final class XssClean {
+
     use XssProtectionTrait;
-    public function handle(Request $request, Closure $next)
+
+    /**
+     * @param Request $request
+     * @param Closure $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next): mixed
     {
 	    $input = $request->all();
 	    array_walk_recursive($input, function(&$input) {
