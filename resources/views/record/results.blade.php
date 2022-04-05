@@ -128,11 +128,6 @@
                 </h3>
                 <div class="row">
                     @foreach($records->items() as $record)
-                        @php
-                            $pris = Arr::pluck($record['_source']['identifier'],'priref');
-                            $pris = array_filter($pris);
-                            $pris= Arr::flatten($pris);
-                        @endphp
                         <x-search-result :record="$record"></x-search-result>
                     @endforeach
                 </div>

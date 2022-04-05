@@ -1,3 +1,8 @@
+@php
+    $pris = Arr::pluck($record['_source']['identifier'],'priref');
+    $pris = array_filter($pris);
+    $pris= Arr::flatten($pris);
+@endphp
 <div class="col-md-4 mb-3">
     <div class="card h-100">
         <div class="mx-auto">
