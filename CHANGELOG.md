@@ -1,5 +1,9 @@
 ## Change log
 
+### 05.04.2022
+
+1. Address dependabot alerts for node modules
+
 ### 04.04.2022
 
 1. Added spoliation claim architecture
