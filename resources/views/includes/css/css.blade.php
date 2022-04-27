@@ -3,4 +3,5 @@
 <link rel="stylesheet" href="{{ mix('css/app.css') }}"/>
 <link rel="icon" href="{{ URL::to('/favicon.ico') }}"/>
 <link rel="stylesheet" href="{{ mix('css/fitzwilliam.css') }}" />
+<link rel="stylesheet" href="/css/site.css" />
 
