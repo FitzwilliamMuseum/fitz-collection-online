@@ -6,23 +6,26 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "production": "mix --production",
-        "copy": "npm run copy-uv-assets && npm run copy-uv-dist-umd && npm run copy-uv-html && npm run copy-uv-css",
-        "copy-uv-assets": "cp -R node_modules/universalviewer/dist/uv-assets ./public",
-        "copy-uv-dist-umd": "cp -R node_modules/universalviewer/dist/uv-dist-umd ./public",
+        "copy": "npm run copy-uv-dist-umd && npm run copy-uv-html && npm run copy-uv-css",
+        "copy-uv-dist-umd": "cp -R node_modules/universalviewer/dist/umd ./public",
         "copy-uv-html": "cp -R node_modules/universalviewer/dist/uv.html ./public",
         "copy-uv-css": "cp -R node_modules/universalviewer/dist/uv.css ./public/",
         "postinstall": "npm run copy"
     },
     "dependencies": {
+        "@popperjs/core": "^2.11.5",
         "@xmldom/xmldom": "^0.8.1",
         "node-forge": ">=1.3.0",
-        "universalviewer": "^4.0.0-pre.16"
+        "universalviewer": "^4.0.0-pre.53"
     },
     "devDependencies": {
+        "@xmldom/xmldom": "^0.8.1",
         "axios": ">=0.21.1",
+        "bootstrap": "^4.6.1",
         "cross-env": "^7.0.3",
         "glob-parent": ">=5.1.2",
         "is-svg": ">=4.2.2",
+        "jquery": "~3.6.0",
         "laravel-mix": "^6.0.42",
         "lodash": "^4.17.21",
         "nth-check": ">=2.0.1",
@@ -33,7 +36,6 @@
         "sass-loader": "^8.0.0",
         "ssri": ">=7.1.1",
         "url-parse": ">=1.5.10",
-        "vue-template-compiler": "^2.6.14",
-        "@xmldom/xmldom": "^0.8.1"
+        "vue-template-compiler": "^2.6.14"
     }
 }

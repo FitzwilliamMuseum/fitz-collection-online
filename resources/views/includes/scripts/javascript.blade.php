@@ -1,17 +1,9 @@
-<!-- JavaScript -->
-<script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
-  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-  crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script><!-- Back to top script -->
-<!-- Back to top script -->
+<script src="{{ mix('js/app.js') }}"></script>
+
 <script src="/js/backtotop.js"></script>
 
-<!-- Cookie management -->
 <script defer type="text/javascript" src="/js/config.js"></script>
-<!-- <script defer type="text/javascript" src="/js/klaro.js"></script> -->
-<!-- End of body -->
+<script defer type="text/javascript" src="/js/klaro.js"></script>
 
 @hasSection('audio-guide')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.5.10/plyr.min.js"></script>
