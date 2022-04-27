@@ -174,8 +174,10 @@ class CIIM extends Model
             ]
         ];
         $params['body']['sort'] = $sort;
-        $records = self::getElastic()->setParams($params)->getSearch();
-        return self::paginate($records)->setPath($request->getBaseUrl());
+        $response = self::getElastic()->setParams($params)->getSearch();
+        $records =  self::paginate($response)->setPath($request->getBaseUrl());
+        $aggregations = $response['aggregations'];
+        return array('records' => $records, 'aggregations' => $aggregations);
     }
 
     /**

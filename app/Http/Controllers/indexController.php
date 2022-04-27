@@ -266,8 +266,9 @@ class indexController extends Controller
             'query' => 'required|max:200|min:3',
         ]);
         $queryString = Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
-        $records = CIIM::getSearchResults( $request);
-        $facets = $records['aggregations'];
+        $response = CIIM::getSearchResults( $request);
+        $records = $response['records'];
+        $facets = $response['aggregations'];
         if (is_null($request->get('format'))) {
             return view('record.results', compact('records', 'queryString', 'facets'));
         } else {

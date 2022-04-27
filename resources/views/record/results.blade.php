@@ -149,7 +149,6 @@
                             @if(!empty($facets))
                                 <div class="filters">
                                 @if(array_key_exists('department', $facets) && !empty($facets['department']['buckets']) )
-
                                     <!-- Departments -->
                                         <div class="col mb-3">
 
