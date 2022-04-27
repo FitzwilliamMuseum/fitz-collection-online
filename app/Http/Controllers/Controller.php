@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Artisan;
+use Illuminate\Support\Facades\Artisan;
 use App\FitzElastic\Elastic;
 use JetBrains\PhpStorm\Pure;
 

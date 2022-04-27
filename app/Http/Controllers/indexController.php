@@ -295,7 +295,7 @@ class indexController extends Controller
     /**
      * @return Response
      */
-    public function randomsearch(): array
+    public function randomsearch(): Response
     {
         $random = new stdClass();
         $random->seed = time();

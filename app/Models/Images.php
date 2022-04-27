@@ -4,7 +4,6 @@ namespace App\Models;
 use App\FitzElastic\Elastic;
 use Illuminate\Http\Request;
 use JetBrains\PhpStorm\Pure;
-use PhpParser\Node\Expr\Array_;
 
 class Images extends Model
 {

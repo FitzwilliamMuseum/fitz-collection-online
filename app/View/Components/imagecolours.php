@@ -7,13 +7,13 @@ use Illuminate\View\Component;
 
 class imagecolours extends Component
 {
-    public $palette;
+    public array $palette;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($palette)
+    public function __construct(array $palette)
     {
         $this->palette = $palette;
     }

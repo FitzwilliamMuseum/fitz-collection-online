@@ -3,7 +3,6 @@
 <head>
 
     @include('includes.structure.meta')
-
     @include('includes.css.css')
 
     @hasSection('map')
@@ -36,21 +35,8 @@
   </div>
 
   @include('includes.structure.emailsignup')
-
   @include('includes.structure.footer')
   @include('includes.scripts.javascript')
-
-  @hasSection('360')
-    @include('includes.scripts.photosphere-js')
-  @endif
-
-  @hasSection('map')
-    @include(includes.scripts.mapjs)
-  @endif
-
-  @hasSection('timeline')
-    @include('includes.scripts.timeline-js')
-  @endif
 
 </body>
 </html>
