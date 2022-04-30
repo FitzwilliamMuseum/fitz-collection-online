@@ -8,9 +8,10 @@ This repository contains the code base for a Laravel based front end for the pro
 the Fitzwilliam Museum collection application. 
 
 This is very much a minimum viable product and to run and install
-your environment would need to be whitelisted for our solr, axiell, shopify and elastic api instances. 
+your environment would need to be whitelisted for our solr, axiell, directus, shopify 
+and elastic api instances. 
 
-This system is built with the latest versions of Bootstrap, Laravel 8, JQuery and uses webpack/npm/ 
+This system is built with the latest versions of Bootstrap, Laravel 8, JQuery and uses webpack/npm. 
 
 # Installation
 
