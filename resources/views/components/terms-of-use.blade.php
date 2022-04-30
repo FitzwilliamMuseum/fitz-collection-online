@@ -1,5 +1,5 @@
-<h3 class="lead collection">Terms of use</h3>
-<p class="text-info">
+<h3>Terms of use</h3>
+<p class="text-dark">
     These images are provided for non-commercial use under a Creative Commons
     License (BY-NC-ND). To license a high resolution version, please contact
     our <a href="{{ env('MAIN_URL') }}/commercial-services/image-library">image library</a>
