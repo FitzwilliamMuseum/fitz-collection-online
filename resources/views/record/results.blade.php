@@ -97,7 +97,7 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <button type="submit" class="btn btn-dark">Submit</button>
-                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal2">
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                             Filter your search
                         </button>
                     </div>
@@ -141,8 +141,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Filter your search</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" class="d-flex">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -154,7 +154,7 @@
 
                                             <div class="contents-label mb-3">
                                                 <h5 class="lead">
-                                                    <a data-toggle="collapse" href="#department">Department</a>
+                                                    <a data-bs-toggle="collapse" href="#department">Department</a>
                                                 </h5>
 
                                                 @if(array_key_exists('department', $facets))
@@ -183,7 +183,7 @@
 
                                                     <div class="contents-label mb-3">
                                                         <h5 class="lead">
-                                                            <a data-toggle="collapse" href="#maker">Maker</a>
+                                                            <a data-bs-toggle="collapse" href="#maker">Maker</a>
                                                         </h5>
 
                                                         @if(array_key_exists('maker', $facets))
@@ -209,7 +209,7 @@
 
                                             <div class="contents-label mb-3">
                                                 <h5 class="lead">
-                                                    <a data-toggle="collapse" href="#material">Material</a>
+                                                    <a data-bs-toggle="collapse" href="#material">Material</a>
                                                 </h5>
 
                                                 @if(array_key_exists('material', $facets))
@@ -236,7 +236,7 @@
 
                                             <div class="contents-label mb-3">
                                                 <h5 class="lead">
-                                                    <a data-toggle="collapse" href="#period">Period</a>
+                                                    <a data-bs-toggle="collapse" href="#period">Period</a>
                                                 </h5>
 
                                                 @if(array_key_exists('period', $facets))
@@ -262,7 +262,7 @@
 
                                             <div class="contents-label mb-3">
                                                 <h5 class="lead">
-                                                    <a data-toggle="collapse" href="#object_type">Object Type</a>
+                                                    <a data-bs-toggle="collapse" href="#object_type">Object Type</a>
                                                 </h5>
 
                                                 @if(array_key_exists('object_type', $facets))
@@ -286,7 +286,7 @@
                             @endif
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

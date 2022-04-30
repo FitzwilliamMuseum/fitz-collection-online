@@ -6,7 +6,7 @@
     /></a>
   </div>
   <div class="text-center mb-2 mt-2">
-    <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-toggle="collapse" aria-expanded="false" aria-controls="download-message"
+    <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-bs-toggle="collapse" aria-expanded="false" aria-controls="download-message"
     ><i class="fas fa-download mr-2"></i> Use this image</a>
       <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('record', $object['identifier'][1]['priref']) }}">Back to record</a>
     @if(Arr::has($filtered[0]['processed'], 'zoom'))

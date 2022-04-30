@@ -1,6 +1,6 @@
 <div class="container ">
     <h3 class="lead shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
-        <a data-toggle="collapse" href="#error" role="button" aria-expanded="false" aria-controls="error">
+        <a data-bs-toggle="collapse" href="#error" role="button" aria-expanded="false" aria-controls="error">
             Contact us</a> @include('includes.elements.expander-error')
     </h3>
     <div class="shadow-sm p-3 mx-auto mt-3 rounded collapse" id="error">

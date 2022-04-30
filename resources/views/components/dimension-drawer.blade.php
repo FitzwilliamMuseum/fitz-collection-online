@@ -2,7 +2,7 @@
   <h3 class="lead collection">Relative size of this object</h3>
   <div>
       {!! $comparison !!}
-      <a data-toggle="collapse" href="#t-ball" class="btn  btn-info btn-sm"><i class="fas fa-question-circle"></i> What does this represent?</a>
+      <a data-bs-toggle="collapse" href="#t-ball" class="btn  btn-info btn-sm"><i class="fas fa-question-circle"></i> What does this represent?</a>
       <p class="collapse" id="t-ball">
         Relative size of this object is displayed using code inspired by
         <a href="https://goodformandspectacle.com/">Good Form and Spectacle</a>'s
