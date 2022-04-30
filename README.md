@@ -1,5 +1,8 @@
 # Fitzwilliam Museum Collection front end
 
+[![DOI](https://zenodo.org/badge/276916733.svg)](https://zenodo.org/badge/latestdoi/276916733)
+
+
 This repository contains the code base for a Laravel based front end for the production version of 
 the Fitzwilliam Museum collection application. 
 
