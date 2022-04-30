@@ -1,17 +1,37 @@
-# beta.collection.fitz.ms
+# Fitzwilliam Museum Collection front end
 
-This repository contains the code base for a Laravel based front end for a beta version of @fitzwilliammuseum collection website. The front end is very simple and uses the Daemonite/Bootstrap 4 framework to interface with Knowledge Integration's CIIM.
+This repository contains the code base for a Laravel based front end for the production version of 
+the Fitzwilliam Museum collection application. 
 
-# installation
+This is very much a minimum viable product and to run and install
+your environment would need to be whitelisted for our solr, axiell, shopify and elastic api instances. 
 
-1. Install php 7+ on your development environment
+This system is built with the latest versions of Bootstrap, Laravel 8, JQuery and uses webpack/npm/ 
+
+# Installation
+
+1. Install php on your development environment
 2. Install composer
-3. git clone https://github.com/FitzwilliamMuseum/collection-online
-4. cd beta.fitz.ms
-5. composer install
-6. php artisan serve
+3. Install Node and NPM
+4. Then run:
 
+```
+$ git clone https://github.com/FitzwilliamMuseum/fitz-collection-online
+$ cd fitz-collection-online
+$ composer install
+$ npm install
+$ npm run production
+$ cp .env.example .env
+```
 
+You should now have all the source code installed, and you will then need to edit the .env file to hold 
+all the values required. If you work for the Fitz, you will need to grab this from our Bitwarden vault. 
+
+Once you are set up, to run locally:
+
+```
+$ php artisan serve
+```
 
 # License
 
