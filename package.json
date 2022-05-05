@@ -9,8 +9,7 @@
         "copy": "npm run copy-uv-html && npm run copy-uv-css && npm run copy-uv-assets",
         "copy-uv-html": "cp -R node_modules/universalviewer/dist/uv.html ./public",
         "copy-uv-css": "cp -R node_modules/universalviewer/dist/uv.css ./public/",
-        "copy-uv-assets": "cp -R node_modules/universalviewer/dist/umd/ ./public/umd/",
-        "postinstall": "npm run copy"
+        "copy-uv-assets": "cp -R node_modules/universalviewer/dist/umd/ ./public/umd/"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.1.1",
