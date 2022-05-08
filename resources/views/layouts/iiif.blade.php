@@ -2,24 +2,15 @@
 <html lang="en" dir="ltr"
       prefix="content: https://purl.org/rss/1.0/modules/content/  dc: https://purl.org/dc/terms/  foaf: https://xmlns.com/foaf/0.1/  og: https://ogp.me/ns#  rdfs: https://www.w3.org/2000/01/rdf-schema#  schema: https://schema.org/  sioc: https://rdfs.org/sioc/ns#  sioct: https://rdfs.org/sioc/types#  skos: https://www.w3.org/2004/02/skos/core#  xsd: https://www.w3.org/2001/XMLSchema# ">
 <head>
-
     @include('includes.structure.metaIIIF')
-
     @include('includes.css.cssIIIF')
-
-    @hasSection('map')
-        @mapstyles
-    @endif
-
     @include('includes.structure.manifest')
     @yield('jsonld')
 
     <link rel="stylesheet" type="text/css" href="/css/uv.css"/>
-    <!-- include this if using 3D: https://github.com/UniversalViewer/universalviewer/issues/716 -->
-    <script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
-    <!-- must include jQuery and jsViews for the UV for now -->
-    <script src="{{ url('/') }}/uv-assets/js/bundle.js"></script>
-    <script src="{{ url('/') }}/uv-dist-umd/UV.js"></script>
+    <script src="{{ url('/') }}/umd/UV.js"></script>
+    @include('includes.css.css')
+
     <link rel="stylesheet" type="text/css" href="/css/iiif.css"/>
 
     @include('googletagmanager::head')
