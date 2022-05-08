@@ -62,6 +62,9 @@ footer, .chip-icon {
 .bg-black {
     background-color: #000000!important;
 }
+.bg-col-nav {
+    background-color: #2a2478 !important;
+}
 .bg-fade {
     background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(163, 193, 173));
 }
