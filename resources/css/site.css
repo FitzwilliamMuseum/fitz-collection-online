@@ -875,3 +875,6 @@ pre {
     word-wrap: break-word;
     font-size: 87.5%;
 }
+.footer__info {
+    width: 330px;
+}
