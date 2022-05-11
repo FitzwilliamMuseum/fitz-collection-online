@@ -38,9 +38,7 @@ class AppServiceProvider extends ServiceProvider
       return "<i class='fas fa-{$iconName} {$classes}' aria-hidden='true' title='{$text}'></i><span class='sr-only'>{$text}</span>";
     });
 
-    Paginator::useBootstrap();
-    Paginator::defaultView('pagination::simple-tailwind');
-
+    Paginator::useBootstrapFive();
 
     BladeHelper::directive('humansize', function ($bytes, $precision = 2) {
       $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
