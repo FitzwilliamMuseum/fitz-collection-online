@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,4 +14,4 @@ const mix = require('laravel-mix');
 
 mix.styles(['resources/css/site.css'], 'public/css/fitzwilliam.css').version();
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/scss/app.scss', 'public/css').version();
+    .sass('resources/scss/app.scss', 'public/css').purgeCss().version();
