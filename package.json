@@ -16,7 +16,6 @@
 
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^6.1.1",
         "@popperjs/core": "^2.11.5",
         "@xmldom/xmldom": "^0.8.2",
         "async": "^3.2.3",
