@@ -14,3 +14,5 @@ yarn-error.log
 /public/uv-*
 .idea
 /public/umd*
+public/images/svg/
+cookieconsent.*
