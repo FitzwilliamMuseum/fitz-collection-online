@@ -12,7 +12,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fa fa-address-book"></i>
+                                @svg('fas-address-book',['width' => 15])
                             </div>
                         </div>
                         <input id="yourname" name="entry.1026021148" placeholder="Please enter your name" type="text"
@@ -25,7 +25,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fa fa-address-card"></i>
+                                @svg('fas-address-card',['width' => 15])
                             </div>
                         </div>
                         <input id="email" name="entry.1353760488" placeholder="Please enter your email" type="text"
@@ -38,7 +38,7 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
-                                <i class="fa fa-object-group"></i>
+                                @svg('fas-object-group',['width' => 15])
                             </div>
                         </div>
                         @if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0]))

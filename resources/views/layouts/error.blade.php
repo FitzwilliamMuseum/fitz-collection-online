@@ -14,7 +14,7 @@
 
 </head>
 
-<body class="doc-body">
+<body class="doc-body c_darkmode">
   @include('googletagmanager::body')
 
 
@@ -29,7 +29,6 @@
 
   @include('includes.structure.head')
 
-  @include('includes.structure.open')
   <div class="container">
         @yield('content')
   </div>

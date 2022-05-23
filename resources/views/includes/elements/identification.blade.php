@@ -5,11 +5,11 @@
     @foreach($record['_source']['identifier'] as $id)
         @if(array_key_exists('type', $id))
             @if($id['type'] === 'uri')
-                <span class="sr-only"><a href="{{ $id['value']}}">Stable URI</a><br/></span>
+                <span class="visually-hidden"><a href="{{ $id['value']}}">Stable URI</a><br/></span>
             @elseif($id['type'] === 'priref')
                 Primary reference Number: <a href="/id/object/{{ $id['value']}}">{{ $id['value']}}</a><br/>
             @elseif($id['type'] === 'Online 3D model')
-                <span class="sr-only"><a
+                <span class="visually-hidden"><a
                         href="https://sketchfab.com/3d-models/{{ $id['value']}}">Sketchfab model</a><br/></span>
             @elseif($id['type'] === 'Wikidata')
                 Wikidata: <a href="https://www.wikidata.org/wiki/{{ $id['value'] }}">{{ $id['value'] }}</a><br/>
@@ -29,5 +29,5 @@
 <span
     class="btn btn-sm btn-outline-dark mb-2 mr-1">Updated: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['modified']/ 1000)->format('l j F Y') }}</span>
 <span
-    class="sr-only">Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</span>
+    class="visually-hidden">Last processed: {{ \Carbon\Carbon::createFromTimestamp($record['_source']['admin']['processed']/ 1000)->format('l j F Y') }}</span>
 @include('includes/elements/institutions')

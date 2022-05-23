@@ -7,8 +7,8 @@
   </div>
   <div class="text-center mb-2 mt-2">
     <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-bs-toggle="collapse" aria-expanded="false" aria-controls="download-message"
-    ><i class="fas fa-download mr-2"></i> Use this image</a>
-      <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('record', $object['identifier'][1]['priref']) }}">Back to record</a>
+    >@svg('fas-download',['class' => 'mr-2','width' => 15]) Use this image</a>
+      <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('record', $object['identifier'][1]['priref']) }}">@svg('fas-backward',['class' => 'mr-2','width' => 15]) Back to record</a>
     @if(Arr::has($filtered[0]['processed'], 'zoom'))
       <a class="btn btn-sm btn-dark m-1" href="{{ route('image.iiif', $object['multimedia'][0]['admin']['id']) }}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
     @endif

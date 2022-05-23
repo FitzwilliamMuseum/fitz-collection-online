@@ -2,7 +2,7 @@
 <div class="text-center">
     <button type="button" id="expander" class="btn btn-dark btn-circle btn-xl mb-2" data-bs-toggle="collapse"
             data-bs-target="#expand-more" aria-expanded="false" aria-controls="expand-more">
-        <span class="collapsed">@fa('plus')</span>
-        <span class="expanded">@fa('minus')</span>
+        <span class="collapsed">@svg('fas-plus',['width'=>'15'])</span>
+        <span class="expanded">@svg('fas-minus',['width'=>'15'])</span>
     </button>
 </div>

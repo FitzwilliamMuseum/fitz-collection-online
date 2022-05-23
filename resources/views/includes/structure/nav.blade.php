@@ -14,7 +14,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ URL::to(env('MAIN_URL')) }}">Home <span
-                            class="sr-only">(current)</span></a>
+                            class="visually-hidden">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ URL::to(env('MAIN_URL') . '/visit-us/') }}">Visit</a>
@@ -47,7 +47,7 @@
                 </li>
             </ul>
             {{ Form::open(['url' => url('search/results'),'method' => 'GET', 'class' => 'd-flex']) }}
-            <label for="search" class="sr-only">Search: </label>
+            <label for="search" class="visually-hidden">Search: </label>
             <input id="query" name="query" type="text" class="form-control me-2"
                    placeholder="Search our site" required value="{{ old('query') }}" aria-label="Your query">
             <button type="submit" class="btn btn-outline-light" id="searchButton" aria-label="Submit your search">Search
