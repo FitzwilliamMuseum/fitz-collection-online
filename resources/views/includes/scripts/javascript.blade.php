@@ -1,12 +1,7 @@
 <script src="{{ mix('js/app.js') }}"></script>
 
-<script src="/js/backtotop.js"></script>
-
-<script defer type="text/javascript" src="/js/config.js"></script>
-<script defer type="text/javascript" src="/js/klaro.js"></script>
-
 @hasSection('audio-guide')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.5.10/plyr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.5.10/plyr.min.js"></script>
 <script>
 // Change "{}" to your options:
 // https://github.com/sampotts/plyr/#options
@@ -45,5 +40,5 @@ window.player = player;
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', '{{ env('APP_GOOGLE_ANALYTICS') }}');
+  gtag('config', '{{ env('APP_GOOGLE_ANALYTICS') }}', { cookie_flags: 'SameSite=None;Secure' });
 </script>
