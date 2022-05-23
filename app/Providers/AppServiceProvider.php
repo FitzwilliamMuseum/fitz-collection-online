@@ -28,16 +28,6 @@ class AppServiceProvider extends ServiceProvider
   */
   public function boot()
   {
-    BladeHelper::directive('fa', function(string $iconName, string $text = null, $classes = '') {
-      if (is_array($classes)) {
-        $classes = join(' ', $classes);
-      }
-
-      $text = $text ?? $iconName;
-
-      return "<i class='fas fa-{$iconName} {$classes}' aria-hidden='true' title='{$text}'></i><span class='sr-only'>{$text}</span>";
-    });
-
     Paginator::useBootstrapFive();
 
     BladeHelper::directive('humansize', function ($bytes, $precision = 2) {
