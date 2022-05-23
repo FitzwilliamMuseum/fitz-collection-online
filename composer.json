@@ -16,6 +16,8 @@
     ],
     "require": {
         "php": "^8.0|^8.1",
+        "ext-dom": "*",
+        "codeat3/blade-fluentui-system-icons": "^1.24",
         "elasticsearch/elasticsearch": "^7.17.0",
         "fitzwilliammuseum/maps": "master",
         "fruitcake/laravel-cors": "^2.2.0",
@@ -32,6 +34,7 @@
         "mews/purifier": "^3.3.7",
         "miljar/php-exif": "^0.6.5",
         "olssonm/l5-very-basic-auth": "^6.7",
+        "owenvoke/blade-fontawesome": "^2.0",
         "php-http/guzzle7-adapter": "^1.0",
         "predis/predis": "^1.1.10",
         "simplesoftwareio/simple-qrcode": "~4.2.0",
@@ -42,8 +45,7 @@
         "symfony/http-kernel": "^6.0.8",
         "timehunter/laravel-google-recaptcha-v3": "~2.5.2",
         "toin0u/geocoder-laravel": "^4.5.1",
-        "upthemedia/xss-protection": "^0.0.8",
-        "ext-dom": "*"
+        "upthemedia/xss-protection": "^0.0.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12.3",
