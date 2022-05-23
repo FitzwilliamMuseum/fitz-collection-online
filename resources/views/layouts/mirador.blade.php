@@ -6,7 +6,7 @@
   @yield('jsonld')
   @include('googletagmanager::head')
 </head>
-<body class="doc-body">
+<body class="doc-body c_darkmode">
   @include('googletagmanager::body')
   @yield('content')
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

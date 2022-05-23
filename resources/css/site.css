@@ -878,3 +878,7 @@ pre {
 .footer__info {
     width: 330px;
 }
+
+.eden {
+    filter: invert(1) sepia(1) saturate(5) hue-rotate(175deg);
+}

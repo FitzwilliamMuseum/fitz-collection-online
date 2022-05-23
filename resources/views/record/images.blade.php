@@ -6,32 +6,39 @@
     <div class="container-fluid bg-grey mb-3">
         <div class="container mb-3">
             <a class="mt-3 mb-3 btn btn-dark"
-               href="{{ route('record', [$data[0]['_source']['identifier'][1]['priref']]) }}">Return to record</a>
+               href="{{ route('record', [$data[0]['_source']['identifier'][1]['priref']]) }}">
+                Return to record
+            </a>
             <div class="row mb-3">
                 @foreach($paginate as $media)
+                    @dd($media)
                     <div class="col-md-4 mt-3 mb-3">
                         <div class="card card-body h-100">
-                            <a href="/id/image/{{ $media['admin']['id']}}"><img class="img-fluid mx-auto d-block"
-                                                                                src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
-                                                                                loading="lazy" alt="An image of "
-                                /></a>
+                            <a href="/id/image/{{ $media['admin']['id']}}">
+                                <img class="img-fluid mx-auto d-block"
+                                     src="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['preview']['location'] }}"
+                                     loading="lazy"
+                                     alt="An image of "
+                                />
+                            </a>
                             <div>
                                 @if(array_key_exists('zoom', $media['processed']))
                                     <span class="btn btn-wine m-1 p-2 share ">
-                      <a href="/id/image/iiif/{{ $media['admin']['id']}}"><img src="/images/logos/iiif.svg"
-                                                                               width="20px"/></a>
-                    </span>
+                                        <a href="{{ env('APP_URL')}}/id/image/iiif/{{ $media['admin']['id']}}">
+                                            <img src="{{ asset("/images/logos/iiif.svg") }}" width="20" alt="IIIF Logo"/>
+                                         </a>
+                                    </span>
                                 @endif
                                 <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
-                    <a href="/id/image/{{ $media['admin']['id']}}"><i class="fas fa-eye"></i></a>
-                  </span>
+                                    <a href="/id/image/{{ $media['admin']['id']}}">@svg('fas-eye',['width' => 15])</a>
+                                </span>
                                 <span class="btn btn-wine m-1 mt-3 mb-3 p-2 share">
-                    <a href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['original']['location'] }}"
-                       target="_blank"
-                       download="{{ basename($media['processed']['original']['location'] ) }}"><i
-                            class="fas fa-download"></i>
-                  </a>
-                  </span>
+                                     <a href="{{ env('APP_URL')}}/imagestore/{{ $media['processed']['original']['location'] }}"
+                                        target="_blank"
+                                        download="{{ basename($media['processed']['original']['location'] ) }}">
+                                         @svg('fas-download', ['width' => 15])
+                                     </a>
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -9,7 +9,7 @@
 <a class="btn btn-sm btn-sm btn-dark m-1 d-block"
    href="{{ env('APP_URL') }}/imagestore/{{ $path }}"
    target="_blank"
-   download="{{ basename($path) }}"><i class="fas fa-download mr-2"></i>
+   download="{{ basename($path) }}">@svg('fas-download',['width'=>'15','class' => 'mr-2'])
     Download this image</a>
 
 <p>

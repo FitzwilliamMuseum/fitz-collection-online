@@ -24,12 +24,11 @@
                 </div>
                 <div class="text-center mt-2">
                     <a class="btn btn-sm btn-sm btn-dark m-1"
-                       href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}"><i
-                            class="fas fa-search mr-2"></i> View image details</a>
+                       href="{{ route('image.single', $record['_source']['multimedia'][0]['admin']['id']) }}">@svg('fas-search',['width' => 15])View image details</a>
 
                     <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-bs-toggle="collapse"
                        aria-expanded="false" aria-controls="download-message"
-                    ><i class="fas fa-download mr-2"></i> Use this image</a>
+                    >@svg('fas-download',['width' => 15]) Use this image</a>
                     {{-- @if(array_key_exists('source',$record['_source']['multimedia'][0]['admin'])) --}}
                     @php
                         $con = array();
@@ -60,8 +59,7 @@
                             <a class="btn btn-sm btn-sm btn-dark m-1 "
                                href="https://api.fitz.ms/data-distributor/iiif/{{ $record['_source']['admin']['id']}}/manifest"><img
                                     src="/images/logos/iiif.svg" alt="IIIF Manifest" width="20px"/> IIIF Manifest</a>
-                            <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}"><i
-                                    class="fas fa-eye"></i> Slow looking</a>
+                            <a class="btn btn-sm btn-sm btn-dark m-1 " href="/id/image/slow/iiif/?image={{ $slow[0] }}">@svg('fas-eye', ['width' => 15]) Slow looking</a>
                             @php
                                 $three = [];
                             @endphp
@@ -76,8 +74,12 @@
                             @endforeach
                             @if(!empty($three))
                                 <a class="btn btn-sm btn-sm btn-dark m-1 "
-                                   href="/id/image/3d/{{ $record['_source']['identifier'][1]['priref'] }}"><i
-                                        class="fas fa-eye"></i> 3D view</a>
+                                   href="/id/image/3d/{{ $record['_source']['identifier'][1]['priref'] }}"><img src="{{ asset( "/images/logos/sketchfab-logo.svg") }}"
+                                                                                                                width="15"
+                                                                                                                class=""
+                                                                                                                height="15"
+                                                                                                                alt="Sketchfab logo"
+                                    /> 3D view</a>
                             @endif
                         @endif
                     @endif
@@ -131,7 +133,7 @@
                             <div class="container">
                                 <a class="btn btn-sm btn-sm btn-dark m-1 mt-2"
                                    href="{{ route('images.multiple', [$record['_source']['identifier'][1]['value']]) }}"
-                                ><i class="fas fa-eye mr-2"></i> View all {{ $records }} images attached </a>
+                                >@svg('fas-images', ['width' => 15]) View all {{ $records }} images attached </a>
                             </div>
                         @endif
 

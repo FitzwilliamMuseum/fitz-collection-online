@@ -24,7 +24,7 @@
     <!-- multimedia section end -->
 
         <div class="col-md-12 mb-3 object-info">
-            <h2 class="sr-only">Object information</h2>
+            <h2 class="visually-hidden">Object information</h2>
             <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
 
                 <div class="">
