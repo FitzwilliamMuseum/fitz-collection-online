@@ -10,7 +10,7 @@
                                 <div class="results_image">
                                     <a href="{{ $record['url'][0] }}">
                                         <img class="results_image__thumbnail img-fluid"
-                                             src="{{ str_replace(array('.jpg','.png'),array('_200x200.jpg','_200x200.png'),$record['thumbnail'][0])}}"
+                                             src="{{ str_replace('.jpg?v','_300x300.jpg?v',$record['thumbnail'][0])}}"
                                              alt="Featured image for the project: {{ $record['title'][0] }}"
                                              loading="lazy"/>
                                     </a>
