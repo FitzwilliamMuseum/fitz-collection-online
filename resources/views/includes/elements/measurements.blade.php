@@ -54,6 +54,7 @@
             @endphp
 
             @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$record['_source']['measurements']['dimensions'][0]))
+               @if(is_numeric($dims['height']))
                 <x-dimension-drawer
                     :height="$dims['height']"
                     :width="$w"
@@ -62,6 +63,7 @@
                     :viewWidth="400"
                     :viewHeight="320"
                     :scale=1></x-dimension-drawer>
+                   @endif
             @endif
         @endif
         @endif
