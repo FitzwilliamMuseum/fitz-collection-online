@@ -11,7 +11,6 @@
             </a>
             <div class="row mb-3">
                 @foreach($paginate as $media)
-                    @dd($media)
                     <div class="col-md-4 mt-3 mb-3">
                         <div class="card card-body h-100">
                             <a href="/id/image/{{ $media['admin']['id']}}">
