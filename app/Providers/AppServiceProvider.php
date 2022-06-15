@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use ImLiam\BladeHelper\Facades\BladeHelper;
-use Illuminate\Support\Facades\Http;
 use Storage;
 use App\LookupPlace;
 use Illuminate\Pagination\Paginator;

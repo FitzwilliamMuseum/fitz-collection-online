@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 /*
 * Basic search routes
 */
-Route::get('/', 'indexController@search')->name('home');
+Route::get('/', 'indexController@index')->name('home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
@@ -37,11 +37,9 @@ Route::get('/id/image/{id}/', 'imagesController@image')->name('image.single');
 Route::get('/id/image/3d/{id}/', 'imagesController@sketchfab')->name('sketchfab');
 Route::get('/id/image/iiif/{id}/', 'imagesController@iiif')->name('image.iiif');
 Route::get('/id/image/flutter/iiif/{id}/', 'imagesController@flutteriiif')->name('image.iiif.flutter');
-
 Route::get('/id/image/slow/iiif/', 'imagesController@slowiiif')->name('slow.iiif');
 Route::get('/id/image/mirador/{id}/', 'imagesController@mirador')->name('image.mirador');
 Route::match(array('GET','POST'),'/images/id/{priref}/', 'imagesController@images')->name('images.multiple');
-
 /*
 * Publication routes
 */

@@ -5,5 +5,6 @@ namespace App\Models;
 
 class Model
 {
-  
+
+
 }

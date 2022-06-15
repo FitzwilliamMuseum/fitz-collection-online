@@ -9,6 +9,8 @@ use JetBrains\PhpStorm\Pure;
 class Agents extends Model
 {
 
+    private static int $_perPage = 24;
+
     /**
      * @return Elastic
      */
@@ -74,12 +76,11 @@ class Agents extends Model
      */
     public static function connected(Request $request, string $id): LengthAwarePaginator
     {
-        $perPage = 24;
-        $from = ($request->get('page', 1) - 1) * $perPage;
+        $from = ($request->get('page', 1) - 1) * self::$_perPage;
 
         $paramsTerm = [
             'index' => 'ciim',
-            'size' => $perPage,
+            'size' => self::$_perPage,
             'from' => $from,
             'body' => [
                 "query" => [
@@ -110,11 +111,10 @@ class Agents extends Model
 
         ];
         $response2 = self::getElastic()->setParams($paramsTerm)->getSearch();
-        $use = $response2['hits'];
         $number = $response2['hits']['total']['value'];
         $records = $response2['hits']['hits'];
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+        $paginate = new LengthAwarePaginator($records, $number, self::$_perPage, $currentPage);
         $paginate->setPath($request->getBaseUrl());
         return $paginate;
     }

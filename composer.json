@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "fitzwilliammuseum/fitz-collection-online",
     "type": "project",
     "description": "The Laravel Framework.",
     "keywords": [
@@ -17,7 +17,8 @@
     "require": {
         "php": "^8.0|^8.1",
         "ext-dom": "*",
-        "codeat3/blade-fluentui-system-icons": "^1.24",
+        "codeat3/blade-fluentui-system-icons": "^1.26.1",
+        "darkaonline/l5-swagger": "^8.3",
         "elasticsearch/elasticsearch": "^7.17.0",
         "fitzwilliammuseum/maps": "master",
         "fruitcake/laravel-cors": "^2.2.0",
@@ -27,10 +28,12 @@
         "imliam/laravel-blade-helper": "^1.4.3",
         "ksubileau/color-thief-php": "^1.4.1",
         "laravel/framework": "^9.0",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7.2",
-        "laravel/ui": "^v3.4.5",
+        "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
         "league/csv": "^9.8",
+        "matchory/elasticsearch": "^2.6",
         "mews/purifier": "^3.3.7",
         "miljar/php-exif": "^0.6.5",
         "olssonm/l5-very-basic-auth": "^6.7",
@@ -41,19 +44,21 @@
         "solarium/solarium": "^6.2.3",
         "spatie/array-to-xml": "^2.16.0",
         "spatie/laravel-googletagmanager": "^2.6.6",
-        "spatie/laravel-responsecache": "^7.2.0",
-        "symfony/http-kernel": "^6.0.8",
+        "spatie/laravel-responsecache": "^7.3.1",
+        "symfony/cache": "^6.1.0",
+        "symfony/http-kernel": "^6.2.x-dev",
         "timehunter/laravel-google-recaptcha-v3": "~2.5.2",
         "toin0u/geocoder-laravel": "^4.5.1",
         "upthemedia/xss-protection": "^0.0.8"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.12.3",
-        "spatie/ignition": "^1.2.10",
+        "barryvdh/laravel-ide-helper": "^2.12",
         "fakerphp/faker": "^1.19.0",
         "mockery/mockery": "^1.5.0",
         "nunomaduro/collision": "^6.2.0",
-        "phpunit/phpunit": "^9.5.20"
+        "phpunit/phpunit": "^9.5.20",
+        "spatie/laravel-ignition": "^1.2.3",
+        "wnx/laravel-stats": "^2.9"
     },
     "config": {
         "optimize-autoloader": true,
