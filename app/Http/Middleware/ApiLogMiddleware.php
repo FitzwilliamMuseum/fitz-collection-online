@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\ApiLog;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
 class ApiLogMiddleware
@@ -13,33 +14,22 @@ class ApiLogMiddleware
 
     public function __construct()
     {
-        $this->enabled = config('api-log.enabled', false);
+        $this->enabled = env('API_LOGGER', false);
     }
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param Request $request
-     * @param Closure $next
-     * @return mixed
-     */
     public function handle(Request $request, Closure $next): mixed
     {
         return $next($request);
     }
 
-
     /**
-     * Handle tasks after the response has been sent to the browser.
-     *
-     * @param Request $request
-     * @param Response $response
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Response $response
      * @return void
      */
-    public function terminate(Request $request, Response $response)
+    public function terminate( $request, $response): void
     {
-        if ($request->route()->getName() != "api.log" && $this->enabled && $request->wantsJson()) {
-
+        if ($this->enabled && $request->wantsJson()) {
             ApiLog::create([
                 'request_full_url' => method_exists($request, 'fullUrl') ? $request->fullUrl() : null,
                 'request_method' => method_exists($request, 'method') ? $request->method() : null,

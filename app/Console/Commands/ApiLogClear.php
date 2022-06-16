@@ -12,7 +12,7 @@ class ApiLogClear extends Command
      *
      * @var string
      */
-    protected $signature = 'api-logger:clear';
+    protected $signature = 'api-log:clear';
 
     /**
      * The console command description.
@@ -38,7 +38,7 @@ class ApiLogClear extends Command
      */
     public function handle()
     {
-        DB::table('api_loggers')->truncate();
+        DB::table('api_logs')->truncate();
 
         return 0;
     }

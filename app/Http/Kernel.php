@@ -29,9 +29,11 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Spatie\ResponseCache\Middlewares\CacheResponse;
 use Spatie\ResponseCache\Middlewares\DoNotCacheResponse;
-
+use App\Http\Middleware\ApiLogMiddleware;
+use \App\Http\Middleware\ForceJsonResponse;
 class Kernel extends HttpKernel
 {
     /**
@@ -52,6 +54,7 @@ class Kernel extends HttpKernel
         SecureHeadersMiddleware::class,
         PrettyPrint::class,
         LogRoute::class,
+        ApiLogMiddleware::class  //Add Middleware XSS
     ];
 
     /**
@@ -72,6 +75,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            EnsureFrontendRequestsAreStateful::class,
             'throttle:60,1',
             SubstituteBindings::class,
         ],
@@ -97,6 +101,6 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'doNotCacheResponse' => DoNotCacheResponse::class,
         'log.route' => LogRoute::class,
-
+        'json.response' => ForceJsonResponse::class,
     ];
 }

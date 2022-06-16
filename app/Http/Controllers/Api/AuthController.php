@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Password;
@@ -10,34 +12,40 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-
-    /*
-     * Register new user
-    */
-    public function signup(Request $request)
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function signup(Request $request): Response
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
-        $validatedData['password'] = Hash::make($validatedData['password']);
-
-        if(User::create($validatedData)) {
-            return response()->json(null, 201);
+        if($validator->fails()){
+            return $this->sendError('Error validation', $validator->errors());
         }
 
-        return response()->json(null, 404);
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] =  $user->createToken($input['password'])->plainTextToken;
+        $success['name'] =  $user->name;
+        return $this->sendResponse($success, 'User created successfully.');
     }
 
-    /*
-     * Generate sanctum token on successful login
-    */
-    public function login(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -54,32 +62,46 @@ class AuthController extends Controller
 
         return response()->json([
             'user' => $user,
-            'access_token' => $user->createToken($request->email)->plainTextToken
+           'access_token' => $user->createToken($request->email)->plainTextToken
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function me(Request $request)
+    {
+        return $request->user();
+    }
 
-    /*
-     * Revoke token; only remove token that is used to perform logout (i.e. will not revoke all tokens)
-    */
-    public function logout(Request $request) {
-
-        // Revoke the token that was used to authenticate the current request
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function logout(Request $request) : JsonResponse
+    {
         $request->user()->currentAccessToken()->delete();
-        //$request->user->tokens()->delete(); // use this to revoke all tokens (logout from all devices)
         return response()->json(null, 200);
     }
 
 
-    /*
-     * Get authenticated user details
-    */
-    public function getAuthenticatedUser(Request $request) {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getAuthenticatedUser(Request $request) : JsonResponse
+    {
         return $request->user();
     }
 
-
-    public function sendPasswordResetLinkEmail(Request $request) {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function sendPasswordResetLinkEmail(Request $request): JsonResponse
+    {
         $request->validate(['email' => 'required|email']);
 
         $status = Password::sendResetLink(
@@ -95,7 +117,13 @@ class AuthController extends Controller
         }
     }
 
-    public function resetPassword(Request $request) {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function resetPassword(Request $request) :  JsonResponse
+    {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',

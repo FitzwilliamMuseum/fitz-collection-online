@@ -64,6 +64,7 @@ class ObjectsController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
+
         if($request->query('fields')){
             $explodedFields = explode(',', $request->query('fields'));
             $errors = array();

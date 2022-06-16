@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
-
-class ImagesController extends ApiController
+class IiifController extends ApiController
 {
+
     /**
      * @var array|string[]
      */
@@ -37,9 +37,6 @@ class ImagesController extends ApiController
         'source.attributes.Keywords'
     );
 
-    /**
-     * @var array|string[]
-     */
     private array $images = array(
         'processed.large',
         'processed.medium',
@@ -87,14 +84,14 @@ class ImagesController extends ApiController
             ],
 
         ];
-        if ($request->query('hasIIIF') === 'true') {
-            $filter = array(
-                "exists" => [
-                    "field" => "processed.zoom"
-                ]
-            );
-            $params['body']['query']['bool']['must'][] = [$filter];
-        }
+        $filter = array(
+            "exists" => [
+                "field" => "processed.zoom"
+            ]
+        );
+        $params['body']['query']['bool']['must'][] = [$filter];
+
+
         if(!is_null($request->query('object'))) {
             $params['body']['query']['bool']['must'][] = ["multi_match" => [
                 "fields" => "objects.admin.id",
@@ -123,12 +120,16 @@ class ImagesController extends ApiController
                 $image['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $object['_source']['objects'][0]['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
                 $image['uvViewerEmbedHTML'] = '<iframe src="'. env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $object['_source']['objects'][0]['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen frameborder="0"></iframe>';
                 $image['miradorPath'] = route('image.mirador',[$object['_source']['admin']['id']]);
-                $image['iiifAPIURI'] =route('api.iiif.show',[$object['_source']['admin']['id']]);
+                $image['iiifMetadata'] = 'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$object['_source']['admin']['id'].'/info.json';
+                $image['greyScale'] = 'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$object['_source']['admin']['id'].'/full/full/0/grey.jpg';
+                $image['default'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$object['_source']['admin']['id'].'/full/full/0/default.jpg';
+                $image['600x400'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$object['_source']['admin']['id'].'/full/600,400/0/default.jpg';
+                $image['100x100Aspect'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$object['_source']['admin']['id'].'/full/!100,100/0/default.jpg';
             }
             unset($image['processed']);
 
-            $image['URI'] = route('image.single', [$object['_source']['admin']['id']]);
-            $image['apiURI'] = route('api.images.show', [$object['_source']['admin']['id']]);
+            $image['URI'] = route('image.iiif', [$object['_source']['admin']['id']]);
+            $image['apiURI'] = route('api.iiif.show', [$object['_source']['admin']['id']]);
             $data[] = $image;
         }
         if (empty($data)) {
@@ -166,17 +167,22 @@ class ImagesController extends ApiController
 
         $data = Collect($this->parse($this->searchAndCache($params)))->first();
         if(empty($data)) {
-            return $this->jsonError(404, 'No image found.');
+            return $this->jsonError(404, 'No IIIF image found.');
         } else {
-            $data['apiURI'] = route('api.images.show', $data['admin']['id']);
-            $data['uri'] = route('image.single', [$data['admin']['id']]);
+            $data['apiURI'] = route('api.iiif.show', $data['admin']['id']);
+            $data['uri'] = route('image.iiif', [$data['admin']['id']]);
             $data['images'] = $this->append_single_iip_url($data);
+//            dd($data['images']);
             if(array_key_exists('zoom', $data['images'])) {
                 $data['manifestURI'] = env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest';
                 $data['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
                 $data['uvViewerEmbedHTML'] = '<iframe src="'. env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen frameborder="0"></iframe>';
                 $data['miradorPath'] = route('image.mirador',[$data['admin']['id']]);
-                $data['iiifAPIURI'] =route('api.iiif.show',[$data['admin']['id']]);
+                $data['iiifMetadata'] = 'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$data['admin']['id'].'/info.json';
+                $data['greyScale'] = 'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$data['admin']['id'].'/full/full/0/grey.jpg';
+                $data['default'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$data['admin']['id'].'/full/full/0/default.jpg';
+                $data['600x400'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$data['admin']['id'].'/full/600,400/0/default.jpg';
+                $data['100x100Aspect'] =  'https://api.fitz.ms/data-distributor/iiif/image/portfolio-'.$data['admin']['id'].'/full/!100,100/0/default.jpg';
             }
             unset($data['processed']);
             if(array_key_exists('objects', $data)) {

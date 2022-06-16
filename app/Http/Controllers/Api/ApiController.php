@@ -655,10 +655,13 @@ class ApiController extends BaseController
         $data['URI'] = $this->getWebURI('terminology', $data['admin']['id']);
         $data['apiURI'] = $this->getTermURI('api.terminology.show', $data['admin']['id']);
         $data['term'] = $data['admin']['id'];
-        if (array_key_exists('role', $data['@link'])) {
-            $data['role'] = $data['@link']['role'];
+        if(array_key_exists('@link', $data)) {
+            if (array_key_exists('role', $data['@link'])) {
+                $data['role'] = $data['@link']['role'];
+            }
+            unset($data['@link']);
         }
-        unset($data['@link']);
+
         unset($data['admin']);
         return $data;
     }
