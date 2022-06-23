@@ -14,22 +14,16 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
+use Mews\Purifier\Facades\Purifier;
+use OpenApi\Annotations as OA;
 use function env;
 use function now;
 use function response;
-
 /**
  * @OA\Info(
- *     version="1.0",
- *     title="Fitzwilliam Museum Collection Database API"
- * )
- */
-
-/**
- * @OA\Get(
- *     path="/api/periods",
- *     description="Home page",
- *     @OA\Response(response="default", description="Welcome page")
+ *     version="1.0.0",
+ *     title="Fitzwilliam Museum Collection Database API",
+ *     description="Api for the Fitzwilliam Museum Collection Database",
  * )
  */
 class ApiController extends BaseController
@@ -40,8 +34,6 @@ class ApiController extends BaseController
      * @var string
      */
     public string $_success = 'Retrieved successfully';
-
-    public string $_invalidSort = 'Invalid sort';
     /**
      * @var string
      */
@@ -55,26 +47,10 @@ class ApiController extends BaseController
      */
     protected array $_headers = ['Content-type' => 'application/json; charset=utf-8'];
 
-    /**
-     * @param Request $request
-     * @param int $perPage
-     * @return float|int
-     */
-    public function getPage(Request $request, int $perPage): float|int
-    {
-        $page = $request['page'] ?? 1;
-        if (is_int($page)) {
-            if ($page > 0) {
-                $offset = ($page - 1) * $perPage;
-            } else {
-                $offset = 0;
-            }
-        } else {
-            $offset = 0;
-        }
-        return $offset;
-    }
-
+    public array $_sortFields = array(
+        'id','created','updated',
+        'name','summary_title'
+    );
     /**
      * @param $items
      * @param int $perPage
@@ -245,7 +221,9 @@ class ApiController extends BaseController
             $array['categories'] = $this->enrichCategories($array['categories']);
         }
         if ($this->multiKeyExists($array, 'name')) {
-            $array['name'] = $this->enrichNames($array['name']);
+           if(array_key_exists('name', $array)) {
+               $array['name'] = $this->enrichNames($array['name']);
+           }
         }
         if ($this->multiKeyExists($array, 'publications')) {
             $array['publications'] = $this->enrichPublications($array['publications']);
@@ -362,27 +340,10 @@ class ApiController extends BaseController
         return $enrichComponents;
     }
 
-//    /**
-//     * @param array $array
-//     * @return array
-//     */
-//    public function append_iip_url(array $array): array
-//    {
-//        $images = array();
-//        foreach ($array['multimedia'] as $image) {
-//            foreach ($image['processed'] as &$surrogate) {
-//                if (array_key_exists('format', $surrogate)) {
-//                    if ($surrogate['format'] === 'pyramid tiff') {
-//                        $image['processed']['zoom']['location'] = str_replace(env('FITZ_IMAGE_URL'), env('FITZ_IIP_URL'), $surrogate['location']);
-//                    }
-//                }
-//            }
-//            $array['multimedia'] = $image;
-//        }
-//
-//        return $array['multimedia'];
-//    }
-
+    /**
+     * @param $multimedia
+     * @return array
+     */
     public function enrichAndLinkImages($multimedia): array
     {
         $enrichedImages = array();
@@ -451,7 +412,6 @@ class ApiController extends BaseController
                 'URI' => $this->getWebURI('terminology', $technique['reference']['admin']['id']),
                 'apiURI' => $this->getTermURI('api.terminology.show', $technique['reference']['admin']['id']),
                 'summary_title' => $technique['reference']['summary_title'],
-//                'admin' => $technique['reference']['admin'],
                 'descriptions' => $descriptions,
             );
         }
@@ -519,18 +479,20 @@ class ApiController extends BaseController
     public function enrichNames(array $names): array
     {
         $enrichNames = array();
-        foreach ($names as $name) {
-            if (array_key_exists('reference', $name)) {
-                $enrichNames[] = array(
-                    'term' => $name['reference']['admin']['id'] ?? $name['admin']['id'],
-                    'URI' => $this->getWebURI('terminology', $name['reference']['admin']['id'] ?? $name['admin']['id']),
-                    'apiURI' => $this->getTermURI('api.terminology.show', $name['reference']['admin']['id'] ?? $name['admin']['id']),
-                    'summary_title' => $name['reference']['summary_title'] ?? $name['summary_title'],
-                );
-            } elseif (array_key_exists('value', $name)) {
-                $enrichNames[] = array(
-                    'value' => $name['value'],
-                );
+        if(is_array($names)) {
+            foreach ($names as $name) {
+                if (array_key_exists('reference', $name)) {
+                    $enrichNames[] = array(
+                        'term' => $name['reference']['admin']['id'] ?? $name['admin']['id'],
+                        'URI' => $this->getWebURI('terminology', $name['reference']['admin']['id'] ?? $name['admin']['id']),
+                        'apiURI' => $this->getTermURI('api.terminology.show', $name['reference']['admin']['id'] ?? $name['admin']['id']),
+                        'summary_title' => $name['reference']['summary_title'] ?? $name['summary_title'],
+                    );
+                } elseif (array_key_exists('value', $name)) {
+                    $enrichNames[] = array(
+                        'value' => $name['value'],
+                    );
+                }
             }
         }
         return $enrichNames;
@@ -550,11 +512,13 @@ class ApiController extends BaseController
                 'apiURI' => $this->getTermURI('api.publications.show', $publication['admin']['id']),
                 'summary_title' => $publication['summary_title']
             );
-            if (array_key_exists('page', $publication['@link'])) {
-                $publicationEnriched['page'] = $publication['@link']['page'];
-            }
-            if (array_key_exists('notes', $publication['@link'])) {
-                $publicationEnriched['notes'] = $publication['@link']['notes'];
+            if(array_key_exists('@link', $publication)) {
+                if (array_key_exists('page', $publication['@link'])) {
+                    $publicationEnriched['page'] = $publication['@link']['page'];
+                }
+                if (array_key_exists('notes', $publication['@link'])) {
+                    $publicationEnriched['notes'] = $publication['@link']['notes'];
+                }
             }
             $enrichPublications[] = $publicationEnriched;
         }
@@ -571,7 +535,9 @@ class ApiController extends BaseController
         if (array_key_exists('acquisition', $lifecycle)) {
             $lifeCycleData['acquisition'] = array();
             foreach ($lifecycle['acquisition'] as $acquisition) {
-                $lifeCycleData['acquisition']['method'] = $acquisition['method']['value'];
+                if(array_key_exists('method',$acquisition)) {
+                    $lifeCycleData['acquisition']['method'] = $acquisition['method']['value'];
+                }
                 if (array_key_exists('date', $acquisition)) {
                     $lifeCycleData['acquisition']['date'] = $acquisition['date'];
                 }
@@ -655,7 +621,7 @@ class ApiController extends BaseController
         $data['URI'] = $this->getWebURI('terminology', $data['admin']['id']);
         $data['apiURI'] = $this->getTermURI('api.terminology.show', $data['admin']['id']);
         $data['term'] = $data['admin']['id'];
-        if(array_key_exists('@link', $data)) {
+        if (array_key_exists('@link', $data)) {
             if (array_key_exists('role', $data['@link'])) {
                 $data['role'] = $data['@link']['role'];
             }
@@ -666,6 +632,10 @@ class ApiController extends BaseController
         return $data;
     }
 
+    /**
+     * @param $elastic
+     * @return array
+     */
     public function parse($elastic): array
     {
         $data = array();
@@ -684,41 +654,41 @@ class ApiController extends BaseController
         return $data;
     }
 
-    /**
-     * @param $find
-     * @param $replace
-     * @param $array
-     * @return mixed
-     */
-    public function enrichImages($find, $replace, &$array): mixed
-    {
-        if (array_key_exists('processed', $array)) {
-            $array['processed'] = $this->append_image_path($array['processed']);
-        }
+//    /**
+//     * @param $find
+//     * @param $replace
+//     * @param $array
+//     * @return mixed
+//     */
+//    public function enrichImages($find, $replace, &$array): mixed
+//    {
+//        if (array_key_exists('processed', $array)) {
+//            $array['processed'] = $this->append_image_path($array['processed']);
+//        }
+//
+//        if ($this->multiKeyExists($array, 'zoom')) {
+//            $array['manifestURI'] = env('FITZ_MANIFEST_URL') . $array['admin']['id'] . '/manifest';
+//            $array['processed'] = $this->append_single_iip_url($array);
+//        }
+//        array_walk_recursive($array, function (&$array) use ($find, $replace) {
+//            $array = str_replace($find, $replace, $array);
+//        });
+//        return $array;
+//    }
 
-        if ($this->multiKeyExists($array, 'zoom')) {
-            $array['manifestURI'] = env('FITZ_MANIFEST_URL') . $array['admin']['id'] . '/manifest';
-            $array['processed'] = $this->append_single_iip_url($array);
-        }
-        array_walk_recursive($array, function (&$array) use ($find, $replace) {
-            $array = str_replace($find, $replace, $array);
-        });
-        return $array;
-    }
-
-    /**
-     * @param $array
-     * @return array
-     */
-    public function append_image_path($array): array
-    {
-        array_walk_recursive($array, function (&$value, $key) {
-            if (!is_array($value) && $key === 'location') {
-                $value = env('FITZ_IMAGE_URL') . $value;
-            }
-        });
-        return $array;
-    }
+//    /**
+//     * @param $array
+//     * @return array
+//     */
+//    public function append_image_path($array): array
+//    {
+//        array_walk_recursive($array, function (&$value, $key) {
+//            if (!is_array($value) && $key === 'location') {
+//                $value = env('FITZ_IMAGE_URL') . $value;
+//            }
+//        });
+//        return $array;
+//    }
 
     /**
      * @param array $elastic
@@ -734,7 +704,7 @@ class ApiController extends BaseController
             foreach ($place['place']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
                 foreach ($creation['places'] as $label) {
 
-                    if($label['admin']['id'] != $place['key']) {
+                    if ($label['admin']['id'] != $place['key']) {
 
                         $labels[] = array(
                             'summary_title' => $label['summary_title'],
@@ -755,7 +725,7 @@ class ApiController extends BaseController
                 'records' => $place['doc_count'],
                 'summary_title' => $title,
             );
-            if(!empty($labels)) {
+            if (!empty($labels)) {
                 $info['associatedPlaces'] = $labels;
             }
             $data[] = $info;
@@ -776,7 +746,7 @@ class ApiController extends BaseController
             foreach ($period['period']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
                 foreach ($creation['periods'] as $label) {
 
-                    if($label['admin']['id'] != $period['key']) {
+                    if ($label['admin']['id'] != $period['key']) {
 
                         $labels[] = array(
                             'summary_title' => $label['summary_title'],
@@ -797,7 +767,7 @@ class ApiController extends BaseController
                 'records' => $period['doc_count'],
                 'summary_title' => $title,
             );
-            if(!empty($labels)) {
+            if (!empty($labels)) {
                 $info['associatedPeriods'] = $labels;
             }
             $data[] = $info;
@@ -814,7 +784,7 @@ class ApiController extends BaseController
             foreach ($maker['maker']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
                 foreach ($creation['maker'] as $label) {
 
-                    if($label['admin']['id'] != $maker['key']) {
+                    if ($label['admin']['id'] != $maker['key']) {
                         $labels[] = array(
                             'summary_title' => $label['summary_title'],
                             'id' => $label['admin']['id'],
@@ -834,7 +804,7 @@ class ApiController extends BaseController
                 'records' => $maker['doc_count'],
                 'summary_title' => $title,
             );
-            if(!empty($labels)) {
+            if (!empty($labels)) {
                 $info['associatedMakers'] = $labels;
             }
             $data[] = $info;
@@ -850,6 +820,7 @@ class ApiController extends BaseController
     {
         $data = array();
         foreach ($elastic as $agent) {
+            $agent = $this->utf8_converter($agent);
             $data[] = array(
                 'agent' => $agent['admin']['id'],
                 'URI' => $this->getWebURI('agent', $agent['admin']['id']),
@@ -862,26 +833,26 @@ class ApiController extends BaseController
         return $data;
     }
 
-    /**
-     * @param array $elastic
-     * @return array
-     */
-    public function parsePublications(array $elastic): array
-    {
-        $data = array();
-        foreach ($elastic as $agent) {
-            $data[] = array(
-                'publication' => $agent['admin']['id'],
-                'URI' => $this->getWebURI('publication.record', $agent['admin']['id']),
-                'apiURI' => $this->getTermURI('api.publications.show', $agent['admin']['id']),
-                'summary_title' => $agent['summary_title'],
-                'admin' => $agent['admin'],
-                'lifecycle' => $agent['lifecycle'] ?? [],
-                'title' => $agent['title'],
-            );
-        }
-        return $data;
-    }
+//    /**
+//     * @param array $elastic
+//     * @return array
+//     */
+//    public function parsePublications(array $elastic): array
+//    {
+//        $data = array();
+//        foreach ($elastic as $agent) {
+//            $data[] = array(
+//                'publication' => $agent['admin']['id'],
+//                'URI' => $this->getWebURI('publication.record', $agent['admin']['id']),
+//                'apiURI' => $this->getTermURI('api.publications.show', $agent['admin']['id']),
+//                'summary_title' => $agent['summary_title'],
+//                'admin' => $agent['admin'],
+//                'lifecycle' => $agent['lifecycle'] ?? [],
+//                'title' => $agent['title'],
+//            );
+//        }
+//        return $data;
+//    }
 
     /**
      * @param array $elastic
@@ -1112,7 +1083,7 @@ class ApiController extends BaseController
      */
     public function getFrom(Request $request): int
     {
-        if ($request->query('page')) {
+        if ($request->query('page') && $request->query('page') > 1) {
             return $request->query('page') * $this->getSize($request);
         } else {
             return 0;
@@ -1137,11 +1108,14 @@ class ApiController extends BaseController
 
     /**
      * @param string $code
-     * @param string $message
+     * @param array|string $message
      * @return JsonResponse
      */
-    public function jsonError(string $code, string $message): JsonResponse
+    public function jsonError(string $code, array|string $message): JsonResponse
     {
+        if($this->isJson($message)) {
+            $message = json_decode($message );
+        }
         return response()->json(
             [
                 'message' => $message,
@@ -1154,34 +1128,35 @@ class ApiController extends BaseController
     }
 
     /**
+     * @param $string
+     * @return bool
+     */
+    public function isJson($string): bool
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+    /**
      * @param Request $request
      * @return array
      */
     public function getSort(Request $request): array
     {
-        if (array_key_exists('sort', $request->query())) {
+        if (array_key_exists('sort', $request->query()) && array_key_exists('sort_field', $request->query())) {
             return array(
-                "admin.modified" => [
+                $request->query('sort_field') => [
                     "order" => $request->query('sort')
                 ]
             );
         } else {
             return array(
                 "admin.modified" => [
-                    "order" => 'asc'
+                    "order" => $request->query('sort') ?? 'asc'
                 ]
             );
         }
     }
 
-    public function getSortParam(Request $request): string
-    {
-        if (array_key_exists('sort', $request->query())) {
-            return $request->query('sort');
-        } else {
-            return 'desc';
-        }
-    }
     /**
      * @param Request $request
      * @param string $default
@@ -1210,4 +1185,55 @@ class ApiController extends BaseController
             }
         }
     }
+
+
+
+    /**
+     * @param Request $request
+     * @param array $params
+     * @return array
+     */
+    public function createQuery(Request $request, array $params ): array
+    {
+        $query = $params;
+        if(!is_null($request->query('q'))) {
+            $query['body']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "_generic_all_std",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+            return $query;
+        } else {
+            return $query;
+        }
+
+    }
+
+    /**
+     * @param $array
+     * @return array
+     */
+    public function utf8_converter($array): array
+    {
+        array_walk_recursive($array, function (&$item, $key) {
+
+            if (!mb_detect_encoding($item, 'utf-8', true)) {
+                $item = utf8_encode($item);
+                $item = str_replace('\u', 'u', $item);
+                $item = preg_replace('@\x{FFFD}@u', 'Æ',($item));
+                $item = preg_replace('/u([\da-fA-F]{4})/', '&#x\1;', $item);
+                dd($item);
+            } else {
+                $item = str_replace('\u', 'u', $item);
+                $item = preg_replace('@\x{FFFD}@u', 'Æ',($item));
+                $item = preg_replace('/u([\da-fA-F]{4})/', '&#x\1;', $item);
+            }
+        });
+        return $array;
+    }
+
+
+
 }

@@ -3,9 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
+use App\Models\Api\Departments;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Get(
+ * path="/api/v1/departments",
+ * summary="Departments of the museum",
+ * description="Retrieve string literals of departments in the museum and object counts",
+ * tags={"Terminology"},
+ * @OA\Response(
+ *    response=200,
+ *    description="Success"
+ *   ),
+ * )
+ * )
+ */
 class DepartmentsController extends ApiController
 {
 
@@ -17,33 +30,20 @@ class DepartmentsController extends ApiController
      * return an array with counts, a label. At the moment, department entries are
      * string literals.
      *
-     * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request): JsonResponse
+    public function index(): JsonResponse
     {
-        $params = [
-            'index' => 'ciim',
-            'body' => [
-                'size' => 0,
-                'aggregations' => [
-                    'department' => [
-                        'terms' => [
-                            'field' => 'department.value.keyword',
-                            'size' => 10,
-                        ],
-                    ],
-                ],
-            ]
-        ];
-        $response = $this->searchAndCache($params);
+        $response = Departments::list();
         $data = array();
-        foreach ($response['aggregations']['department']['buckets'] as $department) {
-            $data[] = array('department' => $department['key'], 'records' => $department['doc_count']);
+        if(array_key_exists('aggregations', $response)) {
+            foreach ($response['aggregations']['department']['buckets'] as $department) {
+                $data[] = array('department' => $department['key'], 'records' => $department['doc_count']);
+            }
+            return $this->jsonSingle($data);
+        } else {
+            return $this->jsonError(404, $this->_notFound);
         }
-        $items = $this->paginate($data, 20, LengthAwarePaginator::resolveCurrentPage());
-        $items->setPath(route('api.departments.index'));
-        return $this->jsonAggGenerate($request, $items, $items->values(), count($response['aggregations']['department']['buckets']));
     }
 
 }

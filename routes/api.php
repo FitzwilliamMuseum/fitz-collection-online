@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 $middleware = array('log.route','api-log','json.response');
-$ip = \Request::ip();
-if(!in_array($ip, explode(',',env('API_IP_WHITELIST')))){
+
+if(!in_array(Request::ip(), explode(',',env('API_IP_WHITELIST')))){
     $middleware[] = 'auth:sanctum';
 }
 /*
@@ -27,10 +26,9 @@ Route::group(['prefix' => 'v1/auth', 'middleware' => ['log.route','api-log','jso
     Route::post('signup', 'App\Http\Controllers\Api\AuthController@signup')->name('signup');
     Route::post('login', 'App\Http\Controllers\Api\AuthController@login')->name('login');
     Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout')->middleware('auth:sanctum')->name('auth.logout');
-    Route::post('/password/email', 'App\Http\Controllers\Api\AuthController@sendPasswordResetLinkEmail')->middleware('throttle:5,1')->name('password.email');
-    Route::post('/password/reset', 'App\Http\Controllers\Api\AuthController@resetPassword')->name('password.reset');
+    Route::post('forgotten', 'App\Http\Controllers\Api\AuthController@sendPasswordResetLinkEmail')->middleware('throttle:5,1')->name('password.email');
+    Route::get('reset', 'App\Http\Controllers\Api\AuthController@resetPassword')->name('password.reset');
     Route::match(array('GET','POST'),'me', 'App\Http\Controllers\Api\AuthController@me')->middleware('auth:sanctum')->name('auth.user');
-
 });
 
 /*

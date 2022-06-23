@@ -2,13 +2,102 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Api\Makers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations as OA;
 
-
+/**
+ * @OA\Get(
+ * path="/api/v1/makers",
+ * summary="Retrieve agents used in the database",
+ * description="A list of makers used in the database, with pagination.",
+ * tags={"Terminology"},
+ * @OA\Parameter(
+ *    description="Query",
+ *    in="query",
+ *    name="q",
+ *    required=false,
+ *    example="Roman",
+ *    @OA\Schema(
+ *       type="string",
+ *     format="string"
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Page number",
+ *    in="query",
+ *    name="page",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    )
+ * ),
+ *  @OA\Parameter(
+ *    description="Size of the page response",
+ *    in="query",
+ *    name="size",
+ *    required=false,
+ *    example="20",
+ *    @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="The request completed successfully."
+ * ),
+ * @OA\Response(
+ *    response=400,
+ *    description="The request cannot be processed"
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Not found"
+ * ),
+ * ),
+ * @OA\Get(
+ * path="/api/v1/makers/{maker}",
+ * summary="Retrieve a maker",
+ * description="A maker's representation as used in the database.",
+ * tags={"Terminology"},
+ * @OA\Parameter(
+ *    description="Query",
+ *    in="path",
+ *    name="maker",
+ *    required=true,
+ *    example="agent-173723",
+ *    @OA\Schema(
+ *      type="string",
+ *     format="string"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="The request completed successfully."
+ * ),
+ * @OA\Response(
+ *    response=400,
+ *    description="The request cannot be processed"
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Not found"
+ * ),
+ * ),
+ * )
+ */
 class MakersController extends ApiController
 {
+    /**
+     * @var array|string[]
+     */
+    private array $_params = array('q', 'page', 'size', 'sort');
 
     /**
      * @param Request $request
@@ -16,86 +105,52 @@ class MakersController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $params = [
-            'index' => 'ciim',
-            'track_total_hits' => true,
-            'size' => $this->getSize($request),
-            'from' => $this->getFrom($request),
-            'body' => [
-                'aggregations' => [
-                    'records' => [
-                        'terms' => [
-                            'field' => 'lifecycle.creation.maker.admin.id',
-                            'size' => 6000,
-                            'order' => [
-                                '_count' => $this->getSortParam($request),
-                            ],
-                        ],
-                        'aggs' => [
-                            'maker' => [
-                                'top_hits' => [
-                                    'size' => 1,
-                                    '_source' => [
-                                        'include' => [
-                                            'lifecycle.creation.maker.summary_title',
-                                            'lifecycle.creation.maker.admin.id'
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
+        $validator = Validator::make($request->all(), [
+            "*" => "in:" . implode(",", $this->_params),
+            "page" => "numeric|gt:0",
+            "size" => "numeric|gte:0|lte:100",
+            "query" => "string|min:3",
+            'sort' => 'string|in:asc,desc|min:3',
+        ]);
 
-        if (!is_null($request->query('q'))) {
-            $params['body']['query']['bool']['must'][] = [
-                [
-                    "match" => [
-                        "_generic_all_std" => [
-                            'query' => $request->query('q'),
-                            "operator" => "AND"
-                            ]
-                    ],
-
-                ]
-            ];
+        if ($validator->fails()) {
+            return $this->jsonError(400, $validator->errors());
         }
-        $response = $this->searchAndCache($params);
+        $response = Makers::list($request);
+
         $data = $this->parseTerminologyAggMakers($response);
-        if(empty($data)) {
+        if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
-        }
-        $items = $this->paginate($data, $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
-        $items->setPath(route('api.makers.index'));
-        if ($items->items()) {
-            return $this->jsonAggGenerate($request, $items, $items->values(), count($response['aggregations']['records']['buckets']));
         } else {
-            return $this->jsonError(404, $this->_notFound);
+            $items = $this->paginate($data, $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
+            $items->setPath(route('api.makers.index'));
+            if ($items->items()) {
+                return $this->jsonAggGenerate($request, $items, $items->values(), count($response['aggregations']['records']['buckets']));
+            } else {
+                return $this->jsonError(404, $this->_notFound);
+            }
         }
+
     }
 
     /**
+     * @param Request $request
      * @param string $maker
      * @return JsonResponse
      */
-    public function show(string $maker): JsonResponse
+    public function show(Request $request, string $maker): JsonResponse
     {
-        $response = $this->searchAndCache([
-            'index' => 'ciim',
-            'body' => [
-                'query' => [
-                    'match' => [
-                        'admin.id' => $maker
-                    ]
-                ]
-            ],
-            '_source' => [
-                'admin.id,admin.created,admin.modified,name,summary_title'
-            ],
+        $validator = Validator::make(array_merge($request->all(), array('maker' => $maker)), [
+            '*' => 'in:maker',
+            'maker' => "string|min:6|regex:'^agent-\d+$'",
         ]);
-        $data = Collect($this->parse($response))->first();
+
+        if ($validator->fails()) {
+            return $this->jsonError(400, $validator->errors());
+        }
+
+        $data = Makers::show($request, $maker);
+
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {

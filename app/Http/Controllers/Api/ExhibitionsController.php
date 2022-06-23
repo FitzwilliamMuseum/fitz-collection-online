@@ -2,102 +2,159 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Api\Exhibitions;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Get(
+ * path="/api/v1/exhibitions",
+ * summary="Retrieve exhibitions used in the database",
+ * description="A list of exhibitions used in the database, with pagination.",
+ * tags={"Terminology"},
+ * @OA\Parameter(
+ *    description="Query",
+ *    in="query",
+ *    name="query",
+ *    required=false,
+ *    example="Hockney",
+ *    @OA\Schema(
+ *       type="string",
+ *     format="string"
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Page number",
+ *    in="query",
+ *    name="page",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    )
+ * ),
+ *  @OA\Parameter(
+ *    description="Size of the page response",
+ *    in="query",
+ *    name="size",
+ *    required=false,
+ *    example="20",
+ *    @OA\Schema(
+ *       type="integer",
+ *       format="int64"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="The request completed successfully."
+ * ),
+ * @OA\Response(
+ *    response=400,
+ *    description="The request cannot be processed"
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Not found"
+ * ),
+ * ),
+ * @OA\Get(
+ * path="/api/v1/exhibitions/{exhibition}",
+ * summary="Retrieve a term",
+ * description="An exhibitions's details.",
+ * tags={"Terminology"},
+ * @OA\Parameter(
+ *    description="Query",
+ *    in="path",
+ *    name="exhibition",
+ *    required=true,
+ *    example="term-112039",
+ *    @OA\Schema(
+ *       type="string",
+ *     format="string"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="The request completed successfully."
+ * ),
+ * @OA\Response(
+ *    response=400,
+ *    description="The request cannot be processed"
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Not found"
+ * ),
+ * ),
+ * )
+ */
 
 class ExhibitionsController extends ApiController
 {
+
+    public array $_allowed = ['query','page','size', 'fields', 'sort', 'sort_field'];
+
+    public array $_showAllowed = ['exhibition','fields'];
+
     /**
      * @param Request $request
      * @return JsonResponse
      */
     public function index(Request $request): JsonResponse
     {
-        $params = [
-            'index' => 'ciim',
-            'size' => $this->getSize($request),
-            'from' => $this->getFrom($request),
-            'track_total_hits' => true,
-            'body' => [
-                'sort' => $this->getSort($request),
-                "query" => [
-                    "bool" => [
-                        "must" => [
-                            [
-                                "term" => ["type.base" => 'exhibition']
-                            ]
-                        ]
-                    ]
-                ],
-            ],
-            '_source' => [
-                'admin.id,admin.created,admin.modified,venues,summary_title,name.value,title.value'
-            ],
-        ];
+        $validator = Validator::make($request->all(), [
+            '*' => 'in:'.implode(',', $this->_allowed),
+            'page' => 'numeric|gt:0',
+            'size' => 'numeric|gte:0|lte:100',
+            'query' => 'string|min:3',
+            "sort_field" => "in:" . implode(",", $this->_sortFields),
+            'sort' => 'string|in:asc,desc',
+        ]);
 
-        if(!is_null($request->query('q'))) {
-            $params['body']['query']['bool']['must'][] = ["multi_match" => [
-                "fields" => "_generic_all_std",
-                "query" => $request->query('q'),
-                "operator" => "AND",
-            ]
-            ];
+        if ($validator->fails()) {
+            return $this->jsonError(400, $validator->errors());
         }
-        $response = $this->searchAndCache($params);
+
+        $response = Exhibitions::list($request);
+
         $data = $this->parseData($response);
+
         if(empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
             $data = $this->parseExhibitions($data);
+            $paginator = new LengthAwarePaginator($data,$response['hits']['total']['value'],$this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
+            $paginator->setPath(route('api.exhibitions.index'));
+            return $this->jsonGenerate($request, $paginator, $paginator->total());
         }
-        $paginator = new LengthAwarePaginator(
-            $data,
-            $response['hits']['total']['value'],
-//            $this->getClient()->count(Arr::except($params, ['_source', 'from', 'size','track_total_hits','sort']))['count'],
-            $this->getSize($request),
-            LengthAwarePaginator::resolveCurrentPage()
-        );
-        $paginator->setPath(route('api.exhibitions.index'));
-        return $this->jsonGenerate($request, $paginator, $paginator->total());
     }
 
     /**
-     * @param string $id
+     * @param Request $request
+     * @param string $exhibition
      * @return JsonResponse
      */
-    public function show(string $id): JsonResponse
+    public function show(Request $request, string $exhibition): JsonResponse
     {
-        $params = [
-            'index' => 'ciim',
-            'body' => [
-                "query" => [
-                    "bool" => [
-                        "must" => [
-                            [
-                                "match" => [
-                                    "admin.id" => $id
-                                ]
-                            ],
-                            [
-                                "term" => ["type.base" => 'exhibition']
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            '_source' => [
-                'admin.id,admin.created,admin.modified,name,summary_title,venues'
-            ],
-        ];
-        $data = Collect($this->parseData($this->searchAndCache($params)))->first();
+        $validator = Validator::make(array('exhibition' => $exhibition), [
+            '*' => 'in:' . implode(',', $this->_showAllowed),
+            'exhibition' => 'string|min:12|regex:"^exhibition-\d+$"',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->jsonError(400, $validator->errors());
+        }
+
+        $data = Exhibitions::show($request, $exhibition);
+
         if(empty($data)) {
-            return $this->jsonError(404, 'No exhibitions found.');
+            return $this->jsonError(404, $this->_notFound);
         } else {
-            $data = $this->enrichExhibition($data);
-            return $this->jsonSingle($data);
+            return $this->jsonSingle($this->enrichExhibition($data));
         }
     }
 }

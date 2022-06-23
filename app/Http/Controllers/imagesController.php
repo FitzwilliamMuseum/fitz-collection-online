@@ -8,7 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
-use Nette\Utils\Image;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
 use App\Models\Images;

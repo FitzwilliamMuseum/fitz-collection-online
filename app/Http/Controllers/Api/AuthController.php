@@ -13,7 +13,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Post(
+ * path="/api/v1/auth/signup",
+ * summary="Sign up a new user",
+ * description="Create a user account",
+ * tags={"Authorisation"},
+ * @OA\Parameter(
+ *    description="Query",
+ *    in="query",
+ *    name="q",
+ *    required=false,
+ *    example="Dendera",
+ *    @OA\Schema(
+ *       type="string",
+ *       format="string"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Success"
+ *     ),
+ * );
+ * )
+ */
 class AuthController extends Controller
 {
     /**
@@ -31,7 +56,6 @@ class AuthController extends Controller
         if($validator->fails()){
             return $this->sendError('Error validation', $validator->errors());
         }
-
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
@@ -63,14 +87,14 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
            'access_token' => $user->createToken($request->email)->plainTextToken
-        ], 200);
+        ]);
     }
 
     /**
      * @param Request $request
      * @return mixed
      */
-    public function me(Request $request)
+    public function me(Request $request): mixed
     {
         return $request->user();
     }
@@ -82,19 +106,8 @@ class AuthController extends Controller
     public function logout(Request $request) : JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-        return response()->json(null, 200);
+        return response()->json(null);
     }
-
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function getAuthenticatedUser(Request $request) : JsonResponse
-    {
-        return $request->user();
-    }
-
     /**
      * @param Request $request
      * @return JsonResponse
@@ -109,7 +122,7 @@ class AuthController extends Controller
         );
 
         if($status === Password::RESET_LINK_SENT) {
-            return response()->json(['message' => __($status)], 200);
+            return response()->json(['message' => __($status)]);
         } else {
             throw ValidationException::withMessages([
                 'email' => __($status)
@@ -122,16 +135,17 @@ class AuthController extends Controller
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function resetPassword(Request $request) :  JsonResponse
+    public function resetPassword(Request $request): JsonResponse
     {
+
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8',
         ]);
 
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
+            $request->only('email', 'password', 'token'),
             function ($user, $password) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($password)
@@ -144,7 +158,7 @@ class AuthController extends Controller
         );
 
         if($status == Password::PASSWORD_RESET) {
-            return response()->json(['message' => __($status)], 200);
+            return response()->json(['message' => __($status)]);
         } else {
             throw ValidationException::withMessages([
                 'email' => __($status)

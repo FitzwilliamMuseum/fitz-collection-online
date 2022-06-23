@@ -1,0 +1,131 @@
+<?php
+
+namespace App\Models\Api;
+
+use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
+
+class Objects extends Model
+{
+
+    private static array $_allowed = array(
+        'admin.id',
+        'admin.created',
+        'admin.modified',
+        'categories',
+        'description',
+        'component',
+        'department.value',
+        'identifier',
+        'inscription',
+        'lifecycle',
+        'institutions',
+        'multimedia',
+        'name',
+        'note',
+        'owners',
+        'publications',
+        'school_or_style',
+        'summary',
+        'techniques',
+        'measurements',
+        'title',
+    );
+
+    private static array $_mandatory = array(
+        'admin.id',
+        'admin.created',
+        'admin.modified',
+        'categories',
+        'description',
+        'component',
+        'department.value',
+        'identifier',
+        'inscription',
+        'lifecycle',
+        'institutions',
+        'multimedia',
+        'name',
+        'note',
+        'owners',
+        'publications',
+        'school_or_style',
+        'summary',
+        'techniques',
+        'measurements',
+        'title'
+    );
+
+    public static function list(Request $request)
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSize($request),
+            'from' => self::getFrom($request),
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+
+                        ],
+                        "filter" =>
+                            [
+                                "term" => ["type.base" => 'object'],
+                            ],
+                    ]
+                ],
+            ],
+            '_source' => [
+                self::getSourceFields($request,self::$_allowed, self::$_mandatory),
+            ],
+        ];
+        $params['body']['sort'] = self::getSort($request);
+        $query = self::createQueryObjects($request);
+        $image = self::getImageParam($request);
+        $iiif = self::getIiifParam($request);
+        $department = self::getDepartmentParam($request);
+        $publications = self::getPublicationParam($request);
+        $categories = self::getCategoriesParam($request);
+        $periods = self::getPeriodsParam($request);
+        $names = self::getNamesParam($request);
+        $acquiredFrom = self::getAcquiredFrom($request);
+        $collected = self::getCollectedFrom($request);
+        $accession = self::getAccessionParam($request);
+        $maker = self::getMaker($request);
+        $school = self::getSchool($request);
+        $start_date = self::getAcquisitionDate($request);
+        $end_date = self::getAcquisitionEndDate($request);
+        $techniques = self::getTechniquesParam($request);
+        $components = self::getComponentsParam($request);
+        $firstCreated = self::getFirstCreationDate($request);
+        $secondCreated = self::getSecondCreationDate($request);
+        $combined = array_merge_recursive(
+            $params, $image, $iiif, $query, $department,
+            $publications, $categories, $periods, $names,
+            $acquiredFrom, $collected, $accession, $maker,
+            $school,$start_date, $end_date, $techniques,
+            $components, $firstCreated, $secondCreated
+        );
+        return self::searchAndCache($combined);
+    }
+
+    public static function show(Request $request, string $object)
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => 1,
+            'body' => [
+                'query' => [
+                    'match' => [
+                        'admin.id' => Purifier::clean($object, array('HTML.Allowed' => '')),
+                    ]
+                ]
+            ],
+            '_source' => [
+                self::getSourceFields($request,self::$_allowed, self::$_mandatory),
+            ],
+        ];
+        return Collect(self::parse(self::searchAndCache($params)))->first();
+    }
+}
