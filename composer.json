@@ -27,6 +27,7 @@
         "guzzlehttp/guzzle": "^7.4.2",
         "imliam/laravel-blade-helper": "^1.4.3",
         "ksubileau/color-thief-php": "^1.4.1",
+        "laravel/fortify": "^1.13",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7.2",

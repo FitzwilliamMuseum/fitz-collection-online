@@ -153,7 +153,8 @@ class TerminologyController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $paginator = new LengthAwarePaginator($this->parseTerms($data), $response['hits']['total']['value'], $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
+            $enriched = $this->insertType($this->parseTerms($data), 'terminology');
+            $paginator = new LengthAwarePaginator($enriched, $response['hits']['total']['value'], $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $paginator->setPath(route('api.terminology.index'));
             return $this->jsonGenerate($request, $paginator, $response['hits']['total']['value']);
         }
@@ -179,7 +180,7 @@ class TerminologyController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            return $this->jsonSingle($this->enrichTerms($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichTerms($data),'terminology'));
         }
     }
 }

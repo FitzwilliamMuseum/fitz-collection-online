@@ -118,7 +118,7 @@ class MakersController extends ApiController
         }
         $response = Makers::list($request);
 
-        $data = $this->parseTerminologyAggMakers($response);
+        $data = $this->insertType($this->parseTerminologyAggMakers($response),'makers');
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {

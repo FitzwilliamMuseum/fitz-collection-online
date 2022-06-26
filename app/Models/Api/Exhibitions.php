@@ -15,9 +15,9 @@ class Exhibitions extends Model
 
     /**
      * @param Request $request
-     * @return array|callable|mixed
+     * @return array
      */
-    public static function list(Request $request)
+    public static function list(Request $request): array
     {
         $params = [
             'index' => 'ciim',

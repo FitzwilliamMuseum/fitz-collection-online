@@ -146,7 +146,7 @@ class ImagesController extends ApiController
             return $this->jsonError(400, $validator->errors());
         }
         $response = Images::list($request);
-        $data = $this->parseData($response);
+        $data = $this->insertType($this->parseData($response),'images');
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
@@ -182,7 +182,7 @@ class ImagesController extends ApiController
             return $this->jsonError(404, 'No image found.');
         } else {
             $enriched = self::enrichSingleImage($data);
-            return $this->jsonSingle($enriched);
+            return $this->jsonSingle($this->insertSingleType(($enriched),'images'));
         }
     }
 

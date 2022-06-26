@@ -16,9 +16,9 @@ class Makers extends Model
 
     /**
      * @param Request $request
-     * @return array|callable|mixed
+     * @return array
      */
-    public static function list(Request $request)
+    public static function list(Request $request): array
     {
         $params = [
             'index' => 'ciim',
@@ -56,7 +56,7 @@ class Makers extends Model
 
     /**
      * @param Request $request
-     * @param string $exhibition
+     * @param string $maker
      * @return array
      */
     public static function show(Request $request, string $maker) : array

@@ -77,10 +77,10 @@ use App\Rules\AgentFieldsAllowed;
  *    in="query",
  *    name="sort_field",
  *    required=false,
- *    example="admin.id",
+ *    example="id",
  *    @OA\Schema(
  *       type="enum",
- *       enum={"admin.created","admin.modified","admin.id","name.value.keyword","summary_title.keyword","description"},
+ *       enum={"created","updated","id","name","summary_title"},
  *       default="admin.id",
  *      nullable=true
  *    )
@@ -176,7 +176,7 @@ class AgentsController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $data = $this->parseAgents($data);
+            $data = $this->insertType($this->parseAgents($data), 'agents');
             $paginator = new LengthAwarePaginator($data, $response['hits']['total']['value'], $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $paginator->setPath(route('api.agents.index'));
             $paginator->appends(request()->except('page'));
@@ -206,7 +206,7 @@ class AgentsController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            return $this->jsonSingle($this->enrichAgent($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichAgent($data),'agents'));
         }
     }
 }

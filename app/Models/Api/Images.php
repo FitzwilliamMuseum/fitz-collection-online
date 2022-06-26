@@ -81,11 +81,11 @@ class Images extends Model
                 self::getFields()
             ],
         ];
-        $query = self::createQueryObjects($request);
+//        $query = self::createQueryObjects($request);
         $image = self::getImageParam($request);
         $iiif = self::getIiifParam($request);
         $combined = array_merge_recursive(
-            $params, $image, $iiif, $query,
+            $params, $image, $iiif,
         );
         return self::searchAndCache($combined);
     }

@@ -62,6 +62,7 @@ class InstitutionsController extends ApiController
                     'summary_title' => $department['inst']['hits']['hits'][0]['_source']['institutions'][0]['summary_title'],
                     'URI'  => $this->getWebURI('terminology', $department['key']),
                     'apiURI' => $this->getTermURI('api.institutions.show', $department['key']),
+                    'type' => 'institutions'
                 );
             }
             return $this->jsonSingle($data);

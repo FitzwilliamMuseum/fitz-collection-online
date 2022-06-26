@@ -66,6 +66,27 @@ class ApiController extends BaseController
     }
 
     /**
+     * @param array $data
+     * @param string $type
+     * @return array
+     */
+    public function insertType(array $data, string $type):array
+    {
+        $typedData = [];
+        foreach($data as $datum){
+            $datum['type'] = $type;
+            $typedData[] = $datum;
+        }
+        return $typedData;
+    }
+
+    public function insertSingleType(array $data, string $type):array
+    {
+        $data['type'] = $type;
+        return $data;
+    }
+
+    /**
      * @param Request $request
      * @param LengthAwarePaginator $paginator
      * @param $total
@@ -75,7 +96,7 @@ class ApiController extends BaseController
     {
         return response()->json(
             [
-                'records' => $paginator->items(),
+                'data' => $paginator->items(),
                 'meta' => array(
                     "current_page" => $paginator->currentPage(),
                     "from" => $paginator->firstItem(),
@@ -122,7 +143,7 @@ class ApiController extends BaseController
     {
         return response()->json(
             [
-                'records' => $items->values(),
+                'data' => $items->values(),
                 'meta' => array(
                     "current_page" => $paginator->currentPage(),
                     "from" => $paginator->firstItem(),
@@ -157,7 +178,7 @@ class ApiController extends BaseController
     {
         return response()->json(
             [
-                'records' => $data,
+                'data' => $data,
                 'message' => $this->_success,
                 'httpCode' => 200
             ],

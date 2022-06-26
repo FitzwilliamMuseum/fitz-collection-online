@@ -328,8 +328,9 @@ class ObjectsController extends ApiController
         }
 
         $response = Objects::list($request);
-        $data = $this->parseData($response);
+        $data = $this->insertType($this->parseData($response), 'objects');
         if (!empty($data)) {
+
             $paginator = new LengthAwarePaginator(
                 $data,
                 $response['hits']['total']['value'],
@@ -343,6 +344,7 @@ class ObjectsController extends ApiController
             return $this->jsonError(404, $this->_notFound);
         }
     }
+
 
     /**
      * @param Request $request
@@ -362,7 +364,8 @@ class ObjectsController extends ApiController
 
         $response = Objects::show($request, $object);
         if (!empty($response)) {
-            return $this->jsonSingle($response);
+            $enriched = $this->insertSingleType($response, 'objects');
+            return $this->jsonSingle($enriched);
         } else {
             return $this->jsonError(404, $this->_notFound);
         }

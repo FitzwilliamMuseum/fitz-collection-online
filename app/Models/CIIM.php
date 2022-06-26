@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Mews\Purifier\Facades\Purifier;
 
@@ -16,7 +17,7 @@ class CIIM extends Model
      * @param Request $request
      * @return array|LengthAwarePaginator
      */
-    public static function getSearchResults(Request $request): LengthAwarePaginator|array
+    #[ArrayShape(['records' => "\Illuminate\Pagination\LengthAwarePaginator", 'aggregations' => "mixed"])] public static function getSearchResults(Request $request): LengthAwarePaginator|array
     {
         $queryString = Purifier::clean($request->get('query'), array('HTML.Allowed' => ''));
         $from = ($request->get('page', 1) - 1) * 24;

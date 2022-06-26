@@ -112,7 +112,7 @@ class IiifController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $images = $this->enrichMultipleIIIF($data);
+            $images = $this->insertType($this->enrichMultipleIIIF($data),'IIIF images');
             $paginator = new LengthAwarePaginator(
                 $images,
                 $response['hits']['total']['value'],
@@ -132,7 +132,7 @@ class IiifController extends ApiController
     {
         $validator = Validator::make(array_merge($request->all(),array('id' => $id)), [
             "*" => "in:".implode(',', $this->_showFields),
-            'id' => "string|min:7|regex:'^media-\d+$'"
+            'id' => "string|min:7|regex:'^object-\d+$'"
         ]);
 
         if ($validator->fails()) {
@@ -143,7 +143,7 @@ class IiifController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            return $this->jsonSingle($this->enrichIIIFSingle($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichIIIFSingle($data),'IIIF images'));
         }
     }
 
@@ -185,7 +185,7 @@ class IiifController extends ApiController
             if (array_key_exists('objects', $image)) {
                 foreach ($image['objects'] as $record) {
                     $record['URI'] = route('record', str_replace('object-', '', $record['admin']['id']));
-                    $record['apiURI'] = route('api.objects.show', [$record['admin']['id']]);
+                    $record['apiURI'] = route('api.iiif.show', [$record['admin']['id']]);
                     $record['id'] = $record['admin']['id'];
                     unset($record['admin']);
                     $image['objects'] = $record;
@@ -203,7 +203,7 @@ class IiifController extends ApiController
             }
             $image = $this->unsetKey($image);
             $image['URI'] = route('image.iiif', [$image['admin']['id']]);
-            $image['apiURI'] = route('api.iiif.show', [$image['admin']['id']]);
+            $image['apiURI'] = route('api.objects.show', [$image['objects']['id']]);
             $data[] = $image;
         }
         return $data;

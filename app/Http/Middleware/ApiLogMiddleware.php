@@ -4,8 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\ApiLog;
-use Illuminate\Http\JsonResponse;
+use App\Models\Api\ApiLog;
 use Illuminate\Http\Response;
 
 class ApiLogMiddleware

@@ -174,6 +174,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ApiLogServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
 
     ],
 

@@ -149,7 +149,7 @@ class PeriodsController extends ApiController
         if (empty($response)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $data = $this->parseTerminologyAggPeriods($response);
+            $data = $this->insertType($this->parseTerminologyAggPeriods($response), 'periods');
             $items = $this->paginate($data, $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $items->setPath(route('api.periods.index'));
             if ($items->items()) {
@@ -180,7 +180,7 @@ class PeriodsController extends ApiController
         $data = Periods::show($request, $period);
 
         if (!empty($data)) {
-            return $this->jsonSingle($this->enrichPeriod($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichPeriod($data),'periods'));
         } else {
             return $this->jsonError(400, $this->_notFound);
         }

@@ -129,7 +129,7 @@ class PublicationsController extends ApiController
         if(empty($response)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $data = $this->enrichPublications($this->parsePublicationsData($response));
+            $data = $this->insertType($this->enrichPublications($this->parsePublicationsData($response)), 'publications');
             $paginator = new LengthAwarePaginator($data,$response['hits']['total']['value'],$this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $paginator->setPath(route('api.publications.index'));
             return $this->jsonGenerate($request, $paginator, $paginator->total());
@@ -156,8 +156,7 @@ class PublicationsController extends ApiController
         $response = Publications::show($request, $publication);
 
         if (!empty($response)) {
-            $data = $this->enrichPublication($response);
-            return $this->jsonSingle($data);
+            return $this->jsonSingle($this->insertSingleType($this->enrichPublication($response),'publications'));
         } else {
             return $this->jsonError(404, $this->_notFound);
         }

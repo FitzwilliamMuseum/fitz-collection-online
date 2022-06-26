@@ -126,7 +126,7 @@ class ExhibitionsController extends ApiController
         if(empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $data = $this->parseExhibitions($data);
+            $data = $this->insertType($this->parseExhibitions($data),'exhibitions');
             $paginator = new LengthAwarePaginator($data,$response['hits']['total']['value'],$this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $paginator->setPath(route('api.exhibitions.index'));
             return $this->jsonGenerate($request, $paginator, $paginator->total());
@@ -154,7 +154,7 @@ class ExhibitionsController extends ApiController
         if(empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            return $this->jsonSingle($this->enrichExhibition($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichExhibition($data),'exhibitions'));
         }
     }
 }

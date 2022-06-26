@@ -82,16 +82,15 @@
                             "type": "enum",
                             "default": "admin.id",
                             "enum": [
-                                "admin.created",
-                                "admin.modified",
-                                "admin.id",
-                                "name.value.keyword",
-                                "summary_title.keyword",
-                                "description"
+                                "created",
+                                "updated",
+                                "id",
+                                "name",
+                                "summary_title"
                             ],
                             "nullable": true
                         },
-                        "example": "admin.id"
+                        "example": "id"
                     }
                 ],
                 "responses": {

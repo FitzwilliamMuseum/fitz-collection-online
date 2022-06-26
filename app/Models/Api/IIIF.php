@@ -3,7 +3,6 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
-use Psr\Log\NullLogger;
 
 class IIIF extends Model
 {
@@ -84,8 +83,6 @@ class IIIF extends Model
             ]
         );
         $params['body']['query']['bool']['must'][] = [$filter];
-
-        $params = self::createQuery($request, $params);
         return self::searchAndCache($params);
     }
 
@@ -104,7 +101,6 @@ class IIIF extends Model
                 implode(',', array_merge(self::$exif, self::$objects, self::$images, self::$admin))
             ],
         ];
-
         return Collect(self::parse(self::searchAndCache($params)))->first();
     }
 }

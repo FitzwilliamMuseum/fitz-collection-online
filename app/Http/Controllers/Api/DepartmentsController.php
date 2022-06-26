@@ -38,7 +38,7 @@ class DepartmentsController extends ApiController
         $data = array();
         if(array_key_exists('aggregations', $response)) {
             foreach ($response['aggregations']['department']['buckets'] as $department) {
-                $data[] = array('department' => $department['key'], 'records' => $department['doc_count']);
+                $data[] = array('department' => $department['key'], 'records' => $department['doc_count'], 'type' => 'departments');
             }
             return $this->jsonSingle($data);
         } else {

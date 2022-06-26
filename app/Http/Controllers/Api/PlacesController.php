@@ -125,7 +125,7 @@ class PlacesController extends ApiController
         if (empty($response)) {
             return $this->jsonError('500', $this->_error);
         } else {
-            $data = $this->parseTerminologyAggPlace($response);
+            $data = $this->insertType($this->parseTerminologyAggPlace($response), 'places');
             $items = $this->paginate($data, $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
             $items->setPath(route('api.places.index'));
             return $this->jsonAggGenerate($request, $items, $items->values(), count($response['aggregations']['places']['buckets']));
@@ -151,7 +151,7 @@ class PlacesController extends ApiController
         $data = Places::show($request, $place);
 
         if (!empty($data)) {
-            return $this->jsonSingle($this->enrichPlace($data));
+            return $this->jsonSingle($this->insertSingleType($this->enrichPlace($data),'places'));
         } else {
             return $this->jsonError(400, $this->_notFound);
         }

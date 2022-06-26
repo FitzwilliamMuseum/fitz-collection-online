@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\Artisan;
 use App\FitzElastic\Elastic;
 use JetBrains\PhpStorm\Pure;
 
@@ -24,35 +24,27 @@ class Controller extends BaseController
     }
 
     /**
-     * @return string
+     * @param array $result
+     * @param string $message
+     * @return JsonResponse
      */
-    public function clearCache(): String
-    {
-      Artisan::call('cache:clear');
-      return "Cache is cleared";
-    }
-
-    /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendResponse($result, $message)
+    public function sendResponse(array $result, string $message): JsonResponse
     {
         $response = [
             'success' => true,
             'data'    => $result,
             'message' => $message,
         ];
-        return response()->json($response, 200);
+        return response()->json($response);
     }
 
     /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\Response
+     * @param string $error
+     * @param  $errorMessages
+     * @param int $code
+     * @return JsonResponse
      */
-    public function sendError($error, $errorMessages = [], $code = 404)
+    public function sendError(string $error, $errorMessages = [], int $code = 404): JsonResponse
     {
         $response = [
             'success' => false,

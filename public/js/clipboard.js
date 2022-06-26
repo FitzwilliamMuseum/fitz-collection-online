@@ -10,12 +10,16 @@ function decodeHtml(html) {
     return txt.value;
 }
 bootstrapCopy.onclick = () => {
-    const text = data.innerHTML;
+    const text = data.innerHTML.trim().replace(/\n[ ]*/g,"");
     navigator.clipboard.writeText(decodeHtml(text));
 }
 wikiCopy.onclick = () => {
     const wikiText = wikiData.innerHTML;
     navigator.clipboard.writeText(decodeHtml(wikiText));
+}
+apiCopy.onclick = () => {
+    const apiText = apiCode.innerHTML;
+    navigator.clipboard.writeText(decodeHtml(apiText));
 }
 harvardCopy.onclick = () => {
     const harvard = harvardData.innerHTML.replace(/\>\s+\</g,'');
