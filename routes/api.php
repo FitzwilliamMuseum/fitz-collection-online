@@ -12,27 +12,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-$middleware = array('log.route','api-log','json.response');
-if(!in_array(Request::ip(), explode(',',env('API_IP_WHITELIST')))){
-    $middleware[] = 'auth:sanctum';
-}
+
 /*
 |--------------------------------------------------------------------------
 | Authorisation routes for the API
 |--------------------------------------------------------------------------
  */
 Route::group(['prefix' => 'auth', 'middleware' => ['log.route','api-log','json.response']], function () {
-    Route::post('signup', 'App\Http\Controllers\Api\AuthController@signup')->name('signup');
-    Route::post('login', 'App\Http\Controllers\Api\AuthController@login')->name('login');
-    Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout')->middleware('auth:sanctum')->name('auth.logout');
-    Route::post('forgotten', 'App\Http\Controllers\Api\AuthController@sendPasswordResetLinkEmail')->middleware('throttle:5,1')->name('password.email');
-    Route::post('reset', 'App\Http\Controllers\Api\AuthController@resetPassword')->name('password.reset');
-    Route::post('revoke', 'App\Http\Controllers\Api\AuthController@revokeTokens')->middleware('auth:sanctum')->name('revoke.tokens');
-    Route::post('me', 'App\Http\Controllers\Api\AuthController@me')->middleware('auth:sanctum')->name('auth.user');
+    Route::post('signup', 'App\Http\Controllers\Api\AuthController@signup')->name('api.signup');
+    Route::post('login', 'App\Http\Controllers\Api\AuthController@login')->name('api.login');
+    Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout')->middleware('auth:sanctum')->name('api.logout');
+    Route::post('me', 'App\Http\Controllers\Api\AuthController@me')->middleware('auth:sanctum')->name('api.user');
+    Route::fallback(function () {
+        return response()->json(['error' => 'Nothing found with that query'], 404);
+    });
 });
-Route::get('/verify', 'App\Http\Controllers\Api\VerificationController@show')->name('verification.notice');
-Route::post('/verify/{id}/{hash}', 'App\Http\Controllers\Api\VerificationController@verify')->name('verification.verify')->middleware(['signed']);
-Route::post('/resend', 'App\Http\Controllers\Api\VerificationController@resend')->name('verification.resend');
 
 
 /*
@@ -40,7 +34,14 @@ Route::post('/resend', 'App\Http\Controllers\Api\VerificationController@resend')
 | V1 home route for the API
 |--------------------------------------------------------------------------
  */
-Route::match(array('GET','POST'),'/v1', 'Api\IndexController@index')->name('api.home')->middleware('log.route','api-log','json.response');
+Route::match(
+    array('GET','POST'),'/v1', 'Api\IndexController@index')->name('api.home')->middleware(
+    'log.route','api-log','json.response'
+);
+$middleware = array('log.route','api-log','json.response','auth:sanctum');
+if(!in_array(Request::ip(), explode(',',env('API_IP_WHITELIST')))){
+    $middleware[] = 'auth:sanctum';
+}
 
 /*
 |--------------------------------------------------------------------------

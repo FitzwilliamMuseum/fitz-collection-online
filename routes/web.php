@@ -16,14 +16,17 @@ use Illuminate\Support\Facades\Route;
 /*
 * Basic search routes
 */
-Route::get('/', 'indexController@index')->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::view('home', 'home')->name('home');
+    Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
+});
+Route::view('/', 'welcome')->name('data.home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
 /*
 * Spelunker route for all records
 */
-Route::get('/spelunker', 'indexController@index')->name('spelunker');
 Route::get('/random', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearch'])->name('random');
 Route::get('/random/app', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearchapp'])->name('random.app');
 
@@ -77,3 +80,4 @@ Route::get('/clear-cache', [
     'as' => 'cache-clear',
     'uses' => 'Controller@clearCache'
 ])->middleware('auth.very_basic', 'doNotCacheResponse');
+

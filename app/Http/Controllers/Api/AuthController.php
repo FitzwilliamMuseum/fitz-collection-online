@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\VerifiesEmails;
-use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Annotations as OA;
@@ -44,10 +41,10 @@ use OpenApi\Annotations as OA;
 class AuthController extends Controller
 {
     /**
-     * @param Request $request
+     * @param RegisterRequest $request
      * @return JsonResponse
      */
-    public function signup(Request $request): JsonResponse
+    public function signup(RegisterRequest $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|required',
@@ -116,61 +113,6 @@ class AuthController extends Controller
         return response()->json(null);
     }
 
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
-     */
-    public function sendPasswordResetLinkEmail(Request $request): JsonResponse
-    {
-        $request->validate(['email' => 'required|email']);
-
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status === Password::RESET_LINK_SENT) {
-            return response()->json(['message' => __($status)]);
-        } else {
-            throw ValidationException::withMessages([
-                'email' => __($status)
-            ]);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     * @throws ValidationException
-     */
-    public function resetPassword(Request $request): JsonResponse
-    {
-
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:8',
-        ]);
-
-        $status = Password::reset(
-            $request->only('email', 'password', 'token'),
-            function ($user, $password) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
-                $user->save();
-                event(new PasswordReset($user));
-            }
-        );
-
-        if ($status == Password::PASSWORD_RESET) {
-            return response()->json(['message' => __($status)]);
-        } else {
-            throw ValidationException::withMessages([
-                'email' => __($status)
-            ]);
-        }
-    }
 
     /**
      * @param Request $request
@@ -196,14 +138,4 @@ class AuthController extends Controller
         return response()->json(['message' => 'Tokens revoked']);
     }
 
-
-    public function listTokens()
-    {
-
-    }
-
-    public function verifyEmail()
-    {
-
-    }
 }

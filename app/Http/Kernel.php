@@ -33,13 +33,13 @@ use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Spatie\ResponseCache\Middlewares\CacheResponse;
 use Spatie\ResponseCache\Middlewares\DoNotCacheResponse;
 use App\Http\Middleware\ApiLogMiddleware;
-use \App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\ForceJsonResponse;
+
 class Kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.
      *
-     * These middleware are run during every request to your application.
      *
      * @var array
      */
@@ -51,10 +51,12 @@ class Kernel extends HttpKernel
         ConvertEmptyStringsToNull::class,
         XssClean::class,  //Add Middleware XSS
         XFrameHeadersMiddleware::class,
-        SecureHeadersMiddleware::class,
+//        SecureHeadersMiddleware::class,
         PrettyPrint::class,
         LogRoute::class,
-        ApiLogMiddleware::class  //Add Middleware XSS
+        ApiLogMiddleware::class,
+        StartSession::class,
+
     ];
 
     /**
@@ -67,7 +69,7 @@ class Kernel extends HttpKernel
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
             StartSession::class,
-            AuthenticateSession::class,
+           // AuthenticateSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
@@ -102,5 +104,6 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => DoNotCacheResponse::class,
         'log.route' => LogRoute::class,
         'json.response' => ForceJsonResponse::class,
+
     ];
 }
