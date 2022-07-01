@@ -8,10 +8,30 @@ use Mews\Purifier\Facades\Purifier;
 class Places extends Model
 {
 
-    public static array $_fields = ['admin.id', 'admin.created', 'admin.modified', 'name', 'summary_title', 'description', 'equivalent', 'parent', 'related', 'identifier'];
-    public static array $_mandatory =  ['admin.id', 'admin.created', 'admin.modified', 'name', 'summary_title', 'description', 'equivalent', 'parent', 'related', 'identifier'];
+    /**
+     * @var array
+     */
+    public static array $_fields = [
+        'admin.id', 'admin.created', 'admin.modified',
+        'name', 'summary_title', 'description',
+        'equivalent', 'parent', 'related',
+        'identifier'
+    ];
+    /**
+     * @var array|string[]
+     */
+    public static array $_mandatory = [
+        'admin.id', 'admin.created', 'admin.modified',
+        'name', 'summary_title', 'description',
+        'equivalent', 'parent', 'related',
+        'identifier'
+    ];
 
-    public static function list(Request $request)
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function list(Request $request): array
     {
         $params = [
             'index' => 'ciim',
@@ -48,7 +68,12 @@ class Places extends Model
         return self::searchAndCache($params);
     }
 
-    public static function show(Request $request, string $place)
+    /**
+     * @param Request $request
+     * @param string $place
+     * @return array|NULL
+     */
+    public static function show(Request $request, string $place): array
     {
         $params = [
             'index' => 'ciim',

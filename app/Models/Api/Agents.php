@@ -2,6 +2,7 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 
 class Agents extends Model
@@ -49,9 +50,9 @@ class Agents extends Model
     /**
      * @param Request $request
      * @param string $term
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $term) : array
+    public static function show(Request $request, string $term): ?array
     {
         $params = [
             'index' => 'ciim',
@@ -61,7 +62,7 @@ class Agents extends Model
                         "must" => [
                             [
                                 "match" => [
-                                    "admin.id" => $term
+                                    "admin.id" => Purifier::clean($term, array('HTML.Allowed' => ''))
                                 ]
                             ],
                             [

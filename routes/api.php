@@ -38,7 +38,7 @@ Route::match(
     array('GET','POST'),'/v1', 'Api\IndexController@index')->name('api.home')->middleware(
     'log.route','api-log','json.response'
 );
-$middleware = array('log.route','api-log','json.response','auth:sanctum');
+$middleware = array('log.route','api-log','json.response');
 if(!in_array(Request::ip(), explode(',',env('API_IP_WHITELIST')))){
     $middleware[] = 'auth:sanctum';
 }

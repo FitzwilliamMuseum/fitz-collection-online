@@ -675,6 +675,48 @@
                         "example": "asc"
                     },
                     {
+                        "name": "random",
+                        "in": "query",
+                        "description": "Random object parameter",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "hasImage",
+                        "in": "query",
+                        "description": "Determine whether an object has  images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "hasIIIF",
+                        "in": "query",
+                        "description": "Determine whether an object has IIIF images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
                         "name": "sort_field",
                         "in": "query",
                         "description": "Sort field",
@@ -702,7 +744,7 @@
                         "example": "term-12502"
                     },
                     {
-                        "name": "acquired_date_from",
+                        "name": "acquired_date_start",
                         "in": "query",
                         "description": "Acquired date greater than",
                         "required": false,
@@ -830,6 +872,16 @@
                             "type": "string"
                         },
                         "example": "term-106206"
+                    },
+                    {
+                        "name": "department",
+                        "in": "query",
+                        "description": "Assigned department for the object",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Antiquities"
                     }
                 ],
                 "responses": {

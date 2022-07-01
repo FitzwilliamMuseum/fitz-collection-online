@@ -7,9 +7,15 @@ use Mews\Purifier\Facades\Purifier;
 
 class Institutions extends Model
 {
+    /**
+     * @var array
+     */
     private static array $_fields = array(
         'admin.id','admin.created','admin.modified','name','summary_title'
     );
+    /**
+     * @var array
+     */
     private static array $_mandatory  = array(
         'admin.id','admin.created','admin.modified','name','summary_title'
     );
@@ -54,9 +60,9 @@ class Institutions extends Model
     /**
      * @param Request $request
      * @param string $institution
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $institution) : array
+    public static function show(Request $request, string $institution) : ?array
     {
         $params = [
             'index' => 'ciim',

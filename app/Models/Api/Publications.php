@@ -55,7 +55,7 @@ class Publications extends Model
      * @param string $publication
      * @return array|NULL
      */
-    public static function show(Request $request, string $publication): array|NULL
+    public static function show(Request $request, string $publication): ?array
     {
         $params = [
             'index' => 'ciim',

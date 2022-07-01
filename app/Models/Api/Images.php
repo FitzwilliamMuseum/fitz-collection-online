@@ -3,6 +3,7 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 class Images extends Model
 {
@@ -93,16 +94,16 @@ class Images extends Model
     /**
      * @param Request $request
      * @param string $id
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $id): array
+    public static function show(Request $request, string $id): ?array
     {
         $params = [
             'index' => 'ciim',
             'body' => [
                 'query' => [
                     'match' => [
-                        'admin.id' => $id
+                        'admin.id' => Purifier::clean($id, array('HTML.Allowed' => ''))
                     ]
                 ]
             ],

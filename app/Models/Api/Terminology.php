@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class Terminology extends Model
 {
     /**
-     * @var array|string[]
+     * @var array
      */
     public static array $_mandatory = array('admin.id', 'admin.created', 'admin.modified', 'name', 'summary_title');
     /**
@@ -49,9 +49,9 @@ class Terminology extends Model
     /**
      * @param Request $request
      * @param string $term
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $term) : array
+    public static function show(Request $request, string $term) : array|NULL
     {
         $params = [
             'index' => 'ciim',

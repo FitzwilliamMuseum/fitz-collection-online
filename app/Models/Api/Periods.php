@@ -61,9 +61,9 @@ class Periods extends Model
     /**
      * @param Request $request
      * @param string $period
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $period): array
+    public static function show(Request $request, string $period): ?array
     {
         $params = [
             'index' => 'ciim',

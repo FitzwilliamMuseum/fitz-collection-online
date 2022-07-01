@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Foundation\Auth\VerifiesEmails;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -41,10 +39,10 @@ use OpenApi\Annotations as OA;
 class AuthController extends Controller
 {
     /**
-     * @param RegisterRequest $request
+     * @param  $request
      * @return JsonResponse
      */
-    public function signup(RegisterRequest $request): JsonResponse
+    public function signup(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'nullable|required',

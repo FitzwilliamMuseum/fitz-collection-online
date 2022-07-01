@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 <div class="container">
@@ -18,7 +18,9 @@
                     {{ __('If you did not receive the email') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
                         @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                        <button type="submit" class="btn btn-primary p-2 my-2 align-baseline">
+                            {{ __('Request a new verification email') }}
+                        </button>
                     </form>
                 </div>
             </div>

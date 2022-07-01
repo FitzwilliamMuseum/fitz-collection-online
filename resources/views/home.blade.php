@@ -6,7 +6,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Two Factor Authentication') }}</div>
-
+                    @dump(request()->bearerToken())
                     <div class="card-body">
                         @if (session('status') == "two-factor-authentication-disabled")
                             <div class="alert alert-danger" role="alert">
@@ -22,27 +22,7 @@
                         <form method="post" action="/user/two-factor-authentication">
                             @csrf
 
-                            @if (auth()->user()->two_factor_secret)
-                                @method('DELETE')
-                                <div class="pb-3">
-                                    {!! auth()->user()->twoFactorQrCodeSvg() !!}
-                                </div>
-                                <div class="mt-4">
-                                    <h3>Recovery Codes</h3>
-                                    <ul class="list-group mb-2">
-                                        @foreach (json_decode(decrypt(auth()->user()->tokens())) as $code)
-                                            <li class="list-group-item">{{ $code }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <button class="btn btn-danger">
-                                    Disable
-                                </button>
-                            @else
-                                <button class="btn btn-success">
-                                    Enable
-                                </button>
-                            @endif
+
                         </form>
                     </div>
                 </div>

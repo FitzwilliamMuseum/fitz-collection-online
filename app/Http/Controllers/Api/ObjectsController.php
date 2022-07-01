@@ -88,6 +88,39 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Random object parameter",
+ *    in="query",
+ *    name="random",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="enum",
+ *     enum={"1","0"}
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Determine whether an object has  images available",
+ *    in="query",
+ *    name="hasImage",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="enum",
+ *     enum={"1","0"}
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Determine whether an object has IIIF images available",
+ *    in="query",
+ *    name="hasIIIF",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="enum",
+ *     enum={"1","0"}
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Sort field",
  *    in="query",
  *    name="sort_field",
@@ -95,7 +128,7 @@ use OpenApi\Annotations as OA;
  *    example="id",
  *    @OA\Schema(
  *       type="enum",
- *     enum={"id","created","updated","name","summary_title"}
+ *       enum={"id","created","updated","name","summary_title"}
  *    )
  * ),
  * @OA\Parameter(
@@ -111,7 +144,7 @@ use OpenApi\Annotations as OA;
  * @OA\Parameter(
  *    description="Acquired date greater than",
  *    in="query",
- *    name="acquired_date_from",
+ *    name="acquired_date_start",
  *    required=false,
  *    example="1920",
  *    @OA\Schema(
@@ -238,6 +271,16 @@ use OpenApi\Annotations as OA;
  *       type="string",
  *    )
  * ),
+ * @OA\Parameter(
+ *    description="Assigned department for the object",
+ *    in="query",
+ *    name="department",
+ *    required=false,
+ *    example="Antiquities",
+ *    @OA\Schema(
+ *       type="string",
+ *    )
+ * ),
  * @OA\Response(
  *    response=200,
  *    description="The request completed successfully."
@@ -284,6 +327,7 @@ class ObjectsController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
+        'random'
     );
     public array $_showParams = array(
         'period', 'fields'
@@ -305,6 +349,7 @@ class ObjectsController extends ApiController
             "fields" => "string|min:4",
             'sort_field' => 'string|in:id,title,created,updated|min:2',
             'sort' => 'string|in:asc,desc|min:3',
+            'random' => 'boolean|prohibited_if:sort,asc|prohibited_if:sort,asc,desc|prohibited_if:sort_field,id,name,summary_title,created,updated',
             'period' => "string|min:7|regex:'^term-\d+$'",
             'category' => "string|min:7|regex:'^term-\d+$'",
             'publication' => "string|min:10|regex:'^publication-\d+$'",
@@ -321,6 +366,9 @@ class ObjectsController extends ApiController
             'acquired_date_end' => 'numeric',
             'created_start' => 'numeric',
             'created_end' => 'numeric',
+        ],
+        [
+            'random.prohibited_if' => 'You cannot use the random parameter with sort or sort_field parameters',
         ]);
 
         if ($validator->fails()) {

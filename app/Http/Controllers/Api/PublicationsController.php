@@ -99,6 +99,7 @@ class PublicationsController extends ApiController
      * @var array
      */
     private array $_listParams = array('query', 'page', 'size','sort', 'fields','sort_field');
+
     /**
      * @var array
      */

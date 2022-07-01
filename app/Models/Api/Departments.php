@@ -4,7 +4,10 @@ namespace App\Models\Api;
 
 class Departments extends Model
 {
-    public static function list()
+    /**
+     * @var array
+     */
+    public static function list(): array
     {
         $params = [
             'index' => 'ciim',

@@ -3,11 +3,12 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 class IIIF extends Model
 {
     /**
-     * @var array|string[]
+     * @var array
      */
     private static array $objects = array(
         'objects.admin.id',
@@ -16,7 +17,7 @@ class IIIF extends Model
     );
 
     /**
-     * @var array|string[]
+     * @var array
      */
     private static array $admin = array(
         'admin.id',
@@ -52,6 +53,10 @@ class IIIF extends Model
         'processed.original',
     );
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public static function list(Request $request):array
     {
         $params = [
@@ -86,14 +91,19 @@ class IIIF extends Model
         return self::searchAndCache($params);
     }
 
-    public static function show(Request $request, string $id): array| Null
+    /**
+     * @param Request $request
+     * @param string $id
+     * @return array|NULL
+     */
+    public static function show(Request $request, string $id) : ?array
     {
         $params = [
             'index' => 'ciim',
             'body' => [
                 'query' => [
                     'match' => [
-                        'admin.id' => $id
+                        'admin.id' => Purifier::clean($id, array('HTML.Allowed' => ''))
                     ]
                 ]
             ],

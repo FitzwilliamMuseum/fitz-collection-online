@@ -3,6 +3,7 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 class Makers extends Model
 {
@@ -66,7 +67,7 @@ class Makers extends Model
             'body' => [
                 'query' => [
                     'match' => [
-                        'admin.id' => $maker
+                        'admin.id' => Purifier::clean($maker, array('HTML.Allowed' => ''))
                     ]
                 ]
             ],

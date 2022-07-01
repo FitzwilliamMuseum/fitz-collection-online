@@ -2,13 +2,20 @@
 namespace App\Models\Api;
 
 use Illuminate\Http\Request;
+use Mews\Purifier\Facades\Purifier;
 
 
 class Exhibitions extends Model
 {
+    /**
+     * @var array
+     */
     private static array $_fields = array(
         'admin.id','admin.created','admin.modified','venues','summary_title','name.value','title.value'
     );
+    /**
+     * @var array
+     */
     private static array $_mandatory  = array(
         'admin.id','admin.created','admin.modified','venues','summary_title','name.value','title.value'
     );
@@ -47,9 +54,9 @@ class Exhibitions extends Model
     /**
      * @param Request $request
      * @param string $exhibition
-     * @return array
+     * @return array|NULL
      */
-    public static function show(Request $request, string $exhibition) : array
+    public static function show(Request $request, string $exhibition) : ?array
     {
         $params = [
             'index' => 'ciim',
@@ -59,7 +66,7 @@ class Exhibitions extends Model
                         "must" => [
                             [
                                 "match" => [
-                                    "admin.id" => $exhibition
+                                    "admin.id" =>  Purifier::clean($exhibition, array('HTML.Allowed' => ''))
                                 ]
                             ],
                             [

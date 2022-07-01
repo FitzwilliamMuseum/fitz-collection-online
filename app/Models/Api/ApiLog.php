@@ -10,6 +10,9 @@ class ApiLog extends Model
 {
     use HasFactory;
 
+    /**
+     * @var array
+     */
     protected $fillable = [
         'request_full_url',
         'request_method',
@@ -22,13 +25,18 @@ class ApiLog extends Model
         'user_id',
         'user_timezone',
     ];
-
+    /**
+     * @var array
+     */
     protected $casts = [
         'request_header' => 'array',
         'request_body' => 'array',
         'response_content' => 'array',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

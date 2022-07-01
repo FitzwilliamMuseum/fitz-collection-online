@@ -8,14 +8,15 @@ use Elasticsearch\ClientBuilder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Mews\Purifier\Facades\Purifier;
+use stdClass;
 
 class Model
 {
     /**
      * @param array $params
-     * @return array|callable|mixed
+     * @return array
      */
-    public static function searchAndCache(array $params): mixed
+    public static function searchAndCache(array $params) : array
     {
         $key = self::getKey($params);
         $expiresAt = now()->addMinutes(60);
@@ -95,13 +96,13 @@ class Model
             $sortField = 'summary_title.keyword';
         }
         if (is_array($params)) {
-            if (array_key_exists('sort', $params)) {
+            if (array_key_exists('sort', $params) && in_array($params['sort'], ['asc', 'desc'])) {
                 $sort = array(
                     $sortField => [
                         "order" => $params['sort']
                     ]
                 );
-            } else {
+            } else  {
                 $sort = array(
                     $sortField => [
                         "order" => 'asc'
@@ -112,6 +113,29 @@ class Model
         return $sort;
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function getRandom(Request $request): array
+    {
+        $params = [];
+        if (!is_null($request->query('random'))) {
+            $random = new stdClass();
+            $random->seed = time();
+            return array(
+                'body' => array(
+                    'query' => array(
+                        'function_score' => array(
+                            'random_score' => $random,
+                        ),
+                    ),
+                ),
+            );
+        } else {
+            return $params;
+        }
+    }
 
     /**
      * @param Request $request
@@ -163,6 +187,29 @@ class Model
 
     }
 
+    public static function createRandomQueryObjects(Request $request): array
+    {
+        $params = [];
+        if (!is_null($request->query('query'))) {
+            $params['body']['query']['function_score']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "_generic_all_std",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+        } else {
+            $params['body']['query']['function_score']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "_generic_all_std",
+                    "query" => 'Fitzwilliam',
+                    "operator" => "AND",
+                ]
+            ];
+        }
+        return $params;
+
+    }
     /**
      * @param Request $request
      * @return int

@@ -8,6 +8,9 @@ use Mews\Purifier\Facades\Purifier;
 class Objects extends Model
 {
 
+    /**
+     * @var array
+     */
     private static array $_allowed = array(
         'admin.id',
         'admin.created',
@@ -32,6 +35,9 @@ class Objects extends Model
         'title',
     );
 
+    /**
+     * @var array
+     */
     private static array $_mandatory = array(
         'admin.id',
         'admin.created',
@@ -56,32 +62,64 @@ class Objects extends Model
         'title'
     );
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public static function list(Request $request)
     {
-        $params = [
-            'index' => 'ciim',
-            'size' => self::getSize($request),
-            'from' => self::getFrom($request),
-            'track_total_hits' => true,
-            'body' => [
-                "query" => [
-                    "bool" => [
-                        "must" => [
+        if (!$request->has('random')) {
+            $params = [
+                'index' => 'ciim',
+                'size' => self::getSize($request),
+                'from' => self::getFrom($request),
+                'track_total_hits' => true,
+                'body' => [
+                    "query" => [
+                        "bool" => [
+                            "must" => [
 
-                        ],
-                        "filter" =>
-                            [
-                                "term" => ["type.base" => 'object'],
                             ],
-                    ]
+                            "filter" =>
+                                [
+                                    "term" => ["type.base" => 'object'],
+                                ],
+                        ]
+                    ],
                 ],
-            ],
-            '_source' => [
-                self::getSourceFields($request,self::$_allowed, self::$_mandatory),
-            ],
-        ];
-        $params['body']['sort'] = self::getSort($request);
-        $query = self::createQueryObjects($request);
+                '_source' => [
+                    self::getSourceFields($request, self::$_allowed, self::$_mandatory),
+                ],
+            ];
+            $params['body']['sort'] = self::getSort($request);
+            $query = self::createQueryObjects($request);
+        } else {
+            $params = [
+                'index' => 'ciim',
+                'size' => self::getSize($request),
+                'from' => self::getFrom($request),
+                'body' => [
+                    "query" => [
+                        "function_score" => [
+                            "random_score" => [],
+                            "query" => [
+                                "bool" => [
+                                    "must" => [
+                                        [
+                                            "term" => ["type.base" => 'object'],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                '_source' => [
+                    self::getSourceFields($request, self::$_allowed, self::$_mandatory),
+                ],
+            ];
+            $query = self::createRandomQueryObjects($request);
+        }
         $image = self::getImageParam($request);
         $iiif = self::getIiifParam($request);
         $department = self::getDepartmentParam($request);
@@ -100,17 +138,23 @@ class Objects extends Model
         $components = self::getComponentsParam($request);
         $firstCreated = self::getFirstCreationDate($request);
         $secondCreated = self::getSecondCreationDate($request);
+        $random = self::getRandom($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
             $acquiredFrom, $collected, $accession, $maker,
-            $school,$start_date, $end_date, $techniques,
-            $components, $firstCreated, $secondCreated
+            $school, $start_date, $end_date, $techniques,
+            $components, $firstCreated, $secondCreated, $random
         );
         return self::searchAndCache($combined);
     }
 
-    public static function show(Request $request, string $object)
+    /**
+     * @param Request $request
+     * @param string $object
+     * @return array
+     */
+    public static function show(Request $request, string $object): array
     {
         $params = [
             'index' => 'ciim',
@@ -123,7 +167,7 @@ class Objects extends Model
                 ]
             ],
             '_source' => [
-                self::getSourceFields($request,self::$_allowed, self::$_mandatory),
+                self::getSourceFields($request, self::$_allowed, self::$_mandatory),
             ],
         ];
         return Collect(self::parse(self::searchAndCache($params)))->first();
