@@ -13,9 +13,13 @@ class IpAddress
     {
         $data = self::getData();
         $whitelistedIps = [];
-        foreach($data['data'] as $item) {
-            $whitelistedIps[] = $item['ip_address'];
+        if(array_key_exists('data', $data))
+        {
+            foreach($data['data'] as $item) {
+                $whitelistedIps[] = $item['ip_address'];
+            }
         }
+
         return $whitelistedIps;
     }
 
