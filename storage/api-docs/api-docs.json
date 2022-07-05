@@ -1,0 +1,1402 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Fitzwilliam Museum Collection Database API",
+        "description": "Api for the Fitzwilliam Museum Collection Database",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/agents": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve agents used in the database",
+                "description": "A list of agents used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Aurelius"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields available to return",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "admin.created,admin.modified,admin.id,name,summary_title",
+                            "nullable": true
+                        },
+                        "example": "admin.created,admin.modified,admin.id,name,summary_title"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "nullable": true
+                        },
+                        "example": "asc"
+                    },
+                    {
+                        "name": "sort_field",
+                        "in": "query",
+                        "description": "Sort field",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "default": "admin.id",
+                            "enum": [
+                                "created",
+                                "updated",
+                                "id",
+                                "name",
+                                "summary_title"
+                            ],
+                            "nullable": true
+                        },
+                        "example": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/agents/{agent}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve an agent",
+                "description": "An agent's details",
+                "parameters": [
+                    {
+                        "name": "agent",
+                        "in": "path",
+                        "description": "Agent term id number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "agent-28"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields available to return",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "admin.id",
+                            "nullable": true
+                        },
+                        "example": "admin.created,admin.modified,admin.id,name,summary_title"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/signup": {
+            "post": {
+                "tags": [
+                    "Authorisation"
+                ],
+                "summary": "Sign up a new user",
+                "description": "Create a user account",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Dendera"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/departments": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Departments of the museum",
+                "description": "Retrieve string literals of departments in the museum and object counts",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/departments/{department}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Departments of the museum",
+                "description": "Retrieve string literals of a specific department in the museum and object counts",
+                "parameters": [
+                    {
+                        "name": "department",
+                        "in": "path",
+                        "description": "Department",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Antiquities"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/exhibitions": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve exhibitions used in the database",
+                "description": "A list of exhibitions used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Hockney"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/exhibitions/{exhibition}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve a term",
+                "description": "An exhibitions's details.",
+                "parameters": [
+                    {
+                        "name": "exhibition",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "term-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/iiif": {
+            "get": {
+                "tags": [
+                    "Static Images and IIIF"
+                ],
+                "summary": "Retrieve iiif used in the database",
+                "description": "A list of iiif used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Titian"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/iiif/{image}": {
+            "get": {
+                "tags": [
+                    "Static Images and IIIF"
+                ],
+                "summary": "Retrieve an image's data ",
+                "description": "An image's paths and associated metadata.",
+                "parameters": [
+                    {
+                        "name": "image",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "media-3049538914"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/images": {
+            "get": {
+                "tags": [
+                    "Static Images and IIIF"
+                ],
+                "summary": "Retrieve images used in the database",
+                "description": "A list of images used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query the system for objects and artworks (defaults to AND)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Dendera"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items returned per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "example": "asc"
+                    },
+                    {
+                        "name": "sort_field",
+                        "in": "query",
+                        "description": "Sort field",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "id",
+                                "created",
+                                "updated",
+                                "name",
+                                "summary_title"
+                            ]
+                        },
+                        "example": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/images/{image}": {
+            "get": {
+                "tags": [
+                    "Static Images and IIIF"
+                ],
+                "summary": "Retrieve an image's data ",
+                "description": "An image's paths and associated metadata.",
+                "parameters": [
+                    {
+                        "name": "image",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string",
+                            "pattern": "^media-\\d+$"
+                        },
+                        "example": "media-3049538914"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        },
+        "/api/v1/institutions": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Institutions representing ownership",
+                "description": "Institutions representing ownership of objects within the museum",
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/institutions/{institution}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve an institution",
+                "description": "An instititution's details ",
+                "parameters": [
+                    {
+                        "name": "institution",
+                        "in": "path",
+                        "description": "institution ID number",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/makers": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve agents used in the database",
+                "description": "A list of makers used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Roman"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/makers/{maker}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve a maker",
+                "description": "A maker's representation as used in the database.",
+                "parameters": [
+                    {
+                        "name": "maker",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "agent-173723"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/objects": {
+            "get": {
+                "tags": [
+                    "Objects and artworks"
+                ],
+                "summary": "Retrieve objects and artworks recorded in the database",
+                "description": "A list of objects and artworks recorded in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query the system for objects and artworks (defaults to AND)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Dendera"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items returned per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "accession_number",
+                        "in": "query",
+                        "description": "Accession number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "maker",
+                        "in": "query",
+                        "description": "Maker",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "agent-149652"
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "agent-149652"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "example": "asc"
+                    },
+                    {
+                        "name": "random",
+                        "in": "query",
+                        "description": "Random object parameter",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "hasImage",
+                        "in": "query",
+                        "description": "Determine whether an object has  images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "hasIIIF",
+                        "in": "query",
+                        "description": "Determine whether an object has IIIF images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "sort_field",
+                        "in": "query",
+                        "description": "Sort field",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "id",
+                                "created",
+                                "updated",
+                                "name",
+                                "summary_title"
+                            ]
+                        },
+                        "example": "id"
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "Period associated",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-12502"
+                    },
+                    {
+                        "name": "acquired_date_start",
+                        "in": "query",
+                        "description": "Acquired date greater than",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "example": "1920"
+                    },
+                    {
+                        "name": "acquired_date_end",
+                        "in": "query",
+                        "description": "Acquired date less than",
+                        "required": false,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "example": "1921"
+                    },
+                    {
+                        "name": "publication",
+                        "in": "query",
+                        "description": "Publication associated",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "publication-2797"
+                    },
+                    {
+                        "name": "component",
+                        "in": "query",
+                        "description": "Materials used for component",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-107563"
+                    },
+                    {
+                        "name": "acquired_from",
+                        "in": "query",
+                        "description": "Person associated with acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "agent-195177"
+                    },
+                    {
+                        "name": "collected_place",
+                        "in": "query",
+                        "description": "Findspot or location associated with acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-107870"
+                    },
+                    {
+                        "name": "school_or_style",
+                        "in": "query",
+                        "description": "School or style associated with object",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-9010"
+                    },
+                    {
+                        "name": "acquired_date_start",
+                        "in": "query",
+                        "description": "Earliest year of acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1970"
+                    },
+                    {
+                        "name": "acquired_date_end",
+                        "in": "query",
+                        "description": "Latest year of acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1975"
+                    },
+                    {
+                        "name": "created_start",
+                        "in": "query",
+                        "description": "Earliest creation year",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1975"
+                    },
+                    {
+                        "name": "created_end",
+                        "in": "query",
+                        "description": "Latest creation year",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1975"
+                    },
+                    {
+                        "name": "technique",
+                        "in": "query",
+                        "description": "Technique used in production",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-27007"
+                    },
+                    {
+                        "name": "component",
+                        "in": "query",
+                        "description": "Components of the work",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "term-106206"
+                    },
+                    {
+                        "name": "department",
+                        "in": "query",
+                        "description": "Assigned department for the object",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Antiquities"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/objects/{object}": {
+            "get": {
+                "tags": [
+                    "Objects and artworks"
+                ],
+                "summary": "Retrieve an object",
+                "description": "An object's details.",
+                "parameters": [
+                    {
+                        "name": "object",
+                        "in": "path",
+                        "description": "Object number",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "object-2910"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/periods": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve agents used in the database",
+                "description": "A list of periods used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Roman"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "nullable": true
+                        },
+                        "example": "asc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/periods/{period}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve a period",
+                "description": "A period's representation as used in the database.",
+                "parameters": [
+                    {
+                        "name": "period",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "term-111193"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields available to return",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "admin.created,admin.modified,admin.id,name,summary_title",
+                            "nullable": true
+                        },
+                        "example": "admin.id,admin.created,admin.modified,name,summary_title,description,equivalent,parent,related,identifier"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/v1/places": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve places used in the database",
+                "description": "A list of places used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Painting"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/places/{place}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve a term",
+                "description": "A term's details.",
+                "parameters": [
+                    {
+                        "name": "place",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "term-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/publications": {
+            "get": {
+                "tags": [
+                    "Publications"
+                ],
+                "summary": "Retrieve publications used in the database",
+                "description": "A list of publications used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Darmstadt"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/publications/{publication}": {
+            "get": {
+                "tags": [
+                    "Publications"
+                ],
+                "summary": "Retrieve a publication",
+                "description": "An publications's details.",
+                "parameters": [
+                    {
+                        "name": "publication",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "publication-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/terminology": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve terminology used in the database",
+                "description": "A list of terminology used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Painting"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "example": "asc"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields available to return",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "admin.id,admin.created,admin.modified,name,summary_title"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Cannot be proceessed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/terminology/{terminology}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve a term",
+                "description": "A term's details.",
+                "parameters": [
+                    {
+                        "name": "terminology",
+                        "in": "path",
+                        "description": "Query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "term-30009"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Fields available to return",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "admin.id,admin.created,admin.modified,name,summary_title"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Not processed"
+                    }
+                }
+            }
+        }
+    }
+}

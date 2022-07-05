@@ -1,9 +1,13 @@
 <!-- Nav bars -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-col-nav fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="/images/logos/Fitz_logo_white.png" alt="The Fitzwilliam Museum Logo" height="60" width=""
-                 class="ml-1 mr-1">
+        <a class="navbar-brand" href="{{ route('data.home') }}">
+            <img src="{{asset("/images/logos/FitzLogo.svg")}}"
+                 alt="The Fitzwilliam Museum Logo"
+                 height="60"
+                 width="66.66"
+                 class="ml-1 mr-1"
+            />
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

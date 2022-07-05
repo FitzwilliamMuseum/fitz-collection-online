@@ -72,7 +72,7 @@ ol.breadcrumb {
     margin-bottom: 0;
 }
 ul.entities {
-    margin-left: -40px!important;
+    margin-left: -32px!important;
 }
 .entities li {
     list-style: none!important;
@@ -368,7 +368,9 @@ label.cm-app-label {
 .min-height-250 {
     min-height: 250px;
 }
-
+.bg-pastel {
+    background-color: #9cc2cb24;
+}
 
 #share {
     display: inline-block;

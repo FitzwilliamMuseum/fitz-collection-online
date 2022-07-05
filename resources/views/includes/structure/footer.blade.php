@@ -1,5 +1,5 @@
 <!-- Footer logos -->
-<div class="container-fluid bg-white p-2 container-fluid bg-white border-cambridge">
+<div class="container-fluid bg-white p-2 container-fluid border-cambridge">
     <div class="col-md-12 mx-auto">
         <div class="row justify-content-center mb-4">
             <div class="col-md-2 col-sm-2 text-center">
@@ -7,8 +7,9 @@
                     <img class="mx-auto my-2"
                          loading="lazy"
                          width="200"
+                         height="62"
                          alt="University of Cambridge Museums logo"
-                         src="{{ asset('/images/logos/ucm_logo_black_white.png') }}"
+                         src="{{ asset('/images/logos/ucm_logo.svg') }}"
                     />
                 </a>
             </div>
@@ -17,8 +18,9 @@
                     <img class="mx-auto my-2"
                          loading="lazy"
                          width="60"
+                         height="73.85"
                          alt="Cambridge City Council logo"
-                         src="{{ asset('/images/logos/camcity_logo.png') }}"
+                         src="{{ asset('/images/logos/Cambridge_City.svg') }}"
                     />
                 </a>
             </div>
@@ -26,9 +28,10 @@
                 <a href="https://www.artscouncil.org.uk/">
                     <img class="mx-auto my-2"
                          alt="Arts Council England Logo"
-                         src="{{ asset('/images/logos/artscouncil_grant.png')}}"
+                         src="{{ asset('/images/logos/ace_grant_eps_black.svg')}}"
                          loading="lazy"
                          width="200"
+                         height="63.3833"
                     />
                 </a>
             </div>
@@ -38,7 +41,8 @@
                          alt="Research England logo"
                          loading="lazy"
                          width="200"
-                         src="{{ asset('images/logos/UKRI_RE-Logo_Horiz-RGB.png')}}"
+                         height="63.5"
+                         src="{{ asset('images/logos/UKRI_RE-Logo_Horiz-RGB.svg')}}"
                     />
                 </a>
             </div>
@@ -47,7 +51,7 @@
 </div>
 
 <!-- Sponsor -->
-<div class="container-fluid bg-white p-2 container-fluid bg-white border-cambridge">
+<div class="container-fluid bg-white p-2 container-fluid border-cambridge">
     <div class="col-md-12 mx-auto">
         <div class="row justify-content-center mb-4">
             <div class="col-md-2 col-sm-2">
@@ -65,7 +69,7 @@
 
 <!--- Footer stuff -->
 
-<footer class="text-black">
+<footer class="text-black bg-pastel">
     <div class="container-fluid">
         <div class="container">
             <div class="row justify-content-center">
@@ -79,7 +83,7 @@
                             CB2 1RB<br/>
                             Switchboard: +44 (0)1223 332 900<br/>
                             Box office: +44 (0)1223 333 230<br/>
-                            <i class="fas fa-ticket-alt mr-1" aria-hidden="true" title="ticket"></i> <a
+                            @svg('fas-at',['width'=> 20]) <a
                                 href="mailto:tickets@museums.cam.ac.uk">tickets@museums.cam.ac.uk</a><br/>
                             What3Words: <span class="w3w"><a
                                     href="https://map.what3words.com/lofts.puzzle.given"

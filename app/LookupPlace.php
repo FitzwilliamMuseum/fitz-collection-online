@@ -41,7 +41,7 @@ class LookupPlace
      * @param string $place
      * @return void
      */
-    public function setPlace(string $place)
+    public function setPlace(string $place): void
     {
         $this->_place = $place;
     }

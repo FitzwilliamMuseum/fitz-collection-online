@@ -222,7 +222,6 @@ class indexController extends Controller
                 $item = utf8_encode($item);
                 $item = str_replace('\u', 'u', $item);
                 $item = preg_replace('/u([\da-fA-F]{4})/', '&#x\1;', $item);
-
             }
         });
         return $array;

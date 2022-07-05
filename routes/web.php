@@ -16,14 +16,17 @@ use Illuminate\Support\Facades\Route;
 /*
 * Basic search routes
 */
-Route::get('/', 'indexController@search')->name('home');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::view('api/activity', 'home')->name('home');
+    Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
+});
+Route::view('/', 'auth.login')->name('data.home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
 /*
 * Spelunker route for all records
 */
-Route::get('/spelunker', 'indexController@index')->name('spelunker');
 Route::get('/random', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearch'])->name('random');
 Route::get('/random/app', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearchapp'])->name('random.app');
 
@@ -37,11 +40,9 @@ Route::get('/id/image/{id}/', 'imagesController@image')->name('image.single');
 Route::get('/id/image/3d/{id}/', 'imagesController@sketchfab')->name('sketchfab');
 Route::get('/id/image/iiif/{id}/', 'imagesController@iiif')->name('image.iiif');
 Route::get('/id/image/flutter/iiif/{id}/', 'imagesController@flutteriiif')->name('image.iiif.flutter');
-
 Route::get('/id/image/slow/iiif/', 'imagesController@slowiiif')->name('slow.iiif');
 Route::get('/id/image/mirador/{id}/', 'imagesController@mirador')->name('image.mirador');
 Route::match(array('GET','POST'),'/images/id/{priref}/', 'imagesController@images')->name('images.multiple');
-
 /*
 * Publication routes
 */
@@ -79,3 +80,8 @@ Route::get('/clear-cache', [
     'as' => 'cache-clear',
     'uses' => 'Controller@clearCache'
 ])->middleware('auth.very_basic', 'doNotCacheResponse');
+
+Route::get("/api", function(){
+    return View::make("api.index");
+})->name('api.index');
+
