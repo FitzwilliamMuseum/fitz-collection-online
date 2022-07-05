@@ -25,7 +25,14 @@ use App\LookupPlace;
  *     version="1.0.0",
  *     title="Fitzwilliam Museum Collection Database API",
  *     description="Api for the Fitzwilliam Museum Collection Database",
- * )
+ * ),
+ *  @OA\SecurityScheme(
+ *     securityScheme="bearerAuth",
+ *     type="http",
+ *     scheme="bearer",
+ *     in="header",
+ *     name="Authorization",
+ *     ),
  */
 class ApiController extends BaseController
 {

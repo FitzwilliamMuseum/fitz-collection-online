@@ -15,6 +15,7 @@ use App\Rules\TerminologyFieldsAllowed;
  * summary="Retrieve terminology used in the database",
  * description="A list of terminology used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -86,6 +87,7 @@ use App\Rules\TerminologyFieldsAllowed;
  * summary="Retrieve a term",
  * description="A term's details.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",
