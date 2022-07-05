@@ -51,7 +51,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="accession_number",
  *    required=false,
- *    example="1",
  *    @OA\Schema(
  *       type="integer",
  *    )
@@ -61,7 +60,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="maker",
  *    required=false,
- *    example="agent-149652",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -71,7 +69,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="category",
  *    required=false,
- *    example="agent-149652",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -92,7 +89,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="random",
  *    required=false,
- *    example="1",
  *    @OA\Schema(
  *       type="enum",
  *     enum={"1","0"}
@@ -110,11 +106,19 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Choose fields to return. Use a comma separated string. These can be any of the following without quotes: 'categories','description','component','department.value','identifier','inscription','lifecycle','institutions','multimedia','name','note','owners','publications','school_or_style','summary','techniques','measurements','title'. By default we return all fields.",
+ *    in="query",
+ *    name="fields",
+ *    required=false,
+ *    @OA\Schema(
+ *     type="string",
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Determine whether an object has geographic data available",
  *    in="query",
  *    name="hasGeo",
  *    required=false,
- *    example="1",
  *    @OA\Schema(
  *       type="enum",
  *     enum={"1","0"}
@@ -125,7 +129,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="hasIIIF",
  *    required=false,
- *    example="1",
  *    @OA\Schema(
  *       type="enum",
  *     enum={"1","0"}
@@ -136,7 +139,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="sort_field",
  *    required=false,
- *    example="id",
  *    @OA\Schema(
  *       type="enum",
  *       enum={"id","created","updated","name","summary_title"}
@@ -147,7 +149,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="period",
  *    required=false,
- *    example="term-12502",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -157,7 +158,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="acquired_date_start",
  *    required=false,
- *    example="1920",
  *    @OA\Schema(
  *       type="int",
  *    )
@@ -167,7 +167,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="acquired_date_end",
  *    required=false,
- *    example="1921",
  *    @OA\Schema(
  *       type="int",
  *    )
@@ -177,7 +176,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="publication",
  *    required=false,
- *    example="publication-2797",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -187,7 +185,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="component",
  *    required=false,
- *    example="term-107563",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -197,7 +194,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="acquired_from",
  *    required=false,
- *    example="agent-195177",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -207,7 +203,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="collected_place",
  *    required=false,
- *    example="term-107870",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -217,7 +212,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="school_or_style",
  *    required=false,
- *    example="term-9010",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -227,7 +221,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="acquired_date_start",
  *    required=false,
- *    example="1970",
  *    @OA\Schema(
  *       type="integer",
  *    )
@@ -237,7 +230,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="acquired_date_end",
  *    required=false,
- *    example="1975",
  *    @OA\Schema(
  *       type="integer",
  *    )
@@ -247,7 +239,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="created_start",
  *    required=false,
- *    example="1975",
  *    @OA\Schema(
  *       type="integer",
  *    )
@@ -257,7 +248,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="created_end",
  *    required=false,
- *    example="1975",
  *    @OA\Schema(
  *       type="integer",
  *    )
@@ -267,7 +257,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="technique",
  *    required=false,
- *    example="term-27007",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -277,7 +266,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="component",
  *    required=false,
- *    example="term-106206",
  *    @OA\Schema(
  *       type="string",
  *    )
@@ -287,7 +275,6 @@ use OpenApi\Annotations as OA;
  *    in="query",
  *    name="department",
  *    required=false,
- *    example="Antiquities",
  *    @OA\Schema(
  *       type="string",
  *    )
