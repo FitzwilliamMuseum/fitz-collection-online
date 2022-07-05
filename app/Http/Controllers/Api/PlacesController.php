@@ -16,10 +16,11 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve places used in the database",
  * description="A list of places used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
- *    name="q",
+ *    name="query",
  *    required=false,
  *    example="Painting",
  *    @OA\Schema(
@@ -67,6 +68,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve a term",
  * description="A term's details.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

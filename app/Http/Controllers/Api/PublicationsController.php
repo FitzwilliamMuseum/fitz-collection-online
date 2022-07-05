@@ -16,6 +16,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve publications used in the database",
  * description="A list of publications used in the database, with pagination.",
  * tags={"Publications"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -67,6 +68,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve a publication",
  * description="An publications's details.",
  * tags={"Publications"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

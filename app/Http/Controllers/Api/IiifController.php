@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve iiif used in the database",
  * description="A list of iiif used in the database, with pagination.",
  * tags={"Static Images and IIIF"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -58,6 +59,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve an image's data ",
  * description="An image's paths and associated metadata.",
  * tags={"Static Images and IIIF"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

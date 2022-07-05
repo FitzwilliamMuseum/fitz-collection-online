@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve exhibitions used in the database",
  * description="A list of exhibitions used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -66,6 +67,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve a term",
  * description="An exhibitions's details.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

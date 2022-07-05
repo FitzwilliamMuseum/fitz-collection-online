@@ -16,6 +16,7 @@ use OpenApi\Annotations as OA;
  * summary="Institutions representing ownership",
  * description="Institutions representing ownership of objects within the museum",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Response(
  *    response=200,
  *    description="The request completed successfully."
@@ -34,6 +35,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve an institution",
  * description="An instititution's details ",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="institution ID number",
  *    in="path",

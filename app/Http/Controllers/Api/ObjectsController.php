@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve objects and artworks recorded in the database",
  * description="A list of objects and artworks recorded in the database, with pagination.",
  * tags={"Objects and artworks"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query the system for objects and artworks (defaults to AND)",
  *    in="query",
@@ -297,6 +298,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve an object",
  * description="An object's details.",
  * tags={"Objects and artworks"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Object number",
  *    in="path",

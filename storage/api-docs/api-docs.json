@@ -103,7 +103,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/agents/{agent}": {
@@ -147,34 +152,336 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/v1/auth/signup": {
+        "/api/auth/signup": {
             "post": {
                 "tags": [
                     "Authorisation"
                 ],
-                "summary": "Sign up a new user",
-                "description": "Create a user account",
-                "parameters": [
-                    {
-                        "name": "q",
-                        "in": "query",
-                        "description": "Query",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "format": "string"
-                        },
-                        "example": "Dendera"
+                "summary": "Register a new user",
+                "description": "Register a new user",
+                "operationId": "signup",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Name of the user",
+                                        "type": "string",
+                                        "example": "Amanda Huginkiss"
+                                    },
+                                    "email": {
+                                        "description": "Email of the user",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "amanda@huginkiss.com"
+                                    },
+                                    "password": {
+                                        "description": "Password of the user",
+                                        "type": "string",
+                                        "example": "secret"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "User created successfully.",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "User with that email already exists": {}
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "User with that email already exists": {}
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Authorisation"
+                ],
+                "summary": "Login a user",
+                "description": "Login a user: Post a request with username and password, and this will create a new bearer token for you to use to authorise requests",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Email of the user",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "amanda@huginkiss.com"
+                                    },
+                                    "password": {
+                                        "description": "Password of the user",
+                                        "type": "string",
+                                        "example": "secret"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "Access token",
+                                            "type": "string",
+                                            "example": "1|sskkskskkskskbdhdj"
+                                        },
+                                        "user": {
+                                            "description": "User",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "User id",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "description": "Name",
+                                                    "type": "string",
+                                                    "example": "Amanda Huginkiss"
+                                                },
+                                                "email": {
+                                                    "description": "Email",
+                                                    "type": "string",
+                                                    "example": "amanda@huginkiss.com"
+                                                },
+                                                "email_verified_at": {
+                                                    "description": "Email verified at",
+                                                    "type": "string",
+                                                    "example": "2022-06-30T08:12:34.000000Z"
+                                                },
+                                                "two_factor_secret": {
+                                                    "description": "Two factor secret",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "two_factor_recovery_codes": {
+                                                    "description": "Two factor recovery codes",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "two_factor_confirmed_at": {
+                                                    "description": "Two factor recovery codes confirmed at",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "created_at": {
+                                                    "description": "Created at",
+                                                    "type": "string",
+                                                    "example": "2020-06-30T08:12:34.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Updated at",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "User with that email already exists": {}
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "post": {
+                "tags": [
+                    "Authorisation"
+                ],
+                "summary": "Get your user details without refreshing the token",
+                "description": "Retrieve user details",
+                "operationId": "me",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "description": "Access token",
+                                            "type": "string",
+                                            "example": "1|sskkskskkskskbdhdj"
+                                        },
+                                        "user": {
+                                            "description": "User",
+                                            "properties": {
+                                                "id": {
+                                                    "description": "User id",
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "description": "Name",
+                                                    "type": "string",
+                                                    "example": "Amanda Huginkiss"
+                                                },
+                                                "email": {
+                                                    "description": "Email",
+                                                    "type": "string",
+                                                    "example": "amanda@huginkiss.com"
+                                                },
+                                                "email_verified_at": {
+                                                    "description": "Email verified at",
+                                                    "type": "string",
+                                                    "example": "2022-06-30T08:12:34.000000Z"
+                                                },
+                                                "two_factor_secret": {
+                                                    "description": "Two factor secret",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "two_factor_recovery_codes": {
+                                                    "description": "Two factor recovery codes",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "two_factor_confirmed_at": {
+                                                    "description": "Two factor recovery codes confirmed at",
+                                                    "type": "string",
+                                                    "example": "NULL"
+                                                },
+                                                "created_at": {
+                                                    "description": "Created at",
+                                                    "type": "string",
+                                                    "example": "2020-06-30T08:12:34.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "description": "Updated at",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "User with that email already exists": {}
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authorisation"
+                ],
+                "summary": "Logout a user",
+                "description": "Logout and delete a token",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "User logged out and token deleted": {}
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/departments": {
@@ -188,7 +495,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/departments/{department}": {
@@ -217,7 +529,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/exhibitions": {
@@ -272,7 +589,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/exhibitions/{exhibition}": {
@@ -305,7 +627,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/iiif": {
@@ -354,7 +681,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/iiif/{image}": {
@@ -381,7 +713,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/images": {
@@ -465,7 +802,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/images/{image}": {
@@ -499,7 +841,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/": {
@@ -529,7 +876,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/institutions/{institution}": {
@@ -561,7 +913,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/makers": {
@@ -616,7 +973,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/makers/{maker}": {
@@ -649,7 +1011,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/objects": {
@@ -956,7 +1323,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/objects/{object}": {
@@ -983,7 +1355,12 @@
                     "200": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/periods": {
@@ -1053,7 +1430,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/periods/{period}": {
@@ -1098,7 +1480,12 @@
                     "404": {
                         "description": "Success"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/places": {
@@ -1110,7 +1497,7 @@
                 "description": "A list of places used in the database, with pagination.",
                 "parameters": [
                     {
-                        "name": "q",
+                        "name": "query",
                         "in": "query",
                         "description": "Query",
                         "required": false,
@@ -1153,7 +1540,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/places/{place}": {
@@ -1186,7 +1578,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/publications": {
@@ -1241,7 +1638,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/publications/{publication}": {
@@ -1274,7 +1676,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/terminology": {
@@ -1352,7 +1759,12 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/api/v1/terminology/{terminology}": {
@@ -1396,8 +1808,24 @@
                     "400": {
                         "description": "Not processed"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            },
+            "0": []
         }
     }
 }

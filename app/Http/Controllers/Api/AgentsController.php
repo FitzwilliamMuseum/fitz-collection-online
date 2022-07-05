@@ -16,6 +16,7 @@ use App\Rules\AgentFieldsAllowed;
  * summary="Retrieve agents used in the database",
  * description="A list of agents used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -103,6 +104,7 @@ use App\Rules\AgentFieldsAllowed;
  * summary="Retrieve an agent",
  * description="An agent's details",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Agent term id number",
  *    in="path",

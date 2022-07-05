@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve images used in the database",
  * description="A list of images used in the database, with pagination.",
  * tags={"Static Images and IIIF"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query the system for objects and artworks (defaults to AND)",
  *    in="query",
@@ -86,6 +87,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve an image's data ",
  * description="An image's paths and associated metadata.",
  * tags={"Static Images and IIIF"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

@@ -15,6 +15,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve agents used in the database",
  * description="A list of makers used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -66,6 +67,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve a maker",
  * description="A maker's representation as used in the database.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",

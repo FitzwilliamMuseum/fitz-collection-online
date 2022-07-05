@@ -43,10 +43,19 @@ Well you could try! It's several of Terabytes!
 
 ### Is your API protected?
 
-Our API is protected vua authentication (via session cookie/bearer token), so you need to login to access it. You can do this by creating an account via a web interface or
+Authenticated: Our API is protected via authentication (via session cookie/bearer token), so you need to login to access it. You can do this by creating an account via a web interface or
 via programmatic means. This means we can monitor use and track problems (hopefully you won't find any!)
 So after creating an [account](/login), you can use the API to access your data. If you are going to use the system frequently,
 your IP address can be added to our list of allowed IP addresses and you won't need to authenticate again.
+
+Rate limited: Unless your address is whitelisted, you can only access the API 60 times per minute. If you are whitelisted, your
+API access is 300 requests per minute. The rate limit is applied to all API calls except the welcome route, and the rate limit available
+to use is returned in the header response as below:
+
+```
+X-RateLimit-Limit: 60
+X-RateLimit-Remaining: 59
+```
 
 ### What data do you collect? What do you use it for?
 

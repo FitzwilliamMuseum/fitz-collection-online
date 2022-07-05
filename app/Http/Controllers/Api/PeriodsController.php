@@ -16,6 +16,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve agents used in the database",
  * description="A list of periods used in the database, with pagination.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
@@ -79,6 +80,7 @@ use OpenApi\Annotations as OA;
  * summary="Retrieve a period",
  * description="A period's representation as used in the database.",
  * tags={"Terminology"},
+ * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="path",
