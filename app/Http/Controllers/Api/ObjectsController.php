@@ -99,9 +99,20 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
- *    description="Determine whether an object has  images available",
+ *    description="Determine whether an object has images available",
  *    in="query",
  *    name="hasImage",
+ *    required=false,
+ *    example="1",
+ *    @OA\Schema(
+ *       type="enum",
+ *     enum={"1","0"}
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Determine whether an object has geographic data available",
+ *    in="query",
+ *    name="hasGeo",
  *    required=false,
  *    example="1",
  *    @OA\Schema(
