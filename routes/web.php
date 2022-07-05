@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('api/activity', 'home')->name('home');
     Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
 });
-Route::view('/', 'auth.login')->name('data.home');
+Route::get('/', 'indexController@search')->name('data.home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
