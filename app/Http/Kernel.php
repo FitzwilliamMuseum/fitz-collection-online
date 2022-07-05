@@ -9,6 +9,7 @@ use App\Http\Middleware\LogRoute;
 use App\Http\Middleware\PrettyPrint;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SecureHeadersMiddleware;
+use App\Http\Middleware\ThrottleRequestsWithIp;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\XFrameHeadersMiddleware;
@@ -57,6 +58,7 @@ class Kernel extends HttpKernel
         ApiLogMiddleware::class,
         StartSession::class,
 
+
     ];
 
     /**
@@ -78,7 +80,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             EnsureFrontendRequestsAreStateful::class,
-            'throttle:60,1',
+            'throttleIp',
             SubstituteBindings::class,
         ],
     ];
@@ -104,6 +106,8 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => DoNotCacheResponse::class,
         'log.route' => LogRoute::class,
         'json.response' => ForceJsonResponse::class,
+        'throttleIp' => ThrottleRequestsWithIp::class
+
 
     ];
 }
