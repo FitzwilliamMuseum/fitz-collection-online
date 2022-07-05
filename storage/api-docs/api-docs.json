@@ -752,7 +752,21 @@
                     {
                         "name": "hasImage",
                         "in": "query",
-                        "description": "Determine whether an object has  images available",
+                        "description": "Determine whether an object has images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ]
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "hasGeo",
+                        "in": "query",
+                        "description": "Determine whether an object has geographic data available",
                         "required": false,
                         "schema": {
                             "type": "enum",
