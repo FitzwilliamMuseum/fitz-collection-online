@@ -22,7 +22,7 @@ class ThrottleRequestsWithIp extends ThrottleRequests
      */
     public function handle($request, Closure $next, $maxAttempts = 300, $decayMinutes = 1, $prefix = ''): mixed
     {
-        if(!in_array($request->ip(), IpAddress::whitelist()))
+        if(in_array($request->ip(), IpAddress::whitelist()))
             return parent::handle($request, $next, $maxAttempts, $decayMinutes, $prefix);
 
         return parent::handle($request, $next, 60, 1, $prefix);
