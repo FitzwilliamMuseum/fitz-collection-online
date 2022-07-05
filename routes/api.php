@@ -38,9 +38,12 @@ Route::match(
     'log.route','api-log','json.response'
 );
 $middleware = array('log.route','api-log','json.response');
+dump(IpAddress::whitelist());
+dump(Request::ip());
 if(!in_array(Request::ip(), IpAddress::whitelist())){
     $middleware[] = 'auth:sanctum';
 }
+dump($middleware);
 
 /*
 |--------------------------------------------------------------------------
