@@ -133,7 +133,7 @@ use App\Rules\AgentFieldsAllowed;
  *    response=400,
  *    description="The request cannot be processed"
  *     ),
- *    @OA\Response(
+ * @OA\Response(
  *    response=404,
  *    description="Not found"
  *     ),

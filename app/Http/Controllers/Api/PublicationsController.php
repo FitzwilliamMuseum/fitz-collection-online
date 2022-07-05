@@ -127,7 +127,7 @@ class PublicationsController extends ApiController
 
         $response = Publications::list($request);
 
-        if(empty($response)) {
+        if(empty($response['hits']['hits'])) {
             return $this->jsonError(404, $this->_notFound);
         } else {
             $data = $this->insertType($this->enrichPublications($this->parsePublicationsData($response)), 'publications');

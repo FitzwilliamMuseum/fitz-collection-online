@@ -119,10 +119,13 @@ use OpenApi\Annotations as OA;
 class PeriodsController extends ApiController
 {
     /**
-     * @var array|string[] $fields
+     * @var array
      */
     private array $_params = array('q', 'page', 'size', 'sort', 'fields', 'sort_field');
 
+    /**
+     * @var array
+     */
     private array $_showParams = array('period', 'fields');
 
     /**
@@ -144,8 +147,6 @@ class PeriodsController extends ApiController
         }
 
         $response = Periods::list($request);
-
-
         if (empty($response)) {
             return $this->jsonError(404, $this->_notFound);
         } else {

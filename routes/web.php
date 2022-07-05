@@ -17,10 +17,10 @@ use Illuminate\Support\Facades\Route;
 * Basic search routes
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('home', 'home')->name('home');
+    Route::view('api/activity', 'home')->name('home');
     Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
 });
-Route::view('/', 'welcome')->name('data.home');
+Route::view('/', 'auth.login')->name('data.home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET','POST'),'/search/results/', 'indexController@results')->name('results');;
 
@@ -80,4 +80,8 @@ Route::get('/clear-cache', [
     'as' => 'cache-clear',
     'uses' => 'Controller@clearCache'
 ])->middleware('auth.very_basic', 'doNotCacheResponse');
+
+Route::get("/api", function(){
+    return View::make("api.index");
+})->name('api.index');
 

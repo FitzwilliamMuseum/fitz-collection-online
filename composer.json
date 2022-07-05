@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.0|^8.1",
         "ext-dom": "*",
+        "arcanedev/laravel-markdown": "^6.0",
         "codeat3/blade-fluentui-system-icons": "^1.26.1",
         "darkaonline/l5-swagger": "^8.3",
         "elasticsearch/elasticsearch": "^7.17.0",
@@ -27,8 +28,8 @@
         "guzzlehttp/guzzle": "^7.4.5",
         "imliam/laravel-blade-helper": "^1.4.3",
         "ksubileau/color-thief-php": "^1.4.1",
-        "laravel/framework": "^9.0",
         "laravel/fortify": "^1.7",
+        "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.7.2",
         "laravelcollective/html": "^6.3",

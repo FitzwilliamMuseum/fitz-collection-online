@@ -60,20 +60,3 @@
 
 </script>
 
-{{-- <script type="text/javascript">
-
-  var BugHerdConfig = {
-    reporter: {required: "true"},
-    feedback: {
-      "tab_position":"bottom-left",
- 			tab_text: "Report a problem/ give feedback"
- 		}
-  };
-
-  (function (d, t) {
-    var bh = d.createElement(t), s = d.getElementsByTagName(t)[0];
-    bh.type = 'text/javascript';
-    bh.src = '//www.bugherd.com/sidebarv2.js?apikey=akxmjgmostfy0dnzbyr92g';
-    s.parentNode.insertBefore(bh, s);
-  })(document, 'script');
-</script> --}}

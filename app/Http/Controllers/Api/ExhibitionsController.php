@@ -95,9 +95,14 @@ use OpenApi\Annotations as OA;
 
 class ExhibitionsController extends ApiController
 {
-
+    /**
+     * @var array
+     */
     public array $_allowed = ['query','page','size', 'fields', 'sort', 'sort_field'];
 
+    /**
+     * @var array
+     */
     public array $_showAllowed = ['exhibition','fields'];
 
     /**

@@ -191,6 +191,35 @@
                 }
             }
         },
+        "/api/v1/departments/{department}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Departments of the museum",
+                "description": "Retrieve string literals of a specific department in the museum and object counts",
+                "parameters": [
+                    {
+                        "name": "department",
+                        "in": "path",
+                        "description": "Department",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Antiquities"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
         "/api/v1/exhibitions": {
             "get": {
                 "tags": [
@@ -490,6 +519,38 @@
                 ],
                 "summary": "Institutions representing ownership",
                 "description": "Institutions representing ownership of objects within the museum",
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/institutions/{institution}": {
+            "get": {
+                "tags": [
+                    "Terminology"
+                ],
+                "summary": "Retrieve an institution",
+                "description": "An instititution's details ",
+                "parameters": [
+                    {
+                        "name": "institution",
+                        "in": "path",
+                        "description": "institution ID number",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "The request completed successfully."

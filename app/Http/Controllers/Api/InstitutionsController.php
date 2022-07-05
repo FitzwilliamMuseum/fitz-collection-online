@@ -29,6 +29,34 @@ use OpenApi\Annotations as OA;
  *    description="Not found"
  * ),
  * ),
+ * @OA\Get(
+ * path="/api/v1/institutions/{institution}",
+ * summary="Retrieve an institution",
+ * description="An instititution's details ",
+ * tags={"Terminology"},
+ * @OA\Parameter(
+ *    description="institution ID number",
+ *    in="path",
+ *    name="institution",
+ *    required=true,
+ *    @OA\Schema(
+ *      type="string",
+ *     format="string"
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="The request completed successfully."
+ * ),
+ * @OA\Response(
+ *    response=400,
+ *    description="The request cannot be processed"
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Not found"
+ * ),
+ * ),
  * )
  */
 class InstitutionsController extends ApiController

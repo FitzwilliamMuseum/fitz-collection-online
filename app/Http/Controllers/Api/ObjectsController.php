@@ -327,7 +327,7 @@ class ObjectsController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
-        'random'
+        'random','hasGeo'
     );
     public array $_showParams = array(
         'period', 'fields'
@@ -366,6 +366,7 @@ class ObjectsController extends ApiController
             'acquired_date_end' => 'numeric',
             'created_start' => 'numeric',
             'created_end' => 'numeric',
+            'hasGeo' => 'boolean',
         ],
         [
             'random.prohibited_if' => 'You cannot use the random parameter with sort or sort_field parameters',
@@ -413,7 +414,7 @@ class ObjectsController extends ApiController
         $response = Objects::show($request, $object);
         if (!empty($response)) {
             $enriched = $this->insertSingleType($response, 'objects');
-            return $this->jsonSingle($enriched);
+            return $this->jsonSingle($this->enrich('http:', 'https:', $enriched));
         } else {
             return $this->jsonError(404, $this->_notFound);
         }

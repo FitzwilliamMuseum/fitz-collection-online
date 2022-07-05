@@ -42,24 +42,24 @@ class Objects extends Model
         'admin.id',
         'admin.created',
         'admin.modified',
-        'categories',
-        'description',
-        'component',
-        'department.value',
-        'identifier',
-        'inscription',
-        'lifecycle',
-        'institutions',
-        'multimedia',
-        'name',
-        'note',
-        'owners',
-        'publications',
-        'school_or_style',
-        'summary',
-        'techniques',
-        'measurements',
-        'title'
+//        'categories',
+//        'description',
+//        'component',
+//        'department.value',
+//        'identifier',
+//        'inscription',
+//        'lifecycle',
+//        'institutions',
+//        'multimedia',
+//        'name',
+//        'note',
+//        'owners',
+//        'publications',
+//        'school_or_style',
+//        'summary',
+//        'techniques',
+//        'measurements',
+//        'title'
     );
 
     /**
@@ -139,12 +139,14 @@ class Objects extends Model
         $firstCreated = self::getFirstCreationDate($request);
         $secondCreated = self::getSecondCreationDate($request);
         $random = self::getRandom($request);
+        $geo = self::getGeoParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
             $acquiredFrom, $collected, $accession, $maker,
             $school, $start_date, $end_date, $techniques,
-            $components, $firstCreated, $secondCreated, $random
+            $components, $firstCreated, $secondCreated,
+            $random, $geo
         );
         return self::searchAndCache($combined);
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Api\IpAddress;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,9 +24,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['log.route','api-log','json.r
     Route::post('login', 'App\Http\Controllers\Api\AuthController@login')->name('api.login');
     Route::post('logout', 'App\Http\Controllers\Api\AuthController@logout')->middleware('auth:sanctum')->name('api.logout');
     Route::post('me', 'App\Http\Controllers\Api\AuthController@me')->middleware('auth:sanctum')->name('api.user');
-    Route::fallback(function () {
-        return response()->json(['error' => 'Nothing found with that query'], 404);
-    });
+
 });
 
 
@@ -39,7 +38,7 @@ Route::match(
     'log.route','api-log','json.response'
 );
 $middleware = array('log.route','api-log','json.response');
-if(!in_array(Request::ip(), explode(',',env('API_IP_WHITELIST')))){
+if(!in_array(Request::ip(), IpAddress::whitelist())){
     $middleware[] = 'auth:sanctum';
 }
 

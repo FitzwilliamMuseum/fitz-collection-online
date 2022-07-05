@@ -142,9 +142,9 @@ class Model
      * @param array $params
      * @return array
      */
-    public static function createQuery(Request $request, array $params): array
+    public static function createQuery(Request $request): array
     {
-        $query = $params;
+        $query = [];
         if (!is_null($request->query('query'))) {
             $query['body']['query']['bool']['must'][] = [
                 "multi_match" => [
@@ -158,6 +158,44 @@ class Model
 
     }
 
+    /**
+     * @param Request $request
+     * @param array $params
+     * @return array
+     */
+    public static function createQueryPlaces(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                'match' => [
+                    'lifecycle.creation.places.summary_title' => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                ]
+            ];
+        }
+        return $query;
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @param array $params
+     * @return array
+     */
+    public static function createQueryMakers(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                'match' => [
+                    'lifecycle.creation.maker.summary_title' => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                ]
+            ];
+        }
+        return $query;
+
+    }
 
     /**
      * @param Request $request
@@ -291,6 +329,20 @@ class Model
             $filter = array(
                 "exists" => [
                     "field" => "multimedia"
+                ]
+            );
+            $params['body']['query']['bool']['must'][] = [$filter];
+        }
+        return $params;
+    }
+
+    public static function getGeoParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('hasGeo', $request->query())) {
+            $filter = array(
+                "exists" => [
+                    "field" => "lifecycle.collection.places"
                 ]
             );
             $params['body']['query']['bool']['must'][] = [$filter];

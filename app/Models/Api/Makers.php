@@ -50,9 +50,8 @@ class Makers extends Model
                 ],
             ],
         ];
-        $params = self::createQuery($request, $params);
-
-        return self::searchAndCache($params);
+        $combined = array_merge_recursive($params, self::createQueryMakers($request));
+        return self::searchAndCache($combined);
     }
 
     /**

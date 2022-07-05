@@ -74,7 +74,7 @@ return [
     |
     */
 
-    'prefix' => '',
+    'prefix' => 'api',
 
     'domain' => null,
 
@@ -136,9 +136,9 @@ return [
         Features::resetPasswords(),
         Features::emailVerification(),
         Features::updatePasswords(),
-        Features::twoFactorAuthentication([
-            'confirmPassword' => true,
-        ]),
+//        Features::twoFactorAuthentication([
+//            'confirmPassword' => true,
+//        ]),
     ],
 
 ];

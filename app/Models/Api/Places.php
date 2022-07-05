@@ -53,7 +53,7 @@ class Places extends Model
                                         'include' =>
                                             [
                                                 'lifecycle.creation.places.summary_title',
-                                                'lifecycle.creation.places.admin.id',
+                                                'lifecycle.creation.places.admin.id'
                                             ]
                                     ],
                                 ],
@@ -63,9 +63,8 @@ class Places extends Model
                 ],
             ]
         ];
-
-        $params = self::createQuery($request, $params);
-        return self::searchAndCache($params);
+        $combined = array_merge_recursive($params, self::createQueryPlaces($request));
+        return self::searchAndCache($combined);
     }
 
     /**

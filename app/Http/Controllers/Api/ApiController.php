@@ -19,6 +19,7 @@ use OpenApi\Annotations as OA;
 use function env;
 use function now;
 use function response;
+use App\LookupPlace;
 /**
  * @OA\Info(
  *     version="1.0.0",
@@ -257,7 +258,17 @@ class ApiController extends BaseController
                 $array = str_replace($find, $replace, $array);
             });
         }
+        if(array_key_exists('multimedia', $array)) {
+            if ($this->multiKeyExists($array['multimedia'], 'zoom')) {
+                $array['manifestURI'] = $this->generateManifestURI($array['admin']['id']);
+            }
+        }
         return $array;
+    }
+
+    private function generateManifestURI(string $id): string
+    {
+        return env('FITZ_MANIFEST_URL') . $id . '/manifest';
     }
 
     /**
@@ -577,11 +588,21 @@ class ApiController extends BaseController
             foreach ($lifecycle['collection'] as $collection) {
                 if (array_key_exists('places', $collection)) {
                     foreach ($collection['places'] as $place) {
-                        $places[] = array(
+                        $transformed = array(
                             'summary_title' => $place['summary_title'],
                             'apiURI' => $this->getTermURI('api.places.show', $place['admin']['id']),
                             'URI' => $this->getWebURI('terminology', $place['admin']['id'])
                         );
+                        $coordinates = $this->getPlaceData($place['summary_title']);
+                        if(!empty($coordinates)) {
+                            $geo = array (
+                                'lat' => $coordinates['lat'],
+                                'lng' => $coordinates['lng'],
+                            );
+                            $transformed['coordinates'] = $geo;
+                        }
+                        $places[] = $transformed;
+
                     }
                 }
             }
@@ -611,9 +632,47 @@ class ApiController extends BaseController
                 if (array_key_exists('maker', $creation)) {
                     $makers = array();
                     foreach ($creation['maker'] as $maker) {
-                        $makers['maker'] = $this->enrichTerms($maker);
+                        $makers['maker'] = $this->enrichAgents($maker);
                     }
                     $lifeCycleData['creation']['maker'] = $makers;
+                }
+                if(array_key_exists('places',$creation)){
+                    $places = array();
+                    foreach ($creation['places'] as $place) {
+                        $transformed = array(
+                            'summary_title' => $place['summary_title'],
+                            'apiURI' => $this->getTermURI('api.places.show', $place['admin']['id']),
+                            'URI' => $this->getWebURI('terminology', $place['admin']['id']),
+                            'place' => $place['admin']['id']
+                        );
+                        $coordinates = $this->getPlaceData($place['summary_title']);
+                        if(!empty($coordinates)) {
+                            $geo = array (
+                                'lat' => $coordinates['lat'],
+                                'lng' => $coordinates['lng'],
+                            );
+                            $transformed['coordinates'] = $geo;
+                        }
+                        if(array_key_exists('note',$place)) {
+                            foreach ($place['note'] as $note) {
+                                $transformed['note'] = $note['value'];
+                            }
+                        }
+                        if(array_key_exists('hierarchies',$place)) {
+                            $hierarchies = array();
+                            foreach ($place['hierarchies'] as $hierarchGeo) {
+                                foreach ($hierarchGeo as $hierarchy) {
+                                    $hierarchies[] = array(
+                                        'summary_title' => $hierarchy['summary_title'],
+                                        'type' => $hierarchy['type'],
+                                    );
+                                }
+                            }
+                            $transformed['hierarchies'] = $hierarchies;
+                        }
+                        $places[] = $transformed;
+                    }
+                    $lifeCycleData['creation']['places'] = $places;
                 }
             }
         }
@@ -629,6 +688,23 @@ class ApiController extends BaseController
         $data['URI'] = $this->getWebURI('agent', $data['admin']['id']);
         $data['apiURI'] = $this->getTermURI('api.agents.show', $data['admin']['id']);
         $data['agent'] = $data['admin']['id'];
+        unset($data['admin']);
+        unset($data['@link']);
+        return $data;
+    }
+
+    public function enrichAgents(array $data): array
+    {
+        $data['URI'] = $this->getWebURI('terminology', $data['admin']['id']);
+        $data['apiURI'] = $this->getTermURI('api.agents.show', $data['admin']['id']);
+        $data['term'] = $data['admin']['id'];
+        if (array_key_exists('@link', $data)) {
+            if (array_key_exists('role', $data['@link'])) {
+                $data['role'] = $data['@link']['role'];
+            }
+            unset($data['@link']);
+        }
+
         unset($data['admin']);
         return $data;
     }
@@ -724,9 +800,7 @@ class ApiController extends BaseController
             $title = '';
             foreach ($place['place']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
                 foreach ($creation['places'] as $label) {
-
                     if ($label['admin']['id'] != $place['key']) {
-
                         $labels[] = array(
                             'summary_title' => $label['summary_title'],
                             'id' => $label['admin']['id'],
@@ -983,17 +1057,77 @@ class ApiController extends BaseController
      */
     public function enrichPlace(array $data): array
     {
+        $coordinates = $this->getPlaceData($data['summary_title']);
+        if(!empty($coordinates)) {
+            $data['coordinates'] = array (
+                'lat' => $coordinates['lat'],
+                'lng' => $coordinates['lng'],
+            );
+        }
         $data['URI'] = $this->getWebURI('terminology', $data['admin']['id']);
         $data['apiURI'] = $this->getTermURI('api.places.show', $data['admin']['id']);
         $data['place'] = $data['admin']['id'];
+        unset($data['@link']);
         if (array_key_exists('parent', $data)) {
             foreach ($data['parent'] as &$parent) {
+                $coordinatesParent = $this->getPlaceData($parent['summary_title']);
+                if(!empty($coordinatesParent)) {
+                    $parent['coordinates'] = array (
+                        'lat' => $coordinatesParent['lat'],
+                        'lng' => $coordinatesParent['lng'],
+                    );
+                }
                 $parent['URI'] = route('terminology', $parent['admin']['id']);
                 $parent['appURI'] = route('api.places.show', $parent['admin']['id']);
                 $parent['id'] = $parent['admin']['id'];
+                unset($parent['@link']);
+
+            }
+        }
+        if (array_key_exists('related', $data)) {
+            foreach ($data['related'] as &$related) {
+                $coordinatesRelated = $this->getPlaceData($related['summary_title']);
+                if(!empty($coordinatesRelated)) {
+                    $related['coordinates'] = array (
+                        'lat' => $coordinatesRelated['lat'],
+                        'lng' => $coordinatesRelated['lng'],
+                    );
+                }
+                $related['URI'] = route('terminology', $related['admin']['id']);
+                $related['appURI'] = route('api.places.show', $related['admin']['id']);
+                $related['id'] = $related['admin']['id'];
+                unset($related['@link']);
+
             }
         }
         return $data;
+    }
+
+    /**
+     * @param string $placeName
+     * @return array
+     * @throws \Geocoder\Exception\Exception
+     */
+    public function getPlaceData(string $placeName): array
+    {
+        $key = md5($placeName);
+        $expiresAt = now()->addDays(60);
+        if (Cache::has($key)) {
+            $gd = Cache::get($key);
+        } else {
+            $geo = new LookupPlace();
+            $geo->setPlace($placeName);
+            $gd = $geo->lookup();
+            Cache::put($key, $gd, $expiresAt);
+        }
+        if(!$gd->isEmpty()){
+            $geoData = $gd->first()->getCoordinates();
+            $lat = $geoData->getLatitude();
+            $lon = $geoData->getLongitude();
+            return array('lat' => $lat, 'lng' => $lon);
+        } else {
+            return [];
+        }
     }
 
     public function enrichMaker(array $data): array

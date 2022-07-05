@@ -98,8 +98,11 @@ class PlacesController extends ApiController
     /**
      * @var array
      */
-    private array $_params = array('q', 'page', 'size','sort','fields',);
+    private array $_params = array('query', 'page', 'size', 'sort','fields');
 
+    /**
+     * @var array|string[]
+     */
     private array $_showParams = array('place');
 
     /**
@@ -112,7 +115,7 @@ class PlacesController extends ApiController
             "*" => "in:" . implode(",", $this->_params),
             "page" => "numeric|gt:0",
             "size" => "numeric|gte:0|lte:100",
-            "q" => "string|min:3",
+            "query" => "string|min:3",
             'sort' => 'string|in:asc,desc|min:3',
         ]);
 
@@ -121,9 +124,8 @@ class PlacesController extends ApiController
         }
 
         $response = Places::list($request);
-
-        if (empty($response)) {
-            return $this->jsonError('500', $this->_error);
+        if (empty($response['hits']['hits'])) {
+            return $this->jsonError('404', $this->_notFound);
         } else {
             $data = $this->insertType($this->parseTerminologyAggPlace($response), 'places');
             $items = $this->paginate($data, $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
@@ -149,11 +151,11 @@ class PlacesController extends ApiController
         }
 
         $data = Places::show($request, $place);
-
         if (!empty($data)) {
             return $this->jsonSingle($this->insertSingleType($this->enrichPlace($data),'places'));
         } else {
             return $this->jsonError(400, $this->_notFound);
         }
     }
+
 }

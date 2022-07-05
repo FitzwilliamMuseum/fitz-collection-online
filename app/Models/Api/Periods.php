@@ -54,7 +54,6 @@ class Periods extends Model
                 ],
             ],
         ];
-        $params = self::createQuery($request, $params);
         return self::searchAndCache($params);
     }
 
