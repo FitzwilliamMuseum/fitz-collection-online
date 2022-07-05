@@ -42,6 +42,7 @@ class Objects extends Model
         'admin.id',
         'admin.created',
         'admin.modified',
+        'summary_title',
 //        'categories',
 //        'description',
 //        'component',

@@ -698,8 +698,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
-                        },
-                        "example": "1"
+                        }
                     },
                     {
                         "name": "maker",
@@ -708,8 +707,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "agent-149652"
+                        }
                     },
                     {
                         "name": "category",
@@ -718,8 +716,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "agent-149652"
+                        }
                     },
                     {
                         "name": "sort",
@@ -746,8 +743,7 @@
                                 "1",
                                 "0"
                             ]
-                        },
-                        "example": "1"
+                        }
                     },
                     {
                         "name": "hasImage",
@@ -764,6 +760,15 @@
                         "example": "1"
                     },
                     {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Choose fields to return. Use a comma separated string. These can be any of the following without quotes: 'categories','description','component','department.value','identifier','inscription','lifecycle','institutions','multimedia','name','note','owners','publications','school_or_style','summary','techniques','measurements','title'. By default we return all fields.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "hasGeo",
                         "in": "query",
                         "description": "Determine whether an object has geographic data available",
@@ -774,8 +779,7 @@
                                 "1",
                                 "0"
                             ]
-                        },
-                        "example": "1"
+                        }
                     },
                     {
                         "name": "hasIIIF",
@@ -788,8 +792,7 @@
                                 "1",
                                 "0"
                             ]
-                        },
-                        "example": "1"
+                        }
                     },
                     {
                         "name": "sort_field",
@@ -805,8 +808,7 @@
                                 "name",
                                 "summary_title"
                             ]
-                        },
-                        "example": "id"
+                        }
                     },
                     {
                         "name": "period",
@@ -815,8 +817,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-12502"
+                        }
                     },
                     {
                         "name": "acquired_date_start",
@@ -825,8 +826,7 @@
                         "required": false,
                         "schema": {
                             "type": "int"
-                        },
-                        "example": "1920"
+                        }
                     },
                     {
                         "name": "acquired_date_end",
@@ -835,8 +835,7 @@
                         "required": false,
                         "schema": {
                             "type": "int"
-                        },
-                        "example": "1921"
+                        }
                     },
                     {
                         "name": "publication",
@@ -845,8 +844,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "publication-2797"
+                        }
                     },
                     {
                         "name": "component",
@@ -855,8 +853,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-107563"
+                        }
                     },
                     {
                         "name": "acquired_from",
@@ -865,8 +862,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "agent-195177"
+                        }
                     },
                     {
                         "name": "collected_place",
@@ -875,8 +871,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-107870"
+                        }
                     },
                     {
                         "name": "school_or_style",
@@ -885,8 +880,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-9010"
+                        }
                     },
                     {
                         "name": "acquired_date_start",
@@ -895,8 +889,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
-                        },
-                        "example": "1970"
+                        }
                     },
                     {
                         "name": "acquired_date_end",
@@ -905,8 +898,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
-                        },
-                        "example": "1975"
+                        }
                     },
                     {
                         "name": "created_start",
@@ -915,8 +907,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
-                        },
-                        "example": "1975"
+                        }
                     },
                     {
                         "name": "created_end",
@@ -925,8 +916,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
-                        },
-                        "example": "1975"
+                        }
                     },
                     {
                         "name": "technique",
@@ -935,8 +925,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-27007"
+                        }
                     },
                     {
                         "name": "component",
@@ -945,8 +934,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "term-106206"
+                        }
                     },
                     {
                         "name": "department",
@@ -955,8 +943,7 @@
                         "required": false,
                         "schema": {
                             "type": "string"
-                        },
-                        "example": "Antiquities"
+                        }
                     }
                 ],
                 "responses": {
