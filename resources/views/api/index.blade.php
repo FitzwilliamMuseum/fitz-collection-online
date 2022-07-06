@@ -27,8 +27,8 @@ Our structured metadata have been licensed openly under a Creative Commons Zero 
 are made available under a more restrictive license - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license.
 This may change in the future. So to reiterate:]
 
-* CCO - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license ** FOR DATA **
-* CC-BY-NC-SA - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license ** FOR IMAGES **
+* CCO - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license **FOR DATA**
+* CC-BY-NC-SA - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license **FOR IMAGES**
 
 20th century and in copyright works generally are not included in this system.
 
@@ -57,7 +57,7 @@ Well you could try! It's several of Terabytes!
 
 Authenticated: Our API is protected via authentication (via session cookie/bearer token), so you need to login to access it. You can do this by creating an account via a web interface or
 via programmatic means. This means we can monitor use and track problems (hopefully you won't find any!)
-So after creating an [account](/login), you can use the API to access your data. If you are going to use the system frequently,
+So after creating an [account](/api/login), you can use the API to access your data. If you are going to use the system frequently,
 your IP address can be added to our list of allowed IP addresses and you won't need to authenticate again.
 
 Rate limited: Unless your address is whitelisted, you can only access the API 60 times per minute. If you are whitelisted, your
@@ -84,27 +84,13 @@ Data we collect includes:
 
 ### Have you documented your API?
 
-Yes! We have:
+Yes! We have in different ways. This will give you an idea of how to use it. We assume you have basic knowledge of
+programming or data science.
 
 * [Swagger UI](https://data.fitzmuseum.cam.ac.uk/api/v1/docs).
 * Downloadable Postman collection
 * R notebooks with examples
 * Python notebooks with examples
-
-### Show me how to use it!
-
-However, this might help learn more. Let's begin with a simple example as a browser authenticated call, just using objects
-to illustrate what you can do.
-
-Let's get the objects and artworks in our collection:
-
-1. Access this url after logging in:
-[https://data.fitzmuseum.cam.ac.uk/api/v1/objects](https://data.fitzmuseum.cam.ac.uk/api/v1/objects)
-
-You'll notice that what you see is a page of text, but don't worry, a JSON viewer browser plugin will help you make
-sense of it all. Here's what it looks like when it's formatted nicely using JSON Peep:
-
-
 @endmarkdown
 
 @endsection
