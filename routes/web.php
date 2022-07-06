@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 /*
 * Basic search routes
 */
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified','doNotCacheResponse'])->group(function () {
     Route::get('api/activity', 'HomeController@activity')->name('home');
     Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
 });
