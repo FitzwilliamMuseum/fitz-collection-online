@@ -45,6 +45,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('data.home') }}">{{ __('Collection pages') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('api.index') }}">{{ __('API overview') }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('l5-swagger.default.api') }}">{{ __('API docs') }}</a>
+                </li>
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">

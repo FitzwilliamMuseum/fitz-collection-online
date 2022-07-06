@@ -4,52 +4,78 @@
     <div class="container">
         <div class="row justify-content-center text-center">
             <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('My API Activity') }}</div>
-                </div>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>ID</th>
-                        <th>Method</th>
-                        <th>Path</th>
-                        <th>IP</th>
-                        <th>Response code</th>
-                        <th>Created At</th>
-                    </tr>
-
-                    @foreach($activity->items() as $item)
-                        <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->request_method }}</td>
-                            <td>{{ $item->request_full_url }}</td>
-                            <td>{{ $item->request_ip }}</td>
-                            <td>{{ $item->response_status_code }}</td>
-                            <td>{{ $item->created_at }}</td>
-                        </tr>
-                    @endforeach
-                </table>
-                <nav aria-label="Page navigation">
-                    {{ $activity->appends(request()->except('page'))->links() }}
-                </nav>
+                <h3 class="text-info">My API Activity</h3>
+                @if($activity->items())
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                            <tr>
+                                <th>Method</th>
+                                <th>Path</th>
+                                <th>IP</th>
+                                <th>Response code</th>
+                                <th>Created At</th>
+                            </tr>
+                            </thead>
+                            @foreach($activity->items() as $item)
+                                <tr>
+                                    <td>{{ $item->request_method }}</td>
+                                    <td><a href="{{ $item->request_full_url }}">{{ $item->request_full_url }}</a></td>
+                                    <td>{{ $item->request_ip }}</td>
+                                    <td>{{ $item->response_status_code }}</td>
+                                    <td>{{ $item->created_at }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <nav aria-label="Page navigation">
+                        {{ $activity->appends(request()->except('page'))->links() }}
+                    </nav>
+                @else
+                    <p>You haven't used the API yet</p>
+                @endif
             </div>
         </div>
 
         <div class="row justify-content-center text-center">
             <div class="col-md-6">
                 <h3 class="text-info">All API activity by method</h3>
-                <ul>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @foreach($totals as $item)
-                        <li>{{ $item->request_method }}: {{ $item->total }}</li>
+                        <tr>
+                            <td>{{ $item->request_method }}</td>
+                            <td>{{ $item->total }}</td>
+                        </tr>
                     @endforeach
-                </ul>
+                    </tbody>
+                </table>
             </div>
             <div class="col-md-6">
                 <h3 class="text-info">All API activity by response code</h3>
-                <ul>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Response code</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @foreach($codes as $item)
-                        <li>{{ $item->response_status_code }}: {{ $item->total }}</li>
+                        <tr>
+                            <td>{{ $item->response_status_code }}</td>
+                            <td>{{ $item->total }}</td>
+                        </tr>
                     @endforeach
-                </ul>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     </div>
