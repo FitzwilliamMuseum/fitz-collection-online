@@ -67,7 +67,7 @@ class Objects extends Model
      * @param Request $request
      * @return array
      */
-    public static function list(Request $request)
+    public static function list(Request $request): array
     {
         if (!$request->has('random')) {
             $params = [
@@ -141,13 +141,14 @@ class Objects extends Model
         $secondCreated = self::getSecondCreationDate($request);
         $random = self::getRandom($request);
         $geo = self::getGeoParam($request);
+        $place = self::getPlaceParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
             $acquiredFrom, $collected, $accession, $maker,
             $school, $start_date, $end_date, $techniques,
             $components, $firstCreated, $secondCreated,
-            $random, $geo
+            $random, $geo, $place
         );
         return self::searchAndCache($combined);
     }

@@ -35,6 +35,8 @@ use OpenApi\Annotations as OA;
  *    example="1",
  *    @OA\Schema(
  *       type="integer",
+ *       nullable=true,
+ *       default="1"
  *    )
  * ),
  *  @OA\Parameter(
@@ -45,6 +47,8 @@ use OpenApi\Annotations as OA;
  *    example="20",
  *    @OA\Schema(
  *       type="integer",
+ *      nullable=true,
+ *      default="20"
  *    )
  * ),
  * @OA\Parameter(
@@ -53,7 +57,8 @@ use OpenApi\Annotations as OA;
  *    name="accession_number",
  *    required=false,
  *    @OA\Schema(
- *       type="integer",
+ *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -63,6 +68,17 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Place of collection",
+ *    in="query",
+ *    name="place",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -72,6 +88,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -82,7 +99,8 @@ use OpenApi\Annotations as OA;
  *    example="asc",
  *    @OA\Schema(
  *       type="enum",
- *     enum={"asc","desc"}
+ *       enum={"asc","desc"},
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -92,7 +110,8 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="enum",
- *     enum={"1","0"}
+ *       enum={"1","0"},
+ *
  *    )
  * ),
  * @OA\Parameter(
@@ -103,7 +122,8 @@ use OpenApi\Annotations as OA;
  *    example="1",
  *    @OA\Schema(
  *       type="enum",
- *     enum={"1","0"}
+ *       enum={"1","0"},
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -122,7 +142,8 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="enum",
- *     enum={"1","0"}
+ *       enum={"1","0"},
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -132,7 +153,8 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="enum",
- *     enum={"1","0"}
+ *       enum={"1","0"},
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -142,7 +164,8 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="enum",
- *       enum={"id","created","updated","name","summary_title"}
+ *       enum={"id","created","updated","name","summary_title"},
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -152,6 +175,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -161,6 +185,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="int",
+ *     nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -170,6 +195,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="int",
+ *     nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -179,6 +205,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -188,6 +215,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -197,6 +225,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -206,6 +235,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -215,6 +245,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -224,6 +255,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="integer",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -233,6 +265,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="integer",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -242,6 +275,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="integer",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -251,6 +285,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="integer",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -260,6 +295,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -269,6 +305,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    @OA\Schema(
  *       type="string",
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -327,7 +364,7 @@ class ObjectsController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
-        'random','hasGeo'
+        'random','hasGeo', 'place'
     );
     public array $_showParams = array(
         'period', 'fields'
@@ -359,6 +396,7 @@ class ObjectsController extends ApiController
             'collected_place' => "string|min:7|regex:'^term-\d+$'",
             'technique' => "string|min:7|regex:'^term-\d+$'",
             'component' => "string|min:7|regex:'^term-\d+$'",
+            'place' => "string|min:7|regex:'^term-\d+$'",
             'accession_number' => "string",
             'maker' => "string|min:7|regex:'^agent-\d+$'",
             'school_or_style' => "string|min:7|regex:'^term-\d+$'",
@@ -405,6 +443,7 @@ class ObjectsController extends ApiController
         $validator = Validator::make($request->all(), [
             "*" => "in:" . implode(",", $this->_showParams),
             'name' => "string|min:9|regex:'^object-\d+$'",
+            "fields" => "string|min:4",
         ]);
 
         if ($validator->fails()) {

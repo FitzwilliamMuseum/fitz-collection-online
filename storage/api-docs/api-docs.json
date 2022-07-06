@@ -132,14 +132,13 @@
                     {
                         "name": "fields",
                         "in": "query",
-                        "description": "Fields available to return",
+                        "description": "Comma separated fields available to return, eg name,summary_title",
                         "required": false,
                         "schema": {
                             "type": "string",
                             "default": "admin.id",
                             "nullable": true
-                        },
-                        "example": "admin.created,admin.modified,admin.id,name,summary_title"
+                        }
                     }
                 ],
                 "responses": {
@@ -851,9 +850,12 @@
         },
         "/api/v1/": {
             "get": {
+                "tags": [
+                    "Home"
+                ],
                 "description": "Home page",
                 "responses": {
-                    "default": {
+                    "200": {
                         "description": "Welcome page"
                     }
                 }
@@ -1044,7 +1046,9 @@
                         "description": "Page number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": "1",
+                            "nullable": true
                         },
                         "example": "1"
                     },
@@ -1054,7 +1058,9 @@
                         "description": "Number of items returned per page",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "default": "20",
+                            "nullable": true
                         },
                         "example": "20"
                     },
@@ -1064,7 +1070,8 @@
                         "description": "Accession number",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1073,7 +1080,18 @@
                         "description": "Maker",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "place",
+                        "in": "query",
+                        "description": "Place of collection",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1082,7 +1100,8 @@
                         "description": "Category",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1095,7 +1114,8 @@
                             "enum": [
                                 "asc",
                                 "desc"
-                            ]
+                            ],
+                            "nullable": true
                         },
                         "example": "asc"
                     },
@@ -1122,7 +1142,8 @@
                             "enum": [
                                 "1",
                                 "0"
-                            ]
+                            ],
+                            "nullable": true
                         },
                         "example": "1"
                     },
@@ -1145,7 +1166,8 @@
                             "enum": [
                                 "1",
                                 "0"
-                            ]
+                            ],
+                            "nullable": true
                         }
                     },
                     {
@@ -1158,7 +1180,8 @@
                             "enum": [
                                 "1",
                                 "0"
-                            ]
+                            ],
+                            "nullable": true
                         }
                     },
                     {
@@ -1174,7 +1197,8 @@
                                 "updated",
                                 "name",
                                 "summary_title"
-                            ]
+                            ],
+                            "nullable": true
                         }
                     },
                     {
@@ -1183,7 +1207,8 @@
                         "description": "Period associated",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1192,7 +1217,8 @@
                         "description": "Acquired date greater than",
                         "required": false,
                         "schema": {
-                            "type": "int"
+                            "type": "int",
+                            "nullable": true
                         }
                     },
                     {
@@ -1201,7 +1227,8 @@
                         "description": "Acquired date less than",
                         "required": false,
                         "schema": {
-                            "type": "int"
+                            "type": "int",
+                            "nullable": true
                         }
                     },
                     {
@@ -1210,7 +1237,8 @@
                         "description": "Publication associated",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1219,7 +1247,8 @@
                         "description": "Materials used for component",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1228,7 +1257,8 @@
                         "description": "Person associated with acquisition",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1237,7 +1267,8 @@
                         "description": "Findspot or location associated with acquisition",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1246,7 +1277,8 @@
                         "description": "School or style associated with object",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1255,7 +1287,8 @@
                         "description": "Earliest year of acquisition",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "nullable": true
                         }
                     },
                     {
@@ -1264,7 +1297,8 @@
                         "description": "Latest year of acquisition",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "nullable": true
                         }
                     },
                     {
@@ -1273,7 +1307,8 @@
                         "description": "Earliest creation year",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "nullable": true
                         }
                     },
                     {
@@ -1282,7 +1317,8 @@
                         "description": "Latest creation year",
                         "required": false,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "nullable": true
                         }
                     },
                     {
@@ -1291,7 +1327,8 @@
                         "description": "Technique used in production",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {
@@ -1300,7 +1337,8 @@
                         "description": "Components of the work",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     },
                     {

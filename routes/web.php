@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 * Basic search routes
 */
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('api/activity', 'home')->name('home');
+    Route::get('api/activity', 'HomeController@activity')->name('home');
     Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
 });
 Route::get('/', 'indexController@search')->name('data.home');

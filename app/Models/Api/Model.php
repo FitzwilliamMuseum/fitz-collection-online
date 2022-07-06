@@ -368,6 +368,21 @@ class Model
         return $params;
     }
 
+
+    public static function getPlaceParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('place', $request->query())) {
+            $filter = array(
+                'match' => [
+                    'lifecycle.collection.places.admin.id' => urldecode(Purifier::clean($request->query('place'), array('HTML.Allowed' => ''))),
+                ]
+            );
+            $params['body']['query']['bool']['must'] = [$filter];
+        }
+        return $params;
+    }
+
     /**
      * @param Request $request
      * @return array
