@@ -9,7 +9,11 @@ use OpenApi\Annotations as OA;
  * @OA\Get(
  *     path="/api/v1/",
  *     description="Home page",
- *     @OA\Response(response="default", description="Welcome page")
+ *     tags={"Home"},
+ *     @OA\Response(
+ *     response=200,
+ *     description="Welcome page",
+ * )
  * )
  */
 class IndexController extends ApiController

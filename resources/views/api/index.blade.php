@@ -2,6 +2,7 @@
 @section('title','The Fitzwilliam Museum Collections API')
 @section('content')
 @markdown
+
 The Fitzwilliam Museum Applications Programming Interface (API) API provides JSON-API data as a REST-style service
 that should enable you to reuse, remix, analyse or incorporate our data into your work or projects.
 
@@ -15,11 +16,21 @@ Our API gives you access to the following data through our current version (V1):
 * Actors and Agents (eg. makers, contributors, etc. - not many of these have biographies)
 * Places (eg. museums, institutions, towns etc. - some of these have coordinates, geocoded via Nominatim)
 
+### What is this API for?
+
+Serendipity, creativity, and the ability to reuse our data in your work or projects. Maybe you are a museum professional,
+or a student or a teacher, or a researcher. You can access our data through the API, and use it to create your own projects.
+
 ### How are these data licensed?
 
 Our structured metadata have been licensed openly under a Creative Commons Zero license for over 10 years, but our images
 are made available under a more restrictive license - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license.
-This may change in the future.
+This may change in the future. So to reiterate:]
+
+* CCO - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license ** FOR DATA **
+* CC-BY-NC-SA - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license ** FOR IMAGES **
+
+20th century and in copyright works generally are not included in this system.
 
 ### What is this API built on?
 
@@ -29,8 +40,9 @@ on our Github repository linked in the footer of this page.
 
 ### Do we want to know what you're doing?
 
-Yes please, as Meret Sanderhof says, Sharing is Caring. We want to know what you're doing with our data, show us, tell us,
-inform us.
+Yes please, as Merete Sanderhoff says, [Sharing is Caring](https://www.youtube.com/watch?v=whkUK3xaoPQ). We want to know what
+you're doing with our data, show us, tell us, inform us, show others etc. Our system stands on the shoulder of giants, maybe
+your work will too.
 
 ### Can I just download all your data?
 
@@ -78,7 +90,6 @@ Yes! We have:
 * Downloadable Postman collection
 * R notebooks with examples
 * Python notebooks with examples
-
 
 ### Show me how to use it!
 

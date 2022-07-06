@@ -58,7 +58,7 @@ use App\Rules\AgentFieldsAllowed;
  *    @OA\Schema(
  *       type="string",
  *       default="admin.created,admin.modified,admin.id,name,summary_title",
- *      nullable=true
+ *       nullable=true
  *    )
  * ),
  * @OA\Parameter(
@@ -83,7 +83,7 @@ use App\Rules\AgentFieldsAllowed;
  *       type="enum",
  *       enum={"created","updated","id","name","summary_title"},
  *       default="admin.id",
- *      nullable=true
+ *       nullable=true
  *    )
  * ),
  * @OA\Response(
@@ -116,11 +116,10 @@ use App\Rules\AgentFieldsAllowed;
  *    )
  * ),
  * @OA\Parameter(
- *    description="Fields available to return",
+ *    description="Comma separated fields available to return, eg name,summary_title",
  *    in="query",
  *    name="fields",
  *    required=false,
- *    example="admin.created,admin.modified,admin.id,name,summary_title",
  *    @OA\Schema(
  *       type="string",
  *       default="admin.id",
