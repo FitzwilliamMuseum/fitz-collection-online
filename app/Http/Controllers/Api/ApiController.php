@@ -20,6 +20,7 @@ use function env;
 use function now;
 use function response;
 use App\LookupPlace;
+use App\Models\AxiellPlaceNames;
 /**
  * @OA\Info(
  *     version="1.0.0",
@@ -1121,12 +1122,25 @@ class ApiController extends BaseController
 
     /**
      * @param string $placeName
+     * @return string
+     */
+    public function checkPlaceName(string $placeName): string
+    {
+        $place = AxiellPlaceNames::find($placeName);
+        if(!empty($place)) {
+            return $place['geocode_name'];
+        }
+        return $placeName;
+    }
+    /**
+     * @param string $placeName
      * @return array
      * @throws \Geocoder\Exception\Exception
      */
     public function getPlaceData(string $placeName): array
     {
         $key = md5($placeName);
+        $placeName = $this->checkPlaceName($placeName);
         $expiresAt = now()->addDays(60);
         if (Cache::has($key)) {
             $gd = Cache::get($key);
