@@ -153,6 +153,66 @@ class Objects extends Model
         return self::searchAndCache($combined);
     }
 
+
+    public static function listNumbers(Request $request): array
+    {
+
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+
+                        ],
+                        "filter" =>
+                            [
+                                "term" => ["type.base" => 'object'],
+                            ],
+                    ]
+                ],
+            ],
+            '_source' => [
+                'admin.id',
+            ],
+        ];
+        $query = self::createQueryObjects($request);
+
+        $image = self::getImageParam($request);
+        $iiif = self::getIiifParam($request);
+        $department = self::getDepartmentParam($request);
+        $publications = self::getPublicationParam($request);
+        $categories = self::getCategoriesParam($request);
+        $periods = self::getPeriodsParam($request);
+        $names = self::getNamesParam($request);
+        $acquiredFrom = self::getAcquiredFrom($request);
+        $collected = self::getCollectedFrom($request);
+        $accession = self::getAccessionParam($request);
+        $maker = self::getMaker($request);
+        $school = self::getSchool($request);
+        $start_date = self::getAcquisitionDate($request);
+        $end_date = self::getAcquisitionEndDate($request);
+        $techniques = self::getTechniquesParam($request);
+        $components = self::getComponentsParam($request);
+        $firstCreated = self::getFirstCreationDate($request);
+        $secondCreated = self::getSecondCreationDate($request);
+        $random = self::getRandom($request);
+        $geo = self::getGeoParam($request);
+        $place = self::getPlaceParam($request);
+        $combined = array_merge_recursive(
+            $params, $image, $iiif, $query, $department,
+            $publications, $categories, $periods, $names,
+            $acquiredFrom, $collected, $accession, $maker,
+            $school, $start_date, $end_date, $techniques,
+            $components, $firstCreated, $secondCreated,
+            $random, $geo, $place
+        );
+        return self::searchAndCache($combined);
+    }
+
     /**
      * @param Request $request
      * @param string $object

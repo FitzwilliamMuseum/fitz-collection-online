@@ -11,9 +11,9 @@ use OpenApi\Annotations as OA;
 
 /**
  * @OA\Get(
- * path="/api/v1/objects",
- * summary="Retrieve objects and artworks recorded in the database",
- * description="A list of objects and artworks recorded in the database, with pagination.",
+ * path="/api/v1/ids",
+ * summary="Retrieve objects and artworks ID numbers",
+ * description="A list of objects and artworks ID numbers recorded in the database",
  * tags={"Objects and artworks"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
@@ -48,7 +48,7 @@ use OpenApi\Annotations as OA;
  *    @OA\Schema(
  *       type="integer",
  *      nullable=true,
- *      default="20"
+ *      default="500"
  *    )
  * ),
  * @OA\Parameter(
@@ -101,17 +101,6 @@ use OpenApi\Annotations as OA;
  *       type="enum",
  *       enum={"asc","desc"},
  *       nullable=true
- *    )
- * ),
- * @OA\Parameter(
- *    description="Random object parameter",
- *    in="query",
- *    name="random",
- *    required=false,
- *    @OA\Schema(
- *       type="enum",
- *       enum={"1","0"},
- *
  *    )
  * ),
  * @OA\Parameter(
@@ -330,30 +319,8 @@ use OpenApi\Annotations as OA;
  *    description="Not found"
  * ),
  * ),
- * @OA\Get(
- * path="/api/v1/objects/{object}",
- * summary="Retrieve an object",
- * description="An object's details.",
- * tags={"Objects and artworks"},
- * security={{"bearerAuth": {}}},
- * @OA\Parameter(
- *    description="Object number",
- *    in="path",
- *    name="object",
- *    required=true,
- *    example="object-2910",
- *    @OA\Schema(
- *       type="string",
- *       format="string"
- *    )
- * ),
- * @OA\Response(
- *    response=200,
- *    description="Success"
- *     ),
- * )
  */
-class ObjectsController extends ApiController
+class ObjectNumbersController extends ApiController
 {
     public array $_params = array(
         'sort', 'size', 'hasImage',
@@ -364,11 +331,9 @@ class ObjectsController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
-        'random','hasGeo', 'place'
+        'hasGeo', 'place'
     );
-    public array $_showParams = array(
-        'period', 'fields'
-    );
+
 
     /**
      * @param Request $request
@@ -379,14 +344,13 @@ class ObjectsController extends ApiController
         $validator = Validator::make($request->all(), [
             "*" => "in:" . implode(",", $this->_params),
             "page" => "numeric|gt:0",
-            "size" => "numeric|gt:0|lte:100",
+            "size" => "numeric|gt:0|lte:500",
             "hasIIIF" => "boolean",
             "hasImage" => "boolean",
             "query" => "string|min:3",
             "fields" => "string|min:4",
             'sort_field' => 'string|in:id,title,created,updated|min:2',
             'sort' => 'string|in:asc,desc|min:3',
-            'random' => 'boolean|prohibited_if:sort,asc|prohibited_if:sort,asc,desc|prohibited_if:sort_field,id,name,summary_title,created,updated',
             'period' => "string|min:7|regex:'^term-\d+$'",
             'category' => "string|min:7|regex:'^term-\d+$'",
             'publication' => "string|min:10|regex:'^publication-\d+$'",
@@ -405,56 +369,26 @@ class ObjectsController extends ApiController
             'created_start' => 'numeric',
             'created_end' => 'numeric',
             'hasGeo' => 'boolean',
-        ],
-        [
-            'random.prohibited_if' => 'You cannot use the random parameter with sort or sort_field parameters',
         ]);
 
         if ($validator->fails()) {
             return $this->jsonError(400, $validator->errors());
         }
 
-        $response = Objects::list($request);
-        $data = $this->insertType($this->parseData($response), 'objects');
+        $response = Objects::listNumbers($request);
+        $data = $this->parseIdData($response);
         if (!empty($data)) {
 
             $paginator = new LengthAwarePaginator(
                 $data,
                 $response['hits']['total']['value'],
-                $request->query('size', 20),
+                $request->query('size', 500),
                 LengthAwarePaginator::resolveCurrentPage()
             );
             $paginator->setPath(route('api.objects.index'));
             $paginator->appends(request()->except('page'));
 
             return $this->jsonGenerate($request, $paginator, $paginator->total());
-        } else {
-            return $this->jsonError(404, $this->_notFound);
-        }
-    }
-
-
-    /**
-     * @param Request $request
-     * @param string $object
-     * @return JsonResponse
-     */
-    public function show(Request $request, string $object): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            "*" => "in:" . implode(",", $this->_showParams),
-            'name' => "string|min:9|regex:'^object-\d+$'",
-            "fields" => "string|min:4",
-        ]);
-
-        if ($validator->fails()) {
-            return $this->jsonError(400, $validator->errors());
-        }
-
-        $response = Objects::show($request, $object);
-        if (!empty($response)) {
-            $enriched = $this->insertSingleType($response, 'objects');
-            return $this->jsonSingle($this->enrich('http:', 'https:', $enriched));
         } else {
             return $this->jsonError(404, $this->_notFound);
         }

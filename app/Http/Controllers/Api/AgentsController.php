@@ -178,7 +178,7 @@ class AgentsController extends ApiController
             return $this->jsonError(404, $this->_notFound);
         } else {
             $data = $this->insertType($this->parseAgents($data), 'agents');
-            $paginator = new LengthAwarePaginator($data, $response['hits']['total']['value'], $this->getSize($request), LengthAwarePaginator::resolveCurrentPage());
+            $paginator = new LengthAwarePaginator($data, $response['hits']['total']['value'],$request->query('size',10), LengthAwarePaginator::resolveCurrentPage());
             $paginator->setPath(route('api.agents.index'));
             $paginator->appends(request()->except('page'));
             return $this->jsonGenerate($request, $paginator, $paginator->total());

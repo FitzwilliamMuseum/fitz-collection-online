@@ -51,6 +51,7 @@ if(!in_array(Request::ip(), IpAddress::whitelist())){
 |--------------------------------------------------------------------------
  */
 Route::group(['prefix' => 'v1', 'middleware' => $middleware], function () {
+    Route::apiResource('ids', 'Api\ObjectNumbersController', ['as' => 'api', 'only' => ['index']]);
     Route::apiResource('objects', 'Api\ObjectsController', ['as' => 'api', 'only' => ['index', 'show']]);
     Route::apiResource('departments', 'Api\DepartmentsController', ['as' => 'api', 'only' => ['index', 'show']]);
     Route::apiResource('periods', 'Api\PeriodsController', ['as' => 'api', 'only' => ['index', 'show']]);
