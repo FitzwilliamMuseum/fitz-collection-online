@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center text-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('My API Activity') }}</div>
                     </div>
@@ -13,6 +13,7 @@
                         <th>Method</th>
                         <th>Path</th>
                         <th>IP</th>
+                        <th>Response code</th>
                         <th>Created At</th>
                     </tr>
 
@@ -22,6 +23,7 @@
                         <td>{{ $item->request_method }}</td>
                         <td>{{ $item->request_full_url }}</td>
                         <td>{{ $item->request_ip }}</td>
+                        <td>{{ $item->response_status_code }}</td>
                         <td>{{ $item->created_at }}</td>
                     </tr>
                 @endforeach
@@ -29,6 +31,12 @@
                 <nav aria-label="Page navigation">
                     {{ $activity->appends(request()->except('page'))->links() }}
                 </nav>
+                <h3 class="text-info">All API activity by method</h3>
+                <ul>
+                    @foreach($totals as $item)
+                        <li>{{ $item->request_method }}: {{ $item->total }}</li>
+                    @endforeach
+                </ul>
                 </div>
             </div>
         </div>

@@ -12582,16 +12582,16 @@
         },
         {
             "name": "wnx/laravel-stats",
-            "version": "v2.9.1",
+            "version": "v2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stefanzweifel/laravel-stats.git",
-                "reference": "6faa785d4211b298ea1c038f23ec02bc61a6619d"
+                "reference": "6ddbc57bfe1ee2b8155e9c6ea14c9a501c110d57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stefanzweifel/laravel-stats/zipball/6faa785d4211b298ea1c038f23ec02bc61a6619d",
-                "reference": "6faa785d4211b298ea1c038f23ec02bc61a6619d",
+                "url": "https://api.github.com/repos/stefanzweifel/laravel-stats/zipball/6ddbc57bfe1ee2b8155e9c6ea14c9a501c110d57",
+                "reference": "6ddbc57bfe1ee2b8155e9c6ea14c9a501c110d57",
                 "shasum": ""
             },
             "require": {
@@ -12649,7 +12649,7 @@
             ],
             "support": {
                 "issues": "https://github.com/stefanzweifel/laravel-stats/issues",
-                "source": "https://github.com/stefanzweifel/laravel-stats/tree/v2.9.1"
+                "source": "https://github.com/stefanzweifel/laravel-stats/tree/v2.9.2"
             },
             "funding": [
                 {
@@ -12661,7 +12661,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-05-31T08:12:06+00:00"
+            "time": "2022-07-05T19:28:39+00:00"
         }
     ],
     "aliases": [],
