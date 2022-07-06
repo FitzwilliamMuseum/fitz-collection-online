@@ -37,6 +37,13 @@
                         <li>{{ $item->request_method }}: {{ $item->total }}</li>
                     @endforeach
                 </ul>
+
+                <h3 class="text-info">All API activity by response code</h3>
+                <ul>
+                    @foreach($codes as $item)
+                        <li>{{ $item->response_status_code }}: {{ $item->total }}</li>
+                    @endforeach
+                </ul>
                 </div>
             </div>
         </div>
