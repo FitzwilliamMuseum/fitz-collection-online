@@ -35,9 +35,9 @@ Route::group(['prefix' => 'auth', 'middleware' => ['log.route','api-log','json.r
  */
 Route::match(
     array('GET','POST'),'/v1', 'Api\IndexController@index')->name('api.home')->middleware(
-    'log.route','api-log','json.response'
+    'log.route','json.response'
 );
-$middleware = array('log.route','api-log','json.response');
+$middleware = array('log.route','json.response');
 
 if(!in_array(Request::ip(), IpAddress::whitelist())){
     $middleware[] = 'auth:sanctum';
