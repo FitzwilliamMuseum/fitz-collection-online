@@ -1021,6 +1021,341 @@
                 ]
             }
         },
+        "/api/v1/ids": {
+            "get": {
+                "tags": [
+                    "Objects and artworks"
+                ],
+                "summary": "Retrieve objects and artworks ID numbers",
+                "description": "A list of objects and artworks ID numbers recorded in the database",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Query the system for objects and artworks (defaults to AND)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "Dendera"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": "1",
+                            "nullable": true
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items returned per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": "500",
+                            "nullable": true
+                        },
+                        "example": "20"
+                    },
+                    {
+                        "name": "accession_number",
+                        "in": "query",
+                        "description": "Accession number",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "maker",
+                        "in": "query",
+                        "description": "Maker",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "place",
+                        "in": "query",
+                        "description": "Place of collection",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "category",
+                        "in": "query",
+                        "description": "Category",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "nullable": true
+                        },
+                        "example": "asc"
+                    },
+                    {
+                        "name": "hasImage",
+                        "in": "query",
+                        "description": "Determine whether an object has images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ],
+                            "nullable": true
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Choose fields to return. Use a comma separated string. These can be any of the following without quotes: 'categories','description','component','department.value','identifier','inscription','lifecycle','institutions','multimedia','name','note','owners','publications','school_or_style','summary','techniques','measurements','title'. By default we return all fields.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "hasGeo",
+                        "in": "query",
+                        "description": "Determine whether an object has geographic data available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ],
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "hasIIIF",
+                        "in": "query",
+                        "description": "Determine whether an object has IIIF images available",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "1",
+                                "0"
+                            ],
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "sort_field",
+                        "in": "query",
+                        "description": "Sort field",
+                        "required": false,
+                        "schema": {
+                            "type": "enum",
+                            "enum": [
+                                "id",
+                                "created",
+                                "updated",
+                                "name",
+                                "summary_title"
+                            ],
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "period",
+                        "in": "query",
+                        "description": "Period associated",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "acquired_date_start",
+                        "in": "query",
+                        "description": "Acquired date greater than",
+                        "required": false,
+                        "schema": {
+                            "type": "int",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "acquired_date_end",
+                        "in": "query",
+                        "description": "Acquired date less than",
+                        "required": false,
+                        "schema": {
+                            "type": "int",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "publication",
+                        "in": "query",
+                        "description": "Publication associated",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "component",
+                        "in": "query",
+                        "description": "Materials used for component",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "acquired_from",
+                        "in": "query",
+                        "description": "Person associated with acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "collected_place",
+                        "in": "query",
+                        "description": "Findspot or location associated with acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "school_or_style",
+                        "in": "query",
+                        "description": "School or style associated with object",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "acquired_date_start",
+                        "in": "query",
+                        "description": "Earliest year of acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "acquired_date_end",
+                        "in": "query",
+                        "description": "Latest year of acquisition",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_start",
+                        "in": "query",
+                        "description": "Earliest creation year",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_end",
+                        "in": "query",
+                        "description": "Latest creation year",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "technique",
+                        "in": "query",
+                        "description": "Technique used in production",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "component",
+                        "in": "query",
+                        "description": "Components of the work",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "department",
+                        "in": "query",
+                        "description": "Assigned department for the object",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/objects": {
             "get": {
                 "tags": [

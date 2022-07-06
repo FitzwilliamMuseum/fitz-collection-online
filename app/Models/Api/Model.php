@@ -78,6 +78,22 @@ class Model
 
     /**
      * @param Request $request
+     * @return int
+     */
+    public static function getSizeID(Request $request): int
+    {
+        $size = 500;
+        $params = $request->query();
+        if (is_array($params)) {
+            if (array_key_exists('size', $params) && $params['size'] > 0) {
+                $size = $params['size'];
+            }
+        }
+        return $size;
+    }
+
+    /**
+     * @param Request $request
      * @return array|string
      */
     public static function getSort(Request $request): array|string
@@ -261,6 +277,18 @@ class Model
         }
     }
 
+    /**
+     * @param Request $request
+     * @return int
+     */
+    public static function getFromID(Request $request): int
+    {
+        if ($request->query('page') && $request->query('page') > 1) {
+            return $request->query('page') * self::getSizeID($request);
+        } else {
+            return 0;
+        }
+    }
     public static function parse($elastic): array
     {
         $data = array();

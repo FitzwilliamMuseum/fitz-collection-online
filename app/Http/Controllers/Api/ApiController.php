@@ -209,6 +209,16 @@ class ApiController extends BaseController
         return $data;
     }
 
+    public function parseIdData($elastic): array
+    {
+        $data = array();
+        foreach ($elastic['hits']['hits'] as $object) {
+            foreach($object['_source'] as $key => $value){
+                $data[] = $value['id'];
+            }
+        }
+        return $data;
+    }
     /**
      * @param $find
      * @param $replace
@@ -928,8 +938,7 @@ class ApiController extends BaseController
                 'URI' => $this->getWebURI('agent', $agent['admin']['id']),
                 'apiURI' => $this->getTermURI('api.agents.show', $agent['admin']['id']),
                 'summary_title' => $agent['summary_title'],
-                'admin' => $agent['admin'],
-                'name' => $agent['name'],
+                'name' => $agent['name'] ?? 'No name',
             );
         }
         return $data;

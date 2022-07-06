@@ -156,6 +156,7 @@ class ImagesController extends ApiController
             $paginator = new LengthAwarePaginator(
                 $enriched,
                 $response['hits']['total']['value'],
+                $request->query('size', 20),
                 LengthAwarePaginator::resolveCurrentPage()
             );
             $paginator->setPath(route('api.images.index'));
