@@ -23,7 +23,7 @@ class HomeController extends Controller
     {
         $activity = ApiLog::where('user_id', '=', Auth::user()->id)->paginate(10);
         $totals = ApiLog::groupBy('request_method')->selectRaw('count(*) as total, request_method')->get();
-        $codes = ApiLog::groupBy('request_method')->selectRaw('count(*) as total, response_status_code')->get();
+        $codes = ApiLog::groupBy('response_status_code')->selectRaw('count(*) as total, response_status_code')->get();
 
         return view('home',compact('activity','totals','codes'));
     }
