@@ -54,7 +54,9 @@ class Periods extends Model
                 ],
             ],
         ];
-        return self::searchAndCache($params);
+        $query = self::createQueryPeriod($request);
+        $combined = array_merge_recursive($params, $query);
+        return self::searchAndCache($combined);
     }
 
     /**
@@ -87,5 +89,49 @@ class Periods extends Model
             ],
         ];
         return Collect(self::parse(self::searchAndCache($params)))->first();
+    }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'track_total_hits' => true,
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'body' => [
+                'aggregations' => [
+                    'records' => [
+                        'terms' => [
+                            'field' => 'lifecycle.creation.periods.admin.id',
+                            'size' => 4000,
+                            'order' => [
+                                '_count' =>  self::getSortParam($request),
+                            ],
+                        ],
+                        'aggs' => [
+                            'period' => [
+                                'top_hits' => [
+                                    'size' => 10,
+                                    '_source' => [
+                                        'include' => [
+                                            'lifecycle.creation.periods.summary_title',
+                                            'lifecycle.creation.periods.admin.id',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $query = self::createQueryPeriod($request);
+        $combined = array_merge_recursive($params, $query);
+        return self::searchAndCache($combined);
     }
 }

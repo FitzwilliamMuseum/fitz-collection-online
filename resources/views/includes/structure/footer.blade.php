@@ -117,6 +117,10 @@
                                 <a aria-label="Work for us" href="https://fitzmuseum.cam.ac.uk/about-us/vacancies">Work for us</a>
                             </li>
                             <li>
+                                <a aria-label="Our Collections API"
+                                   href="{{ route('api.index') }}">Our Collections API</a>
+                            </li>
+                            <li>
                                 <a href="https://www.registrarysoffice.admin.cam.ac.uk/governance-and-strategy/anti-slavery-and-anti-trafficking"
                                    aria-label="Modern Slavery Act statement of compliance">Modern Slavery Act
                                     Statement</a>

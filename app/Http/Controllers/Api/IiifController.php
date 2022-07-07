@@ -118,6 +118,7 @@ class IiifController extends ApiController
             $paginator = new LengthAwarePaginator(
                 $images,
                 $response['hits']['total']['value'],
+                $request->get('size', 20),
                 LengthAwarePaginator::resolveCurrentPage()
             );
             $paginator->setPath(route('api.images.index'));

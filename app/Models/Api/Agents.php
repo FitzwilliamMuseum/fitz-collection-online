@@ -4,7 +4,6 @@ namespace App\Models\Api;
 use Illuminate\Http\Request;
 use Mews\Purifier\Facades\Purifier;
 
-
 class Agents extends Model
 {
     /**
@@ -42,9 +41,9 @@ class Agents extends Model
                 parent::getSourceFields($request, self::$_fields, self::$_mandatory)
             ],
         ];
-        $params = parent::createQuery($request, $params);
         $params['body']['sort'] = parent::getSort($request);
-        return parent::searchAndCache($params);
+        $combined = array_merge_recursive($params, self::createQueryAgents($request));
+        return parent::searchAndCache($combined);
     }
 
     /**
@@ -79,4 +78,34 @@ class Agents extends Model
         return Collect(self::parse(self::searchAndCache($params)))->first();
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "term" => ["type.base" => 'agent']
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+        ];
+        $params['body']['sort'] = parent::getSort($request);
+        $combined = array_merge_recursive($params, self::createQueryAgents($request));
+        return parent::searchAndCache($combined);
+    }
 }

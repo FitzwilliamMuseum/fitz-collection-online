@@ -119,4 +119,42 @@ class Images extends Model
     {
         return implode(',', array_merge(self::$exif, self::$objects, self::$images, self::$admin));
     }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params =  [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                'sort' => self::getSort($request),
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "term" => ["type.base" => 'media']
+                            ]
+                        ]
+                    ]
+                ],
+
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+        ];
+//        $query = self::createQueryObjects($request);
+        $image = self::getImageParam($request);
+        $iiif = self::getIiifParam($request);
+        $combined = array_merge_recursive(
+            $params, $image, $iiif,
+        );
+        return self::searchAndCache($combined);
+    }
 }

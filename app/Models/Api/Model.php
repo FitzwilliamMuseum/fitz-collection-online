@@ -155,7 +155,6 @@ class Model
 
     /**
      * @param Request $request
-     * @param array $params
      * @return array
      */
     public static function createQuery(Request $request): array
@@ -174,9 +173,85 @@ class Model
 
     }
 
+
     /**
      * @param Request $request
-     * @param array $params
+     * @return array
+     */
+    public static function createQueryPeriod(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "lifecycle.creation.periods.summary_title",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+        }
+        return $query;
+
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function createQueryPublications(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "summary_title",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+        }
+        return $query;
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function createQueryTerminology(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "summary_title",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+        }
+        return $query;
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function createQueryAgents(Request $request): array
+    {
+        $query = [];
+        if (!is_null($request->query('query'))) {
+            $query['body']['query']['bool']['must'][] = [
+                "multi_match" => [
+                    "fields" => "summary_title",
+                    "query" => Purifier::clean($request->query('query'), array('HTML.Allowed' => '')),
+                    "operator" => "AND",
+                ]
+            ];
+        }
+        return $query;
+    }
+    /**
+     * @param Request $request
      * @return array
      */
     public static function createQueryPlaces(Request $request): array
@@ -196,7 +271,6 @@ class Model
 
     /**
      * @param Request $request
-     * @param array $params
      * @return array
      */
     public static function createQueryMakers(Request $request): array

@@ -113,5 +113,44 @@ class IIIF extends Model
         ];
         return Collect(self::parse(self::searchAndCache($params)))->first();
     }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request):array
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                'sort' => self::getSort($request),
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "term" => ["type.base" => 'media']
+                            ]
+                        ]
+                    ]
+                ],
+
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+
+        ];
+        $filter = array(
+            "exists" => [
+                "field" => "processed.zoom"
+            ]
+        );
+        $params['body']['query']['bool']['must'][] = [$filter];
+        return self::searchAndCache($params);
+    }
 }
 

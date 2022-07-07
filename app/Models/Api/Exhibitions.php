@@ -47,8 +47,9 @@ class Exhibitions extends Model
                 parent::getSourceFields($request, self::$_fields, self::$_mandatory)
             ],
         ];
-        $params = self::createQuery($request, $params);
-        return self::searchAndCache($params);
+        $query = self::createQuery($request);
+        $combined = array_merge_recursive($params, $query);
+        return self::searchAndCache($combined);
     }
 
     /**
@@ -81,5 +82,36 @@ class Exhibitions extends Model
             ],
         ];
         return  Collect(self::parse(self::searchAndCache($params)))->first();
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'from' => self::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                'sort' => self::getSort($request),
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "term" => ["type.base" => 'exhibition']
+                            ]
+                        ]
+                    ]
+                ],
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+        ];
+        $combined = array_merge_recursive($params);
+        return self::searchAndCache($combined);
     }
 }

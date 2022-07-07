@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
  * path="/api/v1/departments",
  * summary="Departments of the museum",
  * description="Retrieve string literals of departments in the museum and object counts",
- * tags={"Terminology"},
+ * tags={"Admin Entities"},
  * security={{"bearerAuth": {}}},
  * @OA\Response(
  *    response=200,
@@ -24,7 +24,7 @@ use Illuminate\Http\Request;
  *     path="/api/v1/departments/{department}",
  *     summary="Departments of the museum",
  *     description="Retrieve string literals of a specific department in the museum and object counts",
- *     tags={"Terminology"},
+ *     tags={"Admin Entities"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *     description="Department",

@@ -9,7 +9,7 @@
         "/api/v1/agents": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "People"
                 ],
                 "summary": "Retrieve agents used in the database",
                 "description": "A list of agents used in the database, with pagination.",
@@ -20,7 +20,11 @@
                         "description": "Query",
                         "required": false,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "string",
+                            "maxLength": 255,
+                            "minLength": 1,
+                            "example": "Aurelius"
                         },
                         "example": "Aurelius"
                     },
@@ -31,6 +35,9 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
+                            "format": "integer",
+                            "minimum": 1,
+                            "example": "1",
                             "nullable": true
                         },
                         "example": "1"
@@ -42,6 +49,8 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
+                            "minimum": 1,
+                            "example": "20",
                             "nullable": true
                         },
                         "example": "20"
@@ -53,10 +62,14 @@
                         "required": false,
                         "schema": {
                             "type": "string",
-                            "default": "admin.created,admin.modified,admin.id,name,summary_title",
+                            "format": "string",
+                            "default": "name,summary_title",
+                            "maxLength": 255,
+                            "minLength": 4,
+                            "example": "name,summary_title",
                             "nullable": true
                         },
-                        "example": "admin.created,admin.modified,admin.id,name,summary_title"
+                        "example": "name,summary_title"
                     },
                     {
                         "name": "sort",
@@ -114,7 +127,7 @@
         "/api/v1/agents/{agent}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "People"
                 ],
                 "summary": "Retrieve an agent",
                 "description": "An agent's details",
@@ -139,6 +152,63 @@
                             "default": "admin.id",
                             "nullable": true
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/ids/agents": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve agent id numbers used in the database",
+                "description": "A list of agents numbers used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "integer",
+                            "minimum": 1,
+                            "example": "1",
+                            "nullable": true
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "integer",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": 1,
+                            "example": "20",
+                            "nullable": true
+                        },
+                        "example": "20"
                     }
                 ],
                 "responses": {
@@ -486,7 +556,7 @@
         "/api/v1/departments": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Admin Entities"
                 ],
                 "summary": "Departments of the museum",
                 "description": "Retrieve string literals of departments in the museum and object counts",
@@ -505,7 +575,7 @@
         "/api/v1/departments/{department}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Admin Entities"
                 ],
                 "summary": "Departments of the museum",
                 "description": "Retrieve string literals of a specific department in the museum and object counts",
@@ -539,7 +609,7 @@
         "/api/v1/exhibitions": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Exhibitions"
                 ],
                 "summary": "Retrieve exhibitions used in the database",
                 "description": "A list of exhibitions used in the database, with pagination.",
@@ -599,7 +669,7 @@
         "/api/v1/exhibitions/{exhibition}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Exhibitions"
                 ],
                 "summary": "Retrieve a term",
                 "description": "An exhibitions's details.",
@@ -614,6 +684,58 @@
                             "format": "string"
                         },
                         "example": "term-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/exhibitions/ids": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve exhibition IDs used in the database",
+                "description": "A list of exhibition IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
                     }
                 ],
                 "responses": {
@@ -706,6 +828,52 @@
                             "format": "string"
                         },
                         "example": "media-3049538914"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/ids/iiif": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve IIIF IDs used in the database",
+                "description": "A list of IIIF IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
                     }
                 ],
                 "responses": {
@@ -848,6 +1016,59 @@
                 ]
             }
         },
+        "/api/v1/ids/images": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve images IDs used in the database",
+                "description": "A list of image IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "minimum": "1"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items returned per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/": {
             "get": {
                 "tags": [
@@ -864,7 +1085,7 @@
         "/api/v1/institutions": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Admin Entities"
                 ],
                 "summary": "Institutions representing ownership",
                 "description": "Institutions representing ownership of objects within the museum",
@@ -889,7 +1110,7 @@
         "/api/v1/institutions/{institution}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Admin Entities"
                 ],
                 "summary": "Retrieve an institution",
                 "description": "An instititution's details ",
@@ -926,13 +1147,13 @@
         "/api/v1/makers": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "People"
                 ],
                 "summary": "Retrieve agents used in the database",
                 "description": "A list of makers used in the database, with pagination.",
                 "parameters": [
                     {
-                        "name": "q",
+                        "name": "query",
                         "in": "query",
                         "description": "Query",
                         "required": false,
@@ -986,7 +1207,7 @@
         "/api/v1/makers/{maker}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "People"
                 ],
                 "summary": "Retrieve a maker",
                 "description": "A maker's representation as used in the database.",
@@ -1021,10 +1242,62 @@
                 ]
             }
         },
+        "/api/v1/ids/makers": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve ID numbers for makers used in the database",
+                "description": "A list of makers used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/ids": {
             "get": {
                 "tags": [
-                    "Objects and artworks"
+                    "ID Numbers"
                 ],
                 "summary": "Retrieve objects and artworks ID numbers",
                 "description": "A list of objects and artworks ID numbers recorded in the database",
@@ -1739,13 +2012,13 @@
         "/api/v1/periods": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Chronology"
                 ],
                 "summary": "Retrieve agents used in the database",
                 "description": "A list of periods used in the database, with pagination.",
                 "parameters": [
                     {
-                        "name": "q",
+                        "name": "query",
                         "in": "query",
                         "description": "Query",
                         "required": false,
@@ -1814,7 +2087,7 @@
         "/api/v1/periods/{period}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Chronology"
                 ],
                 "summary": "Retrieve a period",
                 "description": "A period's representation as used in the database.",
@@ -1861,10 +2134,62 @@
                 ]
             }
         },
+        "/api/v1/ids/periods": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve agent IDs used in the database",
+                "description": "A list of period IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/places": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Geography"
                 ],
                 "summary": "Retrieve places used in the database",
                 "description": "A list of places used in the database, with pagination.",
@@ -1924,7 +2249,7 @@
         "/api/v1/places/{place}": {
             "get": {
                 "tags": [
-                    "Terminology"
+                    "Geography"
                 ],
                 "summary": "Retrieve a term",
                 "description": "A term's details.",
@@ -1939,6 +2264,58 @@
                             "format": "string"
                         },
                         "example": "term-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/ids/places": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve place IDs used in the database",
+                "description": "A list of place IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
                     }
                 ],
                 "responses": {
@@ -2037,6 +2414,60 @@
                             "format": "string"
                         },
                         "example": "publication-112039"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The request completed successfully."
+                    },
+                    "400": {
+                        "description": "The request cannot be processed"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/ids/publications": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve publication IDs used in the database",
+                "description": "A list of publication IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "1",
+                            "minimum": "1"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": "1"
+                        },
+                        "example": "20"
                     }
                 ],
                 "responses": {
@@ -2180,6 +2611,59 @@
                     },
                     "400": {
                         "description": "Not processed"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/ids/terminology": {
+            "get": {
+                "tags": [
+                    "ID Numbers"
+                ],
+                "summary": "Retrieve terminology IDs used in the database",
+                "description": "A list of terminology IDs used in the database, with pagination.",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Size of the page response",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "integer",
+                            "default": "500",
+                            "maximum": "500",
+                            "minimum": 1,
+                            "example": "20",
+                            "nullable": true
+                        },
+                        "example": "20"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Cannot be proceessed"
+                    },
+                    "404": {
+                        "description": "Not found"
                     }
                 },
                 "security": [

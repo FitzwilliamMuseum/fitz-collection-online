@@ -14,12 +14,12 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/makers",
  * summary="Retrieve agents used in the database",
  * description="A list of makers used in the database, with pagination.",
- * tags={"Terminology"},
+ * tags={"People"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
- *    name="q",
+ *    name="query",
  *    required=false,
  *    example="Roman",
  *    @OA\Schema(
@@ -66,7 +66,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/makers/{maker}",
  * summary="Retrieve a maker",
  * description="A maker's representation as used in the database.",
- * tags={"Terminology"},
+ * tags={"People"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
@@ -99,7 +99,7 @@ class MakersController extends ApiController
     /**
      * @var array|string[]
      */
-    private array $_params = array('q', 'page', 'size', 'sort');
+    private array $_params = array('query', 'page', 'size', 'sort');
 
     /**
      * @param Request $request

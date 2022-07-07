@@ -15,7 +15,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/institutions",
  * summary="Institutions representing ownership",
  * description="Institutions representing ownership of objects within the museum",
- * tags={"Terminology"},
+ * tags={"Admin Entities"},
  * security={{"bearerAuth": {}}},
  * @OA\Response(
  *    response=200,
@@ -34,7 +34,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/institutions/{institution}",
  * summary="Retrieve an institution",
  * description="An instititution's details ",
- * tags={"Terminology"},
+ * tags={"Admin Entities"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="institution ID number",

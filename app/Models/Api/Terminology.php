@@ -41,9 +41,40 @@ class Terminology extends Model
                 parent::getSourceFields($request, self::$_fields, self::$_mandatory)
             ],
         ];
-        $params = parent::createQuery($request, $params);
         $params['body']['sort'] = parent::getSort($request);
-        return parent::searchAndCache($params);
+        $combined = array_merge_recursive($params, self::createQueryTerminology($request));
+        return self::searchAndCache($combined);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => parent::getSizeID($request),
+            'from' => parent::getFromID($request),
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "term" => ["type.base" => 'term']
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+        ];
+        $params['body']['sort'] = parent::getSort($request);
+        $combined = array_merge_recursive($params, self::createQueryTerminology($request));
+        return self::searchAndCache($combined);
     }
 
     /**
