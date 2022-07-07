@@ -45,11 +45,45 @@ class Publications extends Model
                 self::getSourceFields($request, self::$_fields, self::$_mandatory)
             ],
         ];
-        self::createQuery($request, $params);
         $params['body']['sort'] = parent::getSort($request);
-        return self::searchAndCache($params);
+
+        $combined = array_merge_recursive($params, self::createQueryPublications($request));
+        return self::searchAndCache($combined);
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'size' => self::getSizeID($request),
+            'track_total_hits' => true,
+            'from' => self::getFromID($request),
+            'body' => [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'term' => [
+                                    'type.base' => 'publication'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            '_source' => [
+                'admin.id'
+            ],
+        ];
+        $params['body']['sort'] = parent::getSort($request);
+
+        $combined = array_merge_recursive($params, self::createQueryPublications($request));
+        return self::searchAndCache($combined);
+    }
     /**
      * @param Request $request
      * @param string $publication

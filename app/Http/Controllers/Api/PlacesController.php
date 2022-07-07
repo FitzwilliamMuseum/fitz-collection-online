@@ -15,7 +15,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/places",
  * summary="Retrieve places used in the database",
  * description="A list of places used in the database, with pagination.",
- * tags={"Terminology"},
+ * tags={"Geography"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
@@ -67,7 +67,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/places/{place}",
  * summary="Retrieve a term",
  * description="A term's details.",
- * tags={"Terminology"},
+ * tags={"Geography"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",

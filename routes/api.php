@@ -51,19 +51,40 @@ if(!in_array(Request::ip(), IpAddress::whitelist())){
 |--------------------------------------------------------------------------
  */
 Route::group(['prefix' => 'v1', 'middleware' => $middleware], function () {
-    Route::apiResource('ids', 'Api\ObjectNumbersController', ['as' => 'api', 'only' => ['index']]);
+    Route::apiResource('ids', 'Api\ObjectNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
     Route::apiResource('objects', 'Api\ObjectsController', ['as' => 'api', 'only' => ['index', 'show']]);
+
     Route::apiResource('departments', 'Api\DepartmentsController', ['as' => 'api', 'only' => ['index', 'show']]);
+
     Route::apiResource('periods', 'Api\PeriodsController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/periods', 'Api\PeriodsNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('publications', 'Api\PublicationsController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/publications', 'Api\PublicationsNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('agents', 'Api\AgentsController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/agents', 'Api\AgentsNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('terminology', 'Api\TerminologyController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/terminology', 'Api\TerminologyNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('images', 'Api\ImagesController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/images', 'Api\ImagesNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('exhibitions', 'Api\ExhibitionsController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/exhibitions', 'Api\ExhibitionsNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('institutions', 'Api\InstitutionsController', ['as' => 'api', 'only' => ['index', 'show']]);
+
     Route::apiResource('makers', 'Api\MakersController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/makers', 'Api\MakersNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::apiResource('places', 'Api\PlacesController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/places', 'Api\PlacesNumbersController', ['as' => 'api.ids', 'only' => ['index', 'show']]);
+
     Route::apiResource('iiif', 'Api\IiifController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('ids/iiif', 'Api\IiifNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
+
     Route::fallback(function () {
         return response()->json(['error' => 'Nothing found with that query'], 404);
     });

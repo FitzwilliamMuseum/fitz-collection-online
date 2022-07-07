@@ -76,4 +76,44 @@ class Makers extends Model
         ];
         return Collect(self::parse(self::searchAndCache($params)))->first();
     }
+
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function listNumbers(Request $request): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'body' => [
+                'aggregations' => [
+                    'records' => [
+                        'terms' => [
+                            'field' => 'lifecycle.creation.maker.admin.id',
+                            'size' => 6000,
+                            'order' => [
+                                '_count' => self::getSortParam($request),
+                            ],
+                        ],
+                        'aggs' => [
+                            'maker' => [
+                                'top_hits' => [
+                                    'size' => 1,
+                                    '_source' => [
+                                        'include' => [
+                                            'lifecycle.creation.maker.summary_title',
+                                            'lifecycle.creation.maker.admin.id'
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        $combined = array_merge_recursive($params, self::createQueryMakers($request));
+        return self::searchAndCache($combined);
+    }
 }

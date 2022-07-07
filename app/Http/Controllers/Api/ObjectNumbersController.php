@@ -14,7 +14,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/ids",
  * summary="Retrieve objects and artworks ID numbers",
  * description="A list of objects and artworks ID numbers recorded in the database",
- * tags={"Objects and artworks"},
+ * tags={"ID Numbers"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query the system for objects and artworks (defaults to AND)",
@@ -385,7 +385,7 @@ class ObjectNumbersController extends ApiController
                 $request->query('size', 500),
                 LengthAwarePaginator::resolveCurrentPage()
             );
-            $paginator->setPath(route('api.objects.index'));
+            $paginator->setPath(route('api.ids.ids.index'));
             $paginator->appends(request()->except('page'));
 
             return $this->jsonGenerate($request, $paginator, $paginator->total());

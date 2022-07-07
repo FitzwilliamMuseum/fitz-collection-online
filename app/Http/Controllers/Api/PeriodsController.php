@@ -15,12 +15,12 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/periods",
  * summary="Retrieve agents used in the database",
  * description="A list of periods used in the database, with pagination.",
- * tags={"Terminology"},
+ * tags={"Chronology"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
- *    name="q",
+ *    name="query",
  *    required=false,
  *    example="Roman",
  *    @OA\Schema(
@@ -79,7 +79,7 @@ use OpenApi\Annotations as OA;
  * path="/api/v1/periods/{period}",
  * summary="Retrieve a period",
  * description="A period's representation as used in the database.",
- * tags={"Terminology"},
+ * tags={"Chronology"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
@@ -123,7 +123,7 @@ class PeriodsController extends ApiController
     /**
      * @var array
      */
-    private array $_params = array('q', 'page', 'size', 'sort', 'fields', 'sort_field');
+    private array $_params = array('query', 'page', 'size', 'sort', 'fields', 'sort_field');
 
     /**
      * @var array
@@ -148,7 +148,7 @@ class PeriodsController extends ApiController
             return $this->jsonError(400, $validator->errors());
         }
 
-        $response = Periods::list($request);
+        $response = Periods::listNumbers($request);
         if (empty($response)) {
             return $this->jsonError(404, $this->_notFound);
         } else {

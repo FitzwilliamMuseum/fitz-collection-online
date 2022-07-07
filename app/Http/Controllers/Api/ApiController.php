@@ -210,6 +210,10 @@ class ApiController extends BaseController
         return $data;
     }
 
+    /**
+     * @param $elastic
+     * @return array
+     */
     public function parseIdData($elastic): array
     {
         $data = array();
@@ -888,6 +892,27 @@ class ApiController extends BaseController
         return $data;
     }
 
+
+    /**
+     * @param array $elastic
+     * @return array
+     */
+    public function parseTerminologyAggPeriodsID(array $elastic): array
+    {
+        $labels = array();
+        foreach ($elastic['aggregations']['records']['buckets'] as $period) {
+            foreach ($period['period']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
+                foreach ($creation['periods'] as $label) {
+                    $labels[] = $label['admin']['id'];
+                }
+            }
+        }
+        return $labels;
+    }
+    /**
+     * @param array $elastic
+     * @return array
+     */
     public function parseTerminologyAggMakers(array $elastic): array
     {
         $data = array();
@@ -925,6 +950,40 @@ class ApiController extends BaseController
         return $data;
     }
 
+
+    /**
+     * @param array $elastic
+     * @return array
+     */
+    public function parseTerminologyAggMakersID(array $elastic): array
+    {
+        $labels = array();
+        foreach ($elastic['aggregations']['records']['buckets'] as $maker) {
+            foreach ($maker['maker']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
+                foreach ($creation['maker'] as $label) {
+                    $labels[] = $label['admin']['id'];
+                }
+            }
+        }
+        return $labels;
+    }
+
+    /**
+     * @param array $elastic
+     * @return array
+     */
+    public function parseTerminologyAggPlacesID(array $elastic): array
+    {
+        $labels = array();
+        foreach ($elastic['aggregations']['places']['buckets'] as $place) {
+            foreach ($place['place']['hits']['hits'][0]['_source']['lifecycle']['creation'] as $creation) {
+                foreach ($creation['places'] as $label) {
+                    $labels[] = $label['admin']['id'];
+                }
+            }
+        }
+        return $labels;
+    }
     /**
      * @param array $elastic
      * @return array

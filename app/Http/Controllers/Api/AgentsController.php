@@ -15,7 +15,7 @@ use App\Rules\AgentFieldsAllowed;
  * path="/api/v1/agents",
  * summary="Retrieve agents used in the database",
  * description="A list of agents used in the database, with pagination.",
- * tags={"Terminology"},
+ * tags={"People"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Query",
@@ -24,7 +24,11 @@ use App\Rules\AgentFieldsAllowed;
  *    required=false,
  *    example="Aurelius",
  *    @OA\Schema(
- *       type="string",
+ *      type="string",
+ *      format="string",
+ *      maxLength=255,
+ *      minLength=1,
+ *      example="Aurelius"
  *    )
  * ),
  * @OA\Parameter(
@@ -35,7 +39,10 @@ use App\Rules\AgentFieldsAllowed;
  *    example="1",
  *    @OA\Schema(
  *       type="integer",
- *       nullable=true
+ *       nullable=true,
+ *       minimum=1,
+ *       example="1",
+ *      format="integer"
  *    )
  * ),
  *  @OA\Parameter(
@@ -46,7 +53,9 @@ use App\Rules\AgentFieldsAllowed;
  *    example="20",
  *    @OA\Schema(
  *       type="integer",
- *       nullable=true
+ *       nullable=true,
+ *     minimum=1,
+ *     example="20",
  *    )
  * ),
  * @OA\Parameter(
@@ -54,11 +63,15 @@ use App\Rules\AgentFieldsAllowed;
  *    in="query",
  *    name="fields",
  *    required=false,
- *    example="admin.created,admin.modified,admin.id,name,summary_title",
+ *    example="name,summary_title",
  *    @OA\Schema(
  *       type="string",
- *       default="admin.created,admin.modified,admin.id,name,summary_title",
- *       nullable=true
+ *       default="name,summary_title",
+ *       nullable=true,
+ *     format="string",
+ *     maxLength=255,
+ *     minLength=4,
+ *     example="name,summary_title"
  *    )
  * ),
  * @OA\Parameter(
@@ -103,7 +116,7 @@ use App\Rules\AgentFieldsAllowed;
  * path="/api/v1/agents/{agent}",
  * summary="Retrieve an agent",
  * description="An agent's details",
- * tags={"Terminology"},
+ * tags={"People"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
  *    description="Agent term id number",

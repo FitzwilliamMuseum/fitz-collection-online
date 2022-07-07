@@ -117,7 +117,7 @@ class PublicationsController extends ApiController
             "*" => "in: " . implode(", ", $this->_listParams),
             "page" => "numeric|gt:0",
             "size" => "numeric|gte:0|lte:100",
-            "q" => "string|min:3",
+            "query" => "string|min:3",
             'sort_field' => 'string|in:id,title,created,modified|min:2',
             'sort' => 'string|in:asc,desc|min:3',
             "fields" => ['min:5', new PublicationsFieldsAllowed()],
