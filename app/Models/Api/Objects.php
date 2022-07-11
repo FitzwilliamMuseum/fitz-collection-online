@@ -154,6 +154,10 @@ class Objects extends Model
     }
 
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public static function listNumbers(Request $request): array
     {
 
@@ -180,7 +184,6 @@ class Objects extends Model
             ],
         ];
         $query = self::createQueryObjects($request);
-
         $image = self::getImageParam($request);
         $iiif = self::getIiifParam($request);
         $department = self::getDepartmentParam($request);

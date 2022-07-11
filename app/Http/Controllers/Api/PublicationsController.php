@@ -20,7 +20,7 @@ use OpenApi\Annotations as OA;
  * @OA\Parameter(
  *    description="Query",
  *    in="query",
- *    name="q",
+ *    name="query",
  *    required=false,
  *    example="Darmstadt",
  *    @OA\Schema(

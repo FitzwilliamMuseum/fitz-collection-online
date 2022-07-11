@@ -27,7 +27,7 @@ Our structured metadata have been licensed openly under a Creative Commons Zero 
 are made available under a more restrictive license - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license.
 This may change in the future. So to reiterate:]
 
-* CCO - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license **FOR DATA**
+* CCO - Creative Commons Zero **FOR DATA**
 * CC-BY-NC-SA - Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license **FOR IMAGES**
 
 20th century and in copyright works generally are not included in this system.
@@ -46,7 +46,7 @@ your work will too.
 
 ### Can I just download all your data?
 
-Yes! You can get all our structured data in one archive. Our data is available on [Github](https://github.com/fitzwilliammuseum/fitz-collections-dump)
+Yes! You can get all our structured data in one archive. Our data is available on [Github](https://github.com/fitzwilliammuseum/fitz-collection-raw-data)
 as version controlled json files.
 
 ### Can I download all your images?

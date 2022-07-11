@@ -16,7 +16,7 @@ class Model
      * @param array $params
      * @return array
      */
-    public static function searchAndCache(array $params) : array
+    public static function searchAndCache(array $params): array
     {
         $key = self::getKey($params);
         $expiresAt = now()->addMinutes(60);
@@ -118,7 +118,7 @@ class Model
                         "order" => $params['sort']
                     ]
                 );
-            } else  {
+            } else {
                 $sort = array(
                     $sortField => [
                         "order" => 'asc'
@@ -250,6 +250,7 @@ class Model
         }
         return $query;
     }
+
     /**
      * @param Request $request
      * @return array
@@ -338,6 +339,7 @@ class Model
         return $params;
 
     }
+
     /**
      * @param Request $request
      * @return int
@@ -363,6 +365,7 @@ class Model
             return 0;
         }
     }
+
     public static function parse($elastic): array
     {
         $data = array();
@@ -438,19 +441,33 @@ class Model
         return $params;
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     * https://stackoverflow.com/a/56408538 for how to nest must and should queries
+     */
     public static function getGeoParam(Request $request): array
     {
         $params = [];
         if (array_key_exists('hasGeo', $request->query())) {
             $filter = array(
-                "exists" => [
-                    "field" => "lifecycle.collection.places"
-                ]
+                [
+                    "exists" => [
+                        "field" => "lifecycle.creation.places"
+                    ]
+                ],
+                [
+                    "exists" => [
+                        "field" => "lifecycle.collection.places"
+                    ]
+                ],
+
             );
-            $params['body']['query']['bool']['must'][] = [$filter];
+            $params['body']['query']['bool']['must'][]['bool']['should'] = $filter;
         }
         return $params;
     }
+
 
     /**
      * @param Request $request
