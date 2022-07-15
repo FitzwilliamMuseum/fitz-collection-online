@@ -78,7 +78,7 @@ class IIIF extends Model
 
             ],
             '_source' => [
-                implode(',', array_merge(self::$exif, self::$objects, self::$images, self::$admin))
+                implode(',', array_merge(self::$objects, self::$images, self::$admin))
             ],
 
         ];
@@ -88,7 +88,12 @@ class IIIF extends Model
             ]
         );
         $params['body']['query']['bool']['must'][] = [$filter];
-        return self::searchAndCache($params);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
+        return self::searchAndCache($combined);
     }
 
     /**
@@ -102,13 +107,25 @@ class IIIF extends Model
             'index' => 'ciim',
             'body' => [
                 'query' => [
-                    'match' => [
-                        'admin.id' => Purifier::clean($id, array('HTML.Allowed' => ''))
+                    'bool' => [
+                        'must' => [
+                            [
+                                'match' => [
+                                    'admin.id' => $id
+                                ]
+                            ],
+                            [
+                                'term' => [
+                                    'type.base' => 'object'
+                                ]
+                            ]
+                        ]
                     ]
                 ]
             ],
             '_source' => [
-                implode(',', array_merge(self::$exif, self::$objects, self::$images, self::$admin))
+//                implode(',', array_merge(self::$objects, self::$images, self::$admin))
+            'admin,objects,multimedia'
             ],
         ];
         return Collect(self::parse(self::searchAndCache($params)))->first();
@@ -140,7 +157,7 @@ class IIIF extends Model
 
             ],
             '_source' => [
-                'admin.id'
+                'objects.admin.id'
             ],
 
         ];
@@ -150,7 +167,12 @@ class IIIF extends Model
             ]
         );
         $params['body']['query']['bool']['must'][] = [$filter];
-        return self::searchAndCache($params);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
+        return self::searchAndCache($combined);
     }
 }
 

@@ -28,6 +28,54 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Page number",
  *    in="query",
  *    name="page",
@@ -83,6 +131,8 @@ class IiifController extends ApiController
     public array $_params = array(
         'sort', 'size', 'page',
         'query', 'fields', 'sort_field',
+        'created_after', 'created_before', 'modified_after',
+        'modified_before',
     );
 
     /**
@@ -103,6 +153,10 @@ class IiifController extends ApiController
             "object" => "string|min:8|regex:'^object-\d+$'",
             'sort_field' => 'string|in:id,title,created,modified|min:2',
             'sort' => 'string|in:asc,desc|min:3',
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {
@@ -114,7 +168,7 @@ class IiifController extends ApiController
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            $images = $this->insertType($this->enrichMultipleIIIF($data),'IIIF images');
+            $images = $this->insertType($this->enrichMultipleIIIF($data), 'IIIF images');
             $paginator = new LengthAwarePaginator(
                 $images,
                 $response['hits']['total']['value'],
@@ -133,8 +187,8 @@ class IiifController extends ApiController
      */
     public function show(Request $request, string $id): JsonResponse
     {
-        $validator = Validator::make(array_merge($request->all(),array('id' => $id)), [
-            "*" => "in:".implode(',', $this->_showFields),
+        $validator = Validator::make(array_merge($request->all(), array('id' => $id)), [
+            "*" => "in:" . implode(',', $this->_showFields),
             'id' => "string|min:7|regex:'^object-\d+$'"
         ]);
 
@@ -142,38 +196,44 @@ class IiifController extends ApiController
             return $this->jsonError(400, $validator->errors());
         }
 
-        $data  = IIIF::show($request, $id);
+        $data = IIIF::show($request, $id);
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {
-            return $this->jsonSingle($this->insertSingleType($this->enrichIIIFSingle($data),'IIIF images'));
+            return $this->jsonSingle($this->insertSingleType($this->enrichIIIFSingle($data), 'IIIF images'));
         }
     }
 
     public function enrichIIIFSingle(array $data): array
     {
         $data['apiURI'] = route('api.iiif.show', $data['admin']['id']);
-        $data['uri'] = route('image.iiif', [$data['admin']['id']]);
-        $data['images'] = $this->append_single_iip_url($data);
-        if (array_key_exists('zoom', $data['images'])) {
-            $data['manifestURI'] = env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest';
-            $data['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
-            $data['uvViewerEmbedHTML'] = '<iframe src="' . env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $data['admin']['id'] . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
-            $data['miradorPath'] = route('image.mirador', [$data['admin']['id']]);
-            $files = $this->generateIiifFiles($data['admin']['id']);
-            foreach($files as $key => $file) {
-                $data[$key] = $file;
+        foreach ($data['multimedia'] as $processed) {
+            if (array_key_exists('zoom', $processed['processed'])) {
+                $id = $processed['admin']['id'];
+                $data['manifestURI'] = env('FITZ_MANIFEST_URL') . $id . '/manifest';
+                $data['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
+                $data['uvViewerEmbedHTML'] = '<iframe src="' . env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
+                $data['miradorPath'] = route('image.mirador', [$id]);
+                $files = $this->generateIiifFiles($id);
+                foreach ($files as $key => $file) {
+                    $data[$key] = $file;
                 }
             }
-        unset($data['processed']);
+        }
         if (array_key_exists('objects', $data)) {
             foreach ($data['objects'] as $record) {
-                $record['URI'] = route('record', str_replace('object-', '', $record['admin']['id']));
                 $record['apiURI'] = route('api.objects.show', [$record['admin']['id']]);
                 $record['id'] = $record['admin']['id'];
+                unset($record['summary']);
+                unset($record['@link']);
+                unset($record['admin']);
                 $data['objects'] = $record;
+
             }
         }
+        unset($data['multimedia']);
+        unset($data['admin']);
+        $data['admin']['id'] = $id;
         return $data;
     }
 
@@ -187,26 +247,25 @@ class IiifController extends ApiController
         foreach ($images as $image) {
             if (array_key_exists('objects', $image)) {
                 foreach ($image['objects'] as $record) {
-                    $record['URI'] = route('record', str_replace('object-', '', $record['admin']['id']));
-                    $record['apiURI'] = route('api.iiif.show', [$record['admin']['id']]);
+                    $record['apiURI'] = route('api.objects.show', [$record['admin']['id']]);
                     $record['id'] = $record['admin']['id'];
                     unset($record['admin']);
                     $image['objects'] = $record;
                 }
             }
-            $image['images'] = $this->append_single_iip_url($image);
             if (array_key_exists('zoom', $image['processed'])) {
                 $image['manifestURI'] = $this->generateManifestURI($image['objects']['id']);
                 $image['uvViewerPath'] = $this->generateUvViewer($image['objects']['id']);
                 $image['uvViewerEmbedHTML'] = $this->generateUvEmbed($image['objects']['id']);
                 $files = $this->generateIiifFiles($image['admin']['id']);
-                foreach($files as $key => $file) {
+                foreach ($files as $key => $file) {
                     $image[$key] = $file;
                 }
             }
             $image = $this->unsetKey($image);
-            $image['URI'] = route('image.iiif', [$image['admin']['id']]);
-            $image['apiURI'] = route('api.objects.show', [$image['objects']['id']]);
+            $image['apiURI'] = route('api.iiif.show', [$image['objects']['id']]);
+            unset($image['admin']['created']);
+            unset($image['admin']['modified']);
             $data[] = $image;
         }
         return $data;
@@ -264,7 +323,7 @@ class IiifController extends ApiController
      * @param string $id
      * @return array
      */
-    public function generateIiifFiles(string $id):array
+    public function generateIiifFiles(string $id): array
     {
         $files = array();
         foreach ($this->derivatives as $k => $v) {

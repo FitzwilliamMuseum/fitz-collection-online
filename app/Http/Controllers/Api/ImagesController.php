@@ -48,13 +48,61 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="date",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="date",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="date",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="date",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Sort direction",
  *    in="query",
  *    name="sort",
  *    required=false,
  *    example="asc",
  *    @OA\Schema(
- *       type="enum",
+*       type="array",
  *     enum={"asc","desc"}
  *    )
  * ),
@@ -65,7 +113,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    example="id",
  *    @OA\Schema(
- *       type="enum",
+*       type="array",
  *     enum={"id","created","updated","name","summary_title"}
  *    )
  * ),
@@ -119,8 +167,10 @@ class ImagesController extends ApiController
 {
 
     public array $_params = array(
-        'sort', 'size', 'hasIIIF', 'page',
+        'sort', 'size', 'page',
         'query', 'fields', 'sort_field',
+        'created_before', 'created_after',
+        'modified_before', 'modified_after'
     );
 
     /**
@@ -138,10 +188,13 @@ class ImagesController extends ApiController
             "*" => "in:" . implode(",", $this->_params),
             "page" => "numeric|gt:0",
             "size" => "numeric|gt:0|lte:100",
-            "hasIIIF" => "boolean",
             "query" => "string|min:3",
             'sort_field' => 'string|in:id,title,created,updated|min:2',
             'sort' => 'string|in:asc,desc|min:3',
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {
