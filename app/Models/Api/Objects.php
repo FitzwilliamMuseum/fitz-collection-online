@@ -33,6 +33,7 @@ class Objects extends Model
         'techniques',
         'measurements',
         'title',
+        'materials'
     );
 
     /**
@@ -42,25 +43,7 @@ class Objects extends Model
         'admin.id',
         'admin.created',
         'admin.modified',
-        'summary_title',
-//        'categories',
-//        'description',
-//        'component',
-//        'department.value',
-//        'identifier',
-//        'inscription',
-//        'lifecycle',
-//        'institutions',
-//        'multimedia',
-//        'name',
-//        'note',
-//        'owners',
-//        'publications',
-//        'school_or_style',
-//        'summary',
-//        'techniques',
-//        'measurements',
-//        'title'
+        'summary_title'
     );
 
     /**

@@ -27,6 +27,54 @@ use OpenApi\Annotations as OA;
  *       format="int64"
  *    )
  * ),
+ * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
  *  @OA\Parameter(
  *    description="Size of the page response",
  *    in="query",
@@ -36,9 +84,9 @@ use OpenApi\Annotations as OA;
  *    @OA\Schema(
  *     type="integer",
  *     format="int64",
- *     default="500",
- *     minimum="1",
- *     maximum="500"
+ *     default=500,
+ *     minimum=1,
+ *     maximum=500
  *    )
  * ),
  * @OA\Response(
@@ -51,7 +99,7 @@ class IiifNumbersController extends ApiController
 {
 
     public array $_params = array(
-        'size', 'page'
+        'size', 'page','created_after','created_before','modified_after','modified_before'
     );
 
     /**
@@ -62,7 +110,11 @@ class IiifNumbersController extends ApiController
     {
         $validator = Validator::make($request->all(), [
             "page" => "numeric|gt:0",
-            "size" => "numeric|gte:0|lte:500"
+            "size" => "numeric|gte:0|lte:500",
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {
@@ -70,7 +122,7 @@ class IiifNumbersController extends ApiController
         }
 
         $response = IIIF::listNumbers($request);
-        $data = $this->parseIdData($response);
+        $data = $this->parseIiifIdData($response);
         if (empty($data)) {
             return $this->jsonError(404, $this->_notFound);
         } else {

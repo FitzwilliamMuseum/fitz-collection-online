@@ -82,11 +82,16 @@ class Images extends Model
                 self::getFields()
             ],
         ];
-//        $query = self::createQueryObjects($request);
         $image = self::getImageParam($request);
         $iiif = self::getIiifParam($request);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif,
+            $createdBefore, $createdAfter, $modifiedBefore,
+            $modifiedAfter
         );
         return self::searchAndCache($combined);
     }
@@ -149,11 +154,14 @@ class Images extends Model
                 'admin.id'
             ],
         ];
-//        $query = self::createQueryObjects($request);
         $image = self::getImageParam($request);
         $iiif = self::getIiifParam($request);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
         $combined = array_merge_recursive(
-            $params, $image, $iiif,
+            $params, $image, $iiif, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter
         );
         return self::searchAndCache($combined);
     }
