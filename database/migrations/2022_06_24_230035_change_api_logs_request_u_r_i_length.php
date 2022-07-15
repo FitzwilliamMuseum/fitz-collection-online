@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('api_logs', function (Blueprint $table) {
-            $table->varchar('request_full_url', '2048')->change();
+            $table->string('request_full_url', '2048')->change();
         });
     }
 
