@@ -224,6 +224,21 @@ class ApiController extends BaseController
         }
         return $data;
     }
+
+    /**
+     * @param $elastic
+     * @return array
+     */
+    public function parseIiifIdData($elastic): array
+    {
+        $data = array();
+        foreach ($elastic['hits']['hits'] as $object) {
+            foreach($object['_source'] as $key => $value){
+                $data[] = $value[0]['admin']['id'];
+            }
+        }
+        return $data;
+    }
     /**
      * @param $find
      * @param $replace
@@ -414,17 +429,20 @@ class ApiController extends BaseController
     public function append_single_iip_url(array $array): array
     {
         $images = array();
-        $sizes = array_keys($array['processed']);
-        foreach ($array['processed'] as &$surrogate) {
-            if (array_key_exists('format', $surrogate)) {
-                if ($surrogate['format'] === 'pyramid tiff') {
-                    $surrogate['location'] = env('FITZ_IIP_URL') . '/' . $surrogate['location'] . '&cvt=jpeg';
-                } else {
-                    $surrogate['location'] = env('FITZ_IMAGE_URL') . $surrogate['location'];
-                }
+        $sizes = array();
+        if(array_key_exists('processed', $array)) {
+            $sizes = array_keys($array['processed']);
+            foreach ($array['processed'] as &$surrogate) {
+                if (array_key_exists('format', $surrogate)) {
+                    if ($surrogate['format'] === 'pyramid tiff') {
+                        $surrogate['location'] = env('FITZ_IIP_URL') . '/' . $surrogate['location'] . '&cvt=jpeg';
+                    } else {
+                        $surrogate['location'] = env('FITZ_IMAGE_URL') . $surrogate['location'];
+                    }
 
+                }
+                $images[] = $surrogate;
             }
-            $images[] = $surrogate;
         }
         return array_combine($sizes, $images);
     }
