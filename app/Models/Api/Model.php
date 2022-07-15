@@ -420,7 +420,6 @@ class Model
             $params['body']['query']['bool']['must'][] = [$filter];
         }
         return $params;
-
     }
 
     /**
@@ -794,5 +793,71 @@ class Model
         return $params;
     }
 
+    public static function createdBeforeParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('created_before', $request->query())) {
+            $filter = array(
+                'range' => [
+                    'admin.created' =>
+                        [
+                            'lte' => Purifier::clean($request->query('created_before'), array('HTML.Allowed' => ''))
+                        ],
+                ]
+            );
+            $params['body']['query']['bool']['must'] = [$filter];
+        }
+        return $params;
+    }
 
+    public static function createdAfterParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('created_after', $request->query())) {
+            $filter = array(
+                'range' => [
+                    'admin.created' =>
+                        [
+                            'gte' => Purifier::clean($request->query('created_after'), array('HTML.Allowed' => ''))
+                        ],
+                ]
+            );
+            $params['body']['query']['bool']['must'] = [$filter];
+        }
+        return $params;
+    }
+
+    public static function modifiedBeforeParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('modified_before', $request->query())) {
+            $filter = array(
+                'range' => [
+                    'admin.modified' =>
+                        [
+                            'lte' => Purifier::clean($request->query('modified_before'), array('HTML.Allowed' => '')) . 'T00:00:00'
+                        ],
+                ]
+            );
+            $params['body']['query']['bool']['must'] = [$filter];
+        }
+        return $params;
+    }
+
+    public static function modifiedAfterParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('modified_after', $request->query())) {
+            $filter = array(
+                'range' => [
+                    'admin.modified' =>
+                        [
+                            'gte' => Purifier::clean($request->query('modified_after'), array('HTML.Allowed' => ''))
+                        ],
+                ]
+            );
+            $params['body']['query']['bool']['must'] = [$filter];
+        }
+        return $params;
+    }
 }
