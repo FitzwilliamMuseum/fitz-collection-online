@@ -234,7 +234,7 @@ class ApiController extends BaseController
         $data = array();
         foreach ($elastic['hits']['hits'] as $object) {
             foreach($object['_source'] as $key => $value){
-                $data[] = $value[0]['admin']['id'];
+                $data[] = $value['id'];
             }
         }
         return $data;
