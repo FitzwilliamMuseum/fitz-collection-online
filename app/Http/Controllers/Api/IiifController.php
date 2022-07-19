@@ -189,7 +189,7 @@ class IiifController extends ApiController
     {
         $validator = Validator::make(array_merge($request->all(), array('id' => $id)), [
             "*" => "in:" . implode(',', $this->_showFields),
-            'id' => "string|min:7|regex:'^object-\d+$'"
+            'id' => "string|min:7|regex:'^media-\d+$'"
         ]);
 
         if ($validator->fails()) {
@@ -207,9 +207,8 @@ class IiifController extends ApiController
     public function enrichIIIFSingle(array $data): array
     {
         $data['apiURI'] = route('api.iiif.show', $data['admin']['id']);
-        foreach ($data['multimedia'] as $processed) {
-            if (array_key_exists('zoom', $processed['processed'])) {
-                $id = $processed['admin']['id'];
+
+                $id = $data['admin']['id'];
                 $data['manifestURI'] = env('FITZ_MANIFEST_URL') . $id . '/manifest';
                 $data['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
                 $data['uvViewerEmbedHTML'] = '<iframe src="' . env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
@@ -218,8 +217,7 @@ class IiifController extends ApiController
                 foreach ($files as $key => $file) {
                     $data[$key] = $file;
                 }
-            }
-        }
+
         if (array_key_exists('objects', $data)) {
             foreach ($data['objects'] as $record) {
                 $record['apiURI'] = route('api.objects.show', [$record['admin']['id']]);
@@ -263,7 +261,7 @@ class IiifController extends ApiController
                 }
             }
             $image = $this->unsetKey($image);
-            $image['apiURI'] = route('api.iiif.show', [$image['objects']['id']]);
+            $image['apiURI'] = route('api.iiif.show', [$image['admin']['id']]);
             unset($image['admin']['created']);
             unset($image['admin']['modified']);
             $data[] = $image;
