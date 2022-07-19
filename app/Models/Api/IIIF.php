@@ -116,7 +116,7 @@ class IIIF extends Model
                             ],
                             [
                                 'term' => [
-                                    'type.base' => 'object'
+                                    'type.base' => 'media'
                                 ]
                             ]
                         ]
@@ -157,7 +157,7 @@ class IIIF extends Model
 
             ],
             '_source' => [
-                'objects.admin.id'
+                'admin.id'
             ],
 
         ];
