@@ -75,13 +75,61 @@ use App\Rules\AgentFieldsAllowed;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *      type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *      type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *      type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *      type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Sort direction",
  *    in="query",
  *    name="sort",
  *    required=false,
  *    example="asc",
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"asc","desc"},
  *       nullable=true
  *    )
@@ -136,7 +184,7 @@ use App\Rules\AgentFieldsAllowed;
  *    @OA\Schema(
  *       type="string",
  *       default="admin.id",
- *      nullable=true
+ *       nullable=true
  *    )
  * ),
  * @OA\Response(
@@ -159,7 +207,11 @@ class AgentsController extends ApiController
     /**
      * @var array
      */
-    private array $_params = array('query', 'page', 'size', 'sort', 'sort_field', 'fields');
+    private array $_params = array(
+        'query', 'page', 'size', 'sort', 'sort_field', 'fields',
+        'created_before', 'created_after', 'modified_before',
+        'modified_after'
+    );
     /**
      * @var array
      */
@@ -179,6 +231,10 @@ class AgentsController extends ApiController
             "sort" => "string|min:3|in:asc,desc",
             "sort_field" => "in:" . implode(",", $this->_sortFields),
             "fields" => ['min:5', new AgentFieldsAllowed],
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {

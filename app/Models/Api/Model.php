@@ -422,6 +422,25 @@ class Model
         return $params;
     }
 
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function getMediaParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('image_id', $request->query())) {
+            $filter = array(
+                "match" => [
+                    "multimedia.admin.id" => Purifier::clean($request->query('image_id'), array('HTML.Allowed' => ''))
+                ]
+            );
+            $params['body']['query']['bool']['must'][] = [$filter];
+        }
+        return $params;
+    }
+
     /**
      * @param Request $request
      * @return array

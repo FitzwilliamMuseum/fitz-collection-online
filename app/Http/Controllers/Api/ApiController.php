@@ -1082,8 +1082,10 @@ class ApiController extends BaseController
             $data['URI'] = $this->getWebURI('terminology', $data['admin']['id']);
             $data['apiURI'] = $this->getTermURI('api.places.show', $data['admin']['id']);
             $data['venue'] = $data['admin']['id'];
+            $data['dates'] = $data['@link'];
             unset($data['admin']['uid']);
             unset($data['admin']['uuid']);
+            unset($data['@link']);
             $venues[] = $data;
         }
         return $venues;

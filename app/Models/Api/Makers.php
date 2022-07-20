@@ -50,7 +50,11 @@ class Makers extends Model
                 ],
             ],
         ];
-        $combined = array_merge_recursive($params, self::createQueryMakers($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, self::createQueryMakers($request), $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
         return self::searchAndCache($combined);
     }
 
@@ -113,7 +117,11 @@ class Makers extends Model
                 ],
             ],
         ];
-        $combined = array_merge_recursive($params, self::createQueryMakers($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, self::createQueryMakers($request), $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
         return self::searchAndCache($combined);
     }
 }

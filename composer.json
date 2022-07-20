@@ -18,7 +18,7 @@
         "php": "^8.0|^8.1",
         "ext-dom": "*",
         "arcanedev/laravel-markdown": "^6.0",
-        "codeat3/blade-fluentui-system-icons": "^1.26.1",
+        "codeat3/blade-fluentui-system-icons": "^1.29.1",
         "darkaonline/l5-swagger": "^8.3",
         "elasticsearch/elasticsearch": "^7.17.0",
         "fitzwilliammuseum/maps": "master",

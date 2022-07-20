@@ -125,14 +125,22 @@ class Objects extends Model
         $random = self::getRandom($request);
         $geo = self::getGeoParam($request);
         $place = self::getPlaceParam($request);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $media = self::getMediaParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
             $acquiredFrom, $collected, $accession, $maker,
             $school, $start_date, $end_date, $techniques,
             $components, $firstCreated, $secondCreated,
-            $random, $geo, $place
+            $random, $geo, $place, $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter,
+            $media
         );
+//        dd($combined);
         return self::searchAndCache($combined);
     }
 
@@ -188,13 +196,18 @@ class Objects extends Model
         $random = self::getRandom($request);
         $geo = self::getGeoParam($request);
         $place = self::getPlaceParam($request);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
             $acquiredFrom, $collected, $accession, $maker,
             $school, $start_date, $end_date, $techniques,
             $components, $firstCreated, $secondCreated,
-            $random, $geo, $place
+            $random, $geo, $place, $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
         );
         return self::searchAndCache($combined);
     }

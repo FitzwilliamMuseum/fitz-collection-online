@@ -63,7 +63,14 @@ class Places extends Model
                 ],
             ]
         ];
-        $combined = array_merge_recursive($params, self::createQueryPlaces($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryPlaces($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 
@@ -72,7 +79,7 @@ class Places extends Model
      * @param string $place
      * @return array|NULL
      */
-    public static function show(Request $request, string $place): array
+    public static function show(Request $request, string $place): ?array
     {
         $params = [
             'index' => 'ciim',
@@ -135,7 +142,14 @@ class Places extends Model
                 ],
             ]
         ];
-        $combined = array_merge_recursive($params, self::createQueryPlaces($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryPlaces($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 }

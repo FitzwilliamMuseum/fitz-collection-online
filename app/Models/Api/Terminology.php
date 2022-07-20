@@ -42,7 +42,14 @@ class Terminology extends Model
             ],
         ];
         $params['body']['sort'] = parent::getSort($request);
-        $combined = array_merge_recursive($params, self::createQueryTerminology($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryTerminology($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 
@@ -73,7 +80,14 @@ class Terminology extends Model
             ],
         ];
         $params['body']['sort'] = parent::getSort($request);
-        $combined = array_merge_recursive($params, self::createQueryTerminology($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryTerminology($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 
