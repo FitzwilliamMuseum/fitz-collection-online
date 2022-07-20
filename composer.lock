@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6dfccb24aee93fffcb71fba204b63729",
+    "content-hash": "d570f2968386a9deba483e5f8aa4271e",
     "packages": [
         {
             "name": "arcanedev/laravel-markdown",
@@ -2557,16 +2557,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v9.21.0",
+            "version": "v9.21.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a8a529d371faaa38bde087aa6171a5b53a6a8760"
+                "reference": "66bfa61e61ffceddb6370b57306c76ead7667622"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a8a529d371faaa38bde087aa6171a5b53a6a8760",
-                "reference": "a8a529d371faaa38bde087aa6171a5b53a6a8760",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/66bfa61e61ffceddb6370b57306c76ead7667622",
+                "reference": "66bfa61e61ffceddb6370b57306c76ead7667622",
                 "shasum": ""
             },
             "require": {
@@ -2733,7 +2733,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-07-19T14:12:19+00:00"
+            "time": "2022-07-20T18:00:32+00:00"
         },
         {
             "name": "laravel/sanctum",
@@ -3511,16 +3511,16 @@
         },
         {
             "name": "mews/purifier",
-            "version": "3.3.7",
+            "version": "3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mewebstudio/Purifier.git",
-                "reference": "9844bc82886e4291b3116afbd9ab5f532856662a"
+                "reference": "164b420c4a80d2d0a89c1023f0aa9b3c0e3d6dc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mewebstudio/Purifier/zipball/9844bc82886e4291b3116afbd9ab5f532856662a",
-                "reference": "9844bc82886e4291b3116afbd9ab5f532856662a",
+                "url": "https://api.github.com/repos/mewebstudio/Purifier/zipball/164b420c4a80d2d0a89c1023f0aa9b3c0e3d6dc5",
+                "reference": "164b420c4a80d2d0a89c1023f0aa9b3c0e3d6dc5",
                 "shasum": ""
             },
             "require": {
@@ -3586,9 +3586,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mewebstudio/Purifier/issues",
-                "source": "https://github.com/mewebstudio/Purifier/tree/3.3.7"
+                "source": "https://github.com/mewebstudio/Purifier/tree/3.3.8"
             },
-            "time": "2022-02-12T15:54:11+00:00"
+            "time": "2022-07-20T12:14:06+00:00"
         },
         {
             "name": "miljar/php-exif",
@@ -5829,19 +5829,20 @@
         },
         {
             "name": "solarium/solarium",
-            "version": "6.2.4",
+            "version": "6.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/solariumphp/solarium.git",
-                "reference": "fcec5684ee3f2d73a8f06a9fbd0e25d2537e1ab2"
+                "reference": "b3de12c7c5bba3f9a5955729ff5f7938c2b79789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/solariumphp/solarium/zipball/fcec5684ee3f2d73a8f06a9fbd0e25d2537e1ab2",
-                "reference": "fcec5684ee3f2d73a8f06a9fbd0e25d2537e1ab2",
+                "url": "https://api.github.com/repos/solariumphp/solarium/zipball/b3de12c7c5bba3f9a5955729ff5f7938c2b79789",
+                "reference": "b3de12c7c5bba3f9a5955729ff5f7938c2b79789",
                 "shasum": ""
             },
             "require": {
+                "composer-runtime-api": ">=2.0",
                 "ext-json": "*",
                 "php": "^7.3 || ^8.0",
                 "psr/event-dispatcher": "^1.0",
@@ -5886,9 +5887,9 @@
             ],
             "support": {
                 "issues": "https://github.com/solariumphp/solarium/issues",
-                "source": "https://github.com/solariumphp/solarium/tree/6.2.4"
+                "source": "https://github.com/solariumphp/solarium/tree/6.2.5"
             },
-            "time": "2022-06-30T10:48:47+00:00"
+            "time": "2022-07-20T11:51:35+00:00"
         },
         {
             "name": "spatie/array-to-xml",
@@ -6294,16 +6295,16 @@
         },
         {
             "name": "swagger-api/swagger-ui",
-            "version": "v4.12.0",
+            "version": "v4.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swagger-api/swagger-ui.git",
-                "reference": "7fc7320eff983a0e4d8dab88ed5cc9cf2995e47f"
+                "reference": "15284a090d5c988e5d56f7a5b5ef163c4a73574e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/7fc7320eff983a0e4d8dab88ed5cc9cf2995e47f",
-                "reference": "7fc7320eff983a0e4d8dab88ed5cc9cf2995e47f",
+                "url": "https://api.github.com/repos/swagger-api/swagger-ui/zipball/15284a090d5c988e5d56f7a5b5ef163c4a73574e",
+                "reference": "15284a090d5c988e5d56f7a5b5ef163c4a73574e",
                 "shasum": ""
             },
             "type": "library",
@@ -6349,9 +6350,9 @@
             ],
             "support": {
                 "issues": "https://github.com/swagger-api/swagger-ui/issues",
-                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.12.0"
+                "source": "https://github.com/swagger-api/swagger-ui/tree/v4.13.0"
             },
-            "time": "2022-06-03T17:08:45+00:00"
+            "time": "2022-07-19T20:48:30+00:00"
         },
         {
             "name": "symfony/cache",
@@ -7131,12 +7132,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "a0d887ddecd81d4e47bf15442cd610ba090241ec"
+                "reference": "7a64c4597e7bd5d5452c4d9b2a07ddde7a788e2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/a0d887ddecd81d4e47bf15442cd610ba090241ec",
-                "reference": "a0d887ddecd81d4e47bf15442cd610ba090241ec",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/7a64c4597e7bd5d5452c4d9b2a07ddde7a788e2b",
+                "reference": "7a64c4597e7bd5d5452c4d9b2a07ddde7a788e2b",
                 "shasum": ""
             },
             "require": {
@@ -7233,7 +7234,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-07-14T17:52:38+00:00"
+            "time": "2022-07-20T14:45:30+00:00"
         },
         {
             "name": "symfony/mailer",
@@ -10132,16 +10133,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75"
+                "reference": "37f751c67a5372d4e26353bd9384bc03744ec77b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/d7f08a622b3346766325488aa32ddc93ccdecc75",
-                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/37f751c67a5372d4e26353bd9384bc03744ec77b",
+                "reference": "37f751c67a5372d4e26353bd9384bc03744ec77b",
                 "shasum": ""
             },
             "require": {
@@ -10168,7 +10169,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "v1.19-dev"
+                    "dev-main": "v1.20-dev"
                 }
             },
             "autoload": {
@@ -10193,9 +10194,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.19.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.20.0"
             },
-            "time": "2022-02-02T17:38:57+00:00"
+            "time": "2022-07-20T13:12:54+00:00"
         },
         {
             "name": "filp/whoops",
