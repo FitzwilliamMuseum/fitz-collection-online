@@ -9,7 +9,8 @@ class Agents extends Model
     /**
      * @var array|string[]
      */
-    public static array $_mandatory = array('admin.id', 'admin.created', 'admin.modified', 'name', 'summary_title');
+    public static array $_mandatory = array(
+        'admin.id', 'admin.created', 'admin.modified', 'name', 'summary_title');
     /**
      * @var array
      */
@@ -42,7 +43,11 @@ class Agents extends Model
             ],
         ];
         $params['body']['sort'] = parent::getSort($request);
-        $combined = array_merge_recursive($params, self::createQueryAgents($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, self::createQueryAgents($request), $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
         return parent::searchAndCache($combined);
     }
 
@@ -105,7 +110,11 @@ class Agents extends Model
             ],
         ];
         $params['body']['sort'] = parent::getSort($request);
-        $combined = array_merge_recursive($params, self::createQueryAgents($request));
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, self::createQueryAgents($request), $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
         return parent::searchAndCache($combined);
     }
 }

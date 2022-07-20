@@ -125,7 +125,7 @@
                         "description": "Sort direction",
                         "required": false,
                         "schema": {
-                            "type": "array",
+                            "type": "enum",
                             "enum": [
                                 "asc",
                                 "desc"
@@ -140,7 +140,7 @@
                         "description": "Sort field",
                         "required": false,
                         "schema": {
-                            "type": "array",
+                            "type": "enum",
                             "default": "admin.id",
                             "enum": [
                                 "created",
@@ -298,8 +298,8 @@
                         "schema": {
                             "type": "integer",
                             "format": "integer",
-                            "default": "500",
-                            "maximum": "500",
+                            "default": 500,
+                            "maximum": 500,
                             "minimum": 1,
                             "example": "20",
                             "nullable": true
@@ -739,7 +739,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -751,7 +751,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -763,7 +763,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -775,7 +775,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -923,9 +923,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     }
@@ -1157,9 +1157,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     }
@@ -1380,9 +1380,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     },
@@ -1393,7 +1393,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1405,7 +1405,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1417,7 +1417,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1429,7 +1429,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1576,7 +1576,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1588,7 +1588,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1600,7 +1600,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1612,7 +1612,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1701,9 +1701,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     },
@@ -1714,7 +1714,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1726,7 +1726,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1738,7 +1738,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1750,7 +1750,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -1812,7 +1812,9 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "default": "500",
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1,
                             "nullable": true
                         },
                         "example": "20"
@@ -2028,7 +2030,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2040,7 +2042,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2052,7 +2054,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2064,7 +2066,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2195,7 +2197,9 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "default": "20",
+                            "default": 20,
+                            "maximum": 100,
+                            "minimum": 1,
                             "nullable": true
                         },
                         "example": "20"
@@ -2464,7 +2468,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2476,7 +2480,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2488,7 +2492,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2500,7 +2504,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2648,7 +2652,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2660,7 +2664,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2672,7 +2676,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2684,7 +2688,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2785,9 +2789,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     },
@@ -2798,7 +2802,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2810,7 +2814,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2822,7 +2826,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2834,7 +2838,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2906,7 +2910,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2918,7 +2922,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2930,7 +2934,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -2942,7 +2946,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3031,9 +3035,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     },
@@ -3044,7 +3048,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3056,7 +3060,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3068,7 +3072,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3080,7 +3084,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3152,7 +3156,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3164,7 +3168,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3176,7 +3180,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3188,7 +3192,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3279,9 +3283,9 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "default": "500",
-                            "maximum": "500",
-                            "minimum": "1"
+                            "default": 500,
+                            "maximum": 500,
+                            "minimum": 1
                         },
                         "example": "20"
                     },
@@ -3292,7 +3296,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3316,7 +3320,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3412,7 +3416,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3424,7 +3428,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3436,7 +3440,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3448,7 +3452,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3558,8 +3562,8 @@
                         "schema": {
                             "type": "integer",
                             "format": "integer",
-                            "default": "500",
-                            "maximum": "500",
+                            "default": 500,
+                            "maximum": 500,
                             "minimum": 1,
                             "example": "20",
                             "nullable": true
@@ -3573,7 +3577,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3585,7 +3589,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3597,7 +3601,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
@@ -3609,7 +3613,7 @@
                         "required": false,
                         "schema": {
                             "description": "Format: YYYY-MM-DD",
-                            "type": "date",
+                            "type": "string",
                             "format": "Y-m-d",
                             "nullable": true
                         }
