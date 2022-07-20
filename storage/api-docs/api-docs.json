@@ -72,12 +72,60 @@
                         "example": "name,summary_title"
                     },
                     {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "sort",
                         "in": "query",
                         "description": "Sort direction",
                         "required": false,
                         "schema": {
-                            "type": "enum",
+                            "type": "array",
                             "enum": [
                                 "asc",
                                 "desc"
@@ -92,7 +140,7 @@
                         "description": "Sort field",
                         "required": false,
                         "schema": {
-                            "type": "enum",
+                            "type": "array",
                             "default": "admin.id",
                             "enum": [
                                 "created",
@@ -193,6 +241,54 @@
                             "nullable": true
                         },
                         "example": "1"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     },
                     {
                         "name": "size",
@@ -637,6 +733,54 @@
                         "example": "1"
                     },
                     {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "size",
                         "in": "query",
                         "description": "Size of the page response",
@@ -713,6 +857,54 @@
                 "description": "A list of exhibition IDs used in the database, with pagination.",
                 "parameters": [
                     {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "page",
                         "in": "query",
                         "description": "Page number",
@@ -774,6 +966,54 @@
                             "format": "string"
                         },
                         "example": "Titian"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     },
                     {
                         "name": "page",
@@ -862,6 +1102,54 @@
                         "example": "1"
                     },
                     {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
                         "name": "size",
                         "in": "query",
                         "description": "Size of the page response",
@@ -926,6 +1214,54 @@
                             "type": "integer"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     },
                     {
                         "name": "sort",
@@ -1049,6 +1385,54 @@
                             "minimum": "1"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -1184,6 +1568,54 @@
                             "format": "int64"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -1274,6 +1706,54 @@
                             "minimum": "1"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -1538,6 +2018,54 @@
                         "required": false,
                         "schema": {
                             "type": "string",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
                             "nullable": true
                         }
                     },
@@ -1912,7 +2440,7 @@
                     {
                         "name": "created_start",
                         "in": "query",
-                        "description": "Earliest creation year",
+                        "description": "Earliest creation year (production)",
                         "required": false,
                         "schema": {
                             "type": "integer",
@@ -1922,10 +2450,58 @@
                     {
                         "name": "created_end",
                         "in": "query",
-                        "description": "Latest creation year",
+                        "description": "Latest creation year (production)",
                         "required": false,
                         "schema": {
                             "type": "integer",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
                             "nullable": true
                         }
                     },
@@ -2064,6 +2640,54 @@
                             "nullable": true
                         },
                         "example": "asc"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2166,6 +2790,54 @@
                             "minimum": "1"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2226,6 +2898,54 @@
                             "format": "int64"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2316,6 +3036,54 @@
                             "minimum": "1"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2345,7 +3113,7 @@
                 "description": "A list of publications used in the database, with pagination.",
                 "parameters": [
                     {
-                        "name": "q",
+                        "name": "query",
                         "in": "query",
                         "description": "Query",
                         "required": false,
@@ -2376,6 +3144,54 @@
                             "format": "int64"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2468,6 +3284,54 @@
                             "minimum": "1"
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "string",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
@@ -2540,6 +3404,54 @@
                             ]
                         },
                         "example": "asc"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     },
                     {
                         "name": "fields",
@@ -2653,6 +3565,54 @@
                             "nullable": true
                         },
                         "example": "20"
+                    },
+                    {
+                        "name": "created_after",
+                        "in": "query",
+                        "description": "Digital data created after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "created_before",
+                        "in": "query",
+                        "description": "Digital data created before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_after",
+                        "in": "query",
+                        "description": "Digital data modified after",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
+                    },
+                    {
+                        "name": "modified_before",
+                        "in": "query",
+                        "description": "Digital data modified before",
+                        "required": false,
+                        "schema": {
+                            "description": "Format: YYYY-MM-DD",
+                            "type": "date",
+                            "format": "Y-m-d",
+                            "nullable": true
+                        }
                     }
                 ],
                 "responses": {
