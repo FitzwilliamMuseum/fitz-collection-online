@@ -76,7 +76,7 @@ class InstitutionsController extends ApiController
     {
         $validator = Validator::make($request->all(), [
             "*" => "in:" . implode(",", $this->_params),
-            "sort" => "string|in:asc,desc"
+            "sort" => "string|in:asc,desc",
         ]);
 
         if ($validator->fails()) {

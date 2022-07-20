@@ -17,6 +17,54 @@ use OpenApi\Annotations as OA;
  * tags={"ID Numbers"},
  * security={{"bearerAuth": {}}},
  * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Page number",
  *    in="query",
  *    name="page",
@@ -36,9 +84,9 @@ use OpenApi\Annotations as OA;
  *    @OA\Schema(
  *       type="integer",
  *       format="int64",
- *     default="500",
- *     minimum="1",
- *     maximum="500"
+ *       default=500,
+ *     minimum=1,
+ *     maximum=500
  *    )
  * ),
  * @OA\Response(
@@ -62,7 +110,8 @@ class ExhibitionsNumbersController extends ApiController
     /**
      * @var array
      */
-    public array $_allowed = ['page','size'];
+    public array $_allowed = ['page','size','created_before', 'created_after', 'modified_before',
+        'modified_after'];
 
 
     /**
@@ -75,6 +124,10 @@ class ExhibitionsNumbersController extends ApiController
             '*' => 'in:'.implode(',', $this->_allowed),
             "page" => "numeric|gt:0|distinct:ignore_case",
             "size" => "numeric|gte:0|lte:500|distinct:ignore_case",
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {

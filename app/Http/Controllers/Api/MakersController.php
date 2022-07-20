@@ -49,6 +49,54 @@ use OpenApi\Annotations as OA;
  *       format="int64"
  *    )
  * ),
+ * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+*       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+*       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+*       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+*       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
  * @OA\Response(
  *    response=200,
  *    description="The request completed successfully."
@@ -99,7 +147,11 @@ class MakersController extends ApiController
     /**
      * @var array|string[]
      */
-    private array $_params = array('query', 'page', 'size', 'sort');
+    private array $_params = array(
+        'query', 'page', 'size', 'sort',
+        'created_after', 'created_before', 'modified_after',
+        'modified_before'
+    );
 
     /**
      * @param Request $request
@@ -113,6 +165,10 @@ class MakersController extends ApiController
             "size" => "numeric|gte:0|lte:100",
             "query" => "string|min:3",
             'sort' => 'string|in:asc,desc|min:3',
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ]);
 
         if ($validator->fails()) {

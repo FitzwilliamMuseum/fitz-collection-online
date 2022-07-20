@@ -102,7 +102,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    example="asc",
  *    @OA\Schema(
-*       type="array",
+*       type="enum",
  *     enum={"asc","desc"}
  *    )
  * ),
@@ -113,7 +113,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    example="id",
  *    @OA\Schema(
-*       type="array",
+*       type="enum",
  *     enum={"id","created","updated","name","summary_title"}
  *    )
  * ),

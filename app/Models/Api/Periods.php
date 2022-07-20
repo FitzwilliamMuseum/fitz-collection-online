@@ -54,8 +54,14 @@ class Periods extends Model
                 ],
             ],
         ];
-        $query = self::createQueryPeriod($request);
-        $combined = array_merge_recursive($params, $query);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryPeriod($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 
@@ -130,8 +136,14 @@ class Periods extends Model
                 ],
             ],
         ];
-        $query = self::createQueryPeriod($request);
-        $combined = array_merge_recursive($params, $query);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive(
+            $params, self::createQueryPeriod($request), $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 }

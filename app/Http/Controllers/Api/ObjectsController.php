@@ -48,7 +48,9 @@ use OpenApi\Annotations as OA;
  *    @OA\Schema(
  *       type="integer",
  *      nullable=true,
- *      default="20"
+ *      default=20,
+ *     minimum=1,
+ *     maximum=100,
  *    )
  * ),
  * @OA\Parameter(
@@ -98,7 +100,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    example="asc",
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"asc","desc"},
  *       nullable=true
  *    )
@@ -109,7 +111,7 @@ use OpenApi\Annotations as OA;
  *    name="random",
  *    required=false,
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"1","0"},
  *
  *    )
@@ -121,7 +123,7 @@ use OpenApi\Annotations as OA;
  *    required=false,
  *    example="1",
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"1","0"},
  *       nullable=true
  *    )
@@ -141,7 +143,7 @@ use OpenApi\Annotations as OA;
  *    name="hasGeo",
  *    required=false,
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"1","0"},
  *       nullable=true
  *    )
@@ -152,7 +154,7 @@ use OpenApi\Annotations as OA;
  *    name="hasIIIF",
  *    required=false,
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"1","0"},
  *       nullable=true
  *    )
@@ -163,7 +165,7 @@ use OpenApi\Annotations as OA;
  *    name="sort_field",
  *    required=false,
  *    @OA\Schema(
- *       type="enum",
+*       type="enum",
  *       enum={"id","created","updated","name","summary_title"},
  *       nullable=true
  *    )
@@ -269,7 +271,7 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
- *    description="Earliest creation year",
+ *    description="Earliest creation year (production)",
  *    in="query",
  *    name="created_start",
  *    required=false,
@@ -279,13 +281,61 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
- *    description="Latest creation year",
+ *    description="Latest creation year (production)",
  *    in="query",
  *    name="created_end",
  *    required=false,
  *    @OA\Schema(
  *       type="integer",
  *       nullable=true
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created after",
+ *    in="query",
+ *    name="created_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data created before",
+ *    in="query",
+ *    name="created_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified after",
+ *    in="query",
+ *    name="modified_after",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Digital data modified before",
+ *    in="query",
+ *    name="modified_before",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="string",
+ *     nullable=true,
+ *     format="Y-m-d",
+ *     description="Format: YYYY-MM-DD",
  *    )
  * ),
  * @OA\Parameter(
@@ -364,7 +414,9 @@ class ObjectsController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
-        'random','hasGeo', 'place'
+        'random','hasGeo', 'place', 'created_before',
+        'created_after', 'modified_before', 'modified_after',
+        'image_id'
     );
     public array $_showParams = array(
         'period', 'fields'
@@ -386,7 +438,8 @@ class ObjectsController extends ApiController
             "fields" => "string|min:4",
             'sort_field' => 'string|in:id,title,created,updated|min:2',
             'sort' => 'string|in:asc,desc|min:3',
-            'random' => 'boolean|prohibited_if:sort,asc|prohibited_if:sort,asc,desc|prohibited_if:sort_field,id,name,summary_title,created,updated',
+'random' => 'boolean',
+//            'random' => 'boolean|prohibited_if:sort,asc|prohibited_if:sort,asc,desc|prohibited_if:sort_field,id,name,summary_title,created,updated|prohibited:created_after|prohibited:created_before|prohibited:modified_after|prohibited:modified_before',
             'period' => "string|min:7|regex:'^term-\d+$'",
             'category' => "string|min:7|regex:'^term-\d+$'",
             'publication' => "string|min:10|regex:'^publication-\d+$'",
@@ -399,15 +452,21 @@ class ObjectsController extends ApiController
             'place' => "string|min:7|regex:'^term-\d+$'",
             'accession_number' => "string",
             'maker' => "string|min:7|regex:'^agent-\d+$'",
+            'image_id' => "string|min:7|regex:'^media-\d+$'",
             'school_or_style' => "string|min:7|regex:'^term-\d+$'",
             'acquired_date_start' => 'numeric',
             'acquired_date_end' => 'numeric',
             'created_start' => 'numeric',
             'created_end' => 'numeric',
             'hasGeo' => 'boolean',
+            'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
+            'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
+            'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
+            'modified_after' => 'date|date_format:Y-m-d|before:modified_before|before:created_before',
         ],
         [
             'random.prohibited_if' => 'You cannot use the random parameter with sort or sort_field parameters',
+            'random.prohibited' => 'You cannot use the random parameter with date searches in this API',
         ]);
 
         if ($validator->fails()) {

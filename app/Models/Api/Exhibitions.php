@@ -11,13 +11,17 @@ class Exhibitions extends Model
      * @var array
      */
     private static array $_fields = array(
-        'admin.id','admin.created','admin.modified','venues','summary_title','name.value','title.value'
+        'admin.id','admin.created','admin.modified',
+        'venues','summary_title','name.value',
+        'title.value'
     );
     /**
      * @var array
      */
     private static array $_mandatory  = array(
-        'admin.id','admin.created','admin.modified','venues','summary_title','name.value','title.value'
+        'admin.id','admin.created','admin.modified',
+        'venues','summary_title','name.value',
+        'title.value'
     );
 
     /**
@@ -48,7 +52,15 @@ class Exhibitions extends Model
             ],
         ];
         $query = self::createQuery($request);
-        $combined = array_merge_recursive($params, $query);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+
+        $combined = array_merge_recursive(
+            $params, $query, $createdBefore,
+            $createdAfter, $modifiedBefore, $modifiedAfter
+        );
         return self::searchAndCache($combined);
     }
 
@@ -111,7 +123,11 @@ class Exhibitions extends Model
                 'admin.id'
             ],
         ];
-        $combined = array_merge_recursive($params);
+        $createdBefore = self::createdBeforeParam($request);
+        $createdAfter = self::createdAfterParam($request);
+        $modifiedBefore = self::modifiedBeforeParam($request);
+        $modifiedAfter = self::modifiedAfterParam($request);
+        $combined = array_merge_recursive($params, $createdBefore, $createdAfter, $modifiedBefore, $modifiedAfter);
         return self::searchAndCache($combined);
     }
 }
