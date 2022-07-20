@@ -225,7 +225,7 @@ class PeriodsController extends ApiController
         $validator = Validator::make(array_merge($request->all(), array('period' => $period)), [
             '*' => 'in:' . implode(",", $this->_showParams),
             'period' => "string|min:7|regex:'^term-\d+$'",
-            'fields' => ['min:5', new PeriodFieldsAllowed],
+            'fields' => ['min:4', new PeriodFieldsAllowed],
         ]);
 
         if ($validator->fails()) {

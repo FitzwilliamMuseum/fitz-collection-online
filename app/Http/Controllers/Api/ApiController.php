@@ -1262,6 +1262,9 @@ class ApiController extends BaseController
                 $parent['URI'] = route('terminology', $parent['admin']['id']);
                 $parent['appURI'] = route('api.periods.show', $parent['admin']['id']);
                 $parent['period'] = $parent['admin']['id'];
+                unset($parent['@link']);
+                unset($parent['admin']['uuid']);
+                unset($parent['admin']['uid']);
             }
         }
         return $data;
