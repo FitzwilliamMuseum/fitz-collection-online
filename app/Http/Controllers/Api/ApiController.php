@@ -764,8 +764,39 @@ class ApiController extends BaseController
             }
             unset($data['@link']);
         }
+        if (array_key_exists('parent', $data)) {
+            foreach ($data['parent'] as &$parent) {
+                $parent['URI'] = route('terminology', $parent['admin']['id']);
+                $parent['apiURI'] = route('api.terminology.show', $parent['admin']['id']);
+                $parent['period'] = $parent['admin']['id'];
+                unset($parent['@link']);
+                unset($parent['admin']['uuid']);
+                unset($parent['admin']['uid']);
+            }
+        }
+        if (array_key_exists('equivalent', $data)) {
+            foreach ($data['equivalent'] as &$equivalent) {
+                $equivalent['URI'] = route('terminology', $equivalent['admin']['id']);
+                $equivalent['apiURI'] = route('api.terminology.show', $equivalent['admin']['id']);
+                $equivalent['period'] = $equivalent['admin']['id'];
+                unset($equivalent['@link']);
+                unset($equivalent['admin']['uuid']);
+                unset($equivalent['admin']['uid']);
+            }
+        }
+        if (array_key_exists('related', $data)) {
+            foreach ($data['related'] as &$related) {
+                $related['URI'] = route('terminology', $related['admin']['id']);
+                $related['apiURI'] = route('api.terminology.show', $related['admin']['id']);
+                $related['period'] = $related['admin']['id'];
+                unset($related['@link']);
+                unset($related['admin']['uuid']);
+                unset($related['admin']['uid']);
+            }
+        }
 
-        unset($data['admin']);
+        unset($data['admin']['uuid']);
+        unset($data['admin']['uid']);
         return $data;
     }
 
