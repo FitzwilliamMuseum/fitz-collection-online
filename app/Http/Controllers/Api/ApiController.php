@@ -1267,6 +1267,26 @@ class ApiController extends BaseController
                 unset($parent['admin']['uid']);
             }
         }
+        if (array_key_exists('equivalent', $data)) {
+            foreach ($data['equivalent'] as &$equivalent) {
+                $equivalent['URI'] = route('terminology', $equivalent['admin']['id']);
+                $equivalent['appURI'] = route('api.periods.show', $equivalent['admin']['id']);
+                $equivalent['period'] = $equivalent['admin']['id'];
+                unset($equivalent['@link']);
+                unset($equivalent['admin']['uuid']);
+                unset($equivalent['admin']['uid']);
+            }
+        }
+        if (array_key_exists('related', $data)) {
+            foreach ($data['related'] as &$related) {
+                $related['URI'] = route('terminology', $related['admin']['id']);
+                $related['appURI'] = route('api.periods.show', $related['admin']['id']);
+                $related['period'] = $related['admin']['id'];
+                unset($related['@link']);
+                unset($related['admin']['uuid']);
+                unset($related['admin']['uid']);
+            }
+        }
         return $data;
     }
 
