@@ -1260,7 +1260,7 @@ class ApiController extends BaseController
         if (array_key_exists('parent', $data)) {
             foreach ($data['parent'] as &$parent) {
                 $parent['URI'] = route('terminology', $parent['admin']['id']);
-                $parent['appURI'] = route('api.periods.show', $parent['admin']['id']);
+                $parent['apiURI'] = route('api.periods.show', $parent['admin']['id']);
                 $parent['period'] = $parent['admin']['id'];
                 unset($parent['@link']);
                 unset($parent['admin']['uuid']);
@@ -1270,7 +1270,7 @@ class ApiController extends BaseController
         if (array_key_exists('equivalent', $data)) {
             foreach ($data['equivalent'] as &$equivalent) {
                 $equivalent['URI'] = route('terminology', $equivalent['admin']['id']);
-                $equivalent['appURI'] = route('api.periods.show', $equivalent['admin']['id']);
+                $equivalent['apiURI'] = route('api.periods.show', $equivalent['admin']['id']);
                 $equivalent['period'] = $equivalent['admin']['id'];
                 unset($equivalent['@link']);
                 unset($equivalent['admin']['uuid']);
@@ -1280,7 +1280,7 @@ class ApiController extends BaseController
         if (array_key_exists('related', $data)) {
             foreach ($data['related'] as &$related) {
                 $related['URI'] = route('terminology', $related['admin']['id']);
-                $related['appURI'] = route('api.periods.show', $related['admin']['id']);
+                $related['apiURI'] = route('api.periods.show', $related['admin']['id']);
                 $related['period'] = $related['admin']['id'];
                 unset($related['@link']);
                 unset($related['admin']['uuid']);
