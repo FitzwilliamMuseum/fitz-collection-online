@@ -85,7 +85,7 @@
         <h3 class="collection lead">Key words</h3>
         <div id="keywords">
             @foreach ($exif->getKeywords() as $key)
-                <span class="badge badge-dark">{{ $key }}</span>
+                <span class="badge bg-dark">{{ $key }}</span>
             @endforeach
         </div>
     @endif
