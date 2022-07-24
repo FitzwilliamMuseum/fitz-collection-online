@@ -2,8 +2,8 @@
     <div class="mb-2 text-center">
         <span class="btn-outline-dark btn">
         @foreach($location->adlibJSON->recordList->record as $record)
-                @if($record->{"current_location.type"}[0] === 'storage')
-                    Current Location: {{$record->{"current_location.type"}[0]}}
+                @if($record->{"current_location.type"}[0] != 'display')
+                    Current Location: In storage
                 @else
                     Current Location: {{$record->{"current_location.description"}[0]}}
                 @endif
