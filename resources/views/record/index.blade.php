@@ -28,7 +28,7 @@
             <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded">
 
                 <div class="">
-
+                    <x-display-status :location="$location" />
                     @include('includes/elements/descriptive')
                     @include('includes/elements/legal')
                     @include('includes/elements/measurements')

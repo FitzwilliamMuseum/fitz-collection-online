@@ -25,6 +25,7 @@ use Psr\SimpleCache\InvalidArgumentException;
 use Spatie\ArrayToXml\ArrayToXml;
 use stdClass;
 use App\Models\CIIM;
+use App\Models\AxiellLocation;
 use App\Models\SpoliationClaims;
 
 class indexController extends Controller
@@ -156,7 +157,12 @@ class indexController extends Controller
             $exif = NULL;
         }
         $spoliation = SpoliationClaims::find($priref)['data'];
-        return view('record.index', compact('data', 'mlt', 'exif', 'shopify', 'research', 'palette', 'spoliation'));
+        $location = AxiellLocation::find($priref);
+        return view('record.index', compact(
+            'data', 'mlt', 'exif',
+            'shopify', 'research', 'palette',
+            'spoliation', 'location')
+        );
     }
 
     /**
