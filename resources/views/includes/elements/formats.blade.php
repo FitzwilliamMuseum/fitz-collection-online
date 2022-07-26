@@ -1,6 +1,6 @@
-<div class="share">
-    <button class="btn btn-wine m-1"><a href="{{ url()->current() }}/json">json</a></button>
-    <button class="btn btn-wine m-1"><a href="{{ url()->current() }}/xml">xml</a></button>
-    <button class="btn btn-wine m-1"><a href="{{ url()->current() }}/txt">txt</a></button>
-    <button class="btn btn-wine m-1"><a href="{{ url()->current() }}/qr">QR code</a></button>
+<div>
+    <a href="{{ url()->current() }}/json" class="btn btn-dark m-1" aria-label="View this object as a JSON file">JSON</a>
+    <a href="{{ url()->current() }}/xml" class="btn btn-dark m-1" aria-label="View this object as XML">XML</a>
+    <a href="{{ url()->current() }}/txt" class="btn btn-dark m-1" aria-label="View this object as a text file">TXT</a>
+    <a href="{{ url()->current() }}/qr" class="btn btn-dark m-1" aria-label="Access a QR code for this object">QR code</a>
 </div>
