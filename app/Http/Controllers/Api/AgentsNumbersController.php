@@ -128,8 +128,8 @@ class AgentsNumbersController extends ApiController
     {
         $validator = Validator::make($request->all(), [
             "*" => "in:" . implode(",", $this->_params),
-            "page" => "numeric|gt:0|distinct:ignore_case",
-            "size" => "numeric|gte:0|lte:500|distinct:ignore_case",
+            "page" => "numeric|gt:0",
+            "size" => "numeric|gte:0|lte:500",
             'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
             'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
             'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',

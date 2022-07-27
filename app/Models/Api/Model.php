@@ -360,7 +360,7 @@ class Model
     public static function getFromID(Request $request): int
     {
         if ($request->query('page') && $request->query('page') > 1) {
-            return $request->query('page') * self::getSizeID($request);
+            return $request->query('page') - 1 * self::getSizeID($request);
         } else {
             return 0;
         }
