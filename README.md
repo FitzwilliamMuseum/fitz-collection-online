@@ -12,7 +12,7 @@ This is very much a minimum viable product and to run and install
 your environment would need to be whitelisted for our solr, axiell, directus, shopify 
 and elastic api instances. 
 
-This system is built with the latest versions of Bootstrap, Laravel 8, JQuery and uses webpack/npm. 
+This system is built with the latest versions of Bootstrap and Laravel and uses webpack/npm. 
 
 # Installation
 
@@ -39,10 +39,25 @@ Once you are set up, to run locally:
 $ php artisan serve
 ```
 
-# License
+## License
 
-GPL V3
+This project's code is licensed under GPL V3
 
-# Contributors
+## Contributors
 
 Daniel Pett @portableant
+
+## Cite this repository 
+
+### APA style
+
+Pett, D. The Fitzwilliam Museum Collections and API Website Framework [Computer software]. https://github.com/FitzwilliamMuseum/fitz-collection-online
+
+### Bibtex style 
+
+@software{Pett_The_Fitzwilliam_Museum,
+author = {Pett, Daniel},
+license = {AGPL-3.0},
+title = {{The Fitzwilliam Museum Collections and API Website Framework}},
+url = {https://github.com/FitzwilliamMuseum/fitz-collection-online}
+}
