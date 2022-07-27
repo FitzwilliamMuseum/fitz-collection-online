@@ -1,6 +1,7 @@
 # Fitzwilliam Museum Collection front end
 
-[![DOI](https://zenodo.org/badge/276916733.svg)](https://zenodo.org/badge/latestdoi/276916733)
+[![DOI](https://zenodo.org/badge/276916733.svg)](https://zenodo.org/badge/latestdoi/276916733)  
+[![ORCiD](https://img.shields.io/badge/ORCiD-0000--0002--0246--2335-green.svg)](http://orcid.org/0000-0002-0246-2335)
 
 ![Social card for this repo](https://repository-images.githubusercontent.com/276916733/496041fd-bd33-4261-a390-a628689ed5b6)
 

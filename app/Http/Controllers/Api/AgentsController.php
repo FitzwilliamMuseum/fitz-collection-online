@@ -225,8 +225,8 @@ class AgentsController extends ApiController
     {
         $validator = Validator::make($request->all(), [
             "*" => "in:" . implode(",", $this->_params),
-            "page" => "numeric|gt:0|distinct:ignore_case",
-            "size" => "numeric|gte:0|lte:100|distinct:ignore_case",
+            "page" => "numeric|gt:0",
+            "size" => "numeric|gte:0",
             "query" => "string|min:3",
             "sort" => "string|min:3|in:asc,desc",
             "sort_field" => "in:" . implode(",", $this->_sortFields),
