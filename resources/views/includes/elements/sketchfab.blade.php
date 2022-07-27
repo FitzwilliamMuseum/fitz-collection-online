@@ -1,35 +1,36 @@
 @section('sketchfab')
-@php
-$pris = Arr::pluck($data['_source']['identifier'],'priref');
-$pris = array_filter($pris);
-$pris= Arr::flatten($pris);
-@endphp
-<div class="container-fluid bg-grey">
+    @php
+        $pris = Arr::pluck($data['_source']['identifier'],'priref');
+        $pris = array_filter($pris);
+        $pris= Arr::flatten($pris);
+    @endphp
+    <div class="container-fluid bg-grey">
 
-<div class="container">
-  <h2 class="lead">
-    3d scans attached to this object
-  </h2>
-  <a class="mt-3 mb-3 btn btn-dark" href="{{ route('record', [$pris[0]]) }}">Return to record</a>
-</div>
-</div>
-@foreach($data['_source']['identifier'] as $id)
-  @isset($id['type'])
-    @if($id['type'] === 'Online 3D model')
-        <div class="container-fluid bg-grey">
-          <div class="container p-3">
-            <h3 class="lead collection">3D scan</h3>
-
-            <div class="col-12 shadow-sm p-3 mx-auto mb-3 rounded">
-              <div class="embed-responsive embed-responsive-1by1">
-                <iframe title="A 3D model of {{ $data['_source']['summary_title'] }}" class="embed-responsive-item"
-                src="https://sketchfab.com/models/{{ $id['value']}}/embed?"
-                 allow="autoplay; fullscreen; vr" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-              </div>
-            </div>
-          </div>
+        <div class="container">
+            <h2>
+                3d scans attached to this object
+            </h2>
         </div>
-    @endif
-  @endisset
-@endforeach
+        <div class="text-center container">
+            <a class="btn btn-dark d-block" href="{{ route('record', [$pris[0]]) }}">Return to record</a>
+        </div>
+    </div>
+    @foreach($data['_source']['identifier'] as $id)
+        @isset($id['type'])
+            @if($id['type'] === 'Online 3D model')
+                <div class="container-fluid bg-grey">
+                    <div class="container">
+                        <div class="col-12 shadow-sm p-3 mx-auto rounded">
+                            <div class="ratio ratio-1x1">
+                                <iframe title="A 3D model of {{ $data['_source']['summary_title'] }}"
+                                        src="https://sketchfab.com/models/{{ $id['value']}}/embed?"
+                                        allow="autoplay; fullscreen; vr" mozallowfullscreen="true"
+                                        webkitallowfullscreen="true" width="100%" height="800"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endisset
+    @endforeach
 @endsection
