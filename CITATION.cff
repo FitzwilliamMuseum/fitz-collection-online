@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: The Fitzwilliam Museum Collections and API Website Framework
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Daniel
+    family-names: Pett
+    email: dejp3@cam.ac.uk
+    affiliation: 'St Edmund''s College, University of Cambridge'
+    orcid: 'https://orcid.org/0000-0002-0246-2335'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.6802649
+    description: Zenodo issued DOI
+repository-code: >-
+  https://github.com/FitzwilliamMuseum/fitz-collection-online
+url: 'https://data.fitzmuseum.cam.ac.uk'
+abstract: >-
+  This repository holds the Laravel 9 framework for
+  the front end build of the Fitzwilliam Museum's collection
+  website and API.
+keywords:
+  - laravel
+  - museum
+  - open-source
+license: AGPL-3.0
