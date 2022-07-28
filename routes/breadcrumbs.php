@@ -87,5 +87,17 @@ Breadcrumbs::for('api.index', function (BreadcrumbTrail $trail) {
     $trail->push('Using our API');
 });
 
+Breadcrumbs::for('results', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Search results');
+});
+
+Breadcrumbs::for('search', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Search our collection');
+});
+
 
 
