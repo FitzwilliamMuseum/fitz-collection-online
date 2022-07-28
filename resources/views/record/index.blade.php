@@ -20,7 +20,7 @@
     @endif
 
         <!-- multimedia section start -->
-    @include('includes/elements/media')
+    @include('includes.elements.media')
     <!-- multimedia section end -->
 
         <div class="col-md-12 mb-3 object-info">
