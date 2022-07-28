@@ -422,7 +422,41 @@ class Model
         return $params;
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function has3DParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('has3D', $request->query())) {
+            $filter = array(
+                "match" => [
+                    "identifier.type" => 'Online 3D model'
+                ]
+            );
+            $params['body']['query']['bool']['must'][] = [$filter];
+        }
+        return $params;
+    }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public static function hasRICParam(Request $request): array
+    {
+        $params = [];
+        if (array_key_exists('hasRIC', $request->query()) && $request->query('hasRIC') == 1) {
+            $filter = array(
+                "match" => [
+                    "identifier.type" => 'RIC'
+                ]
+            );
+            $params['body']['query']['bool']['must'][] = [$filter];
+        }
+        return $params;
+    }
     /**
      * @param Request $request
      * @return array

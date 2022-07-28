@@ -381,7 +381,7 @@ class ObjectNumbersController extends ApiController
         'accession_number','maker','school_or_style',
         'acquired_date_start','acquired_date_end','technique',
         'component', 'created_start', 'created_end',
-        'hasGeo', 'place'
+        'hasGeo', 'place', 'has3D'
     );
 
 
@@ -419,6 +419,7 @@ class ObjectNumbersController extends ApiController
             'created_start' => 'numeric',
             'created_end' => 'numeric',
             'hasGeo' => 'boolean',
+            'has3D' => 'boolean',
             'created_before' => 'date|date_format:Y-m-d|after:created_after|after:modified_after',
             'created_after' => 'date|date_format:Y-m-d|before:created_before|before:modified_before',
             'modified_before' => 'date|date_format:Y-m-d|after:modified_after|after:created_after',
