@@ -130,6 +130,8 @@ class Objects extends Model
         $modifiedBefore = self::modifiedBeforeParam($request);
         $modifiedAfter = self::modifiedAfterParam($request);
         $media = self::getMediaParam($request);
+        $threedimensional = self::has3DParam($request);
+        $ric = self::hasRICParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
@@ -138,7 +140,7 @@ class Objects extends Model
             $components, $firstCreated, $secondCreated,
             $random, $geo, $place, $createdBefore,
             $createdAfter, $modifiedBefore, $modifiedAfter,
-            $media
+            $media, $threedimensional, $ric
         );
 //        dd($combined);
         return self::searchAndCache($combined);
@@ -200,6 +202,8 @@ class Objects extends Model
         $createdAfter = self::createdAfterParam($request);
         $modifiedBefore = self::modifiedBeforeParam($request);
         $modifiedAfter = self::modifiedAfterParam($request);
+        $threedimensional = self::has3DParam($request);
+        $ric = self::hasRICParam($request);
         $combined = array_merge_recursive(
             $params, $image, $iiif, $query, $department,
             $publications, $categories, $periods, $names,
@@ -207,7 +211,8 @@ class Objects extends Model
             $school, $start_date, $end_date, $techniques,
             $components, $firstCreated, $secondCreated,
             $random, $geo, $place, $createdBefore,
-            $createdAfter, $modifiedBefore, $modifiedAfter
+            $createdAfter, $modifiedBefore, $modifiedAfter,
+            $threedimensional, $ric
         );
         return self::searchAndCache($combined);
     }

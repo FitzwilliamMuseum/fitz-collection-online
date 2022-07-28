@@ -117,6 +117,28 @@ use OpenApi\Annotations as OA;
  *    )
  * ),
  * @OA\Parameter(
+ *    description="Request 3D linked objects",
+ *    in="query",
+ *    name="has3D",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="enum",
+ *       enum={"1","0"},
+ *
+ *    )
+ * ),
+ * @OA\Parameter(
+ *    description="Request coins with RIC numbers assigned",
+ *    in="query",
+ *    name="hasRIC",
+ *    required=false,
+ *    @OA\Schema(
+ *       type="enum",
+ *       enum={"1","0"},
+ *
+ *    )
+ * ),
+ * @OA\Parameter(
  *    description="Determine whether an object has images available",
  *    in="query",
  *    name="hasImage",
@@ -416,7 +438,7 @@ class ObjectsController extends ApiController
         'component', 'created_start', 'created_end',
         'random','hasGeo', 'place', 'created_before',
         'created_after', 'modified_before', 'modified_after',
-        'image_id'
+        'image_id', 'has3D', 'hasRIC'
     );
     public array $_showParams = array(
         'period', 'fields'
@@ -434,11 +456,13 @@ class ObjectsController extends ApiController
             "size" => "numeric|gt:0|lte:100",
             "hasIIIF" => "boolean",
             "hasImage" => "boolean",
+            "has3D" => "boolean",
+            "hasRIC" => "boolean",
             "query" => "string|min:3",
             "fields" => "string|min:4",
             'sort_field' => 'string|in:id,title,created,updated|min:2',
             'sort' => 'string|in:asc,desc|min:3',
-'random' => 'boolean',
+            'random' => 'boolean',
 //            'random' => 'boolean|prohibited_if:sort,asc|prohibited_if:sort,asc,desc|prohibited_if:sort_field,id,name,summary_title,created,updated|prohibited:created_after|prohibited:created_before|prohibited:modified_after|prohibited:modified_before',
             'period' => "string|min:7|regex:'^term-\d+$'",
             'category' => "string|min:7|regex:'^term-\d+$'",
@@ -474,7 +498,7 @@ class ObjectsController extends ApiController
         }
 
         $response = Objects::list($request);
-        $data = $this->insertType($this->parseData($response), 'objects');
+        $data = $this->insertType($this->create3D($this->parseData($response)), 'objects');
         if (!empty($data)) {
 
             $paginator = new LengthAwarePaginator(
@@ -517,5 +541,37 @@ class ObjectsController extends ApiController
         } else {
             return $this->jsonError(404, $this->_notFound);
         }
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function create3D(array $data ): array
+    {
+        foreach($data as &$datum){
+            $ric = [];
+            $threeDimensions = [];
+            foreach($datum['identifier'] as $datum2) {
+                if(array_key_exists('source', $datum2)){
+                    if($datum2['source'] === 'Sketchfab'){
+                        $threeDimensions[] = 'https://sketchfab.com/3d-models/' . $datum2['value'];
+                    }
+                }
+                if(!empty($threeDimensions)){
+                    $datum['3dModels'] = $threeDimensions;
+                }
+                if(array_key_exists('type', $datum2)){
+                    if($datum2['type'] === 'RIC'){
+                        $ric[] =  $datum2['value'];
+                    }
+                }
+                if(!empty($ric)){
+                    $datum['RIC'] = $ric;
+                }
+            }
+        }
+
+        return $data;
     }
 }
