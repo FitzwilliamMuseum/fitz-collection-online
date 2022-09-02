@@ -2,7 +2,7 @@
     <div class="card h-100 card-fitz shadow-sm">
         <div class="mx-auto">
             @if(array_key_exists('multimedia', $record['_source']))
-                <a href="{{ route('record', $priref[0]) }}">
+                <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}">
                     <img class="card-image-top"
                          src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
                          loading="lazy"
@@ -10,7 +10,7 @@
                     />
                 </a>
             @else
-                <a href="{{ route('record', $priref[0]) }}">
+                <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}">
                     @svg('fas-image', ['width' => 250])
                 </a>
             @endif
@@ -19,9 +19,9 @@
             <div class="contents-label mb-3">
                 <h3 class="lead ">
                     @if(array_key_exists('title', $record['_source'] ))
-                        <a href="{{ route('record', $priref[0]) }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+                        <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
                     @else
-                        <a href="{{ route('record', $priref[0]) }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                        <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                     @endif
                 </h3>
                 @if(is_array($accession))
