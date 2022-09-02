@@ -40,7 +40,8 @@ class UlanBiography extends Component
             $altNames = Cache::get($keyAltNames);
             $axiell = Cache::get($keyAxiell);
         } else {
-            $ulan = Graph::newAndLoad("http://vocab.getty.edu/ulan/$ulanID");
+            $ulan = Graph::newAndLoad("http://vocab.getty.edu/ulan/$ulanID", 'rdfxml');
+
             $scope = $ulan->resource("http://vocab.getty.edu/ulan/$ulanID");
             if (!is_null($scope->get('skos:scopeNote'))) {
                 $scopeNote = $ulan->get($scope->get('skos:scopeNote')->getUri(), 'rdf:value');
