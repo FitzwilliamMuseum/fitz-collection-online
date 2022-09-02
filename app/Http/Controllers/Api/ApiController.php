@@ -1542,7 +1542,6 @@ class ApiController extends BaseController
                 $item = str_replace('\u', 'u', $item);
                 $item = preg_replace('@\x{FFFD}@u', 'Æ',($item));
                 $item = preg_replace('/u([\da-fA-F]{4})/', '&#x\1;', $item);
-                dd($item);
             } else {
                 $item = str_replace('\u', 'u', $item);
                 $item = preg_replace('@\x{FFFD}@u', 'Æ',($item));

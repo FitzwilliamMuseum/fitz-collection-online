@@ -142,7 +142,6 @@ class Objects extends Model
             $createdAfter, $modifiedBefore, $modifiedAfter,
             $media, $threedimensional, $ric
         );
-//        dd($combined);
         return self::searchAndCache($combined);
     }
 
