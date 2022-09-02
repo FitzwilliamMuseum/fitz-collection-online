@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\Cache;
 
-class nomismaLookup extends Component
+class NomismaLookup extends Component
 {
     public ?array $labels;
 
