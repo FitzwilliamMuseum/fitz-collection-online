@@ -29,7 +29,7 @@
     @if(!empty($axiell))
         <x-axiell-term-display :axiell="$axiell" :identifiers="$identifiers"></x-axiell-term-display>
     @endif
-
+    @dump($identifiers)
     @if(!empty($identifiers))
         <x-close-match-identifiers :identifiers="$identifiers"></x-close-match-identifiers>
 
