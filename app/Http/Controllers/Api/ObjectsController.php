@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Validator;
 use OpenApi\Annotations as OA;
-use App\LinkedArt\ObjectOrArtwork;
 
 /**
  * @OA\Get(
@@ -536,38 +535,12 @@ class ObjectsController extends ApiController
         $response = Objects::show($request, $object);
         if (!empty($response)) {
             $enriched = $this->insertSingleType($response, 'objects');
-            $enriched = ObjectOrArtwork::createLinkedArt(Collect($enriched), str_replace('object-', '', $object));
             return $this->jsonSingle($this->enrich('http:', 'https:', $enriched));
         } else {
             return $this->jsonError(404, $this->_notFound);
         }
     }
 
-    public function linkedart(Request $request, string $object): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            "*" => "in:" . implode(",", $this->_showParams),
-            'name' => "string|min:9|regex:'^object-\d+$'",
-            "fields" => "string|min:4",
-        ]);
-
-        if ($validator->fails()) {
-            return $this->jsonError(400, $validator->errors());
-        }
-
-        $response = Objects::show($request, $object);
-        if (!empty($response)) {
-            $enriched = $this->insertSingleType($response, 'objects');
-            return response()->json(
-                ObjectOrArtwork::createLinkedArt(Collect($enriched), str_replace('object-', '', $object)),
-                200,
-                $this->getHeaders(),
-                JSON_PRETTY_PRINT
-            );
-        } else {
-            return $this->jsonError(404, $this->_notFound);
-        }
-    }
 
     /**
      * @param array $data
