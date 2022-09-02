@@ -27,7 +27,7 @@
             @endforeach
         </div>
     @endif
-    @if(!is_null($type))
+    @if(!empty($type))
         <div class="col-md-3">
             <h3 class="collection lead">Concept type</h3>
             <p>
