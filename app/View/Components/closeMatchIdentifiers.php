@@ -18,7 +18,7 @@ class closeMatchIdentifiers extends Component
         'pleiades_id' => 'http://pleiades.stoa.org/places/',
     ];
 
-    public array $combined = [];
+    public array $combined;
 
 
     /**
