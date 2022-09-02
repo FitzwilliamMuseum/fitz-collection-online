@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\Cache;
 
-class tgnGettyLookup extends Component
+class TgnGettyLookup extends Component
 {
     /**
      * @var Resource|mixed|string|null
