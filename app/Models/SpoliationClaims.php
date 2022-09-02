@@ -6,17 +6,13 @@ use App\DirectUs;
 
 class SpoliationClaims extends Model
 {
-    public static string $table = 'spoliation_claims';
-
     public static function find(string $priref): array
     {
-        $api = new DirectUs();
-        $api->setEndpoint(self::$table);
-        $api->setArguments(
+        $api = new DirectUs(
+            'spoliation_claims',
             array(
                 'fields' => '*',
-                'filter[priref][eq]' => $priref
-            )
+                'filter[priref][eq]' => $priref),
         );
         return $api->getData();
     }

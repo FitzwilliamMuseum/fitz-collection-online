@@ -6,9 +6,7 @@
     <div class="bg-grey p-3 rounded">
         <button class="btn btn-dark m-1 float-end" id='harvardCopy'>@svg('fas-copy',['width' => '15'])</button>
         <code id="harvardData">
-            The Fitzwilliam Museum ({{ now()->year }})
-            "{{ $record['_source']['title'][0]['value'] ?? ucfirst($record['_source']['summary_title']) }}"
-            Web page available at: {{ url()->current() }} Accessed: {{ \Carbon\Carbon::now()->toDateTimeString() }}
+            The Fitzwilliam Museum ({{ now()->year }}) "{{ $data['title'][0]['value'] ?? ucfirst($data['summary_title']) }}" Web page available at: {{ url()->current() }} Accessed: {{ \Carbon\Carbon::now()->toDateTimeString() }}
         </code>
 
     </div>
@@ -25,7 +23,7 @@
         </button>
         <code id="wikiData">
             &#123;&#123;cite web|url={{ url()->current() }}
-            |title={{ $record['_source']['title'][0]['value'] ?? ucfirst($record['_source']['summary_title']) }}
+            |title={{ $data['title'][0]['value'] ?? ucfirst($data['summary_title']) }}
             |author=The Fitzwilliam Museum|accessdate={{ \Carbon\Carbon::now()->toDateTimeString() }}|publisher=The
             University of Cambridge&#125;&#125;
         </code>
@@ -42,14 +40,14 @@
         <button class="btn btn-dark m-1 float-end" id='apiCopy'>
             @svg('fas-copy',['width' => '15'])
         </button>
-        <code id="apiCode">{{ route('api.objects.show',$record['_source']['admin']['id']) }}</code>
+        <code id="apiCode">{{ route('api.objects.show',$data['admin']['id']) }}</code>
 
     </div>
 </div>
 
 
-@if(array_key_exists('multimedia', $record['_source'] ))
-    @if(array_key_exists('processed', $record['_source']['multimedia'][0]))
+@if(array_key_exists('multimedia', $data ))
+    @if(array_key_exists('processed', $data['multimedia'][0]))
         @include('includes.elements.bootstrap-code')
     @endif
 @endif

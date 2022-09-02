@@ -7,15 +7,11 @@ use Illuminate\View\Component;
 
 class exhibitionDetails extends Component
 {
-    public array $exhibition;
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @param array $exhibition
      */
-    public function __construct(array $exhibition)
+    public function __construct(public array $exhibition)
     {
-        $this->exhibition = $exhibition;
     }
 
     /**

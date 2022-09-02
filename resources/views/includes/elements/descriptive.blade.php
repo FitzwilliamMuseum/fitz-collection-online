@@ -1,18 +1,18 @@
-@section('description', 'A record for a Fitzwilliam Museum object: ' . ucfirst($record['_source']['summary_title']) . ' ' . $data[0]['_source']['identifier'][0]['accession_number'])
-@if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0]))
-    @if(array_key_exists('title',$record['_source']))
-        @section('title', ucfirst($record['_source']['title'][0]['value'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
+@section('description', 'A record for a Fitzwilliam Museum object: ' . ucfirst($data['summary_title']) . ' ' . $data['identifier'][0]['accession_number'])
+@if(array_key_exists('accession_number', $data['identifier'][0]))
+    @if(array_key_exists('title',$data))
+        @section('title', ucfirst($data['title'][0]['value'])  . ': ' . $data['identifier'][0]['accession_number'])
     @else
-        @section('title', ucfirst($record['_source']['summary_title'])  . ': ' . $data[0]['_source']['identifier'][0]['accession_number'])
+        @section('title', ucfirst($data['summary_title'])  . ': ' . $data['identifier'][0]['accession_number'])
     @endif
 @endif
 
-@if(array_key_exists('title', $record['_source']))
+@if(array_key_exists('title', $data))
     <h3 class="lead collection">
         Titles
     </h3>
     <p>
-        @foreach($record['_source']['title'] as $titles)
+        @foreach($data['title'] as $titles)
             {{ $titles['value'] }}
             @if(array_key_exists('translation',$titles))
                 <br/>
@@ -22,22 +22,27 @@
                 @endforeach
     </p>
 @endif
-@include('includes/elements/makers')
 
-@if(array_key_exists('description', $record['_source']))
+@include('includes.elements.makers')
+
+@include('includes.elements.names')
+
+@include('includes.elements.categories')
+
+@if(array_key_exists('description', $data))
     <h3 class="lead collection">
         Description
     </h3>
-    @foreach($record['_source']['description'] as $description)
+    @foreach($data['description'] as $description)
         <p>{!! ucfirst(nl2br($description['value'])) !!} </p>
     @endforeach
 @endif
 
-@if(array_key_exists('note', $record['_source']))
+@if(array_key_exists('note', $data))
     <h3 class="lead collection">
         Notes
     </h3>
-    @foreach ($record['_source']['note'] as $note)
+    @foreach ($data['note'] as $note)
         <p>
             <strong>{{ ucfirst($note['type']) }}:</strong> {{ ucfirst($note['value']) }}
         </p>

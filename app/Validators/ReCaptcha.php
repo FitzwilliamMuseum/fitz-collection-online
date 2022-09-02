@@ -1,8 +1,13 @@
 <?php
 namespace App\Validators;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+
 class ReCaptcha
 {
+    /**
+     * @throws GuzzleException
+     */
     public function validate($attribute, $value, $parameters, $validator)
     {
         $client = new Client;

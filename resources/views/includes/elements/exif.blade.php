@@ -1,5 +1,5 @@
 <h3 class="lead collection">About this image</h3>
-<div class="col-12 p-3 mx-auto mb-3 rounded">
+<div class="col-12  mx-auto mb-3 rounded">
     @if(!empty($exif->getHeadline()))
         @section('title', ucfirst($exif->getHeadline()))
     @elseif(array_key_exists('title', $object))

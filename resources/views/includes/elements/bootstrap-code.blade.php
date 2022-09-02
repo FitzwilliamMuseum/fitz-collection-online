@@ -5,10 +5,10 @@
     <pre id="bootstrapCode">
 &lt;div class=&quot;text-center">
     &lt;figure class=&quot;figure&quot;&gt;
-        &lt;img src="{{ env('APP_URL')  . '/imagestore/' . $record['_source']['multimedia'][0]['processed']['large']['location'] }}"
-        alt="{{ $record['_source']['title'][0]['value'] ?? ucfirst($record['_source']['summary_title']) }}"
+        &lt;img src="{{ env('APP_URL')  . '/imagestore/' . $data['multimedia'][0]['processed']['large']['location'] }}"
+        alt="{{ $data['title'][0]['value'] ?? ucfirst($data['summary_title']) }}"
         class="img-fluid" /&gt;
-        &lt;figcaption class="figure-caption text-info">{{ $record['_source']['title'][0]['value'] ?? ucfirst($record['_source']['summary_title']) }}&lt/figcaption&gt
+        &lt;figcaption class="figure-caption text-info">{{ $data['title'][0]['value'] ?? ucfirst($data['summary_title']) }}&lt/figcaption&gt
     &lt;/figure&gt;
 &lt;/div&gt;
     </pre>

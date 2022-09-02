@@ -6,16 +6,13 @@
         @include('includes.css.cssIIIF')
         @include('includes.structure.manifest')
         @yield('jsonld')
-        <link rel="stylesheet" type="text/css" href="/css/uv.css"/>
-        <script src="{{ url('/') }}/umd/UV.js"></script>
-        @include('includes.css.css')
-        <link rel="stylesheet" type="text/css" href="/css/iiif.css"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('/css/uv.css') }}"/>
+        <link rel="stylesheet" type="text/css" href="{{ asset('/css/iiif.css') }}"/>
+        <script src="{{ asset('/umd/UV.js') }}"></script>
         @include('googletagmanager::head')
     </head>
     <body class="doc-body c_darkmode">
         @include('googletagmanager::body')
-        @include('includes.structure.accessibility')
-        @include('includes.structure.nav')
         @yield('objectInfo')
         @yield('content')
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('APP_GOOGLE_ANALYTICS') }}"></script>

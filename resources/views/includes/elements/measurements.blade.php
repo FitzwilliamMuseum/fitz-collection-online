@@ -1,26 +1,32 @@
-@if(array_key_exists('measurements', $record['_source']))
+@if(array_key_exists('measurements', $data))
     <div class="row">
         <div class="col-md-6">
             <h3 class="lead collection">Measurements and weight</h3>
             <p>
-                @foreach($record['_source']['measurements']['dimensions'] as $dim)
+                @foreach($data['measurements']['dimensions'] as $dim)
                     @if(array_key_exists('dimension',$dim) && array_key_exists('units',$dim))
                         {{ $dim['dimension'] }}: {{ $dim['value'] }} {{ $dim['units'] }}<br/>
+
             @else
-            @section('dims-message')
-                <p class="text-info">
-                    At the moment, this record does not display units or type of
-                    measurements. We will rectify this as soon as possible.
-                </p>
-            @endsection
-            {{ $dim['value'] }}<br/>
-            @endif
-            @endforeach
-            </p>
+                @section('dims-message')
+                    <p class="text-info">
+                        At the moment, this record does not display units or type of
+                        measurements. We will rectify this as soon as possible.
+                    </p>
+                @endsection
+                {{ $dim['value'] }}
+                @if(!$loop->last)
+                    <br/>
+                    @endif
+                    @endif
+                    @endforeach
+                    </p>
         </div>
-        @if(array_key_exists('dimension',$record['_source']['measurements']['dimensions'][0]))
+
+
+        @if(array_key_exists('dimension',$data['measurements']['dimensions'][0]))
             @php
-                $dimensions = $record['_source']['measurements']['dimensions'];
+                $dimensions = $data['measurements']['dimensions'];
                 $dims = [];
                 $width = [];
                 $depth = [];
@@ -53,17 +59,17 @@
                 }
             @endphp
 
-            @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$record['_source']['measurements']['dimensions'][0]))
-               @if(is_numeric($dims['height']))
-                <x-dimension-drawer
-                    :height="$dims['height']"
-                    :width="$w"
-                    :depth="$d"
-                    :units="$record['_source']['measurements']['dimensions'][0]['units']"
-                    :viewWidth="400"
-                    :viewHeight="320"
-                    :scale=1></x-dimension-drawer>
-                   @endif
+            @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$data['measurements']['dimensions'][0]))
+                @if(is_numeric($dims['height']))
+                    <x-dimension-drawer
+                        :height="$dims['height']"
+                        :width="$w"
+                        :depth="$d"
+                        :units="$data['measurements']['dimensions'][0]['units']"
+                        :viewWidth="400"
+                        :viewHeight="320"
+                        :scale=1></x-dimension-drawer>
+                @endif
             @endif
         @endif
         @endif

@@ -1,6 +1,6 @@
-@if(array_key_exists('lifecycle',$record['_source'] ))
-  @if(array_key_exists('creation',$record['_source']['lifecycle']))
-  @if(array_key_exists('places', $record['_source']['lifecycle']['creation'][0]))
+@if(array_key_exists('lifecycle',$data ))
+  @if(array_key_exists('creation',$data['lifecycle']))
+  @if(array_key_exists('places', $data['lifecycle']['creation'][0]))
     <h3 class="lead collection">
       Place(s) associated
     </h3>
@@ -9,7 +9,7 @@
       $coord =  array();
       $placeName = '';
       @endphp
-      @foreach($record['_source']['lifecycle']['creation'][0]['places'] as $place)
+      @foreach($data['lifecycle']['creation'][0]['places'] as $place)
         @php
         $placeName .= $place['summary_title'];
         @endphp
@@ -62,15 +62,15 @@
       @endsection --}}
     @endif
   @endif
-  @if(array_key_exists('collection', $record['_source']['lifecycle']))
-    @if(array_key_exists('places', $record['_source']['lifecycle']['collection'][0]))
+  @if(array_key_exists('collection', $data['lifecycle']))
+    @if(array_key_exists('places', $data['lifecycle']['collection'][0]))
       <h3 class="lead collection">
         Find spot
       </h3>
       <ul class="entities">
-        @foreach($record['_source']['lifecycle']['collection'][0]['places'] as $place)
+        @foreach($data['lifecycle']['collection'][0]['places'] as $place)
           <li>
-            {{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}
+              <a href="{{route('terminology',$place['admin']['id'])}}">{{ preg_replace('@\x{FFFD}@u', 'î', $place['summary_title']) }}</a>
             @php
             if($place['summary_title'] === 'Thebes (Egypt)'){
               $lookup = 'Luxor Egypt';
@@ -113,7 +113,9 @@
                 @endphp
                 @foreach ($hierarchies as $hierarchy)
                   @if(array_key_exists('summary_title', $hierarchy))
-                    &Sc; {{ $hierarchy['summary_title'] ?? ''}}
+                      &Sc; <a href="{{ route('terminology',$hierarchy['admin']['id']) }}">
+                          {{ $hierarchy['summary_title'] ?? ''}}
+                      </a>
                   @endif
                 @endforeach
               @endforeach

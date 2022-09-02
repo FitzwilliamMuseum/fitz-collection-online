@@ -43,10 +43,10 @@ var LookTools = function () {
 
     /**
      * Go to a given position at a given speed
-     * @param {Number} - Image cooridate of X position
-     * @param {Number} - Image cooridate of Y position
-     * @param {Object} - Speed of motion, specified for X and Y
-     * @param {Bool} - If True will make shortest movement duration equal to longest movement duration
+     * @param targetX
+     * @param targetY
+     * @param vArg
+     * @param elongate
      */
     value: function goToBounds(targetX, targetY, vArg, elongate) {
       var v = vArg || { x: this.slowness, y: this.slowness };
@@ -545,7 +545,7 @@ var LookTools = function () {
 
     /**
      * Static method
-     * Pull out descriptive data from a given resource Object
+     * Pull out descriptive data from a given resource ObjectOrArtwork
      * @param {Object} - Resource object containing descriptive data
      */
 

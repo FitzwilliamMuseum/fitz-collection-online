@@ -1,38 +1,66 @@
 @extends('layouts.layout')
-@section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/img_20190105_153947.jpg')
-@section('hero_image_title', "The inside of our Founder's entrance")
 @section('title', ucfirst($data['summary_title']))
-
+@section('description', 'A term description and associated records for '. ucfirst($data['summary_title']))
 @section('content')
-@if(array_key_exists('description', $data))
-    @foreach($data['description'] as $description)
-        <h3 class="lead">{{ ucfirst($description['type']) }}</h3>
+    @if(array_key_exists('description', $data))
+        @foreach($data['description'] as $description)
+            <h3 class="lead collection">
+                {{ ucfirst($description['type']) }}
+            </h3>
+            <p>
+                {{ ucfirst($description['value']) }}
+            </p>
+        @endforeach
+    @endif
+
+    @if($connected->total() > 0)
         <p>
-            {{ ucfirst($description['value']) }}
+            This term has <strong>{{ number_format($connected->total())}}</strong> records attributed within our system.
         </p>
-    @endforeach
-@else
-    <p>
-        No scope notes or supplementary data available at the moment.
-    </p>
-@endif
-<p>This term has <strong>{{ number_format($count['count'])}}</strong> records attributed within our system.</p>
+    @endif
+
+    @if(!empty($axiell))
+        <x-axiell-term-display :axiell="$axiell" :identifiers="$identifiers"></x-axiell-term-display>
+    @endif
+
+    @if(!empty($identifiers))
+        @dd($identifiers)
+        @if(!empty($identifiers['aat_id']))
+            <x-aat-getty-lookup :aatID="$identifiers['aat_id']"></x-aat-getty-lookup>
+        @endif
+
+        @if(!empty($identifiers['tgn_id']))
+            <x-tgn-getty-lookup :tgnID="$identifiers['tgn_id']"></x-tgn-getty-lookup>
+        @endif
+
+        <x-close-match-identifiers :identifiers="$identifiers"></x-close-match-identifiers>
+
+        @if(!is_null($identifiers['nomisma_id']))
+            <x-nomisma-lookup :nomismaID="$identifiers['nomisma_id']"></x-nomisma-lookup>
+        @endif
+    @endif
+
 @endsection
 
-@section('connected')
-    <div class="container-fluid bg-white">
-        <div class="container">
-            <h3 class="lead collection">Connected records</h3>
-            <div class="row">
-                @foreach($connected as $record)
-                    <x-search-result :record="$record"></x-search-result>
-                @endforeach
-
+@if(!empty($connected) && $connected->total() > 0)
+    @section('connected')
+        <div class="container-fluid bg-pastel py-2">
+            <div class="container">
+                <h3 class="lead collection">Connected records</h3>
+                <div class="row">
+                    @foreach($connected as $record)
+                        <x-search-result :record="$record"></x-search-result>
+                    @endforeach
+                </div>
             </div>
-
         </div>
-    </div>
+    @endsection
+@endif
+
+@section('machine')
+    @include('includes.elements.machine-cite-term')
 @endsection
+
 
 @section('pagination')
     @if($connected->total() > 24)

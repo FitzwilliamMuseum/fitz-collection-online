@@ -6,7 +6,6 @@ use App\DirectUs;
 
 class AxiellPlaceNames extends Model
 {
-    public static string $table = 'place_name_aliases';
 
     /**
      * @param string $place
@@ -14,13 +13,12 @@ class AxiellPlaceNames extends Model
      */
     public static function find(string $place): ?array
     {
-        $api = new DirectUs();
-        $api->setEndpoint(self::$table);
-        $api->setArguments(
+        $api = new DirectUs(
+            'place_name_aliases',
             array(
-                'fields' => '*',
-                'filter[axiell_name][eq]' => $place
-            )
+            'fields' => '*',
+            'filter[axiell_name][eq]' => $place),
+            '*.*.*'
         );
         return Collect($api->getData()['data'])->first();
     }

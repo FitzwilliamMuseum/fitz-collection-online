@@ -8,12 +8,22 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use App\FitzElastic\Elastic;
+use Illuminate\Support\Facades\Artisan;
 use JetBrains\PhpStorm\Pure;
 
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @return string
+     */
+    public function clearCache(): string
+    {
+        Artisan::call('cache:clear');
+        return "Cache is cleared";
+    }
 
     /**
      * @return Elastic
@@ -40,11 +50,11 @@ class Controller extends BaseController
 
     /**
      * @param string $error
-     * @param  $errorMessages
+     * @param  array $errorMessages
      * @param int $code
      * @return JsonResponse
      */
-    public function sendError(string $error, $errorMessages = [], int $code = 404): JsonResponse
+    public function sendError(string $error, array $errorMessages = [], int $code = 404): JsonResponse
     {
         $response = [
             'success' => false,
@@ -55,4 +65,6 @@ class Controller extends BaseController
         }
         return response()->json($response, $code);
     }
+
+
 }

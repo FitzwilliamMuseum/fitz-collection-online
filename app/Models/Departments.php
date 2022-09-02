@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use App\FitzElastic\Elastic;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,32 +19,26 @@ class Departments extends Model
     }
 
     /**
-     * @param string $id
+     *
      * @return array
      */
-    public static function count( string $id): array
+    public static function listDepartments(): array
     {
         $params = [
             'index' => 'ciim',
             'body' => [
-                "query" => [
-                    "bool" => [
-                        "must" => [
-                            [
-                                "match" => [
-                                    "department.value" => $id
-                                ]
-                            ],
-                            [
-                                "term"=> [ "type.base" => 'object']
-                            ]
-                        ]
-                    ]
-                ]
-            ],
+                'size' => 0,
+                'aggregations' => [
+                    'department' => [
+                        'terms' => [
+                            'field' => 'department.value.keyword',
+                            'size' => 10,
+                        ],
+                    ],
+                ],
+            ]
         ];
-        return self::getElastic()->setParams($params)->getCount();
-
+        return parent::searchAndCache($params);
     }
 
     /**
@@ -54,6 +49,7 @@ class Departments extends Model
     {
         $params = [
             'index' => 'ciim',
+            'track_total_hits' => true,
             'body' => [
                 "query" => [
                     "bool" => [
@@ -83,12 +79,11 @@ class Departments extends Model
     public static function connected(Request $request, string $id): LengthAwarePaginator
     {
         $perPage = 24;
-        $from = ($request->get('page', 1) - 1) * $perPage;
-
-        $paramsTerm = [
+        $params = [
             'index' => 'ciim',
+            'track_total_hits' => true,
             'size' => $perPage,
-            'from' => $from,
+            'from' => ($request->get('page', 1) - 1) * $perPage,
             'body' => [
                 "query" => [
                     "bool" => [
@@ -100,10 +95,7 @@ class Departments extends Model
                             ],
                             [
                                 "term" => ["type.base" => 'object']
-                            ],
-                            [
-                                "exists" => ['field' => 'multimedia']
-                            ],
+                            ]
                         ]
                     ]
                 ],
@@ -117,11 +109,14 @@ class Departments extends Model
             ],
 
         ];
-        $response = self::getElastic()->setParams($paramsTerm)->getSearch();
-        $number = $response['hits']['total']['value'];
-        $records = $response['hits']['hits'];
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+
+        $response = self::getElastic()->setParams($params)->getSearch();
+        $paginate = new LengthAwarePaginator(
+            $response['hits']['hits'],
+            $response['hits']['total']['value'],
+            $perPage,
+            LengthAwarePaginator::resolveCurrentPage()
+        );
         $paginate->setPath($request->getBaseUrl());
         return $paginate;
     }

@@ -29,6 +29,7 @@ class CIIM extends Model
         $params = [
             'index' => 'ciim',
             'size' => 24,
+            'track_total_hits' => true,
             'from' => $from,
             'body' => [
                 "query" => [

@@ -7,7 +7,9 @@
             @if(array_key_exists('reference', $name))
                 <li>
                     <a class="btn btn-sm btn-outline-dark "
-                       href="{{ URL::to('/id/terminology/' . $name['reference']['admin']['id']) }}">{{ ucfirst($name['reference']['summary_title']) }}</a>
+                       href="{{ route('terminology',$name['reference']['admin']['id']) }}">
+                        {{ ucfirst($name['reference']['summary_title']) }}
+                    </a>
                 </li>
             @else
                 <li><a class="btn btn-sm btn-outline-dark " href="#">{{ ucfirst($name['value']) }}</a></li>

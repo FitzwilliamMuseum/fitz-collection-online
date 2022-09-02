@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\CollectionXML;
+use App\LinkedArt\Image;
 use ColorThief\ColorThief;
+use DOMException;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use PHPExif\Exif;
 use PHPExif\Reader\Reader;
@@ -21,7 +30,7 @@ class imagesController extends Controller
      */
     public function images(Request $request, string $priref): View
     {
-        $data = $this->getElastic()->setParams([
+        $ciim = $this->getElastic()->setParams([
             'index' => 'ciim',
             'size' => 1,
             'body' => [
@@ -31,15 +40,20 @@ class imagesController extends Controller
                     ]
                 ]
             ]
-        ])->getSearch()['hits']['hits'];
-        if (array_key_exists('multimedia', $data[0]['_source'])) {
-            $images = $data[0]['_source']['multimedia'];
+        ])->getSearch();
+        if (!empty($ciim['hits']['hits'])) {
+            $data = Collect($ciim['hits']['hits'])->first()['_source'];
+        } else {
+            abort(404);
+        }
+        if (array_key_exists('multimedia', $data)) {
+            $images = $data['multimedia'];
         } else {
             abort('404');
         }
         $paginate = $this->paginate($images);
         $paginate->setPath($request->getBaseUrl());
-        return view('record.images', compact('paginate', 'data'));
+        return view('images.images', compact('paginate', 'data'));
     }
 
     /**
@@ -57,17 +71,19 @@ class imagesController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param string $id
-     * @return View
+     * @return Application|ResponseFactory|Factory|\Illuminate\Contracts\View\View|JsonResponse|Response|View
+     * @throws DOMException
      */
-    public function image(string $id): View
+    public function image(Request $request, string $id): Factory|\Illuminate\Contracts\View\View|Response|JsonResponse|View|Application|ResponseFactory
     {
-        $data      = Images::getImageData($id);
-        $filtered  = $this->filter_array($data, $id);
-        $palette   = $this->getPalette($this->getPath($data));
-        $exif      = $this->getExif($this->getPath($data));
-        $object    = Images::getObject($id);
-        return view('record.image', compact('filtered', 'object', 'palette', 'exif'));
+        $data = Images::getImageData($id);
+        $filtered = $this->filter_array($data, $id);
+        $palette = $this->getPalette($this->getPath($data));
+        $exif = $this->getExif($this->getPath($data));
+        $object = Images::getObject($id);
+        return $this->machineResponse($request, $filtered, $object, $palette, $exif);
     }
 
     /**
@@ -103,10 +119,10 @@ class imagesController extends Controller
     {
         $data = Images::getIIIF($id);
         $filtered = $this->filtered($data, $id);
-        $palette  = $this->getPalette($this->getPath($data));
-        $exif     = $this->getExif($this->getPath($data));
-        $object   = Images::getObject($id);
-        return view('record.iiif', compact('filtered', 'object', 'palette', 'exif'));
+        $palette = $this->getPalette($this->getPath($data));
+        $exif = $this->getExif($this->getPath($data));
+        $object = Images::getObject($id);
+        return view('images.iiif', compact('filtered', 'object', 'palette', 'exif'));
     }
 
     /**
@@ -125,12 +141,12 @@ class imagesController extends Controller
      */
     public function flutteriiif(int $id): View
     {
-        $data      = Images::getIIIFData(request());
-        $filtered  = $this->filtered($data, $id);
-        $palette   = $this->getPalette($this->getPath($data));
-        $exif      = $this->getExif($this->getPath($data));
-        $object    = Images::getObject($id);
-        return view('record.iiif-flutter', compact('filtered', 'object', 'palette', 'exif'));
+        $data = Images::getIIIFData(request());
+        $filtered = $this->filtered($data, $id);
+        $palette = $this->getPalette($this->getPath($data));
+        $exif = $this->getExif($this->getPath($data));
+        $object = Images::getObject($id);
+        return view('images.iiif-flutter', compact('filtered', 'object', 'palette', 'exif'));
     }
 
     /**
@@ -140,7 +156,7 @@ class imagesController extends Controller
     public function sketchfab(string $id): View
     {
         $data = Images::getSketchFab($id);
-        return view('record.3d', compact('data'));
+        return view('images.3d', compact('data'));
     }
 
     /**
@@ -150,7 +166,7 @@ class imagesController extends Controller
     public function mirador(string $id): View
     {
         $object = Images::getMirador($id);
-        return view('record.mirador', compact('object'));
+        return view('images.mirador', compact('object'));
     }
 
     /**
@@ -179,5 +195,40 @@ class imagesController extends Controller
     {
         $reader = Reader::factory(Reader::TYPE_NATIVE);
         return $reader->read($path);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param array $filtered
+     * @param $object
+     * @param $palette
+     * @param $exif
+     * @return \Illuminate\Contracts\View\View|Factory|Response|JsonResponse|Application|ResponseFactory
+     * @throws DOMException
+     */
+    public function machineResponse(Request $request, array $filtered, $object, $palette, $exif ): View|Factory|Response|JsonResponse|Application|ResponseFactory
+    {
+        $formats = array(null, 'json', 'xml', 'html', 'linked-art');
+        $validator = Validator::make(['format' => $request->get('format')], [
+            "format" => "in:" . implode(",", $formats)
+        ]);
+
+        if ($validator->fails()) {
+            abort(500, $validator->errors());
+        }
+        switch ($request) {
+            case $request->get('format') == 'json' || $request->header('Accept') == 'application/json':
+                return response()->json(array($object, $palette, $exif));
+            case $request->get('format') == 'linked-art' || $request->header('Accept') === 'application/ld+json;profile=\"https://linked.art/ns/v1/linked-art.json\"':
+                return response()->json(Image::createLinkedArtImage(Collect($object)->toArray()));
+            case $request->get('format') == 'xml' || $request->header('Accept') == 'application/xml':
+                $xml = CollectionXML::createXML($object);
+                return response($xml, 200)->header('Content-Type', 'application/xml');
+            case $request->get('format') == 'html' || $request->header('Accept') == 'text/html':
+            default:
+            return view('images.image', compact('filtered', 'object', 'palette', 'exif'));
+
+        }
     }
 }

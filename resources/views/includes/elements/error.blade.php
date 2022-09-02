@@ -41,13 +41,13 @@
                                 @svg('fas-object-group',['width' => 15])
                             </div>
                         </div>
-                        @if(array_key_exists('accession_number', $data[0]['_source']['identifier'][0]))
-                            <input id="object" value="{{ $record['_source']['identifier'][0]['accession_number'] }}"
+                        @if(array_key_exists('accession_number', $data['identifier'][0]))
+                            <input id="object" value="{{ $data['identifier'][0]['accession_number'] }}"
                                    disabled name="object" placeholder="The object you are commenting on" type="text"
                                    class="form-control" aria-describedby="objectHelpBlock">
 
                             <input type="hidden" name="entry.467390036"
-                                   value="{{ $record['_source']['identifier'][0]['accession_number'] }}">
+                                   value="{{ $data['identifier'][0]['accession_number'] }}">
                         @endif
                     </div>
                     <span id="objectHelpBlock" class="form-text text-muted">The object accession number - this is prefilled</span>
@@ -58,9 +58,11 @@
                               required="required" class="form-control"></textarea>
                     <span id="queryHelpBlock" class="form-text text-muted">Please enter your query with as much detail as possible</span>
                 </div>
-                <div class="form-group">
-                    {!!  GoogleReCaptchaV3::renderField('contact_us_id','contact_us_action') !!}
-                </div>
+                @if(env('GOOGLE_RECAPTCHA_KEY') != '')
+                    <div class="form-group">
+                        {!!  GoogleReCaptchaV3::renderField('contact_us_id','contact_us_action') !!}
+                    </div>
+                @endif
                 <div class="form-group">
                     <button name="submit" type="submit" class="btn btn-dark d-block">Submit your query</button>
                 </div>

@@ -7,15 +7,13 @@ use Illuminate\View\Component;
 
 class spoliationClaim extends Component
 {
-    public array $spoliation;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $spoliation)
+    public function __construct(public array $spoliation)
     {
-        $this->spoliation = $spoliation;
     }
 
     /**

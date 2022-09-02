@@ -1,11 +1,12 @@
 @extends('layouts.layout')
-@section('hero_image','https://fitz-cms-images.s3.eu-west-2.amazonaws.com/img_20190105_153947.jpg')
-@section('hero_image_title', "The inside of our Founder's entrance")
-@section('title', urldecode($name))
+@section('title', 'Details for ' . urldecode(ucwords($name)))
+@section('description', 'Details and description for objects connected to ' . urldecode(ucwords($name)))')
 
 @section('content')
-    <div class="shadow-sm p-3 mx-auto mb-3 rounded">
-        <p>This department has <strong>{{ number_format($count['count'])}}</strong> records attributed within our system.
+    <div class="shadow-sm mx-auto mb-3 rounded">
+        <p>
+            This department has <strong>{{ number_format($connected->total())}}</strong> records attributed within
+            our system.
         </p>
     </div>
 @endsection
@@ -21,6 +22,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('machine')
+    @include('includes.elements.machine-cite-department')
 @endsection
 
 @section('pagination')

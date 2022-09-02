@@ -18,7 +18,7 @@ Breadcrumbs::for('artworks', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('record', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
-    $trail->push('Object');
+    $trail->push('Object or Artwork');
 });
 
 Breadcrumbs::for('image.single', function (BreadcrumbTrail $trail) {
@@ -51,36 +51,80 @@ Breadcrumbs::for('images.multiple', function (BreadcrumbTrail $trail) {
     $trail->push('All images attached');
 });
 
+Breadcrumbs::for('publications', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Publications');
+});
+
 Breadcrumbs::for('publication.record', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
+    $trail->push('Publications', route('publications'));
     $trail->push('Publication details');
 });
 
+Breadcrumbs::for('exhibitions', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Exhibitions');
+});
 
 Breadcrumbs::for('exhibition.record', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
+    $trail->push('Exhibitions', route('exhibitions'));
     $trail->push('Exhibition details');
+});
+
+Breadcrumbs::for('terminologies', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Terminologies');
+});
+
+Breadcrumbs::for('places', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Places');
+});
+
+Breadcrumbs::for('periods', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Periods');
 });
 
 Breadcrumbs::for('terminology', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
+    $trail->push('Terminologies', route('terminologies'));
     $trail->push('Terminology details');
+});
+
+Breadcrumbs::for('agents', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Agents');
 });
 
 Breadcrumbs::for('agent', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
+    $trail->push('Agents', route('agents'));
     $trail->push('Agent details');
 });
 Breadcrumbs::for('department', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');
+    $trail->push('Departments', route('departments'));
     $trail->push('Department Details');
 });
-
+Breadcrumbs::for('departments', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->parent('artworks');
+    $trail->push('Departments');
+});
 Breadcrumbs::for('api.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->parent('artworks');

@@ -3,18 +3,21 @@
   <div>
     <img class="img-fluid mx-auto d-block" src="{{ env('APP_URL')}}/imagestore/{{ $record['processed']['large']['location'] }}"
     loading="lazy" alt="An image of {{ $exif->getCaption() }}"
-    /></a>
+    />
   </div>
   <div class="text-center mb-2 mt-2">
     <a class="btn btn-sm btn-sm btn-dark m-1" href="#download-message" data-bs-toggle="collapse" aria-expanded="false" aria-controls="download-message"
     >@svg('fas-download',['class' => 'mr-2','width' => 15]) Use this image</a>
       <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('record', $object['identifier'][1]['priref']) }}">@svg('fas-backward',['class' => 'mr-2','width' => 15]) Back to record</a>
     @if(Arr::has($filtered[0]['processed'], 'zoom'))
-      <a class="btn btn-sm btn-dark m-1" href="{{ route('image.iiif', $object['multimedia'][0]['admin']['id']) }}" ><img src="/images/logos/iiif.svg" width="20px" />  IIIF view</a>
+      <a class="btn btn-sm btn-dark m-1" href="{{ route('image.iiif', $object['multimedia'][0]['admin']['id']) }}">
+          <img src="{{ asset('/images/logos/iiif.svg') }}" width="20px" alt="IIIF organisation logo" />
+          IIIF view
+      </a>
     @endif
   </div>
   <div class="bg-grey col-md-6 mt-2 mx-auto collapse p-3" id="download-message">
-    <x-terms-of-use :path="$record['processed']['large']['location']" />
+    <x-terms-of-use :path="$record['processed']['large']['location']"></x-terms-of-use>
   </div>
 </div>
 
