@@ -17,10 +17,9 @@ class NomismaLookup extends Component
     public ?string $type;
 
     public ?array $definitions;
+
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @param string $nomismaID
      */
     public function __construct(public string $nomismaID)
     {
