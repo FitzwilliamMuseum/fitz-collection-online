@@ -24,11 +24,11 @@
                         <a href="{{ route('record', $record['_source']['identifier'][1]['priref']) }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                     @endif
                 </h3>
-                @if(is_array($accession))
-                    <p class="text-info">
-                        {{ $accession['0'] }}
-                    </p>
-                @endif
+{{--                @if(is_array($accession))--}}
+{{--                    <p class="text-info">--}}
+{{--                        {{ $accession['0'] }}--}}
+{{--                    </p>--}}
+{{--                @endif--}}
                 @include('includes.elements.makers', ['data' => $record['_source']])
             </div>
         </div>
