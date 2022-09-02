@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Models;
+
 use App\FitzElastic\Elastic;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use JetBrains\PhpStorm\Pure;
+use Mews\Purifier\Facades\Purifier;
 
 class Agents extends Model
 {
@@ -19,44 +21,22 @@ class Agents extends Model
         return new Elastic();
     }
 
+
     /**
-     * @param string $id
+     * @param Request $request
      * @return array
      */
-    public static function count( string $id): array
-    {
-        $json = '{
-          "query": {
-            "match": {
-              "reference_links" : "' . $id . '"
-            }
-          }
-        }';
-        $params = [
-            'index' => 'ciim',
-            'body' => $json
-        ];
-        return self::getElastic()->setParams($params)->getCount();
-
-    }
-
-    /**
-     * @param string $id
-     * @return mixed
-     */
-    public static function list(string $id): array
+    public static function listPaginated(Request $request): array
     {
         $params = [
             'index' => 'ciim',
+            'size' => 50,
+            'from' => parent::getFrom($request),
+            'track_total_hits' => true,
             'body' => [
                 "query" => [
                     "bool" => [
                         "must" => [
-                            [
-                                "match" => [
-                                    "admin.id" => $id
-                                ]
-                            ],
                             [
                                 "term" => ["type.base" => 'agent']
                             ]
@@ -64,9 +44,48 @@ class Agents extends Model
                     ]
                 ]
             ],
+            '_source' => [
+            ],
+        ];
+        $params['body']['sort'] = 'summary_title.keyword';
+
+        return parent::searchAndCache($params);
+    }
+
+    /**
+     * @param string $id
+     * @return mixed
+     */
+    public static function show(string $id): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "admin.id" => Purifier::clean($id, array('HTML.Allowed' => ''))
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'agent'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
         ];
         $response = self::getElastic()->setParams($params)->getSearch();
-        return $response['hits']['hits'];
+        if(!empty($response['hits']['hits'])) {
+            return Collect($response['hits']['hits'])->first()['_source'];
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -78,9 +97,10 @@ class Agents extends Model
     {
         $from = ($request->get('page', 1) - 1) * self::$_perPage;
 
-        $paramsTerm = [
+        $params = [
             'index' => 'ciim',
             'size' => self::$_perPage,
+            'track_total_hits' => true,
             'from' => $from,
             'body' => [
                 "query" => [
@@ -88,15 +108,12 @@ class Agents extends Model
                         "must" => [
                             [
                                 "match" => [
-                                    "reference_links" => $id
+                                    "reference_links" => Purifier::clean($id, array('HTML.Allowed' => ''))
                                 ]
                             ],
                             [
                                 "term" => ["type.base" => 'object']
-                            ],
-                            [
-                                "exists" => ['field' => 'multimedia']
-                            ],
+                            ]
                         ]
                     ]
                 ],
@@ -110,12 +127,94 @@ class Agents extends Model
             ],
 
         ];
-        $response2 = self::getElastic()->setParams($paramsTerm)->getSearch();
-        $number = $response2['hits']['total']['value'];
-        $records = $response2['hits']['hits'];
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginate = new LengthAwarePaginator($records, $number, self::$_perPage, $currentPage);
+        $response = self::getElastic()->setParams($params)->getSearch();
+        $paginate = new LengthAwarePaginator($response['hits']['hits'], $response['hits']['total']['value'], self::$_perPage, LengthAwarePaginator::resolveCurrentPage());
         $paginate->setPath($request->getBaseUrl());
         return $paginate;
+    }
+
+    public static function getMakerUsage(string $id)
+    {
+        $params = [
+            'index' => 'ciim',
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "lifecycle.creation.maker.admin.id" => Purifier::clean($id, array('HTML.Allowed' => ''))
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'object'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $response = self::getElastic()->setParams($params)->getSearch();
+        return $response['hits']['total']['value'];
+    }
+
+    public static function getAcquisitionUsage(string $id)
+    {
+        $params = [
+            'index' => 'ciim',
+            'track_total_hits' => true,
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "lifecycle.acquisition.agents.admin.id" => Purifier::clean($id, array('HTML.Allowed' => ''))
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'object'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $response = self::getElastic()->setParams($params)->getSearch();
+        return $response['hits']['total']['value'];
+    }
+
+    public static function getOwnerUsage(string $id)
+    {
+        $params = [
+            'index' => 'ciim',
+            'track_total_hits' => true,
+
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "owners.admin.id" => Purifier::clean($id, array('HTML.Allowed' => ''))
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'object'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $response = self::getElastic()->setParams($params)->getSearch();
+        return $response['hits']['total']['value'];
     }
 }

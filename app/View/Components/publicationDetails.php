@@ -7,18 +7,14 @@ use Illuminate\View\Component;
 
 class publicationDetails extends Component
 {
-    public array $publication;
 
-    public array $count;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(array $publication, array $count)
+    public function __construct(public array $publication, public int $count)
     {
-       $this->publication = $publication;
-       $this->count = $count;
     }
 
     /**

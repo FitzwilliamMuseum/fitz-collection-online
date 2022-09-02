@@ -8,7 +8,7 @@
 
         <div class="shadow-sm p-3 mx-auto mb-3 mt-3 rounded collapse" id="cite">
             <div class="container">
-                @include('includes/elements/citation')
+                @include('includes.elements.citation')
             </div>
         </div>
     </div>
@@ -21,10 +21,9 @@
         </h3>
         <div class="shadow-sm p-3 mx-auto mt-3 rounded collapse" id="formats">
             <div class="container">
-                @include('includes/elements/formats')
+                @include('includes.elements.formats')
             </div>
         </div>
     </div>
-    @include('includes/elements/error')
-
+    @include('includes.elements.error')
 </div>

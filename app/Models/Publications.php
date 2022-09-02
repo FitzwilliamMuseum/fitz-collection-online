@@ -18,33 +18,36 @@ class Publications extends Model
     }
 
     /**
-     * @param string $id
+     * @param Request $request
      * @return array
      */
-    public static function count( string $id): array
+    public static function listPaginated(Request $request): array
     {
         $params = [
             'index' => 'ciim',
+            'size' => 50,
+            'from' => parent::getFrom($request),
+            'track_total_hits' => true,
             'body' => [
                 "query" => [
                     "bool" => [
                         "must" => [
                             [
-                                "match" => [
-                                    "reference_links" => $id
-                                ]
-                            ],
-                            [
-                                "term"=> [ "type.base" => 'object']
+                                "term" => ["type.base" => 'publication']
                             ]
                         ]
                     ]
                 ]
             ],
+            '_source' => [
+            ],
         ];
-        return self::getElastic()->setParams($params)->getCount();
+        $params['body']['sort'] = 'summary_title.keyword';
 
+        return parent::searchAndCache($params);
     }
+
+
 
     /**
      * @param string $id
@@ -64,7 +67,9 @@ class Publications extends Model
                                 ]
                             ],
                             [
-                                "term" => ["type.base" => 'publication']
+                                "term" => [
+                                    "type.base" => 'publication'
+                                ]
                             ]
                         ]
                     ]
@@ -72,7 +77,12 @@ class Publications extends Model
             ],
         ];
         $response = self::getElastic()->setParams($params)->getSearch();
-        return $response['hits']['hits'][0]['_source'];
+        if(!empty($response['hits']['hits'])) {
+            return Collect($response['hits']['hits'])->first()['_source'];
+        } else {
+            return [];
+        }
+
     }
 
     /**
@@ -83,9 +93,7 @@ class Publications extends Model
     public static function connected(Request $request, string $id): LengthAwarePaginator
     {
         $perPage = 24;
-
         $from = ($request->get('page', 1) - 1) * $perPage;
-
         $params = [
             'index' => 'ciim',
             'size' => $perPage,
@@ -109,10 +117,12 @@ class Publications extends Model
 
         ];
         $response = self::getElastic()->setParams($params)->getSearch();
-        $number = $response['hits']['total']['value'];
-        $records = $response['hits']['hits'];
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $paginate = new LengthAwarePaginator($records, $number, $perPage, $currentPage);
+        $paginate = new LengthAwarePaginator(
+            $response['hits']['hits'],
+            $response['hits']['total']['value'],
+            $perPage,
+            LengthAwarePaginator::resolveCurrentPage()
+        );
         $paginate->setPath($request->getBaseUrl());
         return $paginate;
     }

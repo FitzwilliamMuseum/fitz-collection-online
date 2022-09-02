@@ -8,21 +8,25 @@ use Illuminate\View\Component;
 
 class searchResult extends Component
 {
-    /** @var array */
-    public array $record;
 
-    /** @var array */
-    public array $pris;
-
-    /**
-     * @param array $record
+    /*
+     * @var array
      */
-    public function __construct(array $record)
+    public array $priref;
+    /**
+     * @var array
+     */
+    public array $accession;
+    /**
+     * @var array|mixed
+     */
+    public array $makers;
+
+    public function __construct(public array $record)
     {
-        $this->record = $record;
-        $pris = Arr::pluck($record['_source']['identifier'], 'priref');
-        $pris = array_filter($pris);
-        $this->pris = Arr::flatten($pris);
+        $this->priref = Arr::flatten(array_filter(Arr::pluck($record['_source']['identifier'], 'priref')));
+        $this->accession = Arr::flatten(array_filter(Arr::pluck($record['_source']['identifier'], 'accession_number')));
+        $this->makers = $record['_source']['lifecycle']['creation'][0]['maker'] ?? [];
     }
 
     /**

@@ -1,5 +1,27 @@
 ## Change log
 
+### 06.07.2022
+
+1. Major release - Add API and documentation 
+2. Upgrade Universal Viewer to 4.0.4
+3. Change cookie consent libraries 
+
+### 24.05.2022 
+
+1. Upgraded Universal Viewer to version 4.0.0
+2. Drop JQuery from the project
+3. Upgrade Bootstrap
+4. Fix logging
+5. Drop fontawesome libraries
+6. Add icons to the project
+
+### 30.04.2022 
+
+1. Migrate bootstrap to latest version
+2. Update composer loaded vendor packages
+3. Update node modules 
+4. Upgrade pagination to latest version
+
 ### 05.04.2022
 
 1. Address dependabot alerts for node modules

@@ -1,11 +1,11 @@
-@if(array_key_exists('lifecycle',$record['_source'] ))
+@if(array_key_exists('lifecycle',$data ))
 
-    @if(array_key_exists('acquisition', $record['_source']['lifecycle']))
+    @if(array_key_exists('acquisition', $data['lifecycle']))
         <h3 class="lead collection">
             Acquisition and important dates
         </h3>
         <p>
-            @foreach($record['_source']['lifecycle']['acquisition'] as $acquisition)
+            @foreach($data['lifecycle']['acquisition'] as $acquisition)
                 @if(array_key_exists('method', $acquisition))
                     Method of acquisition: {{ ucfirst($acquisition['method']['value']) }}
                 @endif
@@ -18,26 +18,28 @@
                         <a href="{{ route('agent', [$agent['admin']['id']]) }}">{{ $agent['summary_title'] }}</a>
                     @endforeach
                 @endif
-                <br/>
+                @if(!$loop->last)
+                    <br/>
+                @endif
             @endforeach
         </p>
     @endif
 
-    @if(array_key_exists('creation', $record['_source']['lifecycle']))
-        @if(array_key_exists('date', $record['_source']['lifecycle']['creation'][0]))
+    @if(array_key_exists('creation', $data['lifecycle']))
+        @if(array_key_exists('date', $data['lifecycle']['creation'][0]))
             <h3 class="lead collection">
                 Dating
             </h3>
 
             <p>
-                @if(array_key_exists('periods', $record['_source']['lifecycle']['creation'][0]))
-                    @foreach($record['_source']['lifecycle']['creation'][0]['periods'] as $date)
-                        <a href="/id/terminology/{{ $date['admin']['id']}}">{{ ucfirst($date['summary_title']) }}</a>
+                @if(array_key_exists('periods', $data['lifecycle']['creation'][0]))
+                    @foreach($data['lifecycle']['creation'][0]['periods'] as $date)
+                        <a href="{{route('terminology',[$date['admin']['id']]) }}">{{ ucfirst($date['summary_title']) }}</a>
                         <br/>
                     @endforeach
                 @endif
-                @if(!empty($record['_source']['lifecycle']['creation'][0]['date']))
-                    @foreach ($record['_source']['lifecycle']['creation'][0]['date'] as $dating)
+                @if(!empty($data['lifecycle']['creation'][0]['date']))
+                    @foreach ($data['lifecycle']['creation'][0]['date'] as $dating)
                         @if(array_key_exists('range', $dating))
                             @if($dating['range'])
                                 @if(array_key_exists('from', $dating))
@@ -80,15 +82,15 @@
                     @endforeach
                 @endif
 
-                @if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0]))
+                @if(array_key_exists('value', $data['lifecycle']['creation'][0]['date'][0]))
                     Production date:
-                    @if(isset($record['_source']['lifecycle']['creation'][0]['date'][0]['precision']))
-                        {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['precision'] }}
+                    @if(isset($data['lifecycle']['creation'][0]['date'][0]['precision']))
+                        {{ $data['lifecycle']['creation'][0]['date'][0]['precision'] }}
                     @endif
 
                     @php
-                        if(array_key_exists('value', $record['_source']['lifecycle']['creation'][0]['date'][0])) {
-                          $dateTime = $record['_source']['lifecycle']['creation'][0]['date'][0]['value'];
+                        if(array_key_exists('value', $data['lifecycle']['creation'][0]['date'][0])) {
+                          $dateTime = $data['lifecycle']['creation'][0]['date'][0]['value'];
                           if($dateTime < 0){
                             $suffix = ' BC';
                             $string = abs($dateTime) . $suffix;
@@ -99,8 +101,8 @@
                         }
                     @endphp
                     {{ $string }}
-                    @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]['date'][0]))
-                        : {{ $record['_source']['lifecycle']['creation'][0]['date'][0]['note'][0]['value']}}
+                    @if(array_key_exists('note', $data['lifecycle']['creation'][0]['date'][0]))
+                        : {{ $data['lifecycle']['creation'][0]['date'][0]['note'][0]['value']}}
                     @endif
                 @endif
             </p>
@@ -108,12 +110,12 @@
 
     @endif
 
-    @if(array_key_exists('creation', $record['_source']['lifecycle']))
-        @if(array_key_exists('maker',$record['_source']['lifecycle']['creation'][0]))
+    @if(array_key_exists('creation', $data['lifecycle']))
+        @if(array_key_exists('maker',$data['lifecycle']['creation'][0]))
 
-            @if(array_key_exists('note', $record['_source']['lifecycle']['creation'][0]))
+            @if(array_key_exists('note', $data['lifecycle']['creation'][0]))
                 @php
-                    $notes = $record['_source']['lifecycle']['creation'][0]['note']
+                    $notes = $data['lifecycle']['creation'][0]['note']
                 @endphp
                 <h3 class="lead collection">
                     Note
@@ -126,18 +128,18 @@
             @endif
         @endif
     @endif
-
-
-
 @endif
 
-@if(array_key_exists('school_or_style', $record['_source']))
+@if(array_key_exists('school_or_style', $data))
     <h3 class="lead collection">
         School or Style
     </h3>
     <p>
-        @foreach($record['_source']['school_or_style'] as $school)
+        @foreach($data['school_or_style'] as $school)
             <a href="{{  route('terminology',[$school['admin']['id']]) }}">{{ $school['summary_title'] }}</a>
+            @if(!$loop->last)
+                <br/>
+            @endif
         @endforeach
     </p>
 @endif

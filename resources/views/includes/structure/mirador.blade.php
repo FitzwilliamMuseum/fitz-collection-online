@@ -3,8 +3,7 @@
 @endsection
 @push('body-scripts')
     @once
-        <script src="https://cdn.jsdelivr.net/npm/mirador@3.1.1/dist/mirador.min.js"
-                integrity="sha256-kgsl88ooIyFxWsB8GWBeWDt+qbAklTRuCD0rT7w14p0=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/mirador@latest/dist/mirador.min.js"></script>
     @endonce
     @once
         <script>

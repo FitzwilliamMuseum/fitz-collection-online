@@ -1,13 +1,8 @@
-@php
-    $pris = Arr::pluck($record['_source']['identifier'],'priref');
-    $pris = array_filter($pris);
-    $pris= Arr::flatten($pris);
-@endphp
 <div class="col-md-4 mb-3">
-    <div class="card h-100">
+    <div class="card h-100 card-fitz shadow-sm">
         <div class="mx-auto">
             @if(array_key_exists('multimedia', $record['_source']))
-                <a href="/id/object/{{ $pris[0] }}">
+                <a href="{{ route('record', $priref[0]) }}">
                     <img class="card-image-top"
                          src="{{ env('APP_URL')}}/imagestore/{{ $record['_source']['multimedia'][0]['processed']['preview']['location'] }}"
                          loading="lazy"
@@ -15,29 +10,26 @@
                     />
                 </a>
             @else
-                <a href="/id/object/{{ $pris[0] }}">
-                    <img class="card-image-top"
-                         src="https://content.fitz.ms/fitz-website/assets/no-image-available.png?key=directus-medium-crop"
-                         alt="A stand in image for {{ ucfirst($record['_source']['summary_title']) }}}"
-                    />
+                <a href="{{ route('record', $priref[0]) }}">
+                    @svg('fas-image', ['width' => 250])
                 </a>
             @endif
         </div>
-        <div class="card-body ">
+        <div class="card-body">
             <div class="contents-label mb-3">
                 <h3 class="lead ">
-                    @if(array_key_exists('title',$record['_source'] ))
-                        <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
+                    @if(array_key_exists('title', $record['_source'] ))
+                        <a href="{{ route('record', $priref[0]) }}">{{ ucfirst($record['_source']['title'][0]['value']) }}</a>
                     @else
-                        <a href="/id/object/{{ $pris[0] }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
+                        <a href="{{ route('record', $priref[0]) }}">{{ ucfirst($record['_source']['summary_title']) }}</a>
                     @endif
                 </h3>
-                @if(array_key_exists('accession_number', $record['_source']['identifier'][0]))
+                @if(is_array($accession))
                     <p class="text-info">
-                        {{ $record['_source']['identifier'][0]['accession_number'] }}
+                        {{ $accession['0'] }}
                     </p>
                 @endif
-                @include('includes.elements.makers')
+                @include('includes.elements.makers', ['data' => $record['_source']])
             </div>
         </div>
     </div>

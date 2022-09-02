@@ -1,8 +1,8 @@
-@if(array_key_exists('inscription', $record['_source']))
+@if(array_key_exists('inscription', $data))
     <h3 class="lead collection">
         Inscription or legends present
     </h3>
-    @foreach($record['_source']['inscription'] as $inscription)
+    @foreach($data['inscription'] as $inscription)
         @if(array_key_exists('description', $inscription))
             <p><strong>Inscription present:</strong> {{ $inscription['description'][0]['value'] }}</p>
         @endif

@@ -1,5 +1,5 @@
 @extends('layouts.slow')
-@section('title','Take a slow look at ' . $object['title'][0]['value'])
+@section('title','Take a slow look at ' . $object['title'][0]['value'] ?? $object['summary_title'] )
 @section('description', 'A slow looking IIIF image of '. $object['title'][0]['value'])
 @section('hero_image_title', ucfirst($object['title'][0]['value']))
 @section('hero_image', env('APP_URL') . '/imagestore/' . $object['multimedia'][0]['processed']['mid']['location'])
@@ -13,12 +13,16 @@
           </div>
 
           <div class="modal__body">
-            <p>Inspired by Cogapp's original slow looking, you are about to slowly immerse yourself in this image. </p>
-            <p>To exit, just click anywhere.</p>
+            <p>
+                Inspired by Cogapp's original slow looking, you are about to slowly immerse yourself in this image.
+            </p>
+            <p>
+                To exit, just click anywhere.
+            </p>
           </div>
 
           <div class="modal__actions">
-            <a id="back" class="modal__button" href="/id/image/{{ Request::get('image') }}">Return to the record</a>
+            <a id="back" class="modal__button" href="{{ route('image.single', Request::get('image')) }}">Return to the record</a>
             <a id="slowlooking-start" class="modal__button" href="#">Try it now</a>
           </div>
         </div>

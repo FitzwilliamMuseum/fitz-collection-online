@@ -10,16 +10,9 @@ class termsOfUse extends Component
     /**
      * @param string $path
      */
-    public function __construct(string $path)
+    public function __construct(public string $path)
     {
-        $this->path = $path;
     }
-
-    /**
-     * @var string
-     */
-    public string $path;
-
     /**
      * @return View
      */

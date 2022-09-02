@@ -1,15 +1,21 @@
-@if(array_key_exists('institutions', $record['_source']))
+@if(array_key_exists('institutions', $data))
     <h3 class="lead collection">
         Associated departments & institutions
     </h3>
     <p>
-        @foreach($record['_source']['institutions'] as $institution)
+        @foreach($data['institutions'] as $institution)
             Owner or interested party: <a
-                href="/id/agent/{{ $institution['admin']['id']}}">{{ $institution['summary_title'] }}</a><br/>
+                href="{{ route('agent',$institution['admin']['id']) }}">
+                {{ $institution['summary_title'] }}
+            </a>
+            @if($loop->last)
+                <br/>
+            @endif
         @endforeach
-        @if(array_key_exists('department', $record['_source']))
-            Associated department: <a
-                href="/id/departments/{{ urlencode($record['_source']['department']['value'])}}">{{ $record['_source']['department']['value'] }}</a>
+        @if(array_key_exists('department', $data))
+            Associated department: <a href="{{ route('department', urlencode($data['department']['value']))}}">
+                {{ $data['department']['value'] }}
+            </a>
         @endif
     </p>
 @endif

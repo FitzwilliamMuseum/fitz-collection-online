@@ -31,10 +31,12 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
+use Spatie\MissingPageRedirector\RedirectsMissingPages;
 use Spatie\ResponseCache\Middlewares\CacheResponse;
 use Spatie\ResponseCache\Middlewares\DoNotCacheResponse;
 use App\Http\Middleware\ApiLogMiddleware;
 use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\ObjectContextSwitch;
 
 class Kernel extends HttpKernel
 {
@@ -57,7 +59,7 @@ class Kernel extends HttpKernel
         LogRoute::class,
         ApiLogMiddleware::class,
         StartSession::class,
-
+        RedirectsMissingPages::class,
 
     ];
 
@@ -106,7 +108,8 @@ class Kernel extends HttpKernel
         'doNotCacheResponse' => DoNotCacheResponse::class,
         'log.route' => LogRoute::class,
         'json.response' => ForceJsonResponse::class,
-        'throttleIp' => ThrottleRequestsWithIp::class
+        'throttleIp' => ThrottleRequestsWithIp::class,
+        'linkedArt' => ObjectContextSwitch::class,
 
 
     ];

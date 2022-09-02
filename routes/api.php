@@ -53,6 +53,7 @@ if(!in_array(Request::ip(), IpAddress::whitelist())){
 Route::group(['prefix' => 'v1', 'middleware' => $middleware], function () {
     Route::apiResource('ids', 'Api\ObjectNumbersController', ['as' => 'api.ids', 'only' => ['index']]);
     Route::apiResource('objects', 'Api\ObjectsController', ['as' => 'api', 'only' => ['index', 'show']]);
+    Route::apiResource('linked-art', 'Api\LinkedArtController', ['as' => 'api', 'only' => ['index', 'show']]);
 
     Route::apiResource('departments', 'Api\DepartmentsController', ['as' => 'api', 'only' => ['index', 'show']]);
 

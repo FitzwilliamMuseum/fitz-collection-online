@@ -2,27 +2,25 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class DisplayStatus extends Component
 {
-    public object $location;
+
     /**
-     * Create a new component instance.
-     *
-     * @return void
+     * @param object $location
      */
-    public function __construct(object $location)
+    public function __construct(public object $location)
     {
-        $this->location = $location;
     }
 
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View
      */
-    public function render()
+    public function render(): View
     {
         return view('components.display-status');
     }
