@@ -1,7 +1,6 @@
 <div class="col-md-4 mb-3">
     <div class="card h-100 card-fitz shadow-sm">
         <div class="mx-auto">
-            @dd($record)
             @if(array_key_exists('multimedia', $record['_source']))
                 <a href="{{ route('record', $priref[0]) }}">
                     <img class="card-image-top"
