@@ -24,7 +24,7 @@ class nomismaLookup extends Component
      */
     public function __construct(public string $nomismaID)
     {
-        $key = $nomismaID . '-nomismaLookup';
+        $key = $nomismaID . '-nomismaLookup-rdf';
         $expiresAt = now()->addDays(10);
         if (Cache::has($key)) {
             $numismatics = Cache::get($key);
@@ -44,6 +44,7 @@ class nomismaLookup extends Component
             );
             Cache::put($key, $numismatics, $expiresAt);
         }
+        dump($numismatics);
         $this->definitions = $numismatics['definitions'];
         $this->labels = $numismatics['labels'];
         $this->lat = $numismatics['lat'];
