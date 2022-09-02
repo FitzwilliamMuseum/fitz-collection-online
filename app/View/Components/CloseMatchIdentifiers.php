@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class closeMatchIdentifiers extends Component
+class CloseMatchIdentifiers extends Component
 {
     public array $uris = [
         'nomisma_id' => 'http://nomisma.org/id/',
