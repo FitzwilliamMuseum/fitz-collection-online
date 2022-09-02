@@ -29,11 +29,18 @@
     @if(!empty($axiell))
         <x-axiell-term-display :axiell="$axiell" :identifiers="$identifiers"></x-axiell-term-display>
     @endif
+
     @if(!empty($identifiers))
         <x-close-match-identifiers :identifiers="$identifiers"></x-close-match-identifiers>
+
         @if(!is_null($identifiers['ulan_id']))
             <x-ulan-biography :ulanID="$identifiers['ulan_id']" :agentID="$identifiers['axiell_id']"></x-ulan-biography>
         @endif
+
+        @if(!is_null($identifiers['tgn_id']))
+            <x-tgn-getty-lookup :tgnID="$identifiers['tgn_id']"></x-tgn-getty-lookup>
+        @endif
+
         @if(!is_null($identifiers['nomisma_id']))
             <x-nomisma-lookup :nomismaID="$identifiers['nomisma_id']"></x-nomisma-lookup>
         @endif

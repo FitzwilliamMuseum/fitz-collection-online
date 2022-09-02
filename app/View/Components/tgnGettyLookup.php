@@ -21,16 +21,16 @@ class tgnGettyLookup extends Component
      */
     public function __construct(public string $tgnID)
     {
-        $keyScope = $tgnID . '-axiellAgentTGNID-scopenote';
+        $keyScope = $tgnID . '-axiellAgentTGNID-scopenoteLookup';
         $expiresAt = now()->addDays(10);
         if (Cache::has($keyScope) ) {
             $scopeNote = Cache::get($keyScope);
         } else {
-            $tgn = Graph::newAndLoad("http://vocab.getty.edu/tgn/$tgnID.rdf");
+            $tgn = Graph::newAndLoad("http://vocab.getty.edu/tgn/$tgnID", 'rdfxml');
             $scope = $tgn->resource("http://vocab.getty.edu/tgn/$tgnID");
             if($scope->hasProperty('skos:scopeNote')) {
                 $uri = $scope->get('skos:scopeNote')->getUri();
-                $scope = Graph::newAndLoad($uri);
+                $scope = Graph::newAndLoad($uri,'rdfxml');
                 $scopeNote = $scope->getLiteral($uri, 'rdf:value');
             } else {
                 $scopeNote = null;
