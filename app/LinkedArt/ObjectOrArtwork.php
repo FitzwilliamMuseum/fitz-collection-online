@@ -708,7 +708,7 @@ class ObjectOrArtwork
             ];
         }
 
-        if (!is_null($display)) {
+        if (!empty($display)) {
             return [
                 'id' => 'http://vocab.getty.edu/ulan/500219279',
                 'type' => 'Place',
