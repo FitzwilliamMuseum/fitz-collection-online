@@ -24,7 +24,6 @@
     @endif
 
     @if(!empty($identifiers))
-        @dd($identifiers)
         @if(!empty($identifiers['aat_id']))
             <x-aat-getty-lookup :aatID="$identifiers['aat_id']"></x-aat-getty-lookup>
         @endif
