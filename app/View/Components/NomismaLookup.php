@@ -44,8 +44,8 @@ class NomismaLookup extends Component
             );
             Cache::put($key, $numismatics, $expiresAt);
         }
-        dump($numismatics);
         $this->definitions = $numismatics['definitions'];
+        dump($this->definitions);
         $this->labels = $numismatics['labels'];
         $this->lat = $numismatics['lat'];
         $this->long = $numismatics['long'];
