@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 use App\Models\FindMoreLikeThis;
 use Psr\SimpleCache\InvalidArgumentException;
 
-class moreLikeThisShopify extends Component
+class MoreLikeThisShopify extends Component
 {
     public array $shopify;
 

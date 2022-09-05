@@ -47,7 +47,36 @@ class Publications extends Model
         return parent::searchAndCache($params);
     }
 
-
+    public static function findByUuid(string $uuid): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "admin.uuid" => $uuid
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'publication'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $response = self::getElastic()->setParams($params)->getSearch();
+        if(!empty($response['hits']['hits'])) {
+            return Collect($response['hits']['hits'])->first()['_source'];
+        } else {
+            return [];
+        }
+    }
 
     /**
      * @param string $id

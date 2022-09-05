@@ -89,6 +89,41 @@ class Agents extends Model
     }
 
     /**
+     * @param string $id
+     * @return mixed
+     */
+    public static function findByUuid(string $id): array
+    {
+        $params = [
+            'index' => 'ciim',
+            'body' => [
+                "query" => [
+                    "bool" => [
+                        "must" => [
+                            [
+                                "match" => [
+                                    "admin.uuid" => Purifier::clean($id, array('HTML.Allowed' => ''))
+                                ]
+                            ],
+                            [
+                                "term" => [
+                                    "type.base" => 'agent'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        $response = self::getElastic()->setParams($params)->getSearch();
+        if(!empty($response['hits']['hits'])) {
+            return Collect($response['hits']['hits'])->first()['_source'];
+        } else {
+            abort(404);
+        }
+    }
+
+    /**
      * @param Request $request
      * @param string $id
      * @return LengthAwarePaginator

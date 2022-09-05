@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 use Psr\SimpleCache\InvalidArgumentException;
 use Solarium\Core\Query\DocumentInterface;
 
-class moreLikeThisResearch extends Component
+class MoreLikeThisResearch extends Component
 {
     /**
      * @var array|DocumentInterface[]

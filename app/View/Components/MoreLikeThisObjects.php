@@ -6,7 +6,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\MltObjects;
 
-class moreLikeThisObjects extends Component
+class MoreLikeThisObjects extends Component
 {
     public array $mlt;
     /**
