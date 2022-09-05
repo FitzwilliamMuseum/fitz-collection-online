@@ -3,6 +3,7 @@
 namespace App\LinkedArt;
 
 use App\Models\AxiellLocation;
+use App\LinkedArt\CitationSequence;
 use Illuminate\Support\Arr;
 
 class ObjectOrArtwork
@@ -60,6 +61,21 @@ class ObjectOrArtwork
                 ];
             }
         }
+        if(Arr::has($data, 'school_or_style'))
+        {
+            foreach ($data['school_or_style'] as $school) {
+                $categories[] = [
+                    'id' => route('terminology', $school['admin']['id']),
+                    'type' => 'Type',
+                    '_label' => $school['summary_title'],
+                    'classified_as' => [
+                        'id' => 'http://vocab.getty.edu/aat/300055768',
+                        'type' => 'Type',
+                        '_label' => 'Culture',
+                    ]
+                ];
+            }
+        }
         $categories[] = [
             'id' => 'http://vocab.getty.edu/aat/300133025',
             'type' => 'Type',
@@ -87,14 +103,9 @@ class ObjectOrArtwork
         $identifiers = [];
         // Add the primary title
         $identifiers[] = [
-            'id' => self::createUri() . '/identifiers',
+            'id' => route('linked.art.identifiers', [str_replace('object-', '', $data['admin']['id']), 'title']),
             'type' => 'Title',
             'classified_as' => [
-                [
-                    'id' => self::createUri() . '/title',
-                    'type' => 'Name',
-                    '_label' => 'Primary Title'
-                ],
                 [
                     'id' => 'http://vocab.getty.edu/aat/300417193',
                     'type' => 'Name',
@@ -117,7 +128,7 @@ class ObjectOrArtwork
         ];
         // Add the accession number
         $identifiers[] = [
-            'id' => self::createUri() . '/identifiers',
+            'id' => route('linked.art.identifiers', [str_replace('object-', '', $data['admin']['id']), 'accession_number']),
             'type' => 'Identifier',
             'classified_as' => [
                 [
@@ -139,7 +150,8 @@ class ObjectOrArtwork
             'content' => $data['identifier'][0]['accession_number'],
         ];
         $identifiers[] = [
-            'id' => self::createUri() . '/identifiers',
+            'id' => route('linked.art.identifiers', [str_replace('object-', '', $data['admin']['id']), 'priref']),
+
             'type' => 'Identifier',
             'classified_as' => [
                 ['id' => 'https://vocab.getty.edu/aat/300404626',
@@ -156,11 +168,11 @@ class ObjectOrArtwork
         ];
         // Add the system number
         $identifiers[] = [
-            'id' => route('record', $data['admin']['id']) . '/identifiers',
+            'id' => route('linked.art.identifiers', [str_replace('object-', '', $data['admin']['id']), 'axiell_system_number']),
             'type' => 'Identifier',
             'classified_as' => [
                 [
-                    'id' => "https://data.getty.edu/museum/ontology/linked-data/tms-id",
+                    'id' => "http://vocab.getty.edu/page/aat/300417447",
                     'type' => 'Type',
                     '_label' => 'Axiell System Identifier'
                 ]
@@ -180,7 +192,7 @@ class ObjectOrArtwork
         $referred = [];
         // Credit line
         $referred[] = [
-            'id' => self::createUri() . '/referred_to',
+            'id' => route('linked.art.credit_line', str_replace('object-', '', $data['admin']['id'])),
             "type" => "LinguisticObject",
             "_label" => "Source Credit Line",
             "classified_as" => [
@@ -205,7 +217,7 @@ class ObjectOrArtwork
         if (Arr::has($data, 'legal')) {
             if (Arr::has($data['legal'], 'credit_line')) {
                 $referred[] = [
-                    'id' => self::createUri() . '/credit-line',
+                    'id' => route('linked.art.legal_credit_line', str_replace('object-', '', $data['admin']['id'])),
                     "type" => "LinguisticObject",
                     "_label" => "Source Credit Line",
                     "classified_as" => [
@@ -233,50 +245,40 @@ class ObjectOrArtwork
             $count = 0;
             foreach ($data['publications'] as $publication) {
                 $count = $count + 1;
-                $pub =  [
-                    'id' => route('publication.record', $publication['admin']['id']),
+                $pub = [
+                    'id' => route('linked.art.citation', [str_replace('object-','',$data['admin']['id']),$publication['admin']['uuid']]),
                     'type' => 'LinguisticObject',
                     '_label' => 'Citation (Bibliographic Reference)',
                     'classified_as' => [
-
+                        [
+                            'id' => "http://vocab.getty.edu/aat/300311705",
+                            "type" => "Type",
+                            "_label" => "Citations (Bibliographic References)"
+                        ],
+                        [
+                            "id" => "http://vocab.getty.edu/aat/300418049",
+                            "type" => "Type",
+                            "_label" => "Brief Text"
+                        ]
                     ],
                     'content' => $publication['summary_title'],
+                    'about' => [
+                        [
+                            'id' => route('publication.record', $publication['admin']['id']),
+                            'type' => 'LinguisticObject',
+                            '_label' => $publication['summary_title'],
+                        ]
+                    ],
                     "format" => "text/html",
                 ];
-                    $pub['dimension'] = [
-                        [
-                            "id" => "https://data.getty.edu/museum/collection/object/3b1c1bff-e74f-44c0-b0f8-16506df6ed08/citation/791de498-eb5d-4a58-851c-2c3d8476c8e2/sequence",
-                            "type" => "Dimension",
-                            "_label" => "Citation (Bibliographic Reference) Sequence",
-                            'classified_as' => [
-                                [
-                                    "id" => "http://vocab.getty.edu/aat/300010269",
-                                    "type" => "Type",
-                                    "_label" => "Positional Attributes"
-                                ],
-                                [
-                                    "id" => "http://vocab.getty.edu/aat/300192339",
-                                    "type" => "Type",
-                                    "_label" => "Sequences"
-                                ]
-                            ],
-                            'value' => (int) $count,
-                            'unit' => [
-                                "id" => "http://vocab.getty.edu/aat/300055665",
-                                "type" => "MeasurementUnit",
-                                "_label" => "Numbers"
-                            ]
-
-                        ]
-
-                    ];
+                $pub['dimension'] = [CitationSequence::createLinkedArt($data, $count)];
                 $referred[] = $pub;
             }
         }
         // Object description
         if (array_key_exists('description', $data)) {
             $referred[] = [
-                'id' => self::createUri() . '/descriptions',
+                'id' => route('linked.art.description', str_replace('object-', '', $data['admin']['id'])),
                 'type' => 'LinguisticObject',
                 '_label' => 'Object Description',
                 'classified_as' => [
@@ -294,7 +296,7 @@ class ObjectOrArtwork
                 'content' => implode(';', Arr::flatten($data['description'])),
                 'subject_to' => [
                     [
-                        'id' => self::createUri() . '/licensing',
+                        'id' => route('linked.art.license', str_replace('object-', '', $data['admin']['id'])),
                         'type' => 'Right',
                         '_label' => 'License for Object Description',
                         'classified_as' => [
@@ -303,52 +305,53 @@ class ObjectOrArtwork
                                 "type" => "Type",
                                 "_label" => "Public Domain Dedication CC ZERO"
                             ]
-                        ]
-                    ]
-                ],
-                'possessed_by' => [
-                    [
-                        'id' => 'http://vocab.getty.edu/ulan/' . env('FITZ_ULAN'),
-                        'type' => 'Group',
-                        "_label" => "The Fitzwilliam Museum",
-                        'member_of' => [
+                        ],
+                        'possessed_by' => [
                             [
-                                'id' => 'http://vocab.getty.edu/ulan/500247221',
+                                'id' => 'http://vocab.getty.edu/ulan/' . env('FITZ_ULAN'),
                                 'type' => 'Group',
-                                '_label' => 'The University of Cambridge',
-                                'classified_as' => [
+                                "_label" => "The Fitzwilliam Museum",
+                                'member_of' => [
                                     [
-                                        "id" => "http://vocab.getty.edu/ulan/500000003",
-                                        "type" => "Type",
-                                        "_label" => "Corporate Bodies"
+                                        'id' => 'http://vocab.getty.edu/ulan/500247221',
+                                        'type' => 'Group',
+                                        '_label' => 'The University of Cambridge',
+                                        'classified_as' => [
+                                            [
+                                                "id" => "http://vocab.getty.edu/ulan/500000003",
+                                                "type" => "Type",
+                                                "_label" => "Corporate Bodies"
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ]
-                        ]
-                    ]
-                ],
-                'subject_of' => [
-                    [
-                        'id' => self::createUri() . '/acknowledgements',
-                        'type' => 'LinguisticObject',
-                        '_label' => 'Acknowledgements for Object Description',
-                        'classified_as' => [
+                        ],
+                        'subject_of' => [
                             [
-                                "id" => "http://vocab.getty.edu/aat/300026687",
-                                "type" => "Type",
-                                "_label" => "Acknowledgements"
+                                'id' => route('linked.art.acknowledgements', str_replace('object-', '', $data['admin']['id'])),
+                                'type' => 'LinguisticObject',
+                                '_label' => 'Acknowledgements for Object Description',
+                                'classified_as' => [
+                                    [
+                                        "id" => "http://vocab.getty.edu/aat/300026687",
+                                        "type" => "Type",
+                                        "_label" => "Acknowledgements"
+                                    ]
+                                ],
+                                'content' => 'Text provided by the Fitzwilliam Museum. Licensed under CC Zero (https://creativecommons.org/publicdomain/zero/1.0/).'
                             ]
                         ],
-                        'content' => 'Text provided by the Fitzwilliam Museum. Licensed under CC Zero (https://creativecommons.org/publicdomain/zero/1.0/).'
                     ]
-                ]
-                ,
+                ],
+
+
                 "format" => "text/markdown"
             ];
         }
         if (array_key_exists('measurements', $data)) {
             $referred[] = [
-                'id' => self::createUri() . '/measurements',
+                'id' => route('linked.art.dimensions.statement', str_replace('object-', '', $data['admin']['id'])),
                 'type' => 'LinguisticObject',
                 "_label" => "Dimensions Statement",
                 "classified_as" => [
@@ -377,7 +380,7 @@ class ObjectOrArtwork
                 $materials[] = $material['reference']['summary_title'] . $notes;
             }
             $referred[] = [
-                'id' => self::createUri() . '/materials',
+                'id' => route('linked.art.materials', str_replace('object-', '', $data['admin']['id'])),
                 "type" => "LinguisticObject",
                 "_label" => "Materials Description",
                 "classified_as" => [
@@ -397,7 +400,7 @@ class ObjectOrArtwork
         }
         // Object type
         $referred[] = [
-            'id' => self::createUri() . '/object_type',
+            'id' => route('linked.art.objectType', str_replace('object-', '', $data['admin']['id'])),
             'type' => 'LinguisticObject',
             '_label' => 'Object Type',
             'classified_as' => [
@@ -453,7 +456,7 @@ class ObjectOrArtwork
         if (array_key_exists('lifecycle', $data)) {
             if (array_key_exists('creation', $data['lifecycle'])) {
                 $production = [
-                    'id' => self::createUri() . '/production',
+                    'id' => route('linked.art.production', str_replace('object-', '', $data['admin']['id'])),
                     'type' => 'Production',
                     '_label' => 'Production of Artwork',
                     'timespan' => self::buildTimeSpan($data['lifecycle']['creation'][0]),
@@ -485,10 +488,10 @@ class ObjectOrArtwork
             }
             $content = $precision . implode(' - ', array_unique(Arr::flatten($dates)));
             return [
-                'id' => self::createUri() . '/timespan',
+                'id' => route('linked.art.timespan', [str_replace('object-', '', self::$data['admin']['id'])]),
                 'type' => "TimeSpan",
                 'identified_by' => [
-                    'id' => self::createUri() . '/timespan/name',
+                    'id' => route('linked.art.timespan.details', [str_replace('object-', '', self::$data['admin']['id']),'name']),
                     "type" => "Name",
                     "_label" => "Date",
                     "content" => $content
@@ -521,7 +524,7 @@ class ObjectOrArtwork
                     '_label' => $maker['summary_title'],
                     'referred_to_by' => [
                         [
-                            'id' => self::createUri() . '/makers/',
+                            'id' => route('linked.art.maker', [str_replace('object-', '', self::$data['admin']['id']),$maker['admin']['uuid']]),
                             'type' => 'Type',
                             '_label' => $role,
                             'classified_as' => [
@@ -652,7 +655,7 @@ class ObjectOrArtwork
                     $unit = self::getUnitsURI(strtolower($dimension['units']));
                     if ($dim != '' && $unit != '') {
                         $dimensions[] = [
-                            'id' => route('record', $data['admin']['id']) . '/dimensions',
+                            'id' => route('record', (str_replace('object-', '', $data['admin']['id']))) . '/dimensions/' . $dimension['dimension'],
                             'type' => 'Dimension',
                             'classified_as' => [
                                 [
@@ -661,7 +664,7 @@ class ObjectOrArtwork
                                     '_label' => ucwords(strtolower($dimension['dimension']))
                                 ]
                             ],
-                            'value' => $dimension['value'],
+                            'value' => (int) $dimension['value'],
                             'unit' => [
                                 'id' => $unit,
                                 'type' => 'MeasurementUnit',
@@ -712,7 +715,7 @@ class ObjectOrArtwork
             return [
                 'id' => 'http://vocab.getty.edu/ulan/500219279',
                 'type' => 'Place',
-                '_label' => 'On ' . ucwords($display) . ' Fitzwilliam Museum' . $granular,
+                '_label' => ucwords($display) . ' Fitzwilliam Museum' . $granular,
                 'classified_as' => [$class]
             ];
         } else {
@@ -734,6 +737,7 @@ class ObjectOrArtwork
             'yd' => 'http://vocab.getty.edu/aat/300379102',
             'm' => 'http://vocab.getty.edu/aat/300379099',
             'km' => 'http://vocab.getty.edu/aat/300379103',
+            'degrees' => 'https://qudt.org/vocab/unit/DEG',
             default => ''
         };
     }
@@ -755,6 +759,7 @@ class ObjectOrArtwork
             'thickness' => 'http://vocab.getty.edu/aat/300055646',
             'volume' => 'http://vocab.getty.edu/aat/300055649',
             'breadth' => 'http://vocab.getty.edu/aat/300404164',
+            'die axis' => 'http://nomisma.org/id/axis',
             default => '',
         };
     }
@@ -991,14 +996,38 @@ class ObjectOrArtwork
         return $materials;
     }
 
+    public static function buildInscriptionString($information){
+        $inscription = '';
+        if (Arr::has($information, 'transcription')) {
+            $inscription .= $information['transcription'][0]['value'];
+        }
+        if (Arr::has($information, 'description')) {
+            $inscription .= ' (' . $information['description'][0]['value'] . ')';
+        }
+        if(Arr::has($information,'method')){
+            $inscription .= ' ' . ucfirst($information['method']);
+        }
+        if(Arr::has($information,'location')){
+            $inscription .= ' ' . $information['location'];
+        }
+        $inscription .= '.';
+        return $inscription;
+    }
+    /**
+     * @param array $data
+     * @param $priref
+     * @return array
+     */
     public static function buildCarrierInformation(array $data, $priref): array
     {
         $carries = [];
         if (Arr::has($data, 'inscription')) {
+            $count = 0;
             foreach ($data['inscription'] as $information) {
+                $count = $count + 1;
                 if (Arr::has($information, 'transcription') || Arr::has($information, 'description')) {
                     $carries[] = [
-                        'id' => route('record', $priref) . '/inscription',
+                        'id' => route('linked.art.inscription', [$priref, $count]),
                         'type' => 'LinguisticObject',
                         'classified_as' => [
                             [
@@ -1012,12 +1041,48 @@ class ObjectOrArtwork
                                 "_label" => "Brief Text"
                             ]
                         ],
-                        'content' => $information['transcription'][0]['value'] ?? $information['description'][0]['value'],
+                        'content' => self::buildInscriptionString($information),
                     ];
                 }
             }
         }
         return $carries;
+    }
+
+
+    /**
+     * @param $data
+     * @return array|void
+     */
+    public static function createCreditLine($data)
+    {
+        if (Arr::has($data, 'legal')) {
+            if (Arr::has($data['legal'], 'credit_line')) {
+                return [
+                    'id' => route('linked.art.legal_credit_line', str_replace('object-', '', $data['admin']['id'])),
+                    "type" => "LinguisticObject",
+                    "_label" => "Source Credit Line",
+                    "classified_as" => [
+                        [
+                            "id" => "http://vocab.getty.edu/aat/300435418",
+                            "type" => "Type",
+                            "_label" => "Credit Line"
+                        ],
+                        [
+                            "id" => "http://vocab.getty.edu/aat/300404764",
+                            "type" => "Type",
+                            "_label" => "Sources (General Concept)"
+                        ],
+                        [
+                            "id" => "http://vocab.getty.edu/aat/300418049",
+                            "type" => "Type",
+                            "_label" => "Brief Text"
+                        ]
+                    ],
+                    "content" => Arr::get($data, 'legal.credit_line')
+                ];
+            }
+        }
     }
 }
 

@@ -54,7 +54,7 @@ class indexController extends Controller
      */
     public function machineResponse(Request $request, array $data, array $spoliation, stdClass $location, string $priref): \Illuminate\Contracts\View\View|Factory|Response|JsonResponse|Application|ResponseFactory
     {
-        $formats = array(null, 'json', 'xml', 'html','linked-art','txt','qr');
+        $formats = array(null, 'json', 'xml', 'html','linked-art','txt', 'qr');
         $validator = Validator::make(['format' => $request->get('format')], [
             "format" => "in:" . implode(",", $formats)
         ]);
@@ -79,7 +79,8 @@ class indexController extends Controller
                 return view('record.index', [
                     'data' => $data,
                     'spoliation' => $spoliation,
-                    'location' => $location
+                    'location' => $location,
+                    'priref' => $priref
                 ]);
         }
     }
@@ -192,5 +193,9 @@ class indexController extends Controller
         $data = array();
         $data['data'][] = $response['hits']['hits'][0]["_source"];
         return $data;
+    }
+
+    public function linkedDataMermaid($uri){
+        return view('record.mermaid');
     }
 }

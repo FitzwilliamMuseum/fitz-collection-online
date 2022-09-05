@@ -14,7 +14,7 @@ class References
         $person = [
             '@context' => 'https://linked.art/ns/v1/linked-art.json',
             'id' => route('publication.record', $data['admin']['id']),
-            'type' => 'Person',
+            'type' => 'LinguisticObject',
             '_label' => $data['summary_title'],
             'format' => [
                 'application/ld+json'
