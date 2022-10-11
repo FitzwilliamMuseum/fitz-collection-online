@@ -17,7 +17,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.6",
-        "@xmldom/xmldom": "^0.8.2",
+        "@xmldom/xmldom": "^0.8.3",
         "async": "^3.2.4",
         "autoprefixer": "^10.4.8",
         "clean-css": "^5.3.1",
@@ -28,7 +28,7 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
-        "@xmldom/xmldom": "^0.8.2",
+        "@xmldom/xmldom": "^0.8.3",
         "autoprefixer": "^10.4.8",
         "axios": "^0.27.2",
         "bootstrap": "^5.2.0",
