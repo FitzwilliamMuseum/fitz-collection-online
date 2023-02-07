@@ -91,7 +91,7 @@ class Production
                     $role = 'Maker';
                 }
                 $makers[] = [
-                    'id' => route('terminology', ['id' => $maker['admin']['id']]),
+                    'id' => route('agent', ['id' => $maker['admin']['id']]),
                     'type' => 'Person',
                     '_label' => $maker['summary_title'],
                     'referred_to_by' => [

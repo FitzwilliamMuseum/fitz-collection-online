@@ -21,18 +21,20 @@ Route::middleware(['auth', 'verified', 'doNotCacheResponse'])->group(function ()
     Route::get('api/activity', 'HomeController@activity')->name('home');
     Route::view('password/update', 'auth.passwords.update')->name('passwords.update');
 });
+
 Route::get('/', 'indexController@search')->name('data.home');
 Route::get('/search', 'indexController@search')->name('search');
 Route::match(array('GET', 'POST'), '/search/results/', 'indexController@results')->name('results');
 
 /*
-* Spelunker route for all records
+ * Random json responses from indices
 */
 Route::get('/random', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearch'])->name('random');
 Route::get('/random/app', ['middleware' => 'doNotCacheResponse', 'uses' => 'indexController@randomsearchapp'])->name('random.app');
 
 /*
-* ObjectOrArtwork based routes
+ * ObjectOrArtwork based routes
+ *
 */
 Route::middleware([])->group(function () {
     Route::get('/id/object/{priref}', 'indexController@record')->name('record');
@@ -53,12 +55,8 @@ Route::middleware([])->group(function () {
     Route::get('/id/object/{priref}/dimensionsStatement/', 'linkedArtController@dimensionsStatement')->name('linked.art.dimensions.statement');
     Route::get('/id/object/{priref}/inscription/{count}', 'linkedArtController@inscription')->name('linked.art.inscription');
     Route::get('/id/object/{priref}/materials', 'linkedArtController@materials')->name('linked.art.materials');
-
-
-
-
-
 });
+
 Route::get('/id/image/{id}/', 'imagesController@image')->name('image.single');
 Route::get('/id/image/3d/{id}/', 'imagesController@sketchfab')->name('sketchfab');
 Route::get('/id/image/iiif/{id}/', 'imagesController@iiif')->name('image.iiif');
@@ -66,6 +64,7 @@ Route::get('/id/image/flutter/iiif/{id}/', 'imagesController@flutteriiif')->name
 Route::get('/id/image/slow/iiif/', 'imagesController@slowiiif')->name('slow.iiif');
 Route::get('/id/image/mirador/{id}/', 'imagesController@mirador')->name('image.mirador');
 Route::match(array('GET', 'POST'), '/images/id/{priref}/', 'imagesController@images')->name('images.multiple');
+
 /*
 * Publication routes
 */
@@ -74,7 +73,7 @@ Route::get('/id/publication/{id}', 'publicationsController@record')->name('publi
 Route::get('/id/publication/{id}/{format}', 'publicationsController@recordSwitch')->name('publication.context');
 
 /*
-* Publication routes
+* Exhibition routes
 */
 Route::get('/id/exhibition/', 'exhibitionsController@index')->name('exhibitions');
 Route::get('/id/exhibition/{id}', 'exhibitionsController@exhibition')->name('exhibition.record');
@@ -102,7 +101,7 @@ Route::get('/id/agent/', 'agentsController@index')->name('agents');
 Route::get('/id/agent/{id}', 'agentsController@record')->name('agent');
 
 /*
-* Department page
+* Departments pages
 */
 Route::get('/id/departments', 'departmentsController@index')->name('departments');
 Route::get('/id/departments/{id}', 'departmentsController@record')->name('department');
