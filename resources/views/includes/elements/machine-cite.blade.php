@@ -25,5 +25,11 @@
             </div>
         </div>
     </div>
-    @include('includes.elements.error')
+{{--
+For some reason this partial is labelled as "error" - but it is used to contain a contact form
+
+This contact form has been disabled at request by the client:
+
+@include('includes.elements.error')
+--}}
 </div>
