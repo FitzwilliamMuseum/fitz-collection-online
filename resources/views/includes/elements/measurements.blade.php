@@ -22,56 +22,6 @@
                     @endforeach
                     </p>
         </div>
-
-
-        @if(array_key_exists('dimension',$data['measurements']['dimensions'][0]))
-            @php
-                $dimensions = $data['measurements']['dimensions'];
-                $dims = [];
-                $width = [];
-                $depth = [];
-                foreach($dimensions as $dim){
-                  if($dim['dimension'] == 'Height')
-                  {
-                    $dims['height'] = $dim['value'];
-                  }
-                  if($dim['dimension'] == 'Length'){
-                    $width[] = $dim['value'];
-                  }
-                  if($dim['dimension'] == 'Width'){
-                    $width[] = $dim['value'];
-                  }
-                  if($dim['dimension'] == 'Depth'){
-                    $depth[] = $dim['value'];
-                  }
-                  if($dim['dimension'] == 'Thickness'){
-                    $depth[] = $dim['value'];
-                  }
-                }
-                if(!empty($width)){
-                    $width = str_replace(' cm', '', $width);
-                  $w = max($width);
-                }
-                if(count($depth) >= 1) {
-                  $d = max($depth);
-                } else {
-                  $d = 0.001;
-                }
-            @endphp
-
-            @if(array_key_exists('height', $dims) && !empty($w) && array_key_exists('units',$data['measurements']['dimensions'][0]))
-                @if(is_numeric($dims['height']))
-                    <x-dimension-drawer
-                        :height="$dims['height']"
-                        :width="$w"
-                        :depth="$d"
-                        :units="$data['measurements']['dimensions'][0]['units']"
-                        :viewWidth="400"
-                        :viewHeight="320"
-                        :scale=1></x-dimension-drawer>
-                @endif
-            @endif
-        @endif
         @endif
         @yield('dims-message')
     </div>
