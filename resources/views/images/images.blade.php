@@ -14,13 +14,6 @@
                                 <x-image-place-holder :path="$media['processed']['preview']['location']" :altText="''" :classes="'img-fluid mx-auto d-block'"></x-image-place-holder>
                             </a>
                             <div>
-                                @if(array_key_exists('zoom', $media['processed']))
-                                    <span class="btn btn-wine m-1 p-2 share ">
-                                        <a href="{{ route('image.iiif', $media['admin']['id']) }}">
-                                            <img src="{{ asset("/images/logos/iiif.svg") }}" width="20" alt="IIIF Logo"/>
-                                         </a>
-                                    </span>
-                                @endif
                                     <a href="{{ route('image.single', $media['admin']['id']) }}" class="m-1 mt-3 mb-3 p-2 btn btn-dark" >
                                         @svg('fas-eye',['width' => 15]) View this image
                                     </a>
