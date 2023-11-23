@@ -47,10 +47,6 @@
                                     $slow = Arr::pluck($con, 'image');
                                 @endphp
                                 {{-- Check for IIIF --}}
-                                <a class="btn btn-sm btn-sm btn-dark m-1"
-                                   href="{{ route('image.iiif', $data['multimedia'][0]['admin']['id']) }}">
-                                    <img src="{{ asset( '/images/logos/iiif.svg') }}" alt="IIIF icon - view image" width="20px"/> Universal Viewer Deep zoom
-                                </a>
                                 <a class="btn btn-sm btn-sm btn-dark m-1" href="{{ route('image.mirador', $data['multimedia'][0]['admin']['id']) }}">
                                     <img src="{{ asset( '/images/icons/Mirador.svg')}}" alt="Mirador icon - view image" width="20px"/> Mirador deep zoom
                                 </a>
