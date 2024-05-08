@@ -12,7 +12,11 @@ This is very much a minimum viable product and to run and install
 your environment would need to be whitelisted for our solr, axiell, directus, shopify 
 and elastic api instances. 
 
-This system is built with the latest versions of Bootstrap and Laravel and uses webpack/npm. 
+This system is built with the latest versions of Bootstrap and Laravel and uses webpack/npm.
+
+# Requirements
+
+PHP 8.1
 
 # Installation
 
