@@ -17,6 +17,7 @@ This system is built with the latest versions of Bootstrap and Laravel and uses 
 # Requirements
 
 PHP 8.1
+Node 18.17.0
 
 # Installation
 
