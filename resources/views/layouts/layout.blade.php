@@ -54,7 +54,7 @@
 @yield('machine')
 
 @yield('sketchfab')
-@yield('mlt')
+{{-- @yield('mlt') --}}
 @isset($shopify)
     <x-more-like-this-shopify :shopify="$shopify"></x-more-like-this-shopify>
     <x-more-like-this-research :research="$research"></x-more-like-this-research>

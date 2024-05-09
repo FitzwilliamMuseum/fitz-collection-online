@@ -48,8 +48,8 @@
     @include('includes.elements.machine-cite')
 @endsection
 
-@section('mlt')
+{{-- @section('mlt')
     <x-more-like-this-objects :data="$data"></x-more-like-this-objects>
     <x-more-like-this-shopify :data="$data"></x-more-like-this-shopify>
     <x-more-like-this-research :data="$data"></x-more-like-this-research>
-@endsection
+@endsection --}}
