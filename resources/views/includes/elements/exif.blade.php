@@ -34,7 +34,7 @@
         @if(!empty($exif->getCopyright()) )
             <li>{{ str_replace('Â','',utf8_encode($exif->getCopyright())) }}</li>
         @else
-            <li>Copyright © The Fitzwilliam Museum</li>
+            <li>For copyright information contact <a href="https://fitzmuseum.cam.ac.uk/commercial-services/image-library">Fitzwilliam Museum Image Library</a></li>
         @endif
 
         @if(!empty($exif->getAperture()))
