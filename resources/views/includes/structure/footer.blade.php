@@ -84,7 +84,7 @@
                                     of Cambridge Museums</a>
                             </li>
                             <li>
-                                <a href="https://fitzmuseum.cam.ac.uk/about-us/terms-of-use-of-our-website)}}"
+                                <a href="https://fitzmuseum.cam.ac.uk/about-us/terms-of-use-of-our-website"
                                    aria-label="Website terms and conditions">Website Terms of Use</a>
                             </li>
                             <li>
