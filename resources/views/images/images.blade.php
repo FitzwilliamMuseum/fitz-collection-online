@@ -10,9 +10,11 @@
                 @foreach($paginate as $media)
                     <div class="col-md-4 mt-3 mb-3">
                         <div class="card card-body h-100">
-                            <a href="{{ route('image.single', $media['admin']['id']) }}">
-                                <x-image-place-holder :path="$media['processed']['preview']['location']" :altText="''" :classes="'img-fluid mx-auto d-block'"></x-image-place-holder>
-                            </a>
+                            @if(!empty($media['processed']['preview']['location']))
+                                <a href="{{ route('image.single', $media['admin']['id']) }}">
+                                    <x-image-place-holder :path="$media['processed']['preview']['location']" :altText="''" :classes="'img-fluid mx-auto d-block'"></x-image-place-holder>
+                                </a>
+                            @endif
                             <div>
                                     <a href="{{ route('image.single', $media['admin']['id']) }}" class="m-1 mt-3 mb-3 p-2 btn btn-dark" >
                                         @svg('fas-eye',['width' => 15]) View this image
