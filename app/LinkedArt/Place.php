@@ -21,7 +21,7 @@ class Place
                 'application/ld+json'
             ],
             'approximated_by' => [
-                self::createPoint($data['summary_title'])
+                //self::createPoint($data['summary_title'])
             ],
             'subject_of' => [
                 [
