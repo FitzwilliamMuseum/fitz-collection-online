@@ -31,7 +31,7 @@ class DirectUs
      */
     public function getData(): array
     {
-        $url = env('DIRECTUS_URL') . $this->_endpoint . $this->buildQuery();
+        $url = config('fitz.directus.endpoint') . $this->_endpoint . $this->buildQuery();
         $key = md5($url);
         $expiresAt = now()->addMinutes(20);
         if (Cache::has($key)) {

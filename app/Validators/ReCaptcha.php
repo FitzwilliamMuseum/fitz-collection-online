@@ -16,7 +16,7 @@ class ReCaptcha
             [
                 'form_params' =>
                     [
-                        'secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+                        'secret' => config('fitz.recaptcha.secret'),
                         'response' => $value
                     ]
             ]

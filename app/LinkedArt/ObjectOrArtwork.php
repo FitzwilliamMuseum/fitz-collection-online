@@ -308,7 +308,7 @@ class ObjectOrArtwork
                         ],
                         'possessed_by' => [
                             [
-                                'id' => 'http://vocab.getty.edu/ulan/' . env('FITZ_ULAN'),
+                                'id' => 'http://vocab.getty.edu/ulan/' . config('fitz.ulan'),
                                 'type' => 'Group',
                                 "_label" => "The Fitzwilliam Museum",
                                 'member_of' => [
@@ -578,7 +578,7 @@ class ObjectOrArtwork
             foreach ($data['multimedia'] as $image) {
                 if (Arr::has($image['processed'], 'large')) {
                     $representation[] = [
-                        "id" => env('FITZ_IMAGE_URL') . $image['processed']['large']['location'],
+                        "id" => config('fitz.image_url') . $image['processed']['large']['location'],
                         "type" => "VisualItem",
                         "_label" => "A representation of the artwork",
                         "classified_as" => [
@@ -590,7 +590,7 @@ class ObjectOrArtwork
                         "format" => "image/jpeg",
                         'dimension' => [
                             [
-                                "id" => env('FITZ_IMAGE_URL') . $image['processed']['large']['location'],
+                                "id" => config('fitz.image_url') . $image['processed']['large']['location'],
                                 "type" => "Dimension",
                                 "classified_as" => [
                                     [
@@ -607,7 +607,7 @@ class ObjectOrArtwork
                                 ]
                             ],
                             [
-                                "id" => env('FITZ_IMAGE_URL') . $image['processed']['large']['location'],
+                                "id" => config('fitz.image_url') . $image['processed']['large']['location'],
 
                                 "type" => "Dimension",
                                 "classified_as" => [
@@ -628,7 +628,7 @@ class ObjectOrArtwork
                         ],
                         'access_point' => [
                             [
-                                "id" => env('FITZ_IMAGE_URL') . $image['processed']['original']['location'],
+                                "id" => config('fitz.image_url') . $image['processed']['original']['location'],
                                 "type" => "DigitalObject",
                             ]
                         ]
@@ -768,7 +768,7 @@ class ObjectOrArtwork
     {
         return [
             [
-                'id' => 'http://vocab.getty.edu/ulan/' . env('FITZ_ULAN'),
+                'id' => 'http://vocab.getty.edu/ulan/' . config('fitz.ulan'),
                 'type' => 'Group',
                 '_label' => 'The Fitzwilliam Museum',
                 'classified_as' => [

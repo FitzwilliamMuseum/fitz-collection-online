@@ -409,7 +409,7 @@ class linkedArtController
                         ],
                         'possessed_by' => [
                             [
-                                'id' => 'http://vocab.getty.edu/ulan/' . env('FITZ_ULAN'),
+                                'id' => 'http://vocab.getty.edu/ulan/' . config('fitz.ulan'),
                                 'type' => 'Group',
                                 "_label" => "The Fitzwilliam Museum",
                                 'member_of' => [

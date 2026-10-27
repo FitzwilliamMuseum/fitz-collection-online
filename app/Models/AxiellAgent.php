@@ -32,7 +32,7 @@ class AxiellAgent
                 'limit' => 1,
                 'output' => 'json'
             );
-            $response = Http::get(env('ADLIBURI') . urldecode(http_build_query($params)));
+            $response = Http::get(config('fitz.adlib.uri') . urldecode(http_build_query($params)));
             $axiell = $response->object();
             if(property_exists($axiell->adlibJSON,'recordList')){
                 if(is_array($axiell->adlibJSON->recordList->record)){

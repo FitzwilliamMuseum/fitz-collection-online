@@ -91,7 +91,7 @@ class indexController extends Controller
      */
     public function search(): RedirectResponse
     {
-        return Redirect::to(env('MAIN_URL') . '/objects-and-artworks');
+        return Redirect::to(config('fitz.main_url') . '/objects-and-artworks');
     }
 
     /**

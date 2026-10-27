@@ -209,9 +209,9 @@ class IiifController extends ApiController
         $data['apiURI'] = route('api.iiif.show', $data['admin']['id']);
 
                 $id = $data['admin']['id'];
-                $data['manifestURI'] = env('FITZ_MANIFEST_URL') . $id . '/manifest';
-                $data['uvViewerPath'] = env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
-                $data['uvViewerEmbedHTML'] = '<iframe src="' . env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
+                $data['manifestURI'] = config('fitz.manifest_url') . $id . '/manifest';
+                $data['uvViewerPath'] = config('fitz.uv_viewer_path') . config('fitz.manifest_url') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
+                $data['uvViewerEmbedHTML'] = '<iframe src="' . config('fitz.uv_viewer_path') . config('fitz.manifest_url') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
                 $data['miradorPath'] = route('image.mirador', [$id]);
                 $files = $this->generateIiifFiles($id);
                 foreach ($files as $key => $file) {
@@ -285,7 +285,7 @@ class IiifController extends ApiController
      */
     private function generateManifestURI(string $id): string
     {
-        return env('FITZ_MANIFEST_URL') . $id . '/manifest';
+        return config('fitz.manifest_url') . $id . '/manifest';
     }
 
     /**
@@ -294,7 +294,7 @@ class IiifController extends ApiController
      */
     private function generateUvEmbed(string $id): string
     {
-        return '<iframe src="' . env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
+        return '<iframe src="' . config('fitz.uv_viewer_path') . config('fitz.manifest_url') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0" width="560" height="420" allowfullscreen></iframe>';
     }
 
     /**
@@ -303,7 +303,7 @@ class IiifController extends ApiController
      */
     private function generateUvViewer(string $id): string
     {
-        return env('FITZ_UV_VIEWER_PATH') . env('FITZ_MANIFEST_URL') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
+        return config('fitz.uv_viewer_path') . config('fitz.manifest_url') . $id . '/manifest&c=0&m=0&cv=0&config=&locales=en-GB:English (GB),cy-GB:Cymraeg,fr-FR:Français (FR),pl-PL:Polski,sv-SE:Svenska&r=0';
     }
 
     /**

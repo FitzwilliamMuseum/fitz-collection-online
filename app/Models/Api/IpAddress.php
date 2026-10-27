@@ -28,7 +28,7 @@ class IpAddress
      */
     public static function getData(): array
     {
-        $url = 'https://content.fitz.ms/fitz-website/items/api_ip_whitelist?fields=ip_address&access_token=' . env('DIRECTUS_ACCESS_TOKEN');
+        $url = 'https://content.fitz.ms/fitz-website/items/api_ip_whitelist?fields=ip_address&access_token=' . config('fitz.directus.token');
         $key = md5($url);
         $expiresAt = now()->addDays(60);
         if (Cache::has($key)) {

@@ -13,7 +13,7 @@ class ApiLogMiddleware
 
     public function __construct()
     {
-        $this->enabled = env('API_LOGGER', false);
+        $this->enabled = config('apilog.enabled', false);
     }
 
     public function handle(Request $request, Closure $next): mixed

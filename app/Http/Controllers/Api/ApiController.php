@@ -290,7 +290,7 @@ class ApiController extends BaseController
         if ($this->multiKeyExists($array, 'lifecycle')) {
             $array['lifecycle'] = $this->enrichLifeCycle($array['lifecycle']);
         }
-        if (env('APP_ENV') == 'production') {
+        if (config('app.env') == 'production') {
             array_walk_recursive($array, function (&$array) use ($find, $replace) {
                 $array = str_replace($find, $replace, $array);
             });
@@ -305,7 +305,7 @@ class ApiController extends BaseController
 
     private function generateManifestURI(string $id): string
     {
-        return env('FITZ_MANIFEST_URL') . $id . '/manifest';
+        return config('fitz.manifest_url') . $id . '/manifest';
     }
 
     /**
@@ -435,9 +435,9 @@ class ApiController extends BaseController
             foreach ($array['processed'] as &$surrogate) {
                 if (array_key_exists('format', $surrogate)) {
                     if ($surrogate['format'] === 'pyramid tiff') {
-                        $surrogate['location'] = env('FITZ_IIP_URL') . '/' . $surrogate['location'] . '&cvt=jpeg';
+                        $surrogate['location'] = config('fitz.iip_url') . '/' . $surrogate['location'] . '&cvt=jpeg';
                     } else {
-                        $surrogate['location'] = env('FITZ_IMAGE_URL') . $surrogate['location'];
+                        $surrogate['location'] = config('fitz.image_url') . $surrogate['location'];
                     }
 
                 }
@@ -835,7 +835,7 @@ class ApiController extends BaseController
 //        }
 //
 //        if ($this->multiKeyExists($array, 'zoom')) {
-//            $array['manifestURI'] = env('FITZ_MANIFEST_URL') . $array['admin']['id'] . '/manifest';
+//            $array['manifestURI'] = config('fitz.manifest_url') . $array['admin']['id'] . '/manifest';
 //            $array['processed'] = $this->append_single_iip_url($array);
 //        }
 //        array_walk_recursive($array, function (&$array) use ($find, $replace) {
@@ -852,7 +852,7 @@ class ApiController extends BaseController
 //    {
 //        array_walk_recursive($array, function (&$value, $key) {
 //            if (!is_array($value) && $key === 'location') {
-//                $value = env('FITZ_IMAGE_URL') . $value;
+//                $value = config('fitz.image_url') . $value;
 //            }
 //        });
 //        return $array;
@@ -1388,9 +1388,9 @@ class ApiController extends BaseController
     {
         return [
             [
-                'host' => env('ELASTIC_API'),
+                'host' => config('fitz.elastic.host'),
                 'port' => '80',
-                'path' => env('ELASTIC_PATH'),
+                'path' => config('fitz.elastic.path'),
             ]
         ];
     }

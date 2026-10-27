@@ -175,7 +175,7 @@ class imagesController extends Controller
      */
     public function getPath(array $data): string
     {
-        return env('CIIM_IMAGE_URL') . $data[0]['processed']['large']['location'];
+        return config('fitz.ciim_image_url') . $data[0]['processed']['large']['location'];
     }
 
     /**

@@ -53,9 +53,9 @@ class Model
     {
         return [
             [
-                'host' => env('ELASTIC_API'),
+                'host' => config('fitz.elastic.host'),
                 'port' => '80',
-                'path' => env('ELASTIC_PATH'),
+                'path' => config('fitz.elastic.path'),
             ]
         ];
     }

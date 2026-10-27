@@ -18,7 +18,7 @@ class colorThiefObjectDetails extends Component
         if (array_key_exists('multimedia', $data)) {
             if (array_key_exists('large', $data['multimedia'][0]['processed'])) {
                 $image = $data['multimedia'][0]['processed']['large']['location'];
-                $path = env('CIIM_IMAGE_URL') . $image;
+                $path = config('fitz.ciim_image_url') . $image;
                 $this->palette = ColorThief::getPalette($path, 12);
             }
         }

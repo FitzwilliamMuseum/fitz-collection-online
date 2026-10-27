@@ -24,7 +24,7 @@ class AxiellLocation
                 'current_location.description'
             );
             $fields = '&fields=' . implode(',', $fieldsToQuery);
-            $response = Http::get(env('ADLIBURI') . '?&database=objects.uf&search=priref=' . $priref . $fields . '&limit=1&output=json');
+            $response = Http::get(config('fitz.adlib.uri') . '?&database=objects.uf&search=priref=' . $priref . $fields . '&limit=1&output=json');
             $data = $response->object();
             Cache::put($key, $data, $expiresAt);
         }
